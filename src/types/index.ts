@@ -1,2 +1,2 @@
-import './news.ts';
-import './user.ts';
+import './news';
+import './user';
