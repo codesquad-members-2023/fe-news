@@ -32,6 +32,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/Users/jaydenlee/dev-github/codesquad/js_offline/fe-news/node_modules/prettier",
+    "settings.editor.selected.configurable": "settings.typescriptcompiler",
+    "ts.external.directory.path": "/Users/jaydenlee/dev-github/codesquad/js_offline/fe-news/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -43,7 +46,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680486487671</updated>
-      <workItem from="1680486489111" duration="7486000" />
+      <workItem from="1680486489111" duration="11961000" />
     </task>
     <servers />
   </component>
