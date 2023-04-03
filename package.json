@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "scripts": {
+    "sass": "node-sass sass/main.scss css/style.css -w"
+  }
+}
