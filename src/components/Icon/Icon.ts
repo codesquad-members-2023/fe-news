@@ -1,5 +1,6 @@
 import dom from '@utils/dom';
 import { icons } from '@assets/icons/index';
+import style from './IconStyle';
 
 interface setSvgProps {
   name: string;
@@ -22,10 +23,11 @@ class Icon extends HTMLElement {
     if (!svgString) return;
     svgString = this.replaceSvgStringAttributes(svgString);
     if (this.shadowRoot)
-      dom.render({
+      dom.add({
         target: this.shadowRoot as unknown as HTMLElement,
         template: svgString,
       });
+    dom.addStyle({ target: this, style });
   }
 
   replaceSvgStringAttributes(svgString: string) {
