@@ -1,0 +1,17 @@
+{
+  "name": "news-stand",
+  "version": "0.1.0",
+  "scripts": {
+    "lint": "eslint ./**/*.js",
+    "format": "prettier-eslint --write ./**/*.js"
+  },
+  "devDependencies": {
+    "eslint": "8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "prettier": "^2.8.7",
+    "prettier-eslint": "^15.0.1",
+    "prettier-eslint-cli": "^7.1.0"
+  }
+}

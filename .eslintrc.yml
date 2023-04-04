@@ -1,0 +1,31 @@
+root: true
+env:
+  browser: true
+  es2021: true
+extends:
+  - standard
+  - eslint:recommended
+  - plugin:import/recommended
+overrides: []
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+rules:
+  indent:
+    - error
+    - 2
+  max-len:
+    - error
+    - code: 100
+      ignoreUrls: true
+      ignoreRegExpLiterals: true
+      ignorePattern: "^(\
+        \\} from '\\S+'|\
+        from '\\S+'|\
+        import .* from '\\S+'|\
+        [ ]*(export )?(async )?function .*|\
+        [ ]*[a-zA-Z0-9]+=\\{[^}]*\\}\
+        )$"
+  no-console: error
+  no-use-before-define: off
+  no-useless-constructor: off
