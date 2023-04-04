@@ -37,7 +37,7 @@
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
       "@apis/*": ["src/apis/*"],
-      "@service/*": ["src/service/*"],
+      "@services/*": ["src/services/*"],
       "@types/*": ["src/types/*"],
       "@store/*": ["src/store/*"],
       "@pages/*": ["src/pages/*"]

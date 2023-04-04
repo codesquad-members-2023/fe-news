@@ -1,5 +1,5 @@
 import dom from '@utils/dom';
-import { icons } from '@assets/icons';
+import { icons } from '@assets/icons/index';
 
 interface setSvgProps {
   name: string;
@@ -8,6 +8,7 @@ interface setSvgProps {
 class Icon extends HTMLElement {
   constructor() {
     super();
+    this.init();
   }
 
   init() {
