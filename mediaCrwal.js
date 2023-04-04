@@ -11,7 +11,7 @@ nextButton.forEach((item) => {
     let subNewsList = document.querySelectorAll('.sub_news li');
     const mediaType = document.querySelector('.option_on a').textContent;
     subNewsList = Array.from(subNewsList).map((item) => item.textContent);
-    let obj = {
+    const obj = {
       mediaInfo: {
         type: mediaType,
         name: alt,
