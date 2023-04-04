@@ -10,6 +10,7 @@ nextButton.forEach((item) => {
     const mainTitle = mainNews.querySelector('.title');
     let subNewsList = document.querySelectorAll('.sub_news li');
     const mediaType = document.querySelector('.option_on a').textContent;
+    const noticeMessage = document.querySelector('.notice_msg').textContent;
     subNewsList = Array.from(subNewsList).map((item) => item.textContent);
     const obj = {
       mediaInfo: {
@@ -24,6 +25,7 @@ nextButton.forEach((item) => {
       },
       subContent: {
         subNewsList: subNewsList,
+        noticeMessage: noticeMessage,
       },
     };
     result.push(obj);
