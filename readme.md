@@ -1,3 +1,7 @@
+## 구조
+
+![image](https://user-images.githubusercontent.com/96980857/229732784-543b8d21-5593-4efe-ba44-aef3163bf5f4.png)
+
 ## 기능 목록
 
 ### 기본 화면 레이아웃
