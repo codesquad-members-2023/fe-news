@@ -17,3 +17,7 @@
 ### CSS - Grid
 
 - [ ] CSS Grid 학습
+
+# 뉴스 스탠드 설계 문서
+
+[설계 문서](https://hoonding.notion.site/ec5f33e99c8c400abd81cf49f5623055)
