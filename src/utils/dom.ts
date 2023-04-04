@@ -51,8 +51,9 @@ function addShadow({ target }: addShadowProps) {
 }
 
 function addStyle({ target, style }: addStyleProps) {
-  if (!target.shadowRoot) return target.append(style.call(target));
-  return target.shadowRoot.append(style.call(target));
+  const styleElement = style.call(target, null as unknown as HTMLElement);
+  if (!target.shadowRoot) target.append(styleElement);
+  else target.shadowRoot.append(styleElement);
 }
 
 export default {
