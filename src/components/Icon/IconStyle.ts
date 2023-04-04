@@ -1,12 +1,17 @@
-export default function style(target: HTMLElement) {
-  const style = document.createElement('style');
+import Style from '@components/Style/Style';
 
-  style.textContent = `
+export class IconStyle extends Style {
+  constructor() {
+    const content = `
     @import 'src/styles/index.css';
 
     :host {
       display: inline-flex;
     }
-  `;
-  return style;
+    `;
+
+    super({ content });
+  }
 }
+
+export default IconStyle;

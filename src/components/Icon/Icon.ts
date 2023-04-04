@@ -1,9 +1,13 @@
 import dom from '@utils/dom';
 import { icons } from '@assets/icons/index';
-import style from './IconStyle';
+import IconStyle from './IconStyle';
 
 interface setSvgProps {
   name: string;
+}
+
+interface replaceSvgStringAttributesProps {
+  svgString: string;
 }
 
 class Icon extends HTMLElement {
@@ -21,16 +25,17 @@ class Icon extends HTMLElement {
   async setSvg({ name }: setSvgProps) {
     let svgString: string = icons[name];
     if (!svgString) return;
-    svgString = this.replaceSvgStringAttributes(svgString);
+    svgString = this.replaceSvgStringAttributes({ svgString });
     if (this.shadowRoot)
       dom.add({
         target: this.shadowRoot as unknown as HTMLElement,
         template: svgString,
       });
+    const style = new IconStyle().element;
     dom.addStyle({ target: this, style });
   }
 
-  replaceSvgStringAttributes(svgString: string) {
+  replaceSvgStringAttributes({ svgString }: replaceSvgStringAttributesProps) {
     const defaultSize = 24;
     const size = dom.get({ target: this, name: 'size' });
     const width = dom.get({ target: this, name: 'width' });

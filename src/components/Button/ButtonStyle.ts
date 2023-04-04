@@ -1,7 +1,8 @@
-export default function style(target: HTMLElement) {
-  const style = document.createElement('style');
+import Style from '@components/Style/Style';
 
-  style.textContent = `
+export class ButtonStyle extends Style {
+  constructor() {
+    const content = `
     @import 'src/styles/index.css';
 
     :host {
@@ -29,6 +30,10 @@ export default function style(target: HTMLElement) {
       cursor: pointer;
       background: var(--offwhite);
     }
-  `;
-  return style;
+    `;
+
+    super({ content });
+  }
 }
+
+export default ButtonStyle;

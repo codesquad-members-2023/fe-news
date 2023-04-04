@@ -23,7 +23,7 @@ interface addShadowProps {
 
 interface addStyleProps {
   target: HTMLElement;
-  style: (target: HTMLElement) => HTMLStyleElement;
+  style: HTMLStyleElement;
 }
 
 function create({ tagName }: createProps) {
@@ -51,9 +51,8 @@ function addShadow({ target }: addShadowProps) {
 }
 
 function addStyle({ target, style }: addStyleProps) {
-  const styleElement = style.call(target, null as unknown as HTMLElement);
-  if (!target.shadowRoot) target.append(styleElement);
-  else target.shadowRoot.append(styleElement);
+  if (!target.shadowRoot) target.append(style);
+  else target.shadowRoot.append(style);
 }
 
 export default {

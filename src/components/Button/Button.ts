@@ -1,5 +1,10 @@
 import style from './ButtonStyle';
 import dom from '@utils/dom';
+import ButtonStyle from './ButtonStyle';
+
+interface Button {
+  icon?: string | null;
+}
 
 class Button extends HTMLElement {
   constructor() {
@@ -9,6 +14,7 @@ class Button extends HTMLElement {
 
   init() {
     const icon = dom.get({ target: this, name: 'icon' });
+    this.icon = icon;
     const text = this.innerText;
     dom.addShadow({ target: this });
     const template = `
@@ -25,6 +31,7 @@ class Button extends HTMLElement {
       target: this,
       template,
     });
+    const style = new ButtonStyle().element;
     dom.addStyle({ target: this, style });
   }
 }
