@@ -1,0 +1,33 @@
+@import '../abstracts/variables';
+
+#auto-rolling {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.auto__box {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  padding: 16px;
+
+  width: 461px;
+  height: 49px;
+
+  background: $off-white;
+  .auto__media {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: $black;
+  }
+  .auto__content {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: $gray500;
+  }
+}
