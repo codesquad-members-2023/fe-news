@@ -31,5 +31,5 @@ dist
 server/server.js
 
 # webstorm
-
 .idea
+.idea/*.xml
