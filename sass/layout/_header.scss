@@ -1,0 +1,23 @@
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__logo {
+  img {
+    margin-right: 8px;
+  }
+  span {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+  }
+}
+
+.header__current-date {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+}
