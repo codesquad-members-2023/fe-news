@@ -7,7 +7,7 @@ interface constructorProp {
 
 export class GridViewElementStyle extends Style {
   constructor({ target }: constructorProp) {
-    const image = getProperty({ target, name: 'image' });
+    const press = getProperty({ target, name: 'press' });
     const content = `
     @import 'src/styles/index.css';
 
@@ -29,7 +29,6 @@ export class GridViewElementStyle extends Style {
     .press-logo {
       height: 20px;
       width: 100%;
-      background-image: url(src/assets/images/press-logo/${image});
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;

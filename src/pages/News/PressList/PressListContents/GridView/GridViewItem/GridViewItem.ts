@@ -1,4 +1,4 @@
-import { add, addStyle, addShadow } from '@utils/dom';
+import { add, addStyle, addShadow, getProperty } from '@utils/dom';
 import GridViewItemStyle from './GridViewItemStyle';
 
 interface GridViewItem {
@@ -12,9 +12,18 @@ class GridViewItem extends HTMLElement {
   }
 
   render() {
+    const press = getProperty({
+      target: this,
+      name: 'press',
+    });
+
     const template = `
     <button>
-      <div class="press-logo"></div>
+      <div class="press-logo" ${
+        press
+          ? `style="background-image: url(src/assets/images/press-logo/${press}.png)"`
+          : ''
+      }></div>
       <div class="press-subscribe-btn-container hide">
         <button-element icon="plus">구독하기</button-element>
       </div>

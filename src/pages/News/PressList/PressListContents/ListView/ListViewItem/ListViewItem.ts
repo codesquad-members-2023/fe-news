@@ -1,26 +1,44 @@
-import { add, addStyle, addShadow } from '@utils/dom';
+import { add, addStyle, addShadow, getProperty } from '@utils/dom';
 import ListViewItemStyle from './ListViewItemStyle';
 
-interface GridViewItem {
+interface ListViewItem {
   icon?: string | null;
 }
 
-class GridViewItem extends HTMLElement {
+class ListViewItem extends HTMLElement {
   constructor() {
     super();
     this.render();
   }
 
   render() {
+    const press =
+      getProperty({
+        target: this,
+        name: 'press',
+      }) ?? '';
+
+    const image =
+      getProperty({
+        target: this,
+        name: 'image',
+      }) ?? '';
+
     const template = `
     <div class="header">
-      <span class="press-logo"></span>
+      <img ${
+        press ? `src="src/assets/images/press-logo/${press}.png"` : ''
+      } height="20px" width="auto">
       <p class="typo-body-xs">2023.02.10. 18:53 편집</p>
       <button-element icon="plus">구독하기</button-element>
     </div>
     <div class="contents">
       <div class="headliner">
-        <div class="image"></div>
+        <div class="image" ${
+          image
+            ? `style="background-image: url(src/assets/images/headlines/${image}.png)"`
+            : ''
+        }></div>
         <div class="title typo-body-md">봇물처럼 터지는 공공요금 인상…꼭 지금이어야 하나</div>
       </div>
       <div class="articles-container">
@@ -48,4 +66,4 @@ class GridViewItem extends HTMLElement {
   }
 }
 
-export default GridViewItem;
+export default ListViewItem;

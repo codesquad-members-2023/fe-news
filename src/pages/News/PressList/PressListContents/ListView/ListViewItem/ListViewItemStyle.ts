@@ -7,7 +7,6 @@ interface constructorProp {
 
 export class ListViewItemStyle extends Style {
   constructor({ target }: constructorProp) {
-    const image = getProperty({ target, name: 'image' });
     const content = `
     @import 'src/styles/index.css';
 
@@ -28,11 +27,12 @@ export class ListViewItemStyle extends Style {
       width: 320px;
       height: 200px;
       display: inline-block;
-      background: black;
+      background-size: contain;
     }
 
     .headliner > .title {
       margin-top: 16px;
+      color: var(--black);
     }
 
     li {
