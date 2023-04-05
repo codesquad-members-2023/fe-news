@@ -9,6 +9,10 @@ export class ListViewItemStyle extends Style {
   constructor({ target }: constructorProp) {
     const content = `
     @import 'src/styles/index.css';
+    
+    :host {
+      padding: 0 24px;
+    }
 
     .header {
       display: flex;
