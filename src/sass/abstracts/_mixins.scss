@@ -1,0 +1,5 @@
+@mixin fontType($type) {
+  font-size: nth($type, 1);
+  font-weight: nth($type, 2);
+  line-height: nth($type, 3);
+}
