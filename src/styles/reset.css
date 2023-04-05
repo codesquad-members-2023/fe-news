@@ -134,6 +134,12 @@ table {
 }
 
 div,
-button {
+button,
+span {
   box-sizing: border-box;
+  background: none;
+}
+
+span {
+  display: inline-block;
 }

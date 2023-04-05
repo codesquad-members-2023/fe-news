@@ -30,18 +30,10 @@
   line-height: 22px;
 }
 
-.typo-body-md:hover {
-  text-decoration-line: underline;
-}
-
 .typo-body-sm {
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-}
-
-.typo-body-sm:hover {
-  text-decoration-line: underline;
 }
 
 .typo-body-xs {

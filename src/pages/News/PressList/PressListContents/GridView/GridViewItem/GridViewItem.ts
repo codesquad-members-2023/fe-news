@@ -19,7 +19,6 @@ class GridViewItem extends HTMLElement {
         <button-element icon="plus">구독하기</button-element>
       </div>
     </button>
-    
     `;
     addShadow({ target: this });
     add({

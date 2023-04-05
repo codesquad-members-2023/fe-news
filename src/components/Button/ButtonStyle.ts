@@ -30,6 +30,9 @@ export class ButtonStyle extends Style {
       color: var(--gray200);
     }
 
+    button:hover {
+      background: var(--offwhite);
+    }
 
     `;
 
