@@ -35,4 +35,4 @@ server/server.js
 .idea/*.xml
 
 # compiled js files
-src/*.js
+./**/*.js
