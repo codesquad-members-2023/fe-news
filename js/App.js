@@ -1,14 +1,13 @@
-async function getMatchData(keyword) {
-  let result;
-  await fetch('http://localhost:3001/media')
-    .then((response) => response.json())
-    .then((data) => {
-      data = data.data;
-      result = data.find((item) => item.mediaId === 100);
-    })
-    .catch((error) => console.error(`error: ${error.message}`));
-  console.log(result);
-  return result;
-}
+import Header from './view/header';
 
-getMatchData();
+const App = () => {
+  const root = document.querySelector('#root');
+  const $header = Header();
+
+  const documentFragment = new DocumentFragment();
+  documentFragment.append($header);
+
+  root.appendChild(documentFragment);
+};
+
+export default App;
