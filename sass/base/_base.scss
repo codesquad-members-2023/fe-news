@@ -31,6 +31,9 @@ body {
   height: 100%;
   margin: 0;
   position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
 }
 
 #root {
