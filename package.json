@@ -1,0 +1,23 @@
+{
+  "name": "fe2",
+  "version": "1.0.0",
+  "description": "## 학습계획서",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "json-server -p 3001 --watch db.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/bread1022/fe-news.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bread1022/fe-news/issues"
+  },
+  "homepage": "https://github.com/bread1022/fe-news#readme",
+  "dependencies": {
+    "json-server": "^0.17.3"
+  }
+}
