@@ -33,3 +33,6 @@ server/server.js
 # webstorm
 .idea
 .idea/*.xml
+
+# compiled js files
+src/*.js

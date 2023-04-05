@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e85345e8-d703-4639-98a3-2313890bb890" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/app.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/header/HeaderComponent.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/header/HeaderModel.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/header/HeaderView.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/header/header.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +54,7 @@
       <option name="presentableId" value="Default" />
       <updated>1680486487671</updated>
       <workItem from="1680486489111" duration="14366000" />
-      <workItem from="1680568151268" duration="38005000" />
+      <workItem from="1680568151268" duration="39326000" />
     </task>
     <servers />
   </component>
