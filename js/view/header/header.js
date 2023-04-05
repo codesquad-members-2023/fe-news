@@ -38,6 +38,7 @@ const createRightElement = () => {
 };
 
 const changeKorFormatDate = () => {
+  // 엄밀히 따지자면 로직 부분으로 가야할듯..
   const date = new Date();
   const options = {
     year: 'numeric',
@@ -50,7 +51,6 @@ const changeKorFormatDate = () => {
 
 const Header = () => {
   const $header = createHeaderElement();
-
   return $header;
 };
 
