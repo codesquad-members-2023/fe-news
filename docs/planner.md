@@ -17,3 +17,4 @@
 - [ ] : 초기 환경 세팅
   - [ ] : prettier, eslint
   - [ ] : package.json
+- [ ] : 네이버 뉴스 데이터 크롤링 작업 시작
