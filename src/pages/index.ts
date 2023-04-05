@@ -1,3 +1,6 @@
+import GridView from './News/PressList/PressListContents/GridView/GridView';
+customElements.define('grid-view-element', GridView);
+
 import GridViewItem from './News/PressList/PressListContents/GridView/GridViewItem/GridViewItem';
 customElements.define('grid-view-item-element', GridViewItem);
 

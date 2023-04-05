@@ -12,8 +12,9 @@ export class GridViewElementStyle extends Style {
     @import 'src/styles/index.css';
 
     :host {
-      width: 154.17px;
-      height: 96.25px;
+      width: 100%;
+      min-width: 154px;
+      height: 96px;
       display: inline-block;
     }
 
