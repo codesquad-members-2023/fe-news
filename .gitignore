@@ -27,12 +27,12 @@ public
 # dist files
 dist
 
-# server js file
-server/server.js
+
 
 # webstorm
 .idea
 .idea/*.xml
 
 # compiled js files
-./**/*.js
+# server js file
+*.js
