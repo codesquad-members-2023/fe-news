@@ -1,6 +1,6 @@
 ## 구조
 
-![image](https://user-images.githubusercontent.com/96980857/229732784-543b8d21-5593-4efe-ba44-aef3163bf5f4.png)
+![new-stand-structure](https://user-images.githubusercontent.com/96980857/230043837-46156db8-a817-4440-bf85-b000e9eb3525.png)
 
 ## 기능 목록
 
