@@ -1,4 +1,4 @@
-import Header from './view/header';
+import Header from './view/header/header.js';
 
 const App = () => {
   const root = document.querySelector('#root');
