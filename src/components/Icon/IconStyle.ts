@@ -1,5 +1,5 @@
 import Style from '@components/Style/Style';
-import { get, add, addStyle } from '@utils/dom';
+import { getProperty, add, addStyle } from '@utils/dom';
 
 interface constructorProp {
   target: HTMLElement;
@@ -7,9 +7,9 @@ interface constructorProp {
 
 export class IconStyle extends Style {
   constructor({ target }: constructorProp) {
-    const width = get({ target, name: 'width' });
-    const height = get({ target, name: 'height' });
-    const size = get({ target, name: 'size' });
+    const width = getProperty({ target, name: 'width' });
+    const height = getProperty({ target, name: 'height' });
+    const size = getProperty({ target, name: 'size' });
 
     const content = `
     @import 'src/styles/index.css';

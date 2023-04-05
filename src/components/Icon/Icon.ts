@@ -1,4 +1,4 @@
-import { get, add, addStyle } from '@utils/dom';
+import { getProperty, add, addStyle } from '@utils/dom';
 import { icons } from '@assets/icons/index';
 import IconStyle from './IconStyle';
 
@@ -18,7 +18,7 @@ class Icon extends HTMLElement {
 
   render() {
     this.attachShadow({ mode: 'open' });
-    const name = get({ target: this, name: 'name' });
+    const name = getProperty({ target: this, name: 'name' });
     if (name) this.setSvg({ name });
     addStyle({ target: this, style: new IconStyle({ target: this }).element });
   }
@@ -36,10 +36,10 @@ class Icon extends HTMLElement {
 
   replaceAttributes({ svgString }: replaceSvgStringAttributesProps) {
     const defaultSize = 24;
-    const size = get({ target: this, name: 'size' });
-    const width = get({ target: this, name: 'width' });
-    const height = get({ target: this, name: 'height' });
-    const fill = get({ target: this, name: 'fill' });
+    const size = getProperty({ target: this, name: 'size' });
+    const width = getProperty({ target: this, name: 'width' });
+    const height = getProperty({ target: this, name: 'height' });
+    const fill = getProperty({ target: this, name: 'fill' });
 
     let result = svgString
       .replace(/width=".*?"/g, `width="${width ?? size ?? defaultSize}"`)

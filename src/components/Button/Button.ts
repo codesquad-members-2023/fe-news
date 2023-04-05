@@ -1,4 +1,4 @@
-import { addShadow, get, add, addStyle } from '@utils/dom';
+import { addShadow, getProperty, add, addStyle } from '@utils/dom';
 import ButtonStyle from './ButtonStyle';
 
 interface Button {
@@ -12,7 +12,7 @@ class Button extends HTMLElement {
   }
 
   render() {
-    const icon = get({ target: this, name: 'icon' });
+    const icon = getProperty({ target: this, name: 'icon' });
     const text = this.innerText;
     const template = `
     <button class="typo-body-xs">

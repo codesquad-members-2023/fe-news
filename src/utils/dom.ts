@@ -7,7 +7,7 @@ interface selectProps {
   parent?: HTMLElement;
 }
 
-interface getProps {
+interface getPropertyProps {
   target: HTMLElement | null;
   name: string;
 }
@@ -36,7 +36,7 @@ export function select({ selector, parent }: selectProps) {
     : document.querySelector(selector);
 }
 
-export function get({ target, name }: getProps) {
+export function getProperty({ target, name }: getPropertyProps) {
   if (!target?.hasAttribute(name)) return null;
   return target.getAttribute(name);
 }
@@ -56,7 +56,7 @@ export function addStyle({ target, style }: addStyleProps) {
 export default {
   create,
   select,
-  get,
+  getProperty,
   add,
   addShadow,
   addStyle,

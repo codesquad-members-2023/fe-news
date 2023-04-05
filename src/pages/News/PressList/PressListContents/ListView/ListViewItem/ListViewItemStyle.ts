@@ -1,5 +1,5 @@
 import Style from '@components/Style/Style';
-import { get } from '@utils/dom';
+import { getProperty } from '@utils/dom';
 
 interface constructorProp {
   target: HTMLElement;
@@ -7,7 +7,7 @@ interface constructorProp {
 
 export class ListViewItemStyle extends Style {
   constructor({ target }: constructorProp) {
-    const image = get({ target, name: 'image' });
+    const image = getProperty({ target, name: 'image' });
     const content = `
     @import 'src/styles/index.css';
 
