@@ -1,20 +1,23 @@
+import { elementIs, createNode } from '../script/utils.js'
+
 class HeaderHandler {
-  #headerData
+  #header
 
   constructor() {
-    this.#setData()
+    this.#setHeader()
   }
 
-  #setData() {
-    this.#headerData = {
+  #setHeader() {
+    const app = elementIs('.app')
+
+    this.#header = createNode('ns-header')
+    this.#header.headerData = {
       icon: '../../asset/logo.svg',
       title: '뉴스스탠드',
       date: this.#getFormattedDate()
     }
-  }
 
-  getData() {
-    return this.#headerData
+    app.append(this.#header)
   }
 
   #getFormattedDate() {

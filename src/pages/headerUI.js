@@ -1,15 +1,11 @@
 import { createNode } from '../script/utils.js'
-import HeaderHandler from './header.js'
 
 class HeaderUI extends HTMLElement {
-  #headerData
   #container
+  headerData
 
   constructor() {
     super()
-
-    const handler = new HeaderHandler()
-    this.#headerData = handler.getData()
   }
 
   connectedCallback() {
@@ -24,12 +20,12 @@ class HeaderUI extends HTMLElement {
     const container = createNode('div')
 
     const icon = createNode('img')
-    icon.src = this.#headerData.icon
+    icon.src = this.headerData.icon
     icon.alt = 'logo'
     container.appendChild(icon)
 
     const title = createNode('span')
-    title.textContent = this.#headerData.title
+    title.textContent = this.headerData.title
     title.classList.add('display')
     container.appendChild(title)
 
@@ -41,7 +37,7 @@ class HeaderUI extends HTMLElement {
     container.classList.add('todayDate')
 
     const today = createNode('span')
-    today.textContent = this.#headerData.date
+    today.textContent = this.headerData.date
     today.classList.add('body-md')
     container.appendChild(today)
 
@@ -50,4 +46,3 @@ class HeaderUI extends HTMLElement {
 }
 
 customElements.define('ns-header', HeaderUI)
-export default HeaderUI
