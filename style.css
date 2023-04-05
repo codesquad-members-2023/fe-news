@@ -92,3 +92,7 @@ li {
   justify-content: center;
   align-items: center;
 }
+
+.news-list__image {
+  height: 20px;
+}
