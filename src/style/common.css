@@ -1,39 +1,39 @@
 .display {
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: auto;
 }
 
 .title-md {
-  font-weight: bold;
+  font-weight: 700;
   line-height: auto;
 }
 
 .title-sm {
   font-size: 0.85rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: auto;
 }
 
 .title-xs {
   font-size: 0.75rem;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 22px;
 }
 
 .body-md {
-  font-weight: medium;
+  font-weight: 500;
   line-height: 22px;
 }
 
 .body-sm {
   font-size: 0.85rem;
-  font-weight: medium;
+  font-weight: 500;
   line-height: auto;
 }
 
 .body-xs {
   font-size: 0.75rem;
-  font-weight: medium;
+  font-weight: 500;
   line-height: auto;
 }
