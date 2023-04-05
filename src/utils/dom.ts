@@ -4,55 +4,53 @@ interface createProps {
 
 interface selectProps {
   selector: string;
-  target?: HTMLElement;
+  parent?: HTMLElement;
 }
 
 interface getProps {
-  target: HTMLElement;
+  target: HTMLElement | null;
   name: string;
 }
 
 interface addProps {
-  target: HTMLElement;
+  target: HTMLElement | ShadowRoot | null;
   template: string;
 }
 
 interface addShadowProps {
-  target: HTMLElement;
+  target: HTMLElement | null;
 }
 
 interface addStyleProps {
-  target: HTMLElement;
+  target: HTMLElement | ShadowRoot | null;
   style: HTMLStyleElement;
 }
 
-function create({ tagName }: createProps) {
+export function create({ tagName }: createProps) {
   return document.createElement(tagName);
 }
 
-function select({ selector, target }: selectProps) {
-  return target
-    ? target.querySelector(selector)
+export function select({ selector, parent }: selectProps) {
+  return parent
+    ? parent.querySelector(selector)
     : document.querySelector(selector);
 }
 
-function get({ target, name }: getProps) {
-  if (!target.hasAttribute(name)) return null;
+export function get({ target, name }: getProps) {
+  if (!target?.hasAttribute(name)) return null;
   return target.getAttribute(name);
 }
 
-function add({ target, template }: addProps) {
-  if (!target.shadowRoot) return (target.innerHTML = template);
-  target.shadowRoot.innerHTML = template;
+export function add({ target, template }: addProps) {
+  if (target) target.innerHTML = template;
 }
 
-function addShadow({ target }: addShadowProps) {
-  return target.attachShadow({ mode: 'open' });
+export function addShadow({ target }: addShadowProps) {
+  if (target) return target.attachShadow({ mode: 'open' });
 }
 
-function addStyle({ target, style }: addStyleProps) {
-  if (!target.shadowRoot) target.append(style);
-  else target.shadowRoot.append(style);
+export function addStyle({ target, style }: addStyleProps) {
+  target?.append(style);
 }
 
 export default {

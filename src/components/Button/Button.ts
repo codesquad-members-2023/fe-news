@@ -1,5 +1,4 @@
-import style from './ButtonStyle';
-import dom from '@utils/dom';
+import { addShadow, get, add, addStyle } from '@utils/dom';
 import ButtonStyle from './ButtonStyle';
 
 interface Button {
@@ -9,14 +8,12 @@ interface Button {
 class Button extends HTMLElement {
   constructor() {
     super();
-    this.init();
+    this.render();
   }
 
-  init() {
-    const icon = dom.get({ target: this, name: 'icon' });
-    this.icon = icon;
+  render() {
+    const icon = get({ target: this, name: 'icon' });
     const text = this.innerText;
-    dom.addShadow({ target: this });
     const template = `
     <button class="typo-body-xs">
       ${
@@ -27,12 +24,16 @@ class Button extends HTMLElement {
       ${text}
     </button>
     `;
-    dom.add({
-      target: this,
+    addShadow({ target: this });
+    add({
+      target: this.shadowRoot,
       template,
     });
-    const style = new ButtonStyle().element;
-    dom.addStyle({ target: this, style });
+
+    addStyle({
+      target: this.shadowRoot,
+      style: new ButtonStyle({ target: this }).element,
+    });
   }
 }
 

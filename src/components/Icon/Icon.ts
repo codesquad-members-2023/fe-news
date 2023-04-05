@@ -1,4 +1,4 @@
-import dom from '@utils/dom';
+import { get, add, addStyle } from '@utils/dom';
 import { icons } from '@assets/icons/index';
 import IconStyle from './IconStyle';
 
@@ -13,34 +13,33 @@ interface replaceSvgStringAttributesProps {
 class Icon extends HTMLElement {
   constructor() {
     super();
-    this.init();
+    this.render();
   }
 
-  init() {
+  render() {
     this.attachShadow({ mode: 'open' });
-    const name = dom.get({ target: this, name: 'name' });
+    const name = get({ target: this, name: 'name' });
     if (name) this.setSvg({ name });
+    addStyle({ target: this, style: new IconStyle({ target: this }).element });
   }
 
   async setSvg({ name }: setSvgProps) {
     let svgString: string = icons[name];
     if (!svgString) return;
-    svgString = this.replaceSvgStringAttributes({ svgString });
+    svgString = this.replaceAttributes({ svgString });
     if (this.shadowRoot)
-      dom.add({
-        target: this.shadowRoot as unknown as HTMLElement,
+      add({
+        target: this.shadowRoot,
         template: svgString,
       });
-    const style = new IconStyle().element;
-    dom.addStyle({ target: this, style });
   }
 
-  replaceSvgStringAttributes({ svgString }: replaceSvgStringAttributesProps) {
+  replaceAttributes({ svgString }: replaceSvgStringAttributesProps) {
     const defaultSize = 24;
-    const size = dom.get({ target: this, name: 'size' });
-    const width = dom.get({ target: this, name: 'width' });
-    const height = dom.get({ target: this, name: 'height' });
-    const fill = dom.get({ target: this, name: 'fill' });
+    const size = get({ target: this, name: 'size' });
+    const width = get({ target: this, name: 'width' });
+    const height = get({ target: this, name: 'height' });
+    const fill = get({ target: this, name: 'fill' });
 
     let result = svgString
       .replace(/width=".*?"/g, `width="${width ?? size ?? defaultSize}"`)

@@ -1,11 +1,15 @@
 import Style from '@components/Style/Style';
 
+interface constructorProp {
+  target: HTMLElement;
+}
+
 export class ButtonStyle extends Style {
-  constructor() {
+  constructor({ target }: constructorProp) {
     const content = `
     @import 'src/styles/index.css';
 
-    :host {
+    button-element {
       display: inline-block;
     }
 
@@ -26,10 +30,7 @@ export class ButtonStyle extends Style {
       color: var(--gray200);
     }
 
-    button:hover {
-      cursor: pointer;
-      background: var(--offwhite);
-    }
+
     `;
 
     super({ content });
