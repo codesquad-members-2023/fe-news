@@ -12,18 +12,22 @@ export interface PressInfoInterface {
 export interface PressInterface {
   [key: string]: PressInfoInterface;
 }
+
+export type CategoryType = string;
 export interface SectionInterface {
   id: string;
   pressId: string;
-  lastEdited: string;
+  lastEdited: Date;
   articles: ArticleInterface[];
+  category: CategoryType;
 }
 export interface ArticleInterface {
-  id: { type: String; required: true };
+  id: string;
   title: string;
   img: string;
   link: string;
 }
+
 export interface UserInterface {
   id: string;
   subscribingPressIds: PressInterface[];
@@ -32,7 +36,8 @@ export interface UserInterface {
 const SectionShema = new Schema<SectionInterface>({
   id: { type: String, required: true },
   pressId: { type: String, required: true },
-  lastEdited: { type: String, required: true },
+  lastEdited: { type: Date, required: true },
+  category: { type: String, required: true },
   articles: [
     {
       id: { type: String, required: true },
