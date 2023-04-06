@@ -18,7 +18,7 @@ export class GridViewElementStyle extends Style {
 
     ul {
       display: flex;
-
+      align-items: center;
     }
 
     .tab {
@@ -30,12 +30,11 @@ export class GridViewElementStyle extends Style {
 
     }
 
-
-    .tab li {
+    .tab button {
       color: var(--gray200);
     }
 
-    .tab li.is-active {
+    .tab button.is-active {
       color: var(--black);
     }
     

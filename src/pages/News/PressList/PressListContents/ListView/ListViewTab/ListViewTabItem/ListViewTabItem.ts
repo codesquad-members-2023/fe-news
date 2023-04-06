@@ -21,7 +21,7 @@ class ListViewTabItem extends HTMLElement {
       }) ?? '';
 
     const template = `
-    <div class="tab-container typo-body-sm${isActive ? ' is-active' : ''}">
+    <button class="tab-container typo-body-sm${isActive ? ' is-active' : ''}">
       <span>${name}</span>
       ${
         isActive
@@ -32,7 +32,7 @@ class ListViewTabItem extends HTMLElement {
           : ''
       }
       
-    </div>
+    </button>
     `;
     addShadow({ target: this });
     add({

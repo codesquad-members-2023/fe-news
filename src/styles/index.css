@@ -2,7 +2,3 @@
 @import './typography.css';
 @import './color.css';
 @import './global.css';
-
-button:hover {
-  cursor: pointer;
-}

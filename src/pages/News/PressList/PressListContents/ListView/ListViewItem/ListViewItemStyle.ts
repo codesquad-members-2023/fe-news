@@ -44,9 +44,8 @@ export class ListViewItemStyle extends Style {
       margin-bottom: 16px;
     }
 
-    li:hover {
+    .headliner > .title:hover, li:hover {
       text-decoration-line: underline;
-      cursor: pointer;
     }
 
     .articles-container > .caption {

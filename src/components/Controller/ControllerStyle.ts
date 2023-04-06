@@ -15,7 +15,6 @@ export class PressListStyle extends Style {
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: calc(100% - 160px);
       display: flex;
       justify-content: space-between;
       align-items: center;

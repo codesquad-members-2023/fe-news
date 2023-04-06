@@ -32,9 +32,11 @@ class PressListHeader extends HTMLElement {
       ${tab
         .map(
           (item) =>
-            `<li class="typo-body-md${
-              item.isActive ? ' is-active typo-title-md' : ''
-            }">${item.name}</li>`
+            `<li>
+              <button class="${
+                item.isActive ? ' is-active typo-title-md' : ' typo-body-md'
+              }">${item.name}</button>
+            </li>`
         )
         .join('')}
     </ul>
@@ -42,9 +44,13 @@ class PressListHeader extends HTMLElement {
     ${view
       .map(
         (item) =>
-          `<li><icon-element name="${item.name}" size="24"  fill="${
+          `<li>
+            <button>
+              <icon-element name="${item.name}" size="24"  fill="${
             item.isActive ? 'var(--primary)' : 'var(--gray100)'
-          }"></icon-element></li>`
+          }"></icon-element>
+            </button>
+          </li>`
       )
       .join('')}
     </ul>

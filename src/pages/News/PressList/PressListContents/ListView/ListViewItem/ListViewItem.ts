@@ -34,19 +34,19 @@ class ListViewItem extends HTMLElement {
     </div>
     <div class="contents">
       <div class="headliner">
-        <div class="image" ${
+        <button class="image" ${
           image
             ? `style="background-image: url(src/assets/images/headlines/${image}.png)"`
             : ''
-        }></div>
-        <div class="title typo-body-md">봇물처럼 터지는 공공요금 인상…꼭 지금이어야 하나</div>
+        }></button>
+        <div class="title typo-body-md"><a href="/">봇물처럼 터지는 공공요금 인상…꼭 지금이어야 하나</a></div>
       </div>
       <div class="articles-container">
         <ul>
         ${[...Array(6)]
           .map(
             () =>
-              `<li class="typo-body-md">[단독] 美복권 키오스크 "불법"인데…정부 방치에 '우후죽순'</li>`
+              `<li class="typo-body-md"><a href="/">[단독] 美복권 키오스크 "불법"인데…정부 방치에 '우후죽순'</a></li>`
           )
           .join('')}
         </ul>
