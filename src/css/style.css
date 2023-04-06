@@ -28,6 +28,13 @@ body {
   line-height: 2.2rem;
 }
 
+.main-content__header .press-tab {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.2rem;
+  color: #879298;
+}
+
 #app {
   margin: 0 3rem;
 }
@@ -36,8 +43,34 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px;
+  padding: 30px 0;
   border: 1px solid #000;
+}
+
+.main-content__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  border: 1px solid #000;
+}
+
+.main-content__header .press-tab,
+.main-content__header .show-tab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+.main-content__header .press-tab-btn,
+.main-content__header .show-tab img {
+  cursor: pointer;
+}
+.main-content__header .press-tab__all {
+  margin-right: 24px;
+}
+.main-content__header .show-tab__list {
+  margin-right: 14px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -12,3 +12,10 @@ body {
     @include fontType($body-MD);
   }
 }
+
+.main-content__header {
+  .press-tab {
+    @include fontType($body-MD);
+    color: $gray200;
+  }
+}
