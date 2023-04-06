@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { ArticleModel, SectionModel, PressModel } from './schemas';
+import { SectionModel } from './schemas';
 const uuid = require('uuid');
 
 dotenv.config();
@@ -17,38 +17,10 @@ const port = 3001;
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post('/press', async (req, res) => {
-  const id = uuid.v4();
-  try {
-    const result = await PressModel.create({
-      id,
-      ...req.body,
-    });
-    res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ message: 'error' });
-  }
-});
-
 app.post('/section', async (req, res) => {
   const id = uuid.v4();
   try {
     const result = await SectionModel.create({
-      id,
-      ...req.body,
-    });
-    res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ message: 'error' });
-  }
-});
-
-app.post('/article', async (req, res) => {
-  const id = uuid.v4();
-  try {
-    const result = await ArticleModel.create({
       id,
       ...req.body,
     });
