@@ -1,3 +1,12 @@
+import Header from './News/Header/Header';
+customElements.define('header-element', Header);
+
+import Headline from './News/Headline/Headline';
+customElements.define('headline-element', Headline);
+
+import HeadlineItem from './News/Headline/HeadlineItem/HeadlineItem';
+customElements.define('headline-item-element', HeadlineItem);
+
 import GridView from './News/PressList/PressListContents/GridView/GridView';
 customElements.define('grid-view-element', GridView);
 
