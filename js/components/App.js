@@ -1,5 +1,7 @@
-import Header from './view/header/header.js';
-import AutoRolling from './view/autoRolling/autoRolling.js';
+import Header from './Header.js';
+import AutoRolling from './AutoRolling.js';
+
+// 애플리케이션의 root 컴포넌트.
 
 const App = () => {
   const root = document.querySelector('#root');

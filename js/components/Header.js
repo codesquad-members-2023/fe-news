@@ -1,4 +1,5 @@
-import { createElement, createSVGElement } from '../../utils/dom.js';
+import { createElement, createSVGElement } from '../utils/dom.js';
+
 const createHeaderElement = () => {
   const $element = createElement('header', {
     id: 'header',

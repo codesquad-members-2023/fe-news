@@ -1,4 +1,5 @@
-import { createElement } from '../../utils/dom.js';
+import { createElement } from '../utils/dom.js';
+
 const createAutoRollingElement = () => {
   const $element = createElement('section', {
     id: 'auto-rolling',
