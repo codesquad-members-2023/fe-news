@@ -11,7 +11,7 @@ export const getTodayNotice = () => {
 
   const today = new Date();
   const year = today.getFullYear();
-  const month = ("" + today.getMonth()).padStart(2, "0");
+  const month = ("" + (today.getMonth() + 1)).padStart(2, "0");
   const date = ("" + today.getDate()).padStart(2, "0");
   const day = days[today.getDay()];
 
