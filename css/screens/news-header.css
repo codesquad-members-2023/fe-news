@@ -1,0 +1,21 @@
+.news-stand-header {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.header-left span {
+  margin-left: 8px;
+}
+
+.header-left {
+  display: flex;
+  align-items: flex-start;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}

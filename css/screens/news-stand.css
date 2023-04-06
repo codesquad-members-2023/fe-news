@@ -1,36 +1,9 @@
 .news-stand {
   width: 1280px;
-  height: 720px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 0 auto;
-}
-
-.news-stand-header {
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  align-items: center;
-}
-
-.header-left span {
-  margin-left: 8px;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-}
-
-.news-stand-headLine {
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  align-items: center;
 }
