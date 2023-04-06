@@ -3,3 +3,12 @@
 body {
   font-family: Pretendard, sans-serif;
 }
+
+.header {
+  &__logo {
+    @include fontType($display);
+  }
+  &__today {
+    @include fontType($body-MD);
+  }
+}
