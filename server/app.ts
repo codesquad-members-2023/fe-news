@@ -61,7 +61,6 @@ const getPressInfo = (pressId: string) => {
     try {
       const press: PressInfoInterface[] = await getPress();
       const result = press.filter((item: any) => item.pid === pressId);
-      console.log(result);
       resolve(result[0]);
     } catch (error) {
       reject({ message: error });

@@ -16,6 +16,7 @@ export class GridViewElementStyle extends Style {
       grid-template-columns: repeat(6, 1fr);
       border-top: 1px solid var(--gray100);
       border-left: 1px solid var(--gray100);
+      height: var(--presslist-conent-height);
     }
     
     `;

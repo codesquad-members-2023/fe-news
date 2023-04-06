@@ -12,7 +12,8 @@ export class GridViewElementStyle extends Style {
     @import 'src/styles/index.css';
 
     :host {
-
+      position: relative;
+      
     }
 
     

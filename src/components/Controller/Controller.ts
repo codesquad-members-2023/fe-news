@@ -1,11 +1,9 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import ListViewStyle from './PressListContentsStyle';
+import ListViewStyle from './ControllerStyle';
 
-interface PressListHeader {
-  icon?: string | null;
-}
+interface Controller {}
 
-class PressListHeader extends HTMLElement {
+class Controller extends HTMLElement {
   constructor() {
     super();
     this.render();
@@ -13,10 +11,10 @@ class PressListHeader extends HTMLElement {
 
   render() {
     const template = `
-    <grid-view-element></grid-view-element>
-    <list-view-element></list-view-element>
-    <controller-element></controller-element>
-    
+    <div class="controller">
+      <controller-item-element position="left"></controller-item-element>
+      <controller-item-element position="right"></controller-item-element>
+    </div>
     `;
 
     addShadow({ target: this });
@@ -31,4 +29,4 @@ class PressListHeader extends HTMLElement {
   }
 }
 
-export default PressListHeader;
+export default Controller;
