@@ -13,27 +13,28 @@ export class GridViewElementStyle extends Style {
 
     :host {
       display: flex;
-      padding: 0 16px;
-      gap: 16px;
-      width: 100%;
-      min-height: 49px;
-      height: auto;
-      background: var(--offwhite);
-      border: 1px solid var(--gray100);
-      align-items: center;
+      justify-content: space-between;
     }
 
-    .press {
-      flex-grow: 0;
+    ul {
+      display: flex;
+
+    }
+
+    .tab {
+      gap: 24px;
+    }
+
+
+    .tab li {
+      color: var(--gray200);
+    }
+
+    .tab li.is-active {
       color: var(--black);
-      white-space: nowrap;
     }
     
-    .title {
-      flex-grow: 1;
-      color: var(--gray500);
-      
-    }
+
     `;
 
     super({ content });

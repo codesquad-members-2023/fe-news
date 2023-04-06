@@ -143,3 +143,7 @@ span {
 span {
   display: inline-block;
 }
+
+li {
+  list-style-type: none;
+}

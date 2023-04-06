@@ -24,3 +24,6 @@ customElements.define('list-view-tab-element', ListViewTab);
 
 import ListViewTabItem from './News/PressList/PressListContents/ListView/ListViewTab/ListViewTabItem/ListViewTabItem';
 customElements.define('list-view-tab-item-element', ListViewTabItem);
+
+import PressListHeader from './News/PressList/PressListHeader/PressListHeader';
+customElements.define('presslist-header-element', PressListHeader);
