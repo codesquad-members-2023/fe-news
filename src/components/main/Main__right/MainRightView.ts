@@ -1,7 +1,7 @@
 import { State } from '@utils/types';
 import { View } from '@utils/interfaces';
 
-export class MainView implements View {
+export class MainRightView implements View {
   private _template: string;
   private _templateElement: HTMLTemplateElement;
   private _element: HTMLElement;
@@ -13,7 +13,7 @@ export class MainView implements View {
   }
 
   private setTemplate(state: State) {
-    this._template = `<main class="h-4/6 bg-green-100 border border-green-500 flex flex-row justify-end"></main>`;
+    this._template = `<main class="h-full bg-yellow-100 border border-yellow-500 flex-initial order-last basis-1/3 text-3xl text-gray-500 text-center">${state.title}</main>`;
   }
 
   render(state: State) {

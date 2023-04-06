@@ -2,6 +2,7 @@ import { Props, State } from '@utils/types';
 import { Component } from '@utils/interfaces';
 import { MainModel } from '@components/main/MainModel.js';
 import { MainView } from '@components/main/MainView.js';
+import { MainRightComponent } from '@components/main/Main__right/MainRightComponent.js';
 
 export class MainComponent implements Component {
   private _model: MainModel;
@@ -12,6 +13,9 @@ export class MainComponent implements Component {
 
     const state = {};
     this.setState(state);
+
+    const mainRight = new MainRightComponent();
+    this.element.appendChild(mainRight.element);
   }
 
   setState(state: State) {

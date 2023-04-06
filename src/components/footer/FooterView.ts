@@ -13,7 +13,7 @@ export class FooterView implements View {
   }
 
   private setTemplate(state: State) {
-    this._template = `<footer class="h-1/6 bg-amber-100 border border-blue-500 text-3xl text-gray-500 text-center">${state.title}</footer>`;
+    this._template = `<footer class="h-1/6 bg-amber-100 border border-yellow-500 text-3xl text-gray-500 text-center">${state.title}</footer>`;
   }
 
   render(state: State) {
