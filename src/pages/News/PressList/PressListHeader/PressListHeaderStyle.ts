@@ -24,6 +24,11 @@ export class GridViewElementStyle extends Style {
     .tab {
       gap: 24px;
     }
+    
+    .view {
+      gap: 8px;
+
+    }
 
 
     .tab li {
@@ -34,6 +39,7 @@ export class GridViewElementStyle extends Style {
       color: var(--black);
     }
     
+
 
     `;
 
