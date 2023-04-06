@@ -11,10 +11,10 @@ class Controller extends HTMLElement {
 
   render() {
     const template = `
-    <div class="controller">
+    
       <controller-item-element position="left"></controller-item-element>
       <controller-item-element position="right"></controller-item-element>
-    </div>
+
     `;
 
     addShadow({ target: this });

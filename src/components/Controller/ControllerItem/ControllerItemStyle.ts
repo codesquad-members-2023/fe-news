@@ -17,6 +17,9 @@ export class PressListStyle extends Style {
       display: flex;
       align-items: center;
       height: 100%;
+      position: absolute;
+      top:0;
+      ${position === 'right' ? 'right: -72px' : 'left: -72px'}
     }
 
     :host(:hover) {
@@ -27,6 +30,7 @@ export class PressListStyle extends Style {
       width: 40px;
       height: 24px;
       transform: rotate(${rotate}deg);
+      
     }
 
     .controller::before,
