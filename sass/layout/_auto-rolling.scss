@@ -20,12 +20,28 @@
 
   background: $off-white;
   .auto__media {
+    width: 49px;
     margin-right: 16px;
     font-weight: 700;
     color: $black;
   }
-  .auto__content {
-    font-weight: 500;
-    color: $gray500;
+}
+
+.auto__viewport {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  font-weight: 500;
+  min-width: 80%;
+  color: $gray500;
+  .auto__camera {
+    width: auto;
+    will-change: transform;
+    transform: translate3d(0px, 0px, 0px);
+  }
+  .auto__panel {
+    width: auto;
+    position: absolute;
+    top: 0px;
   }
 }

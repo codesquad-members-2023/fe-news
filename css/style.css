@@ -12,7 +12,8 @@ body {
 
 a {
   text-decoration: none;
-  color: inherit; }
+  color: inherit;
+  cursor: pointer; }
 
 ul {
   padding: 0;
@@ -78,9 +79,23 @@ body {
   font-size: 14px;
   background: #f5f7f9; }
   .auto__box .auto__media {
+    width: 49px;
     margin-right: 16px;
     font-weight: 700;
     color: #14212b; }
-  .auto__box .auto__content {
-    font-weight: 500;
-    color: #4b5966; }
+
+.auto__viewport {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  font-weight: 500;
+  min-width: 80%;
+  color: #4b5966; }
+  .auto__viewport .auto__camera {
+    width: auto;
+    will-change: transform;
+    transform: translate3d(0px, 0px, 0px); }
+  .auto__viewport .auto__panel {
+    width: auto;
+    position: absolute;
+    top: 0px; }
