@@ -1,5 +1,5 @@
 import Header from './header.js';
-import AutoRolling from './AutoRolling/autoRolling.js';
+import AutoRolling from './autoRolling/autoRolling.js';
 
 // 애플리케이션의 root 컴포넌트.
 

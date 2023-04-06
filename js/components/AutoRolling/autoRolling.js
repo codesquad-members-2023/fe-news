@@ -1,6 +1,7 @@
 import { createElement } from '../../utils/dom.js';
 import { subscribe } from '../../store/store.js';
 import { fetchActionCreator } from '../../actions/actions.js';
+import { autoRollingFrame } from './autoRollingAnimaiton.js';
 
 const createAutoRollingElement = () => {
   const $element = createElement('section', {
@@ -51,25 +52,13 @@ const updateRollingContent = ($element, content) => {
       $rolling.lastChild.querySelector('.auto__panel');
     $rightRollingElement.textContent = content.rightRollingData[0];
 
+    const obj = {
+      startTime: null,
+      element: $element,
+      content: content,
+    };
+    window.requestAnimationFrame(autoRollingFrame.bind(null, obj));
     // animation 코드. 다른곳으로 옮겨야함.
-    $rolling.lastChild
-      .querySelector('.auto__camera')
-      .addEventListener('click', (e) => {
-        const $child = createElement('div', {
-          class: 'auto__panel',
-          style: 'top: 16px',
-        });
-        $child.textContent = content.rightRollingData[1];
-        e.currentTarget.appendChild($child);
-        e.currentTarget.style.transition = 'transform 0.8s';
-        e.currentTarget.style.transform = 'translate3d(0px, -16px, 0px)';
-        const $lastChild = $rolling.lastChild.querySelector('.auto__camera');
-        $lastChild.ontransitionend = (e) => {
-          e.target.removeAttribute('style');
-          e.target.lastChild.removeAttribute('style');
-          e.target.removeChild(e.target.children[0]);
-        };
-      });
   }
 };
 
@@ -77,6 +66,7 @@ const AutoRolling = () => {
   const $element = createAutoRollingElement();
   subscribe('autoData', updateRollingContent.bind(null, $element));
   fetchActionCreator.fetchAutoData();
+
   return $element;
 };
 
