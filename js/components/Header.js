@@ -6,6 +6,11 @@ const createHeaderElement = () => {
   });
   const $leftElement = createLeftElement();
   const $rightElement = createRightElement();
+
+  $leftElement.addEventListener('click', () => {
+    window.location.reload();
+  });
+
   $element.append($leftElement, $rightElement);
   return $element;
 };

@@ -1,5 +1,5 @@
-import { fetchAutoRollingData } from '../api/Request.js';
-import * as actionTypes from './ActionTypes.js';
+import { fetchAutoRollingData } from '../api/request.js';
+import * as actionTypes from './actionTypes.js';
 import { dispatch } from '../store/store.js';
 
 // Action 생성자 함수.

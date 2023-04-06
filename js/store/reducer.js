@@ -1,4 +1,4 @@
-import { fetchActions } from '../actions/ActionTypes.js';
+import { fetchActions } from '../actions/actionTypes.js';
 
 export const autoDataReducer = (state, action) => {
   switch (action.type) {
@@ -12,7 +12,8 @@ export const autoDataReducer = (state, action) => {
       return {
         ...state,
         loading: false,
-        data: action.payload,
+        leftRollingData: action.payload.leftRollingData,
+        rightRollingData: action.payload.rightRollingData,
       };
     default:
       return state;
@@ -22,6 +23,15 @@ export const autoDataReducer = (state, action) => {
 export const mediaDataReducer = (state, action) => {
   switch (action.type) {
     case fetchActions.FETCH_MEDIA_DATA_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
     case fetchActions.FETCH_MEDIA_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
   }
 };
