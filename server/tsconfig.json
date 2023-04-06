@@ -26,10 +26,6 @@
 
     /* Modules */
 
-    "module": "es2020",
-
-    // "rootDir": "./",                                  /* Specify the root folder within your source files. */
-    "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],

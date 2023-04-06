@@ -1,11 +1,11 @@
-import express from 'express';
+import express, { Response } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { SectionModel, PressInfoInterface } from './schemas';
+import { SectionModel, PressInfoInterface } from './schemas/index';
 const uuid = require('uuid');
-const fs = require('fs');
+import fs from 'fs/promises';
 
 dotenv.config();
 mongoose.set('strictQuery', false);
@@ -38,50 +38,73 @@ app.post('/section', async (req, res) => {
   }
 });
 
-const getPressInfo = async (pressId: string) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile('./mock/press.json', 'utf8', (err: Error, data: any) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      const press: PressInfoInterface[] = JSON.parse(data);
-      const result = press.filter((item) => item.pid === pressId);
-
-      resolve(result[0]);
-    });
-  });
-};
-
-app.get('/rolling-news', async (req, res) => {
+app.get('/press', async (req, res) => {
   try {
-    fs.readFile('./mock/rollingnews.json', 'utf8', (err: Error, data: any) => {
-      if (err) {
-        throw Error(err.message);
-      }
-      const news: PressInfoInterface[] = JSON.parse(data);
-      res.status(200).json(news);
-    });
+    const press = await getPress();
+    res.status(200).json(press);
   } catch (error) {
     res.status(400).json({ message: error });
   }
 });
 
+const getPress = async () => {
+  try {
+    const data = await fs.readFile('./mock/press.json', 'utf8');
+    const press = JSON.parse(data) as PressInfoInterface[];
+    return press;
+  } catch (error) {
+    throw error;
+  }
+};
+const getPressInfo = (pressId: string) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const press: PressInfoInterface[] = await getPress();
+      const result = press.filter((item: any) => item.pid === pressId);
+      console.log(result);
+      resolve(result[0]);
+    } catch (error) {
+      reject({ message: error });
+    }
+  });
+};
+
+app.get('/rolling-news', async (req, res) => {
+  try {
+    const data = await fs.readFile('./mock/rollingnews.json', 'utf8');
+    const news: PressInfoInterface[] = JSON.parse(data);
+    res.status(200).json(news);
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
+interface SectionInfoInterface {
+  id: string;
+  name: string;
+  order: number;
+  pressId: string;
+  updatedAt?: Date;
+  createdAt?: Date;
+  press?: PressInfoInterface;
+}
+
 app.get('/section', async (req, res) => {
   const { pressId } = req.query;
   try {
-    Promise.all([
-      await getPressInfo(pressId as string),
-      await SectionModel.find({ pressId: pressId as string }),
-    ]).then((values) => {
-      const press: any = values[0];
-      const section: any = values[1][0];
-      const result = section.toObject();
-      result.press = press;
-      res.status(200).json({ result });
-    });
+    const [press, section] = await Promise.all([
+      getPressInfo(String(pressId)),
+      SectionModel.findOne({ pressId }),
+    ]);
+    if (section) {
+      const data = section.toObject() as unknown extends SectionInfoInterface
+        ? SectionInfoInterface
+        : { press: unknown };
+      data.press = press;
+      res.status(200).json(data);
+    }
+    res.status(404).json({ message: '섹션을 찾을 수 없습니다.' });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ message: error });
   }
 });

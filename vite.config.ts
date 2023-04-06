@@ -1,11 +1,8 @@
 import { defineConfig } from 'vite';
 import path from 'path';
 
-// export default {
-//   alias: {
-//     '@utils': path.resolve(__dirname, './path/to/utils'),
-//   },
-// };
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default defineConfig({
   build: {
