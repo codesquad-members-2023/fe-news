@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.newsstand {
+  display: grid;
+  padding: 20%;
+}
+
+/*
+header 영역
+*/
+
+.newsstand-header {
+  display: flex;
+}
+
+.header-title {
+  flex: 1 1;
+}
+
+/*
+main 영역
+*/
+
+.main__header {
+  display: flex;
+  padding: 3% 0;
+  gap: 2%;
+}
+
+.main__btn.subscribed-data {
+  flex: 1 1;
+}
+
+.view__container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border: 1px solid #D2DAE0;
+  position: relative;
+}
+
+.view__container > .view__item {
+  padding: 25% 0;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #D2DAE0;
+}
+
+.view__item > img {
+  height: 20px;
+  line-height: 16px;
+}
+
+.view-page-btn.right {
+  position: absolute;
+  top: 42%;
+  right: -10%;
+}
+
+.view-page-btn.left {
+  position: absolute;
+  top: 42%;
+  left: -10%;
+}
