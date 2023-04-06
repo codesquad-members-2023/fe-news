@@ -22,6 +22,8 @@ export class GridViewElementStyle extends Style {
       width: 100%;
       height: 100%;
       background-color: var(--white);
+      border-right: 1px solid var(--gray100);
+      border-bottom: 1px solid var(--gray100);
       position: relative;
     }
 

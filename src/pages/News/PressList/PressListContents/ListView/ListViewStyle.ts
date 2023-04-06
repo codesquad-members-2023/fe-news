@@ -14,7 +14,7 @@ export class GridViewElementStyle extends Style {
     .listview-container {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      border: 1px solid var(--gray100);
     }
     `;
 

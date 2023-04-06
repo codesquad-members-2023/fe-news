@@ -5,23 +5,25 @@ interface constructorProp {
   target: HTMLElement;
 }
 
-export class GridViewElementStyle extends Style {
+export class PressListStyle extends Style {
   constructor({ target }: constructorProp) {
     const press = getProperty({ target, name: 'press' });
     const content = `
     @import 'src/styles/index.css';
 
-    .press-container {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      border-top: 1px solid var(--gray100);
-      border-left: 1px solid var(--gray100);
+    :host {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
+
     
+    
+
     `;
 
     super({ content });
   }
 }
 
-export default GridViewElementStyle;
+export default PressListStyle;

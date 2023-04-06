@@ -14,6 +14,7 @@ export class ListViewItemStyle extends Style {
       height: 40px;
       display: flex;
       background-color: var(--offwhite);
+      border-bottom: 1px solid var(--gray100);
     }
 
 

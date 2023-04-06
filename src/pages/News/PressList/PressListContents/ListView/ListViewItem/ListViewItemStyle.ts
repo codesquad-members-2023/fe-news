@@ -11,7 +11,7 @@ export class ListViewItemStyle extends Style {
     @import 'src/styles/index.css';
     
     :host {
-      padding: 0 24px;
+      padding: 24px;
     }
 
     .header {
