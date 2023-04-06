@@ -1,0 +1,27 @@
+.newsstand_header {
+  display: flex;
+  justify-content: space-between;
+
+  .newsstand_header_title {
+    display: flex;
+    width: 160px;
+
+    .header_title_logo {
+      width: 24px;
+      height: 20px;
+      margin-top: 5px;
+    }
+
+    .header_title_text {
+      margin-left: 6px;
+      @include font($Display, $Bold);
+    }
+  }
+
+  .newsstand_header_date {
+    margin-top: 3px;
+    color: $gray500;
+    @include font($Body_md, $Medium);
+    line-height: 3.2rem;
+  }
+}
