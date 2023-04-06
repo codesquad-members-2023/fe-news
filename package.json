@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:ts": "tsc --watch",
     "watch:tw": "npx tailwindcss -i ./src/styles/global.css -o ./dist/styles/output.css --watch",
+    "watch:tsa": "tsc-alias --watch",
     "watch": "npm-run-all -p watch:*"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
     "tailwindcss": "^3.3.1",
+    "tsc-alias": "^1.8.5",
     "typescript": "^5.0.3"
   }
 }

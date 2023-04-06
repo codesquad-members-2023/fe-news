@@ -1,7 +1,7 @@
 import { State } from '@utils/types';
 import { Model } from '@utils/interfaces';
 
-export class HeaderModel implements Model {
+export class MainModel implements Model {
   private _state: State;
   constructor() {
     this._state = {};
