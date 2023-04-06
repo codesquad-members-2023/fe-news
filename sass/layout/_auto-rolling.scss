@@ -16,18 +16,16 @@
 
   width: 461px;
   height: 49px;
+  font-size: 14px;
 
   background: $off-white;
   .auto__media {
+    margin-right: 16px;
     font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
     color: $black;
   }
   .auto__content {
     font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
     color: $gray500;
   }
 }

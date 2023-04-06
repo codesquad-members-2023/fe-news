@@ -64,6 +64,7 @@ body {
 
 #auto-rolling {
   display: flex;
+  width: 100%;
   flex-direction: row;
   justify-content: space-between; }
 
@@ -74,14 +75,12 @@ body {
   padding: 16px;
   width: 461px;
   height: 49px;
+  font-size: 14px;
   background: #f5f7f9; }
   .auto__box .auto__media {
+    margin-right: 16px;
     font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
     color: #14212b; }
   .auto__box .auto__content {
     font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
     color: #4b5966; }
