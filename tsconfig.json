@@ -38,7 +38,7 @@
       "@utils/*": ["src/utils/*"],
       "@apis/*": ["src/apis/*"],
       "@services/*": ["src/services/*"],
-      "@types/*": ["src/types/*"],
+      "@types/*": ["server/schemas/"],
       "@store/*": ["src/store/*"],
       "@pages/*": ["src/pages/*"]
     },
