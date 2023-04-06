@@ -18,3 +18,7 @@
   order: 1;
   flex-grow: 1;
 }
+
+.headLine-column span:first-child {
+  margin-right: 3px;
+}

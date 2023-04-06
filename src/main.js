@@ -1,5 +1,5 @@
 import { headerEl } from "./components/header/headerView.js";
-import { getHeadLine } from "./api/getHeadLineData.js";
+import { headLineEl } from "./components/headLine/headLineView.js";
 
 // main 구성
 const mainTag = document.createElement("main");
@@ -10,7 +10,6 @@ document.body.appendChild(mainTag);
 mainTag.appendChild(headerEl);
 
 // headLine 구성
-getHeadLine("http://localhost:3000/headLineHot");
-getHeadLine("http://localhost:3000/headLine");
+mainTag.appendChild(headLineEl);
 
 // journal 구성
