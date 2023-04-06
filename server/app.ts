@@ -3,9 +3,9 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { SectionModel } from './schemas';
-import axios from 'axios';
+import { SectionModel, PressInfoInterface } from './schemas';
 const uuid = require('uuid');
+const fs = require('fs');
 
 dotenv.config();
 mongoose.set('strictQuery', false);
@@ -39,16 +39,33 @@ app.post('/section', async (req, res) => {
 });
 
 const getPressInfo = async (pressId: string) => {
-  const data = await axios.get(`http://localhost:3000/press/101`);
-  return data.data;
+  return new Promise((resolve, reject) => {
+    fs.readFile('./mock/press.json', 'utf8', (err: Error, data: any) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const press: PressInfoInterface[] = JSON.parse(data);
+      const result = press.filter((item) => item.pid === pressId);
+
+      resolve(result[0]);
+    });
+  });
 };
 
 app.get('/section', async (req, res) => {
   const { pressId } = req.query;
   try {
-    const data = await getPressInfo(pressId as string);
-    // const result = await SectionModel.find({ id });
-    res.status(200).json(data);
+    Promise.all([
+      await getPressInfo(pressId as string),
+      await SectionModel.find({ pressId: pressId as string }),
+    ]).then((values) => {
+      const press: any = values[0];
+      const section: any = values[1][0];
+      const result = section.toObject();
+      result.press = press;
+      res.status(200).json({ result });
+    });
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: error });
