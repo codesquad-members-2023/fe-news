@@ -53,6 +53,20 @@ const getPressInfo = async (pressId: string) => {
   });
 };
 
+app.get('/rolling-news', async (req, res) => {
+  try {
+    fs.readFile('./mock/rollingnews.json', 'utf8', (err: Error, data: any) => {
+      if (err) {
+        throw Error(err.message);
+      }
+      const news: PressInfoInterface[] = JSON.parse(data);
+      res.status(200).json(news);
+    });
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
 app.get('/section', async (req, res) => {
   const { pressId } = req.query;
   try {
