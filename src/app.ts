@@ -1,4 +1,4 @@
-import { HeaderComponent } from './src/components/header/HeaderComponent.js';
+import { HeaderComponent } from './components/header/HeaderComponent';
 
 class App {
   constructor(appRoot: HTMLElement) {

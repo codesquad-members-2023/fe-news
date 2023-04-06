@@ -1,4 +1,5 @@
-import { State, View } from '../../utils/types';
+import { State } from '../../utils/types';
+import { View } from '../../utils/interfaces';
 
 export class HeaderView implements View {
   private _template: string;

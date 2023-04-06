@@ -1,4 +1,5 @@
-import { State, Model } from '../../utils/types';
+import { State } from '../../utils/types';
+import { Model } from '../../utils/interfaces';
 
 export class HeaderModel implements Model {
   private _state: State;

@@ -1,4 +1,5 @@
-import { Props, State, Component } from '../../utils/types';
+import { Props, State } from '../../utils/types';
+import { Component } from '../../utils/interfaces';
 import { HeaderModel } from './HeaderModel.js';
 import { HeaderView } from './HeaderView.js';
 

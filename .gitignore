@@ -27,8 +27,6 @@ public
 # dist files
 dist
 
-
-
 # webstorm
 .idea
 .idea/*.xml
