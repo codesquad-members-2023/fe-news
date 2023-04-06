@@ -1,7 +1,8 @@
 export class Component {
   _state;
-  constructor(target) {
+  constructor(target, props) {
     this.target = target;
+    this.props = props;
     this.setUp();
     this.render();
     this.setEvent();
