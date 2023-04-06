@@ -13,7 +13,7 @@ export class HeaderView implements View {
   }
 
   private setTemplate(state: State) {
-    this._template = `<header>${state.title}</header>`;
+    this._template = `<header class="h-24 bg-amber-100 border border-blue-500 text-3xl text-gray-500 text-center">${state.title}</header>`;
   }
 
   render(state: State) {

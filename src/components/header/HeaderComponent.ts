@@ -12,7 +12,7 @@ export class HeaderComponent implements Component {
     this._view = new HeaderView();
     this._element = this._view.element;
 
-    const state = { title: '헤더입니다.' };
+    const state = { title: 'Header' };
     this.setState(state);
   }
 
