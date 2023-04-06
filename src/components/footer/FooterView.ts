@@ -1,7 +1,7 @@
 import { State } from '@utils/types';
 import { View } from '@utils/interfaces';
 
-export class MainView implements View {
+export class FooterView implements View {
   private _template: string;
   private _templateElement: HTMLTemplateElement;
   private _element: HTMLElement;
@@ -13,7 +13,7 @@ export class MainView implements View {
   }
 
   private setTemplate(state: State) {
-    this._template = `<main class="h-4/6 bg-green-100 border border-red-500"></main>`;
+    this._template = `<footer class="h-1/6 bg-amber-100 border border-blue-500 text-3xl text-gray-500 text-center">${state.title}</footer>`;
   }
 
   render(state: State) {
