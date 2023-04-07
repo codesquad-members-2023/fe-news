@@ -1,15 +1,15 @@
 import Header from './header.js';
 import AutoRolling from './autoRolling/autoRolling.js';
-
+import MainHeader from './main/mainHeader.js';
 // 애플리케이션의 root 컴포넌트.
 
 const App = () => {
   const root = document.querySelector('#root');
   const $header = Header();
   const $autoRolling = AutoRolling();
-
+  const $mainHeader = MainHeader();
   const documentFragment = new DocumentFragment();
-  documentFragment.append($header, $autoRolling);
+  documentFragment.append($header, $autoRolling, $mainHeader);
 
   root.appendChild(documentFragment);
 };
