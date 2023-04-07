@@ -1,5 +1,6 @@
 export default class HeaderMaker {
-  constructor() {
+  constructor({ headerElement }) {
+    this.headerElement = headerElement;
     this.template;
     this.date;
   }
@@ -13,8 +14,8 @@ export default class HeaderMaker {
   createHeader() {
     this.template = `<div class="newsstand_header">
     <span class="newsstand_header_title">
-      <img class="header_title_logo" src="/src/asset/headerIcon.svg" alt="newspaper" />
-      <span class="header_title_text">뉴스스탠드</span>
+      <img class="header_title_logo" src="${this.headerElement.logoImgSrc}" alt="${this.headerElement.imgAlt}" />
+      <span class="header_title_text">${this.headerElement.title}</span>
     </span>
     <span class="newsstand_header_date">${this.date}</span>
   </div>`;
