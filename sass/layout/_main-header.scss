@@ -1,0 +1,32 @@
+@import '../abstracts/variables';
+.main-header {
+  margin-top: 34.5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.main-header__media {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .main-header__all-media {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin-right: 24px;
+    color: $black;
+  }
+  .main-header__my-media {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    color: $gray200;
+  }
+}
+.main-header__buttons {
+  display: flex;
+  align-items: center;
+  .main-header__list-button {
+    margin-right: 14px;
+  }
+}

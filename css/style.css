@@ -11,30 +11,30 @@ body {
   box-sizing: border-box; }
 
 a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
   cursor: pointer; }
 
 ul {
-  padding: 0;
-  margin: 0; }
+  margin: 0;
+  padding: 0; }
 
 li {
   list-style: none; }
 
 button {
-  cursor: pointer;
   border: none;
-  background-color: inherit;
-  font: inherit; }
+  font: inherit;
+  cursor: pointer;
+  background-color: inherit; }
 
 html,
 body {
+  display: grid;
+  position: relative;
   width: 100%;
   height: 100%;
   margin: 0;
-  position: relative;
-  display: grid;
   place-items: center;
   min-height: 100vh; }
 
@@ -43,59 +43,87 @@ body {
 
 #header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
   margin-bottom: 40px; }
 
 .header__logo img {
   margin-right: 8px; }
 
 .header__logo span {
+  font-size: 24px;
   color: #14212b;
   font-weight: 700;
-  font-size: 24px;
   line-height: 29px; }
 
 .header__current-date {
+  font-size: 16px;
   color: #4b5966;
   font-weight: 500;
-  font-size: 16px;
   line-height: 22px; }
 
 #auto-rolling {
   display: flex;
+  justify-content: space-between;
   width: 100%;
-  flex-direction: row;
-  justify-content: space-between; }
+  flex-direction: row; }
 
 .auto__box {
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
-  padding: 16px;
   width: 461px;
   height: 49px;
+  padding: 16px;
+  background: #f5f7f9;
   font-size: 14px;
-  background: #f5f7f9; }
+  flex-direction: row; }
   .auto__box .auto__media {
     width: 49px;
-    margin-right: 16px;
+    color: #14212b;
     font-weight: 700;
-    color: #14212b; }
+    margin-right: 16px; }
 
 .auto__viewport {
-  position: relative;
   overflow: hidden;
+  position: relative;
   height: 100%;
+  color: #4b5966;
   font-weight: 500;
-  min-width: 80%;
-  color: #4b5966; }
+  min-width: 80%; }
   .auto__viewport .auto__camera {
     width: auto;
     will-change: transform;
     transform: translate3d(0px, 0px, 0px); }
   .auto__viewport .auto__panel {
-    width: auto;
     position: absolute;
-    top: 0px; }
+    top: 0px;
+    width: auto; }
+
+.main-header {
+  margin-top: 34.5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+
+.main-header__media {
+  display: flex;
+  flex-direction: row;
+  align-items: center; }
+  .main-header__media .main-header__all-media {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin-right: 24px;
+    color: #14212b; }
+  .main-header__media .main-header__my-media {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    color: #879298; }
+
+.main-header__buttons {
+  display: flex;
+  align-items: center; }
+  .main-header__buttons .main-header__list-button {
+    margin-right: 14px; }
