@@ -10,6 +10,7 @@ class HeaderUI extends HTMLElement {
 
   connectedCallback() {
     this.#container = createNode('div')
+    this.#container.classList.add('header-container')
     this.appendChild(this.#container)
 
     this.#createTitleSection()
