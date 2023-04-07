@@ -7,4 +7,8 @@ export const fetchActions = {
   FETCH_MEDIA_DATA_SUCCESS: 'FETCH_MEDIA_DATA_SUCCESS',
 };
 
+export const autoRollingActions = {
+  START_AUTO_ROLLING: 'START_AUTO_ROLLING',
+};
+
 export const displayActions = {};

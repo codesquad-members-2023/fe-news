@@ -1,4 +1,4 @@
-import { fetchActions } from '../actions/actionTypes.js';
+import { fetchActions, autoRollingActions } from '../actions/actionTypes.js';
 
 export const autoDataReducer = (state, action) => {
   switch (action.type) {
@@ -14,6 +14,10 @@ export const autoDataReducer = (state, action) => {
         loading: false,
         leftRollingData: action.payload.leftRollingData,
         rightRollingData: action.payload.rightRollingData,
+      };
+    case autoRollingActions.START_AUTO_ROLLING:
+      return {
+        ...state,
       };
     default:
       return state;

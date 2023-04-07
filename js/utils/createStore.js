@@ -19,6 +19,7 @@ const createStore = (initialState = {}) => {
    * @param {*} domainReducer : 도메인 리듀서
    * @param {*} initialState : 도메인의 초기 상태.
    */
+
   const addDomain = (domain, domainReducer, initialState = {}) => {
     state[domain] = initialState;
     listeners[domain] = [];

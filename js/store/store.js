@@ -1,5 +1,5 @@
 import createStore from '../utils/createStore.js';
-import { autoDataReducer } from './reducer.js';
+import { autoDataReducer } from './dataReducer.js';
 
 const defaultAutoRollingData = {
   leftRollingData: [],

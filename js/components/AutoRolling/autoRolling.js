@@ -53,10 +53,14 @@ const updateRollingContent = ($element, content) => {
     $rightRollingElement.textContent = content.rightRollingData[0];
 
     const obj = {
-      startTime: null,
+      leftTime: null,
+      rightTime: null,
       element: $element,
       content: content,
+      leftIdx: 1,
+      rightIdx: 1,
     };
+
     window.requestAnimationFrame(autoRollingFrame.bind(null, obj));
     // animation 코드. 다른곳으로 옮겨야함.
   }

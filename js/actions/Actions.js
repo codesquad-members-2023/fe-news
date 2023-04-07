@@ -32,4 +32,11 @@ export const fetchActionCreator = {
     const response = await fetchAutoRollingData();
     dispatch(fetchActionCreator.fetchAutoDataSuccess(response.data));
   },
+
+  startActionCreator: () => {
+    return {
+      type: actionTypes.autoRollingActions.START_AUTO_ROLLING,
+      payload: null, // startTime null로 보내주기.
+    };
+  },
 };
