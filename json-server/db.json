@@ -1,0 +1,388 @@
+{
+  "logo": [
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/930.png",
+      "alt": "뉴스타파"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/214.png",
+      "alt": "MBC"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/005.png",
+      "alt": "국민일보"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2019/logo/011.png",
+      "alt": "서울경제"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/008.png",
+      "alt": "머니투데이"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/117.png",
+      "alt": "마이데일리"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/044.png",
+      "alt": "코리아헤럴드"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/038.png",
+      "alt": "한국일보"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/056.png",
+      "alt": "KBS"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/057.png",
+      "alt": "MBN"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/052.png",
+      "alt": "YTN"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/314.png",
+      "alt": "스포츠동아"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/327.png",
+      "alt": "뉴데일리"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/293.png",
+      "alt": "블로터"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2020/0708/nsd94830278.png",
+      "alt": "스포츠서울"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/243.png",
+      "alt": "이코노미스트"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/1116/nsd113848865.png",
+      "alt": "정책브리핑"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/440.png",
+      "alt": "티브이데일리"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/0418/nsd164755323.png",
+      "alt": "이코노믹리뷰"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/0823/nsd105911492.png",
+      "alt": "쿠키뉴스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/802.png",
+      "alt": "스포츠Q"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/447.png",
+      "alt": "뉴스엔"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/346.png",
+      "alt": "헬스조선"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/965.png",
+      "alt": "전기신문"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/277.png",
+      "alt": "아시아경제"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/014.png",
+      "alt": "파이낸셜뉴스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/330.png",
+      "alt": "중앙데일리"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/308.png",
+      "alt": "시사인"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2020/0903/nsd185255316.png",
+      "alt": "조선일보"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/020.png",
+      "alt": "동아일보"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/009.png",
+      "alt": "매일경제"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/031.png",
+      "alt": "아이뉴스24"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/030.png",
+      "alt": "전자신문"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/376.png",
+      "alt": "지지통신"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/016.png",
+      "alt": "헤럴드경제"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2023/0112/nsd92558162.png",
+      "alt": "일간스포츠"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/079.png",
+      "alt": "노컷뉴스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/032.png",
+      "alt": "경향신문"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/002.png",
+      "alt": "프레시안"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2020/0615/nsd10319824.png",
+      "alt": "한경잡앤조이"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/979.png",
+      "alt": "약사공론"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/991.png",
+      "alt": "데일리NK"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/932.png",
+      "alt": "CEO스코어데일리"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/1006/nsd205818702.png",
+      "alt": "뉴스클레임"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/988.png",
+      "alt": "이웃집과학자"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/1115/nsd153942530.png",
+      "alt": "대한경제"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2021/0211/nsd02321523.png",
+      "alt": "게임동아"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/040.png",
+      "alt": "코리아타임스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/215.png",
+      "alt": "한국경제TV"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/0208/nsd16121208.png",
+      "alt": "서울신문"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/904.png",
+      "alt": "JTBC"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/047.png",
+      "alt": "오마이뉴스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2021/0824/nsd115034872.png",
+      "alt": "중앙일보"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/139.png",
+      "alt": "스포탈코리아"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/422.png",
+      "alt": "연합뉴스TV"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/015.png",
+      "alt": "한국경제"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/366.png",
+      "alt": "조선비즈"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/326.png",
+      "alt": "KBS World"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/006.png",
+      "alt": "미디어오늘"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/021.png",
+      "alt": "석간 문화일보"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/018.png",
+      "alt": "이데일리"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/076.png",
+      "alt": "스포츠조선"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/0905/nsd131925414.png",
+      "alt": "지디넷코리아"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/0615/nsd7251644.png",
+      "alt": "이코노타임즈"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/905.png",
+      "alt": "더스쿠프"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/311.png",
+      "alt": "엑스포츠뉴스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/396.png",
+      "alt": "스포츠월드"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/969.png",
+      "alt": "매일노동뉴스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/961.png",
+      "alt": "메트로신문"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/956.png",
+      "alt": "철강금속신문"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/914.png",
+      "alt": "뉴스핌"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/941.png",
+      "alt": "초이스경제"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/022.png",
+      "alt": "세계일보"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/028.png",
+      "alt": "한겨레"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/055.png",
+      "alt": "SBS"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/368.png",
+      "alt": "데일리안"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/003.png",
+      "alt": "뉴시스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2020/0610/nsd151458769.png",
+      "alt": "OSEN"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/029.png",
+      "alt": "디지털타임스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2021/1112/nsd10248812.png",
+      "alt": "뉴스포스트"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/984.png",
+      "alt": "낚시춘추"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2021/1221/nsd15292271.png",
+      "alt": "M이코노미뉴스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/075.png",
+      "alt": "맥스무비"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/354.png",
+      "alt": "엘르"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2020/0928/nsd125033437.png",
+      "alt": "한경비즈니스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2022/0817/nsd14480190.png",
+      "alt": "월간노동법률"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/950.png",
+      "alt": "월간중앙"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/970.png",
+      "alt": "소비자가만드는신문"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/135.png",
+      "alt": "시사저널"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/361.png",
+      "alt": "채널예스"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/910.png",
+      "alt": "넥스트데일리"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/138.png",
+      "alt": "디지털데일리"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/up/2023/0213/nsd17943530.png",
+      "alt": "비즈워치"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/980.png",
+      "alt": "KBC광주방송"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/922.png",
+      "alt": "이투데이"
+    },
+    {
+      "imgSrc": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/120.png",
+      "alt": "EBN"
+    }
+  ]
+}
