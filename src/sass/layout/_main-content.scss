@@ -14,7 +14,7 @@
   .show-tab img {
     cursor: pointer;
   }
-  .press-tab__all {
+  .press-tab-btn:not(:last-child) {
     margin-right: 24px;
   }
   .show-tab__list {

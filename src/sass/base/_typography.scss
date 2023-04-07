@@ -2,6 +2,7 @@
 
 body {
   font-family: Pretendard, sans-serif;
+  color: $black;
 }
 
 .header {
@@ -18,5 +19,9 @@ body {
   .press-tab {
     @include fontType($body-MD);
     color: $gray200;
+    &-btn.active {
+      @include fontType($title-MD);
+      color: $black;
+    }
   }
 }

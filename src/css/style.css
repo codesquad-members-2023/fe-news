@@ -16,6 +16,7 @@ li {
 
 body {
   font-family: Pretendard, sans-serif;
+  color: #14212b;
 }
 
 .header__logo {
@@ -35,6 +36,12 @@ body {
   font-weight: 500;
   line-height: 2.2rem;
   color: #879298;
+}
+.main-content__header .press-tab-btn.active {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: #14212b;
 }
 
 #app {
@@ -68,7 +75,7 @@ body {
 .main-content__header .show-tab img {
   cursor: pointer;
 }
-.main-content__header .press-tab__all {
+.main-content__header .press-tab-btn:not(:last-child) {
   margin-right: 24px;
 }
 .main-content__header .show-tab__list {
