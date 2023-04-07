@@ -10,6 +10,12 @@
       display: flex;
       gap: 10px;
       @include font($Title_md, $Bold);
+      .all_press_show_button {
+        color: $black;
+      }
+      .subscribe_press_show_button {
+        color: $gray200;
+      }
     }
 
     .header_view_buttons {
