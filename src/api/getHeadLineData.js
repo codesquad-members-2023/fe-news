@@ -7,5 +7,5 @@ export const getHeadLine = (URL) => {
       const headLine = new HeadLine(jsonData);
       return headLine.makeHeadline();
     })
-    .catch((error) => console.log(`fetch 에러! ${error}`));
+    .catch((error) => console.error(`fetch 에러! ${error}`));
 };
