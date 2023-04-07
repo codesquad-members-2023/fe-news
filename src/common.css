@@ -42,14 +42,14 @@ main 영역
   position: relative;
 }
 
-.view__container > .view__item {
+.view__container > .item__container {
   padding: 25% 0;
   width: 100%;
   text-align: center;
   border: 1px solid #D2DAE0;
 }
 
-.view__item > img {
+.item__container > img {
   height: 20px;
   line-height: 16px;
 }

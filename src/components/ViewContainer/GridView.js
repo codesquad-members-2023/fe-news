@@ -1,4 +1,5 @@
 import { Component } from "../../core/Component.js";
+import { GridItem } from "./GridItem.js";
 // import { SubScribeBtn } from "./SubscribeBtn.js";
 
 export class GridView extends Component {
@@ -8,6 +9,12 @@ export class GridView extends Component {
   }
 
   templete() {
+    const itemContainers = Array.from(
+      { length: 24 },
+      (_, index) =>
+        `<div class="item__container" data-index-number="${index}"></div>`
+    );
+
     return `
       <div class="main__header">
         <div class="main__btn all-data">전체 언론사</div>
@@ -26,16 +33,7 @@ export class GridView extends Component {
             `,
           ""
         )}
-        ${this._state.press.reduce(
-          (acc, { logo_src }) =>
-            acc +
-            `
-              <div class="view__item">
-                <img src="${logo_src}" alt="" />
-              </div>
-            `,
-          ""
-        )}
+        ${itemContainers.join("")}
       </div>
     `;
   }
@@ -47,18 +45,19 @@ export class GridView extends Component {
         this.setState(this.getGridViewState(this._state, dir));
       }
     });
-
-    this.target.addEventListener("mouseover", ({ target }) => {
-      const item = target.closest(".view__item");
-      console.log(item);
-    });
   }
 
-  // mounted() {
-  //   const viewContainer = this.target.querySelector(".view__container");
-  //   console.log(viewContainer);
-  //   new SubScribeBtn(viewContainer, this._state);
-  // }
+  mounted() {
+    this._state.press.forEach(({ logo_src }, index) => {
+      const itemContainer = this.target.querySelector(
+        `[data-index-number="${index}"]`
+      );
+      new GridItem(itemContainer, {
+        pressIcon: logo_src,
+        subscribeBtn: "src/images/subscribe_btn.svg",
+      });
+    });
+  }
 
   getGridViewState(pressData, dir) {
     let { page, press, originalData, btnDir } = pressData;
