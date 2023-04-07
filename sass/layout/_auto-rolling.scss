@@ -2,46 +2,46 @@
 
 #auto-rolling {
   display: flex;
+  justify-content: space-between;
   width: 100%;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 .auto__box {
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
-
-  padding: 16px;
 
   width: 461px;
   height: 49px;
-  font-size: 14px;
+
+  padding: 16px;
 
   background: $off-white;
+  font-size: 14px;
+  flex-direction: row;
   .auto__media {
     width: 49px;
-    margin-right: 16px;
-    font-weight: 700;
     color: $black;
+    font-weight: 700;
+    margin-right: 16px;
   }
 }
 
 .auto__viewport {
-  position: relative;
   overflow: hidden;
+  position: relative;
   height: 100%;
+  color: $gray500;
   font-weight: 500;
   min-width: 80%;
-  color: $gray500;
   .auto__camera {
     width: auto;
     will-change: transform;
     transform: translate3d(0px, 0px, 0px);
   }
   .auto__panel {
-    width: auto;
     position: absolute;
     top: 0px;
+    width: auto;
   }
 }
