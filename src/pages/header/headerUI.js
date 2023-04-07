@@ -1,4 +1,4 @@
-import { createNode } from '../script/utils.js'
+import { createNode } from '../../script/utils.js'
 
 class HeaderUI extends HTMLElement {
   #container

@@ -1,7 +1,8 @@
-import './pages/headerUI.js'
-import HeaderHandler from './pages/header.js'
-import './pages/mainGridCellUI.js'
-import MainGrid from './pages/mainGrid.js'
+import './pages/header/headerUI.js'
+import HeaderHandler from './pages/header/header.js'
+import './pages/mainSection/mainGridCellUI.js'
+import './pages/mainSection/mainGridView.js'
+import MainView from './pages/mainSection/mainView.js'
 
 const header = new HeaderHandler()
-const mainGrid = new MainGrid()
+const mainView = new MainView()

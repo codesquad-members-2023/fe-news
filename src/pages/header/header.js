@@ -1,4 +1,4 @@
-import { elementIs, createNode } from '../script/utils.js'
+import { elementIs, createNode } from '../../script/utils.js'
 
 class HeaderHandler {
   #header

@@ -1,8 +1,8 @@
-import { createNode } from '../script/utils.js'
+import { createNode } from '../../script/utils.js'
 
 class MainGridCellUI extends HTMLElement {
   #container
-  mainGridBlockData
+  mainGridCellData
 
   constructor() {
     super()
@@ -13,8 +13,9 @@ class MainGridCellUI extends HTMLElement {
     this.appendChild(this.#container)
 
     const logo = createNode('img')
-    logo.src = this.mainGridBlockData.logoId
-    logo.alt = this.mainGridBlockData.name
+
+    logo.src = this.mainGridCellData.logoId
+    logo.alt = this.mainGridCellData.name
 
     this.#container.appendChild(logo)
   }
