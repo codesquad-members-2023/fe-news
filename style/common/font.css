@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'Pretendard';
+  font-size: 24px;
+  src: url('/font/Pretendard-Bold.woff') format("woff");
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-size: 16px;
+  src: url('/font/Pretendard-Bold.woff') format("woff");
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-size: 14px;
+  src: url('/font/Pretendard-Bold.woff') format("woff");
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-size: 12px;
+  src: url('/font/Pretendard-Bold.woff') format("woff");
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-size: 16px;
+  src: url('/font/Pretendard-Medium.woff') format("woff");
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-size: 14px;
+  src: url('/font/Pretendard-Medium.woff') format("woff");
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-size: 12px;
+  src: url('/font/Pretendard-Medium.woff') format("woff");
+}
+
+* {
+  font-family: "Pretendard", sans-serif;
+}
