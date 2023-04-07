@@ -21,8 +21,8 @@
 
 .journal-container {
   display: grid;
-  grid-template-columns: repeat(24, minmax(150px, auto));
-  grid-template-rows: repeat(4, minmax(95px, auto));
+  grid-template-columns: repeat(24, minmax(150px, 150px));
+  grid-template-rows: repeat(4, minmax(95px, 95px));
   grid-gap: 1px;
 }
 
@@ -31,4 +31,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.journal-item img {
+  width: 70%;
 }
