@@ -1,6 +1,5 @@
 import { Component } from "../../core/Component.js";
 import { GridItem } from "./GridItem.js";
-// import { SubScribeBtn } from "./SubscribeBtn.js";
 
 export class GridView extends Component {
   setUp() {
