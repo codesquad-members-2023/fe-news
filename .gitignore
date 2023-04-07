@@ -31,5 +31,4 @@ dist
 .idea/*.xml
 
 # compiled js files
-# server js file
-*.js
+src/**/*.js

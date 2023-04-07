@@ -16,6 +16,7 @@ export class MainComponent implements Component {
 
     const mainRight = new MainRightComponent();
     this.element.appendChild(mainRight.element);
+    mainRight.setState({ title: 123 });
   }
 
   setState(state: State) {
