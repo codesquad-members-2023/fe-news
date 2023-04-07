@@ -5,7 +5,6 @@ export const getJournal = (URL) => {
     .then((response) => response.json())
     .then((jsonData) => {
       const journal = new Journal(jsonData);
-      console.log(journal.makeJournal());
       return journal.makeJournal();
     })
     .catch((error) => console.error(`fetch 에러! ${error}`));

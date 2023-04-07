@@ -30,7 +30,6 @@ journalContainer.classList.add("journal-container");
 journalListEl.appendChild(journalContainer);
 
 getJournal(journalURL).then((journalItems) => {
-  console.log(journalItems);
   journalItems.forEach((item) => {
     journalContainer.appendChild(item);
   });
