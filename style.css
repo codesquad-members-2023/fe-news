@@ -1,0 +1,138 @@
+/* Color */
+/* Typography */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+a {
+  text-decoration: none;
+  color: inherit; }
+
+li {
+  list-style: none; }
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+  font: inherit; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 100vh; }
+
+.newsstand_container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 970px;
+  height: 630px;
+  padding: 20px;
+  border: 1px solid #4b5966; }
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
+  font-style: normal; }
+
+body {
+  font-family: 'Pretendard', sans-serif; }
+
+.newssection_view .newssection_view_grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  border-top: 1px solid #d2dae0;
+  border-left: 1px solid #d2dae0; }
+  .newssection_view .newssection_view_grid .grid_items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 155px;
+    height: 97px;
+    border-right: 1px solid #d2dae0;
+    border-bottom: 1px solid #d2dae0; }
+
+.newsstand_header {
+  display: flex;
+  justify-content: space-between; }
+  .newsstand_header .newsstand_header_title {
+    display: flex;
+    width: 160px; }
+    .newsstand_header .newsstand_header_title .header_title_logo {
+      width: 24px;
+      height: 20px;
+      margin-top: 5px; }
+    .newsstand_header .newsstand_header_title .header_title_text {
+      margin-left: 6px;
+      font-size: 2.4rem;
+      font-weight: 700; }
+  .newsstand_header .newsstand_header_date {
+    margin-top: 3px;
+    color: #4b5966;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 3.2rem; }
+
+.newsstand_headline_container {
+  display: flex; }
+  .newsstand_headline_container .newsstand_headline {
+    display: flex;
+    width: 461px;
+    padding: 16px;
+    border: 1px solid #d2dae0;
+    background-color: #f5f7f9; }
+    .newsstand_headline_container .newsstand_headline .headline_press {
+      width: 49px;
+      margin-right: 10px;
+      font-size: 1.4rem;
+      font-weight: 700; }
+    .newsstand_headline_container .newsstand_headline .headline_rolling_container {
+      overflow: hidden;
+      height: 17px; }
+      .newsstand_headline_container .newsstand_headline .headline_rolling_container .headline_rolling_news {
+        width: 300px;
+        height: calc(5 * 17px); }
+        .newsstand_headline_container .newsstand_headline .headline_rolling_container .headline_rolling_news > li {
+          height: 17px;
+          font-size: 1.4rem;
+          font-weight: 500;
+          line-height: 1.8rem; }
+  .newsstand_headline_container .left {
+    margin-right: 5px; }
+  .newsstand_headline_container .right {
+    margin-left: 5px; }
+
+.newsstand_newssection {
+  width: 930px; }
+  .newsstand_newssection .newsstand_newssection_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; }
+    .newsstand_newssection .newsstand_newssection_header .header_sort_buttons {
+      display: flex;
+      gap: 10px;
+      font-size: 1.6rem;
+      font-weight: 700; }
+      .newsstand_newssection .newsstand_newssection_header .header_sort_buttons .all_press_show_button {
+        color: #14212b; }
+      .newsstand_newssection .newsstand_newssection_header .header_sort_buttons .subscribe_press_show_button {
+        color: #879298; }
+    .newsstand_newssection .newsstand_newssection_header .header_view_buttons {
+      display: flex;
+      gap: 10px; }
+  .newsstand_newssection .newssection_slide_buttons {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 390px;
+    left: -30px;
+    width: 1030px; }
