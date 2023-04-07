@@ -23,10 +23,10 @@ export default class Header {
 
     return String.raw`
       <header id="header">
-        <div class="header__logo">
-          <img src="../../src/images/logo.svg"></img>
+        <a href="/" class="header__logo">
+          <img src="../../src/images/logo.svg">
           <span>뉴스스탠드</span>
-        </div>
+        </a>
         <div class="header__today">${getDateContent(today)}</div>
       </header>
     `;

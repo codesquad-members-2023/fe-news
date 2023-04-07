@@ -10,6 +10,7 @@ body {
   }
   &__today {
     @include fontType($body-MD);
+    color: $gray500;
   }
 }
 

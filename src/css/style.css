@@ -7,6 +7,7 @@
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 li {
@@ -26,6 +27,7 @@ body {
   font-size: 16px;
   font-weight: 500;
   line-height: 2.2rem;
+  color: #4b5966;
 }
 
 .main-content__header .press-tab {
@@ -36,7 +38,7 @@ body {
 }
 
 #app {
-  margin: 0 3rem;
+  margin: 0 10rem;
 }
 
 #header {
