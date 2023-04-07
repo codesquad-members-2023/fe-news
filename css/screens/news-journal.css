@@ -26,7 +26,7 @@
   grid-gap: 1px;
 }
 
-.jounal-item {
+.journal-item {
   box-shadow: 0 0 0 1px var(--gray100);
   display: flex;
   align-items: center;

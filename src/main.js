@@ -7,13 +7,5 @@ const mainTag = document.createElement("main");
 mainTag.classList.add("news-stand");
 document.body.appendChild(mainTag);
 
-// // header 구성
-// mainTag.appendChild(headerEl);
-
-// // headLine 구성
-// mainTag.appendChild(headLineEl);
-
-// // journal 구성
-// mainTag.appendChild(journalListEl);
-
+// main에 헤더. 헤드라인, 언론사 추가
 mainTag.append(headerEl, headLineEl, journalListEl);

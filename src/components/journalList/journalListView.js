@@ -27,5 +27,11 @@ journalListEl.innerHTML = journalHeader;
 // 언론사 리스트
 const journalContainer = document.createElement("div");
 journalContainer.classList.add("journal-container");
+journalListEl.appendChild(journalContainer);
 
-console.log(getJournal(journalURL));
+getJournal(journalURL).then((journalItems) => {
+  console.log(journalItems);
+  journalItems.forEach((item) => {
+    journalContainer.appendChild(item);
+  });
+});
