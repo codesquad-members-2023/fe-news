@@ -1,6 +1,6 @@
 import { createNode } from '../script/utils.js'
 
-class MainGridBlockUI extends HTMLElement {
+class MainGridCellUI extends HTMLElement {
   #container
   mainGridBlockData
 
@@ -20,4 +20,4 @@ class MainGridBlockUI extends HTMLElement {
   }
 }
 
-customElements.define('ns-main-grid-block', MainGridBlockUI)
+customElements.define('ns-main-grid-cell', MainGridCellUI)
