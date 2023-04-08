@@ -1,3 +1,13 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
+* {
+  font-family: Pretendard, sans-serif;
+}
+
+@mixin font($size,$weight) {
+  font-size: $size;
+  font-weight: $weight;
+}
+
 :root {
   --color-white-70: #ffffff, 70%;
   --color-white: #ffffff;

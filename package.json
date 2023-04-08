@@ -1,6 +1,7 @@
 {
   "name": "fe-news",
   "version": "1.0.0",
+  "type": "module",
   "description": "## 학습목표",
   "main": "index.js",
   "scripts": {
