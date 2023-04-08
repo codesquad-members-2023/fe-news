@@ -1,8 +1,6 @@
-import HeaderLogo from "./newsHeader/hederLogo.js";
-import HeaderDate from "./newsHeader/headerDate.js";
+import NewsHeader from "./newsHeader/newsHeader.js";
 const main = () => {
-  new HeaderLogo().init();
-  new HeaderDate().init();
+  new NewsHeader().init();
 };
 
 main();
