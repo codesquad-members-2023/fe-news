@@ -1,0 +1,47 @@
+main {
+  box-sizing: content-box;
+  margin: 0 auto;
+
+  .sort-buttons {
+    width: $containerWidth;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .press-buttons {
+      display: flex;
+      gap: 15px;
+      cursor: pointer;
+
+      .all-press {
+        @include font($titleMD, $bold);
+      }
+
+      .subscribed-press {
+        @include font($bodyMD, $medium);
+        color: $gray100;
+      }
+    }
+  }
+
+  .view-buttons {
+    @extend .press-buttons;
+
+    .view-list,
+    .view-grid {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .view-list {
+      background-image: url('/src/assets/icons/ListBtn.svg');
+    }
+
+    .view-grid {
+      background-image: url('/src/assets/icons/GridBtn.svg');
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.title-area {
+  width: $containerWidth;
+  height: 30px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .link-newsstand {
+    display: inline-block;
+    height: 30px;
+
+    @include font($display, $bold);
+    cursor: pointer;
+
+    &::before {
+      content: url('/src/assets/icons/Newsstand.svg');
+      padding-right: 5px;
+    }
+  }
+
+  .system-time {
+    @include font($bodyMD, $medium);
+    color: $gray500;
+  }
+}

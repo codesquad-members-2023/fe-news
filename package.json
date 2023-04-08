@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "## 학습계획서",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "json-server -p 3001 --watch db.json"
+    "server": "json-server -p 3001 --watch db.json",
+    "node-sass": "node-sass",
+    "sass": "node-sass sass/style.scss css/style.css -w"
   },
   "repository": {
     "type": "git",
@@ -18,6 +21,10 @@
   },
   "homepage": "https://github.com/bread1022/fe-news#readme",
   "dependencies": {
-    "json-server": "^0.17.3"
+    "json-server": "^0.17.3",
+    "node-sass": "^8.0.0",
+    "normalize.css": "^8.0.1",
+    "sass": "^1.60.0",
+    "styled-reset": "^4.4.5"
   }
 }

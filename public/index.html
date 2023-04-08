@@ -4,9 +4,90 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src="/src/js/app.js" defer></script>
+  <link rel="icon" href="/src/assets/icons/Newsstand.svg">
+  <link rel="stylesheet" href="/src/css//style.css">
   <title>New Stand</title>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <header class="title-area">
+      <a class="link-newsstand">${CONSTANTS['NEWS_STAND']}</a>
+      <span class="system-time">${systemTime}</span>
+    </header>
+    <section class="rolling-container">
+      <div class="rolling-box">
+        <a class="link-press">${ROLLING_LINK_PRESS}</a>
+        <ul class="flick-container">
+          <li class="filck-title">${titleLeft}</li>
+          <!-- <li class="filck-title">2</li>
+          <li class="filck-title">3</li>
+          <li class="filck-title">4</li>
+          <li class="filck-title">5</li> -->
+        </ul>
+      </div>
+      <div class="rolling-box">
+        <a class="link-press">${ROLLING_PRESS_TITLE}</a>
+        <ul class="flick-container">
+          <li class="filck-title">${titleRight}</li>
+          <!-- <li class="filck-title">7</li>
+          <li class="filck-title">8</li>
+          <li class="filck-title">9</li>
+          <li class="filck-title">10</li> -->
+        </ul>
+      </div>
+    </section>
+    <main>
+      <div class="sort-buttons">
+        <div class="press-buttons">
+          <a class="all-press">${CONSTANTS['ALL_PRESS']}</a>
+          <a class="subscribed-press">${CONSTANTS['SUBSCRIBED_PRESS']}</a>
+        </div>
+        <div class="view-buttons">
+          <a class="view-list"></a>
+          <a class="view-grid"></a>
+        </div>
+      </div>
+      <div class="view-container">
+        <div class="grid-container">
+          <ul class="grid-area">
+            <li><img src="https://s.pstatic.net/static/newsstand/2020/logo/light/0604/973.png"></li>
+            <li><img src="https://s.pstatic.net/static/newsstand/2020/logo/light/0604/973.png"></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img src="https://s.pstatic.net/static/newsstand/2020/logo/light/0604/973.png"></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img src="https://s.pstatic.net/static/newsstand/2020/logo/light/0604/973.png"></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img src="https://s.pstatic.net/static/newsstand/2020/logo/light/0604/973.png"></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+            <li><img></li>
+          </ul>
+        </div>
+        <!-- <div class="list-container">
+          <div class="prev-button"></div>
+          <div class="category-area"></div>
+          <div class="press-box"></div>
+          <div class="news-box"></div>
+          <div class="next-button"></div>
+        </div> -->
+        <a class="prev-button"></a>
+        <a class="next-button"></a>
+      </div>
+    </main>
+  </div>
 </body>
 </html>
