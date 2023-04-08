@@ -10,17 +10,13 @@ export class HeaderComponent implements Component {
     this._model = new HeaderModel();
     this._view = new HeaderView();
 
-    const state = { title: 'Header' };
-    this.setState(state);
+    const title = 'Header';
+    this.setState({ title });
   }
 
-  setState(state: State) {
+  private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
-  }
-
-  get state() {
-    return this._model.state;
   }
 
   get element() {

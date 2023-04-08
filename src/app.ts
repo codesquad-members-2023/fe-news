@@ -13,4 +13,4 @@ class App {
   }
 }
 
-const app = new App(document.querySelector('#app') as HTMLElement);
+const app = new App(document.querySelector('#root') as HTMLElement);

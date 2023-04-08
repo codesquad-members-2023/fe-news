@@ -1,17 +1,7 @@
-import { State } from '@utils/types';
-import { Model } from '@utils/interfaces';
+import { AbstractModel } from '@utils/abstracts.js';
 
-export class MainRightModel implements Model {
-  private _state: State;
+export class MainRightModel extends AbstractModel {
   constructor() {
-    this._state = {};
-  }
-
-  setState(newState: State) {
-    this._state = { ...this._state, ...newState };
-  }
-
-  get state() {
-    return this._state;
+    super();
   }
 }
