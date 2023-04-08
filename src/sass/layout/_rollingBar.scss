@@ -19,18 +19,29 @@
     background-color: $offwhite;
     border: 1px solid $gray100;
     gap: 15px;
-  }
 
-  .link-press {
-    @include font($titleSM, $bold);
-  }
+    .link-press {
+      @include font($titleSM, $bold);
+    }
 
-  .filck-title {
-    @include font($bodySM, $medium);
-    color: $gray500;
+    .flick-container {
+      height: 16px;
+      overflow: hidden;
 
-    &:hover{
-      text-decoration: underline $gray500;
+      .flick-panels {
+        height: 16px;
+        will-change: transform;
+
+        .flick-panel {
+          @include font($bodySM, $medium);
+          color: $gray500;
+
+          &:hover{
+            text-decoration: underline $gray500;
+            cursor: pointer;
+          }
+        }
+      }
     }
   }
 }

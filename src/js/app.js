@@ -8,7 +8,10 @@ const app = async() => {
   const root = document.querySelector("#root");
 
   root.append(header(CONSTANTS["NEWS_STAND"], systemTimeOption));
+  root.append(new RollingBar(CONSTANTS["ROLLING_LINK_PRESS"], 5000, 'left', 'right').init());
+
   // const [rollingData, mediaData] = await getAllData(API_URL['rolling'], API_URL['media']);
 }
+
 
 app();
