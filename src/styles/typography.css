@@ -1,0 +1,53 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css');
+
+.typo-display {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.typo-title-md {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.typo-title-sm {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.typo-title-xs {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.typo-body-md {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+.typo-body-sm {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.typo-body-xs {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+body {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--black);
+}

@@ -1,0 +1,8 @@
+:root {
+  --presslist-conent-height: 385px;
+}
+
+button:hover,
+a:hover {
+  cursor: pointer;
+}
