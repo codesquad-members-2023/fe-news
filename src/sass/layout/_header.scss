@@ -8,15 +8,15 @@
   align-items: center;
 
   .link-newsstand {
-    display: inline-block;
-    height: 30px;
-
     @include font($display, $bold);
     cursor: pointer;
 
     &::before {
-      content: url('/src/assets/icons/Newsstand.svg');
-      padding-right: 5px;
+      display: inline-block;
+      width: 30px;
+      height: 20px;
+      content: ' ';
+      background: icon(news, $icon-primary);
     }
   }
 

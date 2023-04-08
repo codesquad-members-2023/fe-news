@@ -38,11 +38,19 @@ main {
     }
 
     .view-list {
-      background-image: url('/src/assets/icons/ListBtn.svg');
+      background: icon(list, $icon-gray100);
+
+      &:hover {
+        background: icon(list, $icon-gray300);
+      }
     }
 
     .view-grid {
-      background-image: url('/src/assets/icons/GridBtn.svg');
+      background: icon(grid, $icon-gray100);
+
+      &:hover {
+        background: icon(grid, $icon-gray300);
+      }
     }
   }
 }
