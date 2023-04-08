@@ -10,17 +10,13 @@ export class MainRightComponent implements Component {
     this._model = new MainRightModel();
     this._view = new MainRightView();
 
-    const state = { title: 'MainRight' };
-    this.setState(state);
+    const title = 'MainRight';
+    this.setState({ title });
   }
 
-  setState(state: State) {
+  private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
-  }
-
-  get state() {
-    return this._model.state;
   }
 
   get element() {

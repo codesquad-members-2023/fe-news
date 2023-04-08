@@ -1,27 +1,19 @@
 import { State } from '@utils/types';
-import { View } from '@utils/interfaces';
+import { AbstractView } from '@utils/abstracts.js';
 
-export class MainRightView implements View {
-  private _template: string;
-  private _templateElement: HTMLTemplateElement;
-  private _element: HTMLElement;
+export class MainRightView extends AbstractView {
   constructor() {
-    this._template = `<div></div>`;
-    this._templateElement = document.createElement('template');
-    this._element = this._templateElement.content
-      .firstElementChild as HTMLElement;
+    super();
   }
 
-  private setTemplate(state: State) {
-    this._template = `<main class="h-full bg-yellow-100 border border-yellow-500 flex-initial order-last basis-1/3 text-3xl text-gray-500 text-center">${state.title}</main>`;
+  protected setTemplate() {
+    this._templateElement.innerHTML = `<section class="h-full bg-yellow-100 border border-yellow-500 flex-initial order-last basis-1/3 text-3xl text-gray-500 text-center"></section>`;
   }
 
   render(state: State) {
-    this.setTemplate(state);
-    this._templateElement.innerHTML = this._template;
-  }
-
-  get element() {
-    return this._templateElement.content.firstElementChild as HTMLElement;
+    const { title } = state;
+    if (typeof title === 'string') {
+      this.element.textContent = title;
+    }
   }
 }

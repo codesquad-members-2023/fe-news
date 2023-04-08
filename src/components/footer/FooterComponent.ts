@@ -10,17 +10,13 @@ export class FooterComponent implements Component {
     this._model = new FooterModel();
     this._view = new FooterView();
 
-    const state = { title: 'Footer' };
-    this.setState(state);
+    const title = 'Footer';
+    this.setState({ title });
   }
 
-  setState(state: State) {
+  private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
-  }
-
-  get state() {
-    return this._model.state;
   }
 
   get element() {
