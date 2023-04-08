@@ -22,4 +22,5 @@
 }
 .date_text {
   @include font(16px, 500);
+  color: var(--color-gray-500);
 }
