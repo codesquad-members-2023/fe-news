@@ -3,6 +3,7 @@ import { Component } from '@utils/interfaces';
 import { MainModel } from '@components/main/MainModel.js';
 import { MainView } from '@components/main/MainView.js';
 import { MainRightComponent } from '@components/main/Main__right/MainRightComponent.js';
+import { MainLeftComponent } from '@components/main/Main__left/MainLeftComponent.js';
 
 export class MainComponent implements Component {
   private _model: MainModel;
@@ -11,8 +12,14 @@ export class MainComponent implements Component {
     this._model = new MainModel();
     this._view = new MainView();
 
-    const mainRight = new MainRightComponent();
-    this.element.appendChild(mainRight.element);
+    const left = new MainLeftComponent();
+    const right = new MainRightComponent();
+    left.attachTo(this);
+    right.attachTo(this);
+  }
+
+  get element() {
+    return this._view.element;
   }
 
   setState(state: State) {
@@ -20,7 +27,7 @@ export class MainComponent implements Component {
     this._view.render(this._model.state);
   }
 
-  get element() {
-    return this._view.element;
+  attachTo(component: Component, position: InsertPosition = 'beforeend') {
+    component.element.insertAdjacentElement(position, this.element);
   }
 }

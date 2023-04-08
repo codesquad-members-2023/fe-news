@@ -1,17 +1,14 @@
 import { Props, State } from '@utils/types';
 import { Component } from '@utils/interfaces';
-import { HeaderModel } from '@components/header/HeaderModel.js';
-import { HeaderView } from '@components/header/HeaderView.js';
+import { MainLeftModel } from '@components/main/Main__left/MainLeftModel.js';
+import { MainLeftView } from '@components/main/Main__left/MainLeftView.js';
 
-export class HeaderComponent implements Component {
-  private _model: HeaderModel;
-  private _view: HeaderView;
+export class MainLeftComponent implements Component {
+  private _model: MainLeftModel;
+  private _view: MainLeftView;
   constructor(props?: Props) {
-    this._model = new HeaderModel();
-    this._view = new HeaderView();
-
-    const title = 'Header';
-    this.setState({ title });
+    this._model = new MainLeftModel();
+    this._view = new MainLeftView();
   }
 
   get element() {

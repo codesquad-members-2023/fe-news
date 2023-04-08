@@ -14,12 +14,16 @@ export class FooterComponent implements Component {
     this.setState({ title });
   }
 
+  get element() {
+    return this._view.element;
+  }
+
   private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
   }
 
-  get element() {
-    return this._view.element;
+  attachTo(component: Component, position: InsertPosition = 'beforeend') {
+    component.element.insertAdjacentElement(position, this.element);
   }
 }

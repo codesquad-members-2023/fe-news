@@ -5,10 +5,10 @@ import { FooterComponent } from '@components/footer/FooterComponent.js';
 class App {
   constructor(appRoot: HTMLElement) {
     const header = new HeaderComponent();
-    appRoot.appendChild(header.element);
     const main = new MainComponent();
-    appRoot.appendChild(main.element);
     const footer = new FooterComponent();
+    appRoot.appendChild(header.element);
+    appRoot.appendChild(main.element);
     appRoot.appendChild(footer.element);
   }
 }
