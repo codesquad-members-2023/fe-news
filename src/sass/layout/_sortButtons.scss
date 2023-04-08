@@ -4,7 +4,8 @@ main {
 
   .sort-buttons {
     width: $containerWidth;
-    height: 70px;
+    height: 50px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;

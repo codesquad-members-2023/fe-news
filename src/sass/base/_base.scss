@@ -9,10 +9,10 @@
   top: 15vh;
   width: 1280px;
   height: 720px;
-  padding: 50px 0 60px 0;
+  padding: 60px 0 70px 0;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid var(--black);
+  border: 1px solid $black;
 }
