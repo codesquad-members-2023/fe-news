@@ -8,6 +8,9 @@ export default class NewsStandView {
     this.rollingHeadlineLeft;
     this.rollingHeadlineRight;
     this.headlineAnimationStartTime = null;
+    this.headlineTransitionDuration = 1000;
+    this.headlineDelayDuration = 5000;
+    this.headlineLiWidth = 17;
     this.render();
   }
 
@@ -37,8 +40,8 @@ export default class NewsStandView {
 
   translateHeadline() {
     this.rollingHeadline.forEach((headline) => {
-      headline.style.transitionDuration = `1000ms`;
-      headline.style.transform = `translateY(-17px)`;
+      headline.style.transitionDuration = `${this.headlineTransitionDuration}ms`;
+      headline.style.transform = `translateY(-${this.headlineLiWidth}px)`;
       headline.ontransitionend = () => this.resortHeadlineNews(headline);
       this.headlineAnimationStartTime = null;
     });
@@ -49,7 +52,7 @@ export default class NewsStandView {
       if (!this.headlineAnimationStartTime) this.headlineAnimationStartTime = timestamp;
       const elapsedTime = timestamp - this.headlineAnimationStartTime;
 
-      if (elapsedTime >= 2000) {
+      if (elapsedTime >= this.headlineDelayDuration) {
         this.translateHeadline();
       }
 

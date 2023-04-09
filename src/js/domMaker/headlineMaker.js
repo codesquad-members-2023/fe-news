@@ -2,6 +2,7 @@ export default class HeadlineMaker {
   constructor({ headlineElement }, dataFetcher) {
     this.headlineElement = headlineElement;
     this.dataFetcher = dataFetcher;
+    this.headlineLiLength = 5;
     this.headlineData;
     this.template;
   }
@@ -22,7 +23,7 @@ export default class HeadlineMaker {
     let headlineRightLi = '';
 
     this.headlineData.forEach((data) => {
-      data.id < 6
+      data.id <= this.headlineLiLength
         ? (headlineLeftLi += `<li>${data.title}</li>`)
         : (headlineRightLi += `<li>${data.title}</li>`);
     });
