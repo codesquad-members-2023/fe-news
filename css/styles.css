@@ -3,6 +3,7 @@
 @import "common/root.css";
 
 /* COMPONENTS */
+@import "components/news-journal-carousel.css";
 
 /* SCREENS */
 @import "screens/news-stand.css";
