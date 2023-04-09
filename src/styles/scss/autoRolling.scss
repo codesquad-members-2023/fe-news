@@ -1,0 +1,24 @@
+.auto-rolling {
+  display: flex;
+  justify-content: space-between;
+}
+
+.rolling__container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 461px;
+  height: 49px;
+  background-color: $off-white;
+  border: 1px solid $gray100;
+}
+
+.media {
+  font-size: $title-sm;
+  font-weight: $bold;
+}
+.issue {
+  font-size: $title-sm;
+  font-weight: $medium;
+  color: $gray500;
+}
