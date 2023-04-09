@@ -1,0 +1,351 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: block;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+a {
+  background-color: transparent;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+img {
+  border-style: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0; /* 3 */
+  white-space: normal;
+}
+
+progress {
+  vertical-align: baseline;
+}
+
+textarea {
+  overflow: auto;
+}
+
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type=search] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
+
+template {
+  display: none;
+}
+
+[hidden] {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  position: relative;
+  top: 15vh;
+  width: 1280px;
+  height: 720px;
+  padding: 60px 0 70px 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #14212B;
+}
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.title-area {
+  width: 930px;
+  height: 30px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title-area .link-newsstand {
+  display: inline-block;
+  height: 30px;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.title-area .link-newsstand::before {
+  content: url("/src/assets/icons/Newsstand.svg");
+  padding-right: 5px;
+}
+.title-area .system-time {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4B5966;
+}
+
+.rolling-container {
+  width: 930px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.rolling-container .rolling-box {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  background-color: #F5F7F9;
+  border: 1px solid #D2DAE0;
+  gap: 15px;
+}
+.rolling-container .link-press {
+  font-size: 14px;
+  font-weight: 700;
+}
+.rolling-container .filck-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4B5966;
+}
+.rolling-container .filck-title:hover {
+  -webkit-text-decoration: underline #4B5966;
+          text-decoration: underline #4B5966;
+}
+
+main {
+  box-sizing: content-box;
+  margin: 0 auto;
+}
+main .sort-buttons {
+  width: 930px;
+  height: 50px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+main .sort-buttons .press-buttons, main .sort-buttons .view-buttons {
+  display: flex;
+  gap: 15px;
+  cursor: pointer;
+}
+main .sort-buttons .press-buttons .all-press, main .sort-buttons .view-buttons .all-press {
+  font-size: 16px;
+  font-weight: 700;
+}
+main .sort-buttons .press-buttons .subscribed-press, main .sort-buttons .view-buttons .subscribed-press {
+  font-size: 16px;
+  font-weight: 500;
+  color: #D2DAE0;
+}
+main .view-buttons .view-list,
+main .view-buttons .view-grid {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  cursor: pointer;
+}
+main .view-buttons .view-list {
+  background-image: url("/src/assets/icons/ListBtn.svg");
+}
+main .view-buttons .view-grid {
+  background-image: url("/src/assets/icons/GridBtn.svg");
+}
+
+.view-container {
+  position: relative;
+  width: 930px;
+  height: 390px;
+}
+.view-container .grid-container,
+.view-container .list-container,
+.view-container .grid-area {
+  width: inherit;
+  height: inherit;
+}
+.view-container .prev-button,
+.view-container .next-button {
+  position: absolute;
+  top: 174px;
+  display: inline-block;
+  width: 25px;
+  height: 40px;
+  cursor: pointer;
+}
+.view-container .prev-button {
+  left: -55px;
+  background-image: url("/src/assets/icons/LeftButton.svg");
+}
+.view-container .next-button {
+  right: -55px;
+  background-image: url("/src/assets/icons/RightButton.svg");
+}
+.view-container .grid-area {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 96.5px);
+  background-color: #D2DAE0;
+  border: 1px solid #D2DAE0;
+  grid-gap: 1px;
+  overflow-y: hidden;
+}
+.view-container .grid-area li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FFFFFF;
+}

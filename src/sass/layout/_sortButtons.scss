@@ -1,0 +1,56 @@
+main {
+  box-sizing: content-box;
+  margin: 0 auto;
+
+  .sort-buttons {
+    width: $containerWidth;
+    height: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .press-buttons {
+      display: flex;
+      gap: 15px;
+      cursor: pointer;
+
+      .all-press {
+        @include font($titleMD, $bold);
+      }
+
+      .subscribed-press {
+        @include font($bodyMD, $medium);
+        color: $gray100;
+      }
+    }
+  }
+
+  .view-buttons {
+    @extend .press-buttons;
+
+    .view-list,
+    .view-grid {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .view-list {
+      background: icon(list, $icon-gray100);
+
+      &:hover {
+        background: icon(list, $icon-gray300);
+      }
+    }
+
+    .view-grid {
+      background: icon(grid, $icon-gray100);
+
+      &:hover {
+        background: icon(grid, $icon-gray300);
+      }
+    }
+  }
+}

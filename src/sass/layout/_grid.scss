@@ -1,0 +1,53 @@
+.view-container {
+  position: relative;
+  width: $containerWidth;
+  height: 390px;
+
+  .list-container,
+  .grid-area {
+    width: $containerWidth;
+    height: 390px;
+  }
+
+  .prev-button,
+  .next-button {
+    position: absolute;
+    display: inline-block;
+    top: 174px;
+    width: 25px;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  .prev-button {
+    left: -55px;
+    background-image: url('/src/assets/icons/LeftButton.svg');
+  }
+
+  .next-button {
+    right: -55px;
+    background-image: url('/src/assets/icons/RightButton.svg');
+  }
+
+  .grid-container {
+    max-width: $containerWidth;
+
+    .grid-area {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      background-color: $gray100;
+      border: 1px solid $gray100;
+      grid-gap: 1px;
+      overflow-y: hidden;
+
+      li {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $white;
+      }
+    }
+  }
+}
