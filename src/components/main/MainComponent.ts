@@ -2,8 +2,8 @@ import { Props, State } from '@utils/types';
 import { Component } from '@utils/interfaces';
 import { MainModel } from '@components/main/MainModel.js';
 import { MainView } from '@components/main/MainView.js';
-import { MainRightComponent } from '@components/main/Main__right/MainRightComponent.js';
-import { MainLeftComponent } from '@components/main/Main__left/MainLeftComponent.js';
+import { MainRightComponent } from '@components/main/main__right/MainRightComponent.js';
+import { MainLeftComponent } from '@components/main/main__left/MainLeftComponent.js';
 
 export class MainComponent implements Component {
   private _model: MainModel;

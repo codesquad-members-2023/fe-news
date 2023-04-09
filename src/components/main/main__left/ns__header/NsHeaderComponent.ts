@@ -1,14 +1,14 @@
 import { Props, State } from '@utils/types';
 import { Component } from '@utils/interfaces';
-import { MainLeftModel } from '@components/main/Main__left/MainLeftModel.js';
-import { MainLeftView } from '@components/main/Main__left/MainLeftView.js';
+import { NsHeaderModel } from '@components/main/main__left/ns__header/NsHeaderModel.js';
+import { NsHeaderView } from '@components/main/main__left/ns__header/NsHeaderView.js';
 
-export class MainLeftComponent implements Component {
-  private _model: MainLeftModel;
-  private _view: MainLeftView;
+export class NsHeaderComponent implements Component {
+  private _model: NsHeaderModel;
+  private _view: NsHeaderView;
   constructor(props?: Props) {
-    this._model = new MainLeftModel();
-    this._view = new MainLeftView();
+    this._model = new NsHeaderModel();
+    this._view = new NsHeaderView();
   }
 
   get element() {
