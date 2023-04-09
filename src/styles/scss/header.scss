@@ -1,0 +1,14 @@
+.news__header {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    font-size: $display;
+    font-weight: $bold;
+    margin-left: 8px;
+  }
+  .date {
+    font-size: $title-md;
+    color: $gray500;
+  }
+}
