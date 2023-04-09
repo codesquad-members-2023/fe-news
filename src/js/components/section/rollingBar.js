@@ -15,7 +15,7 @@ class RollingBar {
 
   init() {
     this.rollingBar.innerHTML = this.template();
-    this.rollingHandler();
+    this.rollingPanelHandler();
     return this.rollingBar;
   }
 
@@ -35,7 +35,7 @@ class RollingBar {
     }, '');
   }
 
-  rollingHandler() {
+  rollingPanelHandler() {
     this.flickPanels = this.rollingBar.querySelector('.flick-panels');
     this.autoRollingPanel();
     this.addEventRollingBar();
