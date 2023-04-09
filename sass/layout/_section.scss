@@ -1,0 +1,36 @@
+.newsstand_newssection {
+  width: 930px;
+
+  .newsstand_newssection_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .header_sort_buttons {
+      display: flex;
+      gap: 10px;
+      @include font($Title_md, $Bold);
+      .all_press_show_button {
+        color: $black;
+      }
+      .subscribe_press_show_button {
+        color: $gray200;
+      }
+    }
+
+    .header_view_buttons {
+      display: flex;
+      gap: 10px;
+    }
+  }
+  .newssection_slide_buttons {
+    display: flex;
+    justify-content: space-between;
+
+    position: absolute;
+    top: 390px;
+    left: -30px;
+
+    width: 1030px;
+  }
+}

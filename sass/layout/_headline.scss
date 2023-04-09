@@ -1,0 +1,43 @@
+.newsstand_headline_container {
+  display: flex;
+
+  .newsstand_headline {
+    display: flex;
+    width: 461px;
+    padding: 16px;
+    border: 1px solid $gray100;
+    background-color: $off-white;
+
+    .headline_press {
+      width: 49px;
+      margin-right: 10px;
+      @include font($Title_sm, $Bold);
+    }
+
+    .headline_rolling_container {
+      overflow: hidden;
+      height: 17px;
+
+      .headline_rolling_news {
+        width: 300px;
+        height: calc(5 * 17px);
+
+        > li {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          height: 17px;
+          @include font($Title_sm, $Medium);
+          line-height: 1.8rem;
+        }
+      }
+    }
+  }
+  .left {
+    margin-right: 5px;
+  }
+
+  .right {
+    margin-left: 5px;
+  }
+}
