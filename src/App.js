@@ -37,9 +37,8 @@ export default class App extends Component {
     const newsStand = this.parentElement.querySelector(".news-stand");
     new Label(newsStand);
 
-    // 롤링바 나중에 하기
-    // const latestNews = this.parentElement.querySelector(".latest-news");
-    // new LatestNews(latestNews);
+    const latestNews = this.parentElement.querySelector(".latest-news");
+    new LatestNews(latestNews);
 
     const optionListContainer = this.parentElement.querySelector(
       ".option-list-container"

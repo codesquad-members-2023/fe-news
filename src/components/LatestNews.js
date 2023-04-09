@@ -1,21 +1,18 @@
 import Component from "../core/Component.js";
+import Bar from "./Bar.js";
 
 export default class LatestNews extends Component {
   template() {
-    const { headIdx, breakIdx, headNewses, breakNewses } = this.state;
-
     return `
-    <div class="latest-news__bar">
-    </div>
-          `;
+    <div class="latest-news__bar"></div>
+    <div class="latest-news__bar"></div>
+  `;
   }
 
   setup() {
     this.state = {
       headNewses: [],
       breakNewses: [],
-      headIdx: 0,
-      breakIdx: 0,
     };
   }
 
@@ -38,5 +35,13 @@ export default class LatestNews extends Component {
         breakNewses: breakData,
       });
     } catch (e) {}
+  }
+
+  renderChildComponents() {
+    const latestNewsBars =
+      this.parentElement.querySelectorAll(".latest-news__bar");
+    const { headNewses, breakNewses } = this.state;
+    new Bar(latestNewsBars[0], { newses: headNewses });
+    new Bar(latestNewsBars[1], { newses: breakNewses });
   }
 }
