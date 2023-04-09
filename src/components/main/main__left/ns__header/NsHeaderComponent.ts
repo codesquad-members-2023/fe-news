@@ -3,6 +3,7 @@ import { Component } from '@src/types/interfaces';
 import { NsHeaderModel } from '@components/main/main__left/ns__header/NsHeaderModel.js';
 import { NsHeaderView } from '@components/main/main__left/ns__header/NsHeaderView.js';
 import { NsTitleComponent } from '@components/main/main__left/ns__header/ns__title/NsTitleComponent.js';
+import { NsDateComponent } from '@components/main/main__left/ns__header/ns__date/NsDateComponent.js';
 
 export class NsHeaderComponent implements Component {
   private _model: NsHeaderModel;
@@ -12,7 +13,9 @@ export class NsHeaderComponent implements Component {
     this._view = new NsHeaderView();
 
     const nsTitle = new NsTitleComponent();
+    const nsDate = new NsDateComponent();
     nsTitle.attachTo(this);
+    nsDate.attachTo(this);
   }
 
   get element() {
