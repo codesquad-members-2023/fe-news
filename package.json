@@ -1,0 +1,7 @@
+{
+  "name": "newsstand",
+  "version": "1.0.0",
+  "scripts": {
+    "sass": "sass --watch --style expanded src/styles/scss/main.scss src/styles/style.css"
+  }
+}
