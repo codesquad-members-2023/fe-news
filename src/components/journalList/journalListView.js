@@ -33,7 +33,8 @@ journalContainer.classList.add("journal-container");
 journalCarousel.appendChild(journalContainer);
 
 getJournal(journalURL).then((journalItems) => {
-  journalItems.forEach((item) => {
+  const shuffledItems = journalItems.sort(() => 0.5 - Math.random());
+  shuffledItems.forEach((item) => {
     journalContainer.appendChild(item);
   });
 });
