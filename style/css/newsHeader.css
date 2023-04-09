@@ -1,0 +1,36 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css");
+* {
+  font-family: Pretendard, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.news__header {
+  display: flex;
+  width: 1000px;
+  padding-top: 50px;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.header__logo {
+  display: flex;
+}
+
+.logo_img {
+  padding-right: 5px;
+}
+
+.logo_text {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.date_text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-gray-500);
+}
