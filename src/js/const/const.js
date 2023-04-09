@@ -4,4 +4,10 @@ const headerElement = {
   title: '뉴스스탠드',
 };
 
-export { headerElement };
+const headlineElement = {
+  title: '연합뉴스',
+};
+
+const dataUrl = 'http://localhost:3001/';
+
+export { headerElement, headlineElement, dataUrl };

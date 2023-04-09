@@ -99,7 +99,7 @@ body {
       overflow: hidden;
       height: 17px; }
       .newsstand_headline_container .newsstand_headline .headline_rolling_container .headline_rolling_news {
-        width: 300px;
+        width: 350px;
         height: calc(5 * 17px); }
         .newsstand_headline_container .newsstand_headline .headline_rolling_container .headline_rolling_news > li {
           height: 17px;
