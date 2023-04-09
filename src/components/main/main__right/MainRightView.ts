@@ -1,5 +1,5 @@
-import { State } from '@utils/types';
-import { AbstractView } from '@utils/abstracts.js';
+import { State } from '@src/types/types';
+import { AbstractView } from '@src/types/abstracts.js';
 
 export class MainRightView extends AbstractView {
   constructor() {

@@ -1,5 +1,5 @@
-import { Props, State } from '@utils/types';
-import { Component } from '@utils/interfaces';
+import { Props, State } from '@src/types/types';
+import { Component } from '@src/types/interfaces';
 import { MainLeftModel } from '@components/main/main__left/MainLeftModel.js';
 import { MainLeftView } from '@components/main/main__left/MainLeftView.js';
 import { NsHeaderComponent } from '@components/main/main__left/ns__header/NsHeaderComponent.js';

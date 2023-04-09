@@ -1,5 +1,5 @@
-import { State } from '@utils/types';
-import { Model, View } from '@utils/interfaces';
+import { State } from '@src/types/types';
+import { Model, View } from '@src/types/interfaces';
 
 export abstract class AbstractModel implements Model {
   protected _state: State;
