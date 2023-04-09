@@ -1,0 +1,14 @@
+// 액션 타입 상수를 정의.
+
+export const fetchActions = {
+  FETCH_AUTO_DATA_REQUEST: 'FETCH_AUTO_DATA_REQUEST',
+  FETCH_AUTO_DATA_SUCCESS: 'FETCH_AUTO_DATA_SUCCESS',
+  FETCH_MEDIA_DATA_REQUEST: 'FETCH_MEDIA_DATA_REQUEST',
+  FETCH_MEDIA_DATA_SUCCESS: 'FETCH_MEDIA_DATA_SUCCESS',
+};
+
+export const autoRollingActions = {
+  START_AUTO_ROLLING: 'START_AUTO_ROLLING',
+};
+
+export const displayActions = {};
