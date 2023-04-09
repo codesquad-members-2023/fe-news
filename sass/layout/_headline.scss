@@ -19,10 +19,13 @@
       height: 17px;
 
       .headline_rolling_news {
-        width: 350px;
+        width: 300px;
         height: calc(5 * 17px);
 
         > li {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
           height: 17px;
           @include font($Title_sm, $Medium);
           line-height: 1.8rem;
