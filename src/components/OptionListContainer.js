@@ -1,5 +1,8 @@
 import Component from "../core/Component.js";
 import Cell from "./Cell.js";
+import Tab from "./Tab.js";
+import Viewer from "./Viewer.js";
+
 const LOGOS_NUM_PER_PAGE = 24;
 const MAX_PAGE_NUM = 4;
 const INITIAL_PAGE_NUM = 0;
@@ -45,29 +48,40 @@ export default class OptionListContainer extends Component {
       );
 
       this.setState({ presses: selectedPresses });
-
-      this.#renderChildComponents();
     } catch (e) {
       console.log(e);
     }
   }
 
-  componentDidUpdate() {
-    this.#renderChildComponents();
-  }
+  renderChildComponents() {
+    const tabContainers = this.parentElement.querySelector(".view-option__tab");
+    new Tab(tabContainers);
 
-  #renderChildComponents() {
+    const viewerContainers = this.parentElement.querySelector(
+      ".view-option__viewer"
+    );
+    new Viewer(viewerContainers);
+
     const cellContainers =
       this.parentElement.querySelectorAll(".news-list__item");
-
     const startIdx = this.state.pageNum * LOGOS_NUM_PER_PAGE;
     const endIdx = startIdx + LOGOS_NUM_PER_PAGE;
-
-    const test = this.state.presses.slice(startIdx, endIdx);
+    const singleSlidePresses = this.state.presses.slice(startIdx, endIdx);
 
     cellContainers.forEach((cellContainer, idx) => {
-      const src = test[idx].logo_src;
-      new Cell(cellContainer, { src });
+      const src = singleSlidePresses[idx]?.logo_src;
+      const name = singleSlidePresses[idx]?.name;
+
+      const { addSubscribing, removeSubscribing, subscribingPresses } =
+        this.props;
+
+      new Cell(cellContainer, {
+        src,
+        name,
+        addSubscribing,
+        removeSubscribing,
+        subscribingPresses,
+      });
     });
   }
 
@@ -90,21 +104,23 @@ export default class OptionListContainer extends Component {
     class="news-list__button news-list__button--right"
   />`;
 
+    const isFirstPage = this.state.pageNum === INITIAL_PAGE_NUM;
+
+    const isLastPage =
+      this.state.pageNum ===
+      Math.ceil(this.state.presses.length / LOGOS_NUM_PER_PAGE) - 1;
+
     return `
       <div class="view-option">
          <div class="view-option__tab">
-           <span class="view-option__all">전체 언론사</span>
-           <span class="view-option__subscribe">내가 구독한 언론사</span>
          </div>
          <div class="view-option__viewer"> 
-           <img src="assets/icons/list-view.svg" alt="list view icon" /> 
-           <img src="assets/icons/grid-view.svg" alt="grid view icon" />
          </div>
        </div>
 
        <ul class="news-list__grid">
-          ${this.state.pageNum === INITIAL_PAGE_NUM ? "" : leftButtonHtml}
-          ${this.state.pageNum === MAX_PAGE_NUM - 1 ? "" : rightButtonHtml}
+          ${isFirstPage ? "" : leftButtonHtml}
+          ${isLastPage ? "" : rightButtonHtml}
           ${cellContainers}
         </ul>
           `;

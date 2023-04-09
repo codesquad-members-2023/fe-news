@@ -8,9 +8,7 @@ export default class Component {
     this.props = props;
 
     this.setup();
-    this.setEvent();
     this.render();
-    this.componentDidMount();
   }
 
   setup() {}
@@ -21,31 +19,40 @@ export default class Component {
     return "";
   }
 
-  // 오버라이딩 X
   render() {
-    this.parentElement.innerHTML = this.template();
+    const dupParentElement = this.parentElement.cloneNode(true);
+    dupParentElement.innerHTML = this.template();
+    this.parentElement.parentNode.replaceChild(
+      dupParentElement,
+      this.parentElement
+    );
+    this.parentElement = dupParentElement;
+
+    this.setEvent();
     this.componentDidMount();
+    this.renderChildComponents();
   }
 
   update() {
     this.parentElement.innerHTML = this.template();
     this.componentDidUpdate();
+    this.renderChildComponents();
   }
 
   componentDidMount() {}
 
   componentDidUpdate() {}
 
-  // 오버라이딩 X
-  setState(newState) {
+  renderChildComponents() {}
+
+  setState(newState, shouldUpdate = true) {
     this.state = { ...this.state, ...newState };
 
-    // this.render();
+    if (!shouldUpdate) return;
+
     this.update();
-    this.componentDidUpdate();
   }
 
-  // 오버라이딩 X
   addEvent(eventType, selector, callback) {
     this.parentElement.addEventListener(eventType, (event) => {
       if (!event.target.closest(selector)) return false;
