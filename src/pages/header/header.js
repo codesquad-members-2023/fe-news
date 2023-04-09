@@ -1,4 +1,4 @@
-import { elementIs, createNode } from '../../script/utils.js'
+import { getElement, createNode } from '../../script/utils.js'
 
 class HeaderHandler {
   #header
@@ -8,7 +8,7 @@ class HeaderHandler {
   }
 
   #setHeader() {
-    const app = elementIs('.app')
+    const app = getElement('.app')
 
     this.#header = createNode('ns-header')
     this.#header.headerData = {

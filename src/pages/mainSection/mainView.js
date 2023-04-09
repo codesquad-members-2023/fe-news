@@ -1,5 +1,5 @@
 import MainGridView from './mainGridView.js'
-import { elementIs, createNode } from '../../script/utils.js'
+import { getElement, createNode } from '../../script/utils.js'
 
 class MainView {
   #currentView
@@ -7,16 +7,7 @@ class MainView {
 
   // constructor(viewType) {
   constructor() {
-    const app = elementIs('.app')
-
-    // fetch('http://localhost:3001/presses')
-    //   .then(res => res.json())
-    //   .then(
-    //     data.forEach(press => {
-    //       this.createPress(press.logo_src, press.name)
-    //     })
-    //   )
-    //   .then(() => app.appendChild(this.#mainGrid))
+    const app = getElement('.app')
 
     fetch('http://localhost:3001/presses')
       .then(res => res.json())

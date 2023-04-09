@@ -1,7 +1,5 @@
-export function createNode(element) {
-  return document.createElement(element)
-}
+const createNode = element => document.createElement(element)
+const getElement = (selector, parent = document) =>
+  parent.querySelector(selector)
 
-export function elementIs(selector, parent = document) {
-  return parent.querySelector(selector)
-}
+export { createNode, getElement }
