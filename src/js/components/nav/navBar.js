@@ -1,4 +1,6 @@
 export default class NavBar {
+  #startIdx = 0;
+
   constructor($parent, props) {
     this.$parent = $parent;
     this.$ele = document.createElement('div');
@@ -20,24 +22,22 @@ export default class NavBar {
   }
 
   template() {
-    const { press, headLines } = this.props;
-    // * 2개의 headline으로 ui 확인
-    const fakeHeadLines = headLines.slice(0, 2);
+    const { navBarData } = this.props;
+    const { press, headLines } = navBarData;
+    const { currentIdx } = this.state;
 
     return /* html */ `
       <a href="" class="nav-bar__press">${press}</a>
       <div class="nav-bar__headLine">
         <div class="nav-bar__headLine-wrapper">
-          ${fakeHeadLines.map((headLine) => `<a href="">${headLine}</a>`).join('')}
+          <a href="">${headLines[currentIdx]}</a>
         </div>
       </div>
     `;
   }
 
   initState() {
-    const { press, headLines } = this.props;
-
-    this.setState({ press, headLines });
+    this.state = { currentIdx: this.#startIdx };
   }
 
   setState(newState) {

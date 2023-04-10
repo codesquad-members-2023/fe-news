@@ -9,7 +9,6 @@ export default class Nav {
     this.$ele = document.createElement('nav');
     this.$ele.id = 'nav';
 
-    this.state = {};
     this.leftBar;
     this.rightBar;
   }
@@ -17,8 +16,8 @@ export default class Nav {
   async mount() {
     const { left, right } = await getData(this.#url);
 
-    this.leftBar = new NavBar(this.$ele, left);
-    this.rightBar = new NavBar(this.$ele, right);
+    this.leftBar = new NavBar(this.$ele, { navBarData: left });
+    this.rightBar = new NavBar(this.$ele, { navBarData: right });
 
     this.leftBar.mount();
     this.rightBar.mount();
