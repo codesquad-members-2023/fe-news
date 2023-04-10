@@ -1,4 +1,4 @@
-import { getJournal } from "../../api/getJournalListData.js";
+import { getJournal } from "../../api/getData.js";
 
 const journalURL = " http://localhost:3000/journal";
 

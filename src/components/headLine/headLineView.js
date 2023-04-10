@@ -1,4 +1,4 @@
-import { getHeadLine } from "../../api/getHeadLineData.js";
+import { getHeadLine } from "../../api/getData.js";
 
 const headLineHotURL = "http://localhost:3000/headLineHot";
 const headLineURL = "http://localhost:3000/headLine";
