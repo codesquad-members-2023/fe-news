@@ -100,6 +100,9 @@ body {
     top: 0px;
     width: auto; }
 
+main {
+  position: relative; }
+
 .main-header {
   margin-top: 34.5px;
   display: flex;
@@ -128,24 +131,34 @@ body {
   .main-header__buttons .main-header__list-button {
     margin-right: 14px; }
 
+.left-button,
+.right-button {
+  position: absolute;
+  width: 24px;
+  height: 40px;
+  top: 50%; }
+
+.left-button {
+  left: -47px; }
+
+.right-button {
+  right: -47px; }
+
 .main-grid {
   margin-top: 26.5px;
   width: 930px;
   height: 388px; }
 
-.main-grid__1page,
-.main-grid__2page,
-.main-grid__3page,
-.main-grid__4page {
+.main-grid__page {
   width: 100%;
   height: 100%;
-  display: grid;
   grid-template-columns: repeat(6, 1fr); }
 
-.main-grid__2page,
-.main-grid__3page,
-.main-grid__4page {
+.none {
   display: none; }
+
+.grid {
+  display: grid; }
 
 .main-grid__box {
   width: 100%;

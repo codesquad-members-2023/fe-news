@@ -1,4 +1,9 @@
 @import '../abstracts/variables';
+
+main {
+  position: relative;
+}
+
 .main-header {
   margin-top: 34.5px;
   display: flex;
@@ -29,4 +34,19 @@
   .main-header__list-button {
     margin-right: 14px;
   }
+}
+
+.left-button,
+.right-button {
+  position: absolute;
+  width: 24px;
+  height: 40px;
+  top: 50%;
+}
+
+.left-button {
+  left: -47px;
+}
+.right-button {
+  right: -47px;
 }
