@@ -8,9 +8,9 @@ export class NsArticlebarView extends AbstractView {
   }
 
   protected setTemplate() {
-    this._templateElement.innerHTML = `<div class="m-1 w-1/2 bg-slate-50 border border-gray-100 flex flex-row justify-start items-center">
-                                        <div class="mx-2 text-sm font-bold"></div>
-                                        <p class="mx-2 text-sm font-medium text-gray-500"></p>
+    this._templateElement.innerHTML = `<div class="w-1/2 bg-slate-50 border border-gray-100 flex flex-row justify-start items-center">
+                                        <div class="mx-2 w-14 text-sm font-bold"></div>
+                                        <p class="mx-2 w-fit text-sm font-medium text-gray-500 truncate"></p>
                                        </div>`;
   }
 

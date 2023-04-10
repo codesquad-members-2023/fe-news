@@ -13,11 +13,11 @@ export class NsNavbarComponent implements Component {
 
     const leftArticlebar = new NsArticlebarComponent({
       press: '연합뉴스',
-      articleTitle: '[속보]따라란',
+      articleTitle: '[1보] 김기현·안철수·천하람·황교안, 與전대 본경선 진출',
     });
     const rightArticlebar = new NsArticlebarComponent({
       press: '연합뉴스',
-      articleTitle: '[속보]또로롱',
+      articleTitle: '[속보] 與최고위원 본경선, 김병민·김용태·김재원·민영삼',
     });
 
     leftArticlebar.attachTo(this);
