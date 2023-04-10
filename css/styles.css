@@ -1,0 +1,17 @@
+@import "reset.css";
+@import "common/fonts.css";
+@import "common/root.css";
+
+/* COMPONENTS */
+@import "components/news-journal-carousel.css";
+
+/* SCREENS */
+@import "screens/news-stand.css";
+@import "screens/news-journal.css";
+@import "screens/news-header.css";
+@import "screens/news-head-line.css";
+
+body {
+  display: flex;
+  height: 100vh;
+}

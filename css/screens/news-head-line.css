@@ -1,0 +1,24 @@
+.news-stand-headLine {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.headLine-column {
+  width: 440px;
+  padding: 16px;
+  background-color: var(--off-white);
+  border: 1px solid var(--gray100);
+}
+
+.headLine-column span {
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+}
+
+.headLine-column span:first-child {
+  margin-right: 3px;
+}
