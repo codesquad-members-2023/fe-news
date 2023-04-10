@@ -3,6 +3,7 @@ import { Component } from '@src/types/interfaces';
 import { NsNavbarModel } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarModel.js';
 import { NsNavbarView } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarView.js';
 import { NavbarLeftComponent } from '@components/main/main__left/ns__container/ns__navbar/navbar__left/NavbarLeftComponent.js';
+import { NavbarRightComponent } from '@components/main/main__left/ns__container/ns__navbar/navbar__right/NavbarRightComponent.js';
 
 export class NsNavbarComponent implements Component {
   private _model: NsNavbarModel;
@@ -12,7 +13,9 @@ export class NsNavbarComponent implements Component {
     this._view = new NsNavbarView();
 
     const navbarLeft = new NavbarLeftComponent();
+    const navbarRight = new NavbarRightComponent();
     navbarLeft.attachTo(this);
+    navbarRight.attachTo(this);
   }
 
   get element() {
