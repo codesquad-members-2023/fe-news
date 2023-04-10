@@ -1,0 +1,15 @@
+@import './variables.scss';
+@import './reset.scss';
+@import './header.scss';
+@import './autoRolling.scss';
+
+html {
+  font-size: 10px;
+  box-sizing: border-box;
+}
+
+body {
+  width: 930px;
+  display: block;
+  margin: 60px auto;
+}
