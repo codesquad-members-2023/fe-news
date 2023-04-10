@@ -1,13 +1,13 @@
 import { State } from '@src/types/types';
 import { AbstractView } from '@src/types/abstracts.js';
 
-export class MainLeftView extends AbstractView {
+export class NsNavbarView extends AbstractView {
   constructor() {
     super();
   }
 
   protected setTemplate() {
-    this._templateElement.innerHTML = `<section class="h-full w-2/3 flex flex-col flex-initial"></section>`;
+    this._templateElement.innerHTML = `<nav class="w-full h-12 border border-red-500 flex flex-row"></nav>`;
   }
 
   render(state: State) {
