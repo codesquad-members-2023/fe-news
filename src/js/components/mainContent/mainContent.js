@@ -11,6 +11,6 @@ export default class MainContent {
 
   initRender() {
     this.header.initRender();
-    this.$parent.insertAdjacentElement('beforeEnd', this.$ele);
+    this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 }

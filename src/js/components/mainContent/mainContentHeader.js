@@ -29,7 +29,7 @@ export default class MainContentHeader {
           `<span class="press-tab-btn ${isClicked ? 'active' : ''}">${contents}</span>`
       )
       .join('');
-    return String.raw`
+    return /* html */ `
       <div class="press-tab">
         ${pressTabsTemplate}
       </div>
