@@ -2,7 +2,7 @@
   "name": "fe-news",
   "version": "1.0.0",
   "description": "포탈 사이트의 메인 페이지 `뉴스 스탠드`를 구현한 프로젝트",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:ts": "tsc --watch",

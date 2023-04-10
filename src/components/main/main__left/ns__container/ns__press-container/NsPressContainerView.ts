@@ -7,9 +7,9 @@ export class NsPressContainerView extends AbstractView {
   }
 
   protected setTemplate() {
-    this._templateElement.innerHTML = `<section class="py-2 flex-auto border border-blue-500 flex flex-row justify-between">
+    this._templateElement.innerHTML = `<section class="py-2 flex-auto border border-blue-500 flex flex-row justify-between items-center">
                                          <button id="btn-prev" class=""><</button>
-                                         <ul id="ns__grid-container" class="grid grid-cols-6 grid-rows-4 w-full">
+                                         <ul id="ns__grid-container" class="grid grid-cols-6 grid-rows-4 w-full h-full">
                                            <li class="border border-blue-100">1</li>
                                            <li class="border border-blue-100">2</li>
                                            <li class="border border-blue-100">3</li>
