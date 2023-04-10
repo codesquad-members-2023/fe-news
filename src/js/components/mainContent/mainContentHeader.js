@@ -5,7 +5,7 @@ export default class MainContentHeader {
     this.$ele.className = 'main-content__header';
   }
 
-  initRender() {
+  mount() {
     this.render();
     this.$parent.insertAdjacentElement('afterbegin', this.$ele);
   }

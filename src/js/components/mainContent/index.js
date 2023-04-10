@@ -9,8 +9,8 @@ export default class MainContent {
     this.header = new MainContentHeader(this.$ele);
   }
 
-  initRender() {
-    this.header.initRender();
+  mount() {
+    this.header.mount();
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 }

@@ -5,8 +5,8 @@ const app = ($targetEle) => {
   const header = new Header($targetEle);
   const mainContent = new MainContent($targetEle);
 
-  header.initRender();
-  mainContent.initRender();
+  header.mount();
+  mainContent.mount();
 };
 
 export default app;

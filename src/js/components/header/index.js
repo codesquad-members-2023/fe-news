@@ -15,7 +15,7 @@ export default class Header {
     };
   }
 
-  initRender() {
+  mount() {
     this.$parent.insertAdjacentHTML('afterbegin', this.template());
   }
 
