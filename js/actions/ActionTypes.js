@@ -11,4 +11,7 @@ export const autoRollingActions = {
   START_AUTO_ROLLING: 'START_AUTO_ROLLING',
 };
 
-export const displayActions = {};
+export const displayActions = {
+  GRID_LEFT_BUTTON_CLICK: 'GRID_LEFT_BUTTON_CLICK',
+  GRID_RIGHT_BUTTON_CLICK: 'GRID_RIGHT_BUTTON_CLICK',
+};

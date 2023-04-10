@@ -32,7 +32,7 @@ const createMainHeaderElement = () => {
 
 const createMainButtonElement = () => {
   const $leftButton = createElement('a', {
-    class: 'left-button',
+    class: 'left-button none',
     role: 'button',
   });
   const $rightButton = createElement('a', {
