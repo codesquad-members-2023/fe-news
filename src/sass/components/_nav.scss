@@ -4,12 +4,15 @@
   height: 49px;
 
   &__press,
-  &__headLine-wrapper {
+  &__headLine {
     height: 14px;
   }
 
-  &__headLine-wrapper {
+  &__headLine {
     overflow-y: hidden;
+  }
+
+  &__headLine-wrapper {
     a {
       display: inline-block;
     }

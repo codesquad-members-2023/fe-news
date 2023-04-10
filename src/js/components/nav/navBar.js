@@ -26,8 +26,10 @@ export default class NavBar {
 
     return /* html */ `
       <a href="" class="nav-bar__press">${press}</a>
-      <div class="nav-bar__headLine-wrapper">
-        ${fakeHeadLines.map((headLine) => `<a href="">${headLine}</a>`).join('')}
+      <div class="nav-bar__headLine">
+        <div class="nav-bar__headLine-wrapper">
+          ${fakeHeadLines.map((headLine) => `<a href="">${headLine}</a>`).join('')}
+        </div>
       </div>
     `;
   }
