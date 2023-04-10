@@ -1,5 +1,5 @@
 import createStore from '../utils/createStore.js';
-import { autoDataReducer } from './dataReducer.js';
+import { autoDataReducer, mediaDataReducer } from './dataReducer.js';
 
 const defaultAutoRollingData = {
   leftRollingData: [],
@@ -19,5 +19,6 @@ const initialState = {
 const store = createStore();
 
 store.addDomain('autoData', autoDataReducer, initialState['autoData']);
+store.addDomain('mediaData', mediaDataReducer, initialState['mediaData']);
 
 export const { dispatch, subscribe, getStoreState } = store;

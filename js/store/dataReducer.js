@@ -36,6 +36,9 @@ export const mediaDataReducer = (state, action) => {
       return {
         ...state,
         loading: false,
+        data: action.payload,
       };
+    default:
+      return state;
   }
 };

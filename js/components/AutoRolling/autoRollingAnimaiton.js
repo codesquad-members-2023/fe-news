@@ -15,7 +15,7 @@ const rollingRightAnimation = ($element, content, idx) => {
   // 2. Panel의 부모인 Camera에 inline Style을 부여한다. 애니메이션 적용!
   // 먼저 위에서 생성한 Panel을 붙인 뒤 animation을 준다.
   $camera.appendChild($newPanel);
-  $camera.style.transition = 'transform 0.8s';
+  $camera.style.transition = 'transform 0.5s';
   $camera.style.transform = 'translate3d(0px, -16px, 0px)';
 
   // 3. 애니메이션이 끝나면 camera의 style을 제거하고 newPanel의 top 값을 없애준다.
@@ -41,7 +41,7 @@ const rollingLeftAnimation = ($element, content, idx) => {
   // 2. Panel의 부모인 Camera에 inline Style을 부여한다. 애니메이션 적용!
   // 먼저 위에서 생성한 Panel을 붙인 뒤 animation을 준다.
   $camera.appendChild($newPanel);
-  $camera.style.transition = 'transform 0.8s';
+  $camera.style.transition = 'transform 0.5s';
   $camera.style.transform = 'translate3d(0px, -16px, 0px)';
 
   // 3. 애니메이션이 끝나면 camera의 style을 제거하고 newPanel의 top 값을 없애준다.
@@ -70,7 +70,7 @@ export const autoRollingFrame = (obj, timestamp) => {
     obj.rightTime = now;
   }
 
-  if (rightDuration >= 1800) {
+  if (rightDuration >= 2000) {
     obj.rightIdx++;
     rollingRightAnimation(obj.element, obj.content, obj.rightIdx);
     obj.rightTime = null;

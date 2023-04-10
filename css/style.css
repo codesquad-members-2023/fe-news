@@ -127,3 +127,33 @@ body {
   align-items: center; }
   .main-header__buttons .main-header__list-button {
     margin-right: 14px; }
+
+.main-grid {
+  margin-top: 26.5px;
+  width: 930px;
+  height: 388px; }
+
+.main-grid__1page,
+.main-grid__2page,
+.main-grid__3page,
+.main-grid__4page {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); }
+
+.main-grid__2page,
+.main-grid__3page,
+.main-grid__4page {
+  display: none; }
+
+.main-grid__box {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d2dae0;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.main-grid__logo {
+  height: 20px; }

@@ -1,4 +1,4 @@
-import { fetchAutoRollingData } from '../api/request.js';
+import { fetchAutoRollingData, fetchMediaData } from '../api/request.js';
 import * as actionTypes from './actionTypes.js';
 import { dispatch } from '../store/store.js';
 
@@ -31,6 +31,13 @@ export const fetchActionCreator = {
 
     const response = await fetchAutoRollingData();
     dispatch(fetchActionCreator.fetchAutoDataSuccess(response.data));
+  },
+
+  fetchMediaData: async () => {
+    dispatch(fetchActionCreator.fetchMediaDataRequest());
+
+    const response = await fetchMediaData();
+    dispatch(fetchActionCreator.fetchMediaDataSuccess(response.data));
   },
 
   startActionCreator: () => {
