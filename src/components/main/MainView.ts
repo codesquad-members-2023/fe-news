@@ -7,7 +7,7 @@ export class MainView extends AbstractView {
   }
 
   protected setTemplate() {
-    this._templateElement.innerHTML = `<main class="h-4/6 border border-green-500 flex flex-row justify-end"></main>`;
+    this._templateElement.innerHTML = `<main class="h-4/6 flex flex-row justify-end"></main>`;
   }
 
   render(state: State) {

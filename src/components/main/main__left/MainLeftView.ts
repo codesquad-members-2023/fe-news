@@ -7,7 +7,7 @@ export class MainLeftView extends AbstractView {
   }
 
   protected setTemplate() {
-    this._templateElement.innerHTML = `<section class="h-full bg-green-100 border border-green-500 flex-initial basis-2/3 flex flex-column"></section>`;
+    this._templateElement.innerHTML = `<section class="h-full w-2/3 bg-green-100 border border-green-500 flex flex-col flex-initial"></section>`;
   }
 
   render(state: State) {

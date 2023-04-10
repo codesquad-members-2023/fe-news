@@ -7,6 +7,7 @@ class App {
     const header = new HeaderComponent();
     const main = new MainComponent();
     const footer = new FooterComponent();
+
     appRoot.appendChild(header.element);
     appRoot.appendChild(main.element);
     appRoot.appendChild(footer.element);
