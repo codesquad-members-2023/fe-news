@@ -25,3 +25,15 @@ body {
     }
   }
 }
+
+.nav-bar {
+  &__press {
+    @include fontType($title-SM);
+    white-space: nowrap;
+  }
+
+  &__headLine-wrapper {
+    @include fontType($body-SM);
+    color: $gray500;
+  }
+}

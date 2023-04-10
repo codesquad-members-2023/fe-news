@@ -1,0 +1,17 @@
+.nav-bar {
+  background-color: $gray100;
+  width: 460px;
+  height: 49px;
+
+  &__press,
+  &__headLine-wrapper {
+    height: 14px;
+  }
+
+  &__headLine-wrapper {
+    overflow-y: hidden;
+    a {
+      display: inline-block;
+    }
+  }
+}
