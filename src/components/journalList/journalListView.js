@@ -1,6 +1,7 @@
 import { getJournal } from "../../api/getData.js";
+import { Carousel } from "./journalCarousel.js";
 
-export const createNewsStandJournal = () => {
+const createNewsStandJournal = () => {
   const journalURL = " http://localhost:3000/journal";
 
   // 언론사 영역
@@ -26,13 +27,8 @@ export const createNewsStandJournal = () => {
   journalListEl.innerHTML += journalHeader;
 
   // 언론사 리스트
-  const journalCarousel = `<div class="journal-carousel">
-   <button class="journal-carousel-btn"></button>
-   <button class="journal-carousel-btn"></button>
-   <div class="journal-container"></div>
-</div>`;
-
-  journalListEl.innerHTML += journalCarousel;
+  const journalCarousel = new Carousel();
+  journalListEl.innerHTML += journalCarousel.beElement();
 
   getJournal(journalURL).then((journalItems) => {
     const journalContainer = document.querySelector(".journal-container");
@@ -42,5 +38,7 @@ export const createNewsStandJournal = () => {
     });
   });
 
-  return journalListEl;
+  return { journalListEl, journalCarousel };
 };
+
+export default createNewsStandJournal;
