@@ -1,19 +1,10 @@
-import HeaderDate from "./headerDate.js";
-import HeaderLogo from "./hederLogo.js";
-export default class NewsHeader {
-  constructor() {
-    this.newsHeader = document.querySelector(".root");
-  }
-  init() {
-    this.insertNewsHeader();
-  }
-  insertLogo() {
-    return new HeaderLogo().insertHedaerLogo();
-  }
-  insertDate() {
-    return new HeaderDate().insertHeaderDate();
-  }
-  insertNewsHeader() {
-    this.newsHeader.innerHTML = `<header><div class="news__header">${this.insertLogo()}${this.insertDate()}</div></header>`;
-  }
-}
+import { insertNewsHeader } from "../store/insertNewsHeader.js";
+
+const viewNewsHeader = () => {
+  const root = document.querySelector(".root");
+  const newsHeader = document.createElement("header");
+  root.appendChild(newsHeader);
+  newsHeader.innerHTML = insertNewsHeader();
+};
+
+export { viewNewsHeader };
