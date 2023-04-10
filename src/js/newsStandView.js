@@ -1,5 +1,5 @@
 export default class NewsStandView {
-  constructor(ref, header, headline) {
+  constructor(ref, header, headline, headlineAnimationInfo) {
     this.mainContainer = ref.newsStandContainer;
     this.header = header;
     this.headline = headline;
@@ -7,10 +7,13 @@ export default class NewsStandView {
     this.rollingHeadline;
     this.rollingHeadlineLeft;
     this.rollingHeadlineRight;
+
+    this.headlineTransitionDuration = headlineAnimationInfo.transitionDuration;
+    this.headlineDelayDuration = headlineAnimationInfo.delayDuration;
+    this.headlineLiWidth = headlineAnimationInfo.headlineLiWidth;
     this.headlineAnimationStartTime = null;
-    this.headlineTransitionDuration = 1000;
-    this.headlineDelayDuration = 5000;
-    this.headlineLiWidth = 17;
+    this.headlineHover = false;
+    this.headlineAnimationId;
     this.render();
   }
 
@@ -24,7 +27,11 @@ export default class NewsStandView {
     const template = await this.getTemplate();
     this.mainContainer.insertAdjacentHTML('afterbegin', template);
     this.setHeadlineSection();
-    this.setHeadlineAnimation();
+    this.setEvent();
+  }
+
+  setEvent() {
+    window.addEventListener('DOMContentLoaded', this.setHeadlineAnimation());
   }
 
   resortHeadlineNews(headline) {
@@ -52,13 +59,14 @@ export default class NewsStandView {
       if (!this.headlineAnimationStartTime) this.headlineAnimationStartTime = timestamp;
       const elapsedTime = timestamp - this.headlineAnimationStartTime;
 
-      if (elapsedTime >= this.headlineDelayDuration) {
+      if (elapsedTime >= 2000) {
         this.translateHeadline();
       }
-
-      requestAnimationFrame(animateHeadline);
+      if (!this.headlineHover) {
+        this.headlineAnimationId = requestAnimationFrame(animateHeadline);
+      }
     };
 
-    requestAnimationFrame(animateHeadline);
+    this.headlineAnimationId = requestAnimationFrame(animateHeadline);
   }
 }
