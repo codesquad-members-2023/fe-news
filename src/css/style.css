@@ -1,0 +1,85 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  font-family: Pretendard, sans-serif;
+  color: #14212b;
+}
+
+.header__logo {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+.header__today {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.2rem;
+  color: #4b5966;
+}
+
+.main-content__header .press-tab {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.2rem;
+  color: #879298;
+}
+.main-content__header .press-tab-btn.active {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: #14212b;
+}
+
+#app {
+  margin: 0 10rem;
+}
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+  border: 1px solid #000;
+}
+
+.main-content__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  border: 1px solid #000;
+}
+
+.main-content__header .press-tab,
+.main-content__header .show-tab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+.main-content__header .press-tab-btn,
+.main-content__header .show-tab img {
+  cursor: pointer;
+}
+.main-content__header .press-tab-btn:not(:last-child) {
+  margin-right: 24px;
+}
+.main-content__header .show-tab__list {
+  margin-right: 14px;
+}
+
+/*# sourceMappingURL=style.css.map */

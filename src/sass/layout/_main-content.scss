@@ -1,0 +1,23 @@
+.main-content {
+  &__header {
+    @include flex-row($justify-content: space-between, $align-items: center);
+    border: 1px solid #000;
+  }
+}
+
+.main-content__header {
+  .press-tab,
+  .show-tab {
+    @include flex-row($justify-content: space-between, $align-items: center);
+  }
+  .press-tab-btn,
+  .show-tab img {
+    cursor: pointer;
+  }
+  .press-tab-btn:not(:last-child) {
+    margin-right: 24px;
+  }
+  .show-tab__list {
+    margin-right: 14px;
+  }
+}
