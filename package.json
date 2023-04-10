@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "json-server -p 3001 --watch db.json",
     "node-sass": "node-sass",
-    "sass": "node-sass sass/style.scss css/style.css -w"
+    "sass": "node-sass sass/style.scss src/css/style.css -w"
   },
   "repository": {
     "type": "git",
