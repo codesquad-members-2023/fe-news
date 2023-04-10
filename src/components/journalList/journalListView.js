@@ -22,17 +22,19 @@ const journalHeader = `<header class="journal-header">
     </div>
 </header>`;
 
-journalListEl.innerHTML = journalHeader;
+journalListEl.innerHTML += journalHeader;
 
 // 언론사 리스트
-const journalCarousel = document.createElement("div");
-journalCarousel.classList.add("journal-carousel");
-journalListEl.appendChild(journalCarousel);
-const journalContainer = document.createElement("div");
-journalContainer.classList.add("journal-container");
-journalCarousel.appendChild(journalContainer);
+const journalCarousel = `<div class="journal-carousel">
+   <button class="journal-carousel-btn"></button>
+   <button class="journal-carousel-btn"></button>
+   <div class="journal-container"></div>
+</div>`;
+
+journalListEl.innerHTML += journalCarousel;
 
 getJournal(journalURL).then((journalItems) => {
+  const journalContainer = document.querySelector(".journal-container");
   const shuffledItems = journalItems.sort(() => 0.5 - Math.random());
   shuffledItems.forEach((item) => {
     journalContainer.appendChild(item);

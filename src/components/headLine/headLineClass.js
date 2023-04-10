@@ -14,9 +14,6 @@ export class HeadLine {
   };
 
   makeHeadline = function () {
-    // this.headLineList.forEach((title) => {
-    //   this.toBeElement(title.headLineList);
-    // });
     const randomNub = Math.floor(Math.random() * this.headLineList.length);
     const title = this.headLineList[randomNub].headLineTitle;
     return this.toBeElement(title);
