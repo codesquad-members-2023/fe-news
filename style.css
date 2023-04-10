@@ -67,14 +67,16 @@ body {
   .newsstand_header .newsstand_header_title {
     display: flex;
     width: 160px; }
-    .newsstand_header .newsstand_header_title .header_title_logo {
-      width: 24px;
-      height: 20px;
-      margin-top: 5px; }
-    .newsstand_header .newsstand_header_title .header_title_text {
-      margin-left: 6px;
-      font-size: 2.4rem;
-      font-weight: 700; }
+    .newsstand_header .newsstand_header_title a {
+      cursor: pointer; }
+      .newsstand_header .newsstand_header_title a .header_title_logo {
+        width: 24px;
+        height: 20px;
+        margin-top: 5px; }
+      .newsstand_header .newsstand_header_title a .header_title_text {
+        margin-left: 6px;
+        font-size: 2.4rem;
+        font-weight: 700; }
   .newsstand_header .newsstand_header_date {
     margin-top: 3px;
     color: #4b5966;
@@ -99,9 +101,12 @@ body {
       overflow: hidden;
       height: 17px; }
       .newsstand_headline_container .newsstand_headline .headline_rolling_container .headline_rolling_news {
-        width: 350px;
+        width: 300px;
         height: calc(5 * 17px); }
         .newsstand_headline_container .newsstand_headline .headline_rolling_container .headline_rolling_news > li {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
           height: 17px;
           font-size: 1.4rem;
           font-weight: 500;
