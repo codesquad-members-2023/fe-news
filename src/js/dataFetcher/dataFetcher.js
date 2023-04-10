@@ -2,7 +2,6 @@ export default class DataFetcher {
   constructor(url) {
     this.url = url;
     this.data;
-    this.template;
   }
 
   async fetchData(type) {
