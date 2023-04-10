@@ -1,5 +1,5 @@
-import Header from './components/header.js';
-import MainContent from './components/mainContent/mainContent.js';
+import Header from './components/header/index.js';
+import MainContent from './components/mainContent/index.js';
 
 const app = ($targetEle) => {
   const header = new Header($targetEle);
