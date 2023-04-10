@@ -16,12 +16,12 @@ const createMainGridElement = () => {
 
 const createMainGridPage = (page) => {
   const $mainGridPage = createElement('div', {
-    class: `main-grid__${page}page`,
+    class: page === 1 ? `main-grid__page grid` : 'main-grid__page none',
   });
   const $mainGridBox = createElement('div', {
     class: 'main-grid__box',
   });
-  for (let i = 0; i < 24; i++) {
+  for (let boxes = 0; boxes < 24; boxes++) {
     $mainGridPage.append($mainGridBox.cloneNode(true));
   }
   return $mainGridPage;
@@ -47,6 +47,7 @@ const MainGrid = () => {
   const $grid = createMainGridElement();
   subscribe('mediaData', updateMediaContent.bind(null, $grid));
   fetchActionCreator.fetchMediaData();
+
   return $grid;
 };
 
