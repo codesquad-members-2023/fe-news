@@ -1,5 +1,5 @@
 import { createElement } from '../../utils/dom.js';
-
+import { buttonClickEventHandler } from './mainButtonEvents.js';
 // TODO : 이벤트 등록 해야함.
 
 const createMainHeaderElement = () => {
@@ -49,16 +49,7 @@ const MainCommon = () => {
   const $mainButtons = createMainButtonElement();
 
   $mainButtons.forEach((button) => {
-    button.addEventListener('click', ({ currentTarget }) => {
-      const $mainSection = currentTarget.parentNode.lastChild;
-      Array.from($mainSection.childNodes).some((node, idx, arr) => {
-        if (node.classList.contains('grid')) {
-          node.classList.replace('grid', 'none');
-          arr[(idx + 1) % 4].classList.replace('none', 'grid');
-          return true;
-        }
-      });
-    });
+    button.addEventListener('click', buttonClickEventHandler);
   });
   return [$mainHeader, $mainButtons];
 };
