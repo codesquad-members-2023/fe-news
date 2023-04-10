@@ -1,33 +1,35 @@
 import createEl from '../../utils/util.js';
+import { CONSTANTS, API_URL, autoAnimationInfo }  from '../../core/constants.js';
 
 class RollingBar {
   #PANEL_COUNT = 2;
-  #TRANSLATE_TIME = '500ms';
   flickPanels;
   movePanel;
-  constructor(rollingPressName, delayTime, ...className) {
+  constructor(rollingPressName, { autoAnimationInfo }, ...className) {
     this.ROLLING_LINK_PRESS = rollingPressName;
-    this.DELAY_TIME = delayTime;
+    this.TRANSLATE_TIME = autoAnimationInfo.transitionDuration;
+    this.LEFT_DELAY_TIME =autoAnimationInfo.leftDelayTime;
+    this.TIME_DIFF = autoAnimationInfo.timeDiff;
     this.classNames = [...className];
     this.rollingBar = createEl("section", "rolling-container");
     this.rafState = true;
   }
 
-  init() {
+  render() {
     this.rollingBar.innerHTML = this.template();
-    this.rollingPanelHandler();
+    this.autoMovePanel();
+    this.addEventRollingBar();
     return this.rollingBar;
   }
 
   template() {
-    // 뼈대는 2개만 만들고, textContent로 그 안에 데이터만 변경되게 구현해보기.....되나?
     return this.classNames.reduce((template, className) => {
-      template += `<div class="rolling-box ${className}">
+      template += `<div class="rolling-box">
       <a class="link-press">${this.ROLLING_LINK_PRESS}</a>
       <div class="flick-container">
-        <ul class="flick-panels">
-          <li class="flick-panel"></li>
-          <li class="flick-panel"></li>
+        <ul class="flick-panels ${className}">
+          <li class="flick-panel">1</li>
+          <li class="flick-panel">2</li>
         </ul>
       </div>
     </div>`
@@ -35,45 +37,51 @@ class RollingBar {
     }, '');
   }
 
-  rollingPanelHandler() {
-    this.flickPanels = this.rollingBar.querySelector('.flick-panels');
-    this.autoRollingPanel();
-    this.addEventRollingBar();
-  }
-
-  autoRollingPanel() {
-    let currentPanel = 0;
-    let lastTime = 0;
+  autoMovePanel() {
+    let leftTime = null;
+    let rightTime = null;
     this.movePanel = currentTime => {
-      let deltaTime = currentTime - lastTime;
-      if (deltaTime > this.DELAY_TIME) {
-        currentPanel++;
-        if(currentPanel >= this.#PANEL_COUNT) currentPanel = 0;
-        this.translatePanel();
-        lastTime = currentTime;
+      if(!leftTime) leftTime = currentTime;
+      const leftTimeDiff = currentTime - leftTime;
+      const rightTimeDiff = !rightTime ? 0 : currentTime - rightTime;
+
+      if(leftTimeDiff >= this.LEFT_DELAY_TIME) {
+        this.translatePanel.bind(this)('left');
+        leftTime = null;
+        rightTime = currentTime;
+      }
+      if(rightTimeDiff >= this.TIME_DIFF) {
+        this.translatePanel.bind(this)('right');
+        rightTime = null;
       }
       if(this.rafState) requestAnimationFrame(this.movePanel);
     }
     requestAnimationFrame(this.movePanel);
   }
 
-  //애니메이션 메소드는.. 분리해야...겠지요..?
-  translatePanel() {
-    this.flickPanels.style.transitionDuration = this.#TRANSLATE_TIME;
-    this.flickPanels.style.transform = `translateY(-100%)`;
-    this.flickPanels.ontransitionend = () => this.appendPanel();
+  translatePanel(className) {
+    const panel = className === 'left' ?
+    this.rollingBar.querySelector('.left') : this.rollingBar.querySelector('.right');
+
+    panel.style.transitionDuration = this.TRANSLATE_TIME;
+    panel.style.transform = `translateY(-100%)`;
+    panel.ontransitionend = () => this.appendPanel(panel);
   }
 
-  appendPanel() {
-    this.flickPanels.removeAttribute('style');
-    this.flickPanels.appendChild(this.flickPanels.firstElementChild);
+  appendPanel(panel) {
+    panel.removeAttribute('style');
+    panel.appendChild(panel.firstElementChild);
   }
 
   addEventRollingBar() {
-    this.flickPanels.addEventListener('mouseover', () => this.rafState = false);
-    this.flickPanels.addEventListener('mouseout', () => {
+    this.rollingBar.addEventListener('mouseover', ({ target }) => {
+      if(target.tagName !== 'LI') return;
+      this.rafState = false;
+    });
+    this.rollingBar.addEventListener('mouseout', ({ target }) => {
+      if(target.tagName !== 'LI') return;
       this.rafState = true;
-      requestAnimationFrame(this.movePanel);
+      requestAnimationFrame(() => this.movePanel());
     });
   }
 }
