@@ -14,8 +14,9 @@ export default class HeaderMaker {
   createHeader() {
     this.template = `<div class="newsstand_header">
     <span class="newsstand_header_title">
+      <a onClick="window.location.reload()">
       <img class="header_title_logo" src="${this.headerElement.logoImgSrc}" alt="${this.headerElement.imgAlt}" />
-      <span class="header_title_text">${this.headerElement.title}</span>
+      <span class="header_title_text">${this.headerElement.title}</span></a>
     </span>
     <span class="newsstand_header_date">${this.date}</span>
   </div>`;

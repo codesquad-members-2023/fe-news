@@ -8,6 +8,12 @@ const headlineElement = {
   title: '연합뉴스',
 };
 
+const headlineAnimationInfo = {
+  transitionDuration: 1000,
+  delayDuration: 5000,
+  headlineLiWidth: 17,
+};
+
 const dataUrl = 'http://localhost:3001/';
 
-export { headerElement, headlineElement, dataUrl };
+export { headerElement, headlineElement, headlineAnimationInfo, dataUrl };
