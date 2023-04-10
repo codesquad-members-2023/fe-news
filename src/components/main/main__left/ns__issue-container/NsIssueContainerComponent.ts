@@ -1,27 +1,27 @@
 import { Props, State } from '@src/types/types';
 import { Component } from '@src/types/interfaces';
-import { NsNavbarModel } from '@components/main/main__left/ns__navbar/NsNavbarModel.js';
-import { NsNavbarView } from '@components/main/main__left/ns__navbar/NsNavbarView.js';
-import { NsArticlebarComponent } from '@components/main/main__left/ns__navbar/ns__articlebar/NsArticlebarComponent.js';
+import { NsIssueContainerModel } from '@components/main/main__left/ns__issue-container/NsIssueContainerModel.js';
+import { NsIssueContainerView } from '@components/main/main__left/ns__issue-container/NsIssueContainerView.js';
+import { NsIssueComponent } from '@components/main/main__left/ns__issue-container/ns__issue/NsIssueComponent.js';
 
-export class NsNavbarComponent implements Component {
-  private _model: NsNavbarModel;
-  private _view: NsNavbarView;
+export class NsIssueContainerComponent implements Component {
+  private _model: NsIssueContainerModel;
+  private _view: NsIssueContainerView;
   constructor(props?: Props) {
-    this._model = new NsNavbarModel();
-    this._view = new NsNavbarView();
+    this._model = new NsIssueContainerModel();
+    this._view = new NsIssueContainerView();
 
-    const leftArticlebar = new NsArticlebarComponent({
+    const leftIssue = new NsIssueComponent({
       press: '연합뉴스',
       articleTitle: '[1보] 김기현·안철수·천하람·황교안, 與전대 본경선 진출',
     });
-    const rightArticlebar = new NsArticlebarComponent({
+    const rightIssue = new NsIssueComponent({
       press: '연합뉴스',
       articleTitle: '[속보] 與최고위원 본경선, 김병민·김용태·김재원·민영삼',
     });
 
-    leftArticlebar.attachTo(this);
-    rightArticlebar.attachTo(this);
+    leftIssue.attachTo(this);
+    rightIssue.attachTo(this);
   }
 
   get element() {

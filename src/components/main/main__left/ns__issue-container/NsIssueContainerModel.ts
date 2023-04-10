@@ -1,6 +1,6 @@
 import { AbstractModel } from '@src/types/abstracts.js';
 
-export class NsNavbarModel extends AbstractModel {
+export class NsIssueContainerModel extends AbstractModel {
   constructor() {
     super();
   }

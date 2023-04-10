@@ -2,7 +2,7 @@ import { State } from '@src/types/types';
 import { AbstractView } from '@src/types/abstracts.js';
 import { $ } from '@utils/dom.js';
 
-export class NsNavbarView extends AbstractView {
+export class NsIssueContainerView extends AbstractView {
   constructor() {
     super();
   }

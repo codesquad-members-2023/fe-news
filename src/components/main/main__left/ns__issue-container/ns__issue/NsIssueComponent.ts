@@ -1,14 +1,14 @@
 import { Props, State } from '@src/types/types';
 import { Component } from '@src/types/interfaces';
-import { NsArticlebarModel } from '@components/main/main__left/ns__navbar/ns__articlebar/NsArticlebarModel.js';
-import { NsArticlebarView } from '@components/main/main__left/ns__navbar/ns__articlebar/NsArticlebarView.js';
+import { NsIssueModel } from '@components/main/main__left/ns__issue-container/ns__issue/NsIssueModel.js';
+import { NsIssueView } from '@components/main/main__left/ns__issue-container/ns__issue/NsIssueView.js';
 
-export class NsArticlebarComponent implements Component {
-  private _model: NsArticlebarModel;
-  private _view: NsArticlebarView;
+export class NsIssueComponent implements Component {
+  private _model: NsIssueModel;
+  private _view: NsIssueView;
   constructor(props?: Props) {
-    this._model = new NsArticlebarModel();
-    this._view = new NsArticlebarView();
+    this._model = new NsIssueModel();
+    this._view = new NsIssueView();
 
     const { press, articleTitle } = props!;
     this.setState({ press, articleTitle });
