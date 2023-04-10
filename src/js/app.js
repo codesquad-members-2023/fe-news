@@ -1,18 +1,12 @@
 import Header from './components/header.js';
 import MainContent from './components/mainContent/mainContent.js';
 
-export default class App {
-  constructor($targetEle) {
-    this.$targetEle = $targetEle;
+const app = ($targetEle) => {
+  const header = new Header($targetEle);
+  const mainContent = new MainContent($targetEle);
 
-    this.header = new Header(this.$targetEle);
-    this.mainContent = new MainContent(this.$targetEle);
+  header.initRender();
+  mainContent.initRender();
+};
 
-    this.initRender();
-  }
-
-  initRender() {
-    this.header.initRender();
-    this.mainContent.initRender();
-  }
-}
+export default app;
