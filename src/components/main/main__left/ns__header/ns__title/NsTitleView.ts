@@ -9,8 +9,8 @@ export class NsTitleView extends AbstractView {
 
   protected setTemplate() {
     this._templateElement.innerHTML = `<div class="w-1/2 h-full flex flex-row justify-start items-center gap-x-2">
-                                        <img src="/public/images/symbols/newspaper.svg" alt="newspaper-symbol">
-                                        <p class="text-2xl font-bold"></p>
+                                         <img src="/public/images/symbols/newspaper.svg" alt="newspaper-symbol">
+                                         <p class="text-2xl font-bold"></p>
                                        </div>`;
   }
 
