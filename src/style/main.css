@@ -3,3 +3,13 @@
 @import url('./variables.css');
 @import url('./header.css');
 @import url('./mainGridView.css');
+
+.app {
+  width: 1280px;
+  height: 720px;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}

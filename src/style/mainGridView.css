@@ -1,3 +1,16 @@
+.main-view {
+  position: relative;
+}
+
+ns-direction-btn {
+  display: flex;
+  justify-content: space-between;
+  width: 110%;
+  height: 100%;
+  position: absolute;
+  left: -5%;
+}
+
 .main-grid {
   width: 930px;
   height: 388px;
