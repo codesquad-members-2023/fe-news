@@ -9,8 +9,9 @@ const headlineElement = {
 };
 
 const headlineAnimationInfo = {
-  transitionDuration: 1000,
-  delayDuration: 5000,
+  transitionDuration: 500,
+  leftDelayDuration: 3000,
+  rightDelayDuration: 1000,
   headlineLiWidth: 17,
 };
 

@@ -4,15 +4,16 @@ export default class NewsStandView {
     this.header = header;
     this.headline = headline;
 
-    this.rollingHeadline;
     this.rollingHeadlineLeft;
     this.rollingHeadlineRight;
 
     this.headlineTransitionDuration = headlineAnimationInfo.transitionDuration;
-    this.headlineDelayDuration = headlineAnimationInfo.delayDuration;
+    this.leftHeadlineDelayDuration = headlineAnimationInfo.leftDelayDuration;
+    this.rightHeadlineDelayDuration = headlineAnimationInfo.rightDelayDuration;
     this.headlineLiWidth = headlineAnimationInfo.headlineLiWidth;
-    this.headlineAnimationStartTime = null;
-    this.headlineHover = false;
+
+    this.leftHeadlineAnimationStartTime = null;
+    this.rightHeadlineAnimationStartTime = null;
     this.headlineAnimationId;
     this.render();
   }
@@ -34,39 +35,52 @@ export default class NewsStandView {
     window.addEventListener('DOMContentLoaded', this.setHeadlineAnimation());
   }
 
-  resortHeadlineNews(headline) {
+  resortHeadlineList(headline) {
     headline.appendChild(headline.firstElementChild);
     headline.removeAttribute('style');
   }
 
   setHeadlineSection() {
-    this.rollingHeadline = this.mainContainer.querySelectorAll('.headline_rolling_news');
-    this.rollingHeadlineLeft = this.rollingHeadline[0];
-    this.rollingHeadlineRight = this.rollingHeadline[1];
+    this.headlineContainer = this.mainContainer.querySelector('.newsstand_headline_container');
+    this.rollingHeadlineLeft = this.headlineContainer.querySelector('.headline_rolling_news.left');
+    this.rollingHeadlineRight = this.headlineContainer.querySelector(
+      '.headline_rolling_news.right'
+    );
   }
 
-  translateHeadline() {
-    this.rollingHeadline.forEach((headline) => {
-      headline.style.transitionDuration = `${this.headlineTransitionDuration}ms`;
-      headline.style.transform = `translateY(-${this.headlineLiWidth}px)`;
-      headline.ontransitionend = () => this.resortHeadlineNews(headline);
-      this.headlineAnimationStartTime = null;
-    });
+  translateHeadline(location) {
+    location.style.transitionDuration = `${this.headlineTransitionDuration}ms`;
+    location.style.transform = `translateY(-${this.headlineLiWidth}px)`;
+    location.ontransitionend = () => this.resortHeadlineList(location);
+    this.headlineAnimationStartTime = null;
+  }
+
+  headlineRollingHandler(location) {
+    location === 'left'
+      ? this.translateHeadline(this.rollingHeadlineLeft)
+      : this.translateHeadline(this.rollingHeadlineRight);
   }
 
   setHeadlineAnimation() {
     const animateHeadline = (timestamp) => {
-      if (!this.headlineAnimationStartTime) this.headlineAnimationStartTime = timestamp;
-      const elapsedTime = timestamp - this.headlineAnimationStartTime;
+      if (!this.leftHeadlineAnimationStartTime) this.leftHeadlineAnimationStartTime = timestamp;
+      const leftElapsedTime = timestamp - this.leftHeadlineAnimationStartTime;
+      const rightElapseTime = !this.rightHeadlineAnimationStartTime
+        ? 0
+        : timestamp - this.rightHeadlineAnimationStartTime;
 
-      if (elapsedTime >= 2000) {
-        this.translateHeadline();
+      if (leftElapsedTime >= this.leftHeadlineDelayDuration) {
+        this.headlineRollingHandler('left');
+        this.leftHeadlineAnimationStartTime = null;
+        this.rightHeadlineAnimationStartTime = timestamp;
       }
-      if (!this.headlineHover) {
-        this.headlineAnimationId = requestAnimationFrame(animateHeadline);
+
+      if (rightElapseTime >= this.rightHeadlineDelayDuration) {
+        this.headlineRollingHandler('right');
+        this.rightHeadlineAnimationStartTime = null;
       }
+      this.headlineAnimationId = requestAnimationFrame(animateHeadline);
     };
-
-    this.headlineAnimationId = requestAnimationFrame(animateHeadline);
+    requestAnimationFrame(animateHeadline);
   }
 }

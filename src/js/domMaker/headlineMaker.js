@@ -32,14 +32,14 @@ export default class HeadlineMaker {
     <div class="newsstand_headline left">
       <a class="headline_press">${this.headlineElement.title}</a>
       <div class="headline_rolling_container">
-        <ul class="headline_rolling_news">${headlineLeftLi}
+        <ul class="headline_rolling_news left">${headlineLeftLi}
         </ul>
       </div>
     </div>
     <div class="newsstand_headline right">
       <a class="headline_press">${this.headlineElement.title}</a>
       <div class="headline_rolling_container">
-        <ul class="headline_rolling_news">${headlineRightLi}
+        <ul class="headline_rolling_news right">${headlineRightLi}
         </ul>
       </div>
     </div>
