@@ -54,14 +54,13 @@ main 영역
   line-height: 16px;
 }
 
+.view-page-btn.left,
 .view-page-btn.right {
   position: absolute;
   top: 42%;
   right: -10%;
 }
 
-.view-page-btn.left {
-  position: absolute;
-  top: 42%;
-  left: -10%;
+.subscribe-btn {
+  background-color: gray;
 }
