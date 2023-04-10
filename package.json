@@ -11,10 +11,10 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-standard": "^5.0.0",
+    "json-server": "^0.17.3",
     "prettier": "^2.8.7",
     "prettier-eslint": "^15.0.1",
-    "prettier-eslint-cli": "^7.1.0",
-    "json-server": "^0.17.3"
+    "prettier-eslint-cli": "^7.1.0"
   },
   "dependencies": {}
 }
