@@ -3,7 +3,7 @@ export class HeadLine {
     this.headLineList = jsonData;
   }
 
-  toBeElement = function (title) {
+  toBeElement(title) {
     const div = `<div class="headLine-column headLine-left">
                     <span class="Title-SM">연합뉴스</span>
                     <span class="Body-SM">
@@ -11,7 +11,7 @@ export class HeadLine {
                     </span>
                  </div>`;
     return div;
-  };
+  }
 
   makeHeadline = function () {
     const randomNub = Math.floor(Math.random() * this.headLineList.length);
