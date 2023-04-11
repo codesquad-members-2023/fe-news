@@ -26,7 +26,7 @@ const rollingRightAnimation = ($element, content, idx) => {
   $camera.ontransitionend = ({ target }) => {
     target.removeAttribute('style');
     target.lastChild.removeAttribute('style');
-    target.removeChild(target.children[0]);
+    target.removeChild(target.querySelector('.auto__panel'));
   };
 };
 
@@ -49,10 +49,10 @@ const rollingLeftAnimation = ($element, content, idx) => {
   $camera.style.transform = 'translate3d(0px, -16px, 0px)';
 
   // 3. 애니메이션이 끝나면 camera의 style을 제거하고 newPanel의 top 값을 없애준다.
-  $camera.ontransitionend = (e) => {
-    e.target.removeAttribute('style');
-    e.target.lastChild.removeAttribute('style');
-    e.target.removeChild(e.target.children[0]);
+  $camera.ontransitionend = ({ target }) => {
+    target.removeAttribute('style');
+    target.lastChild.removeAttribute('style');
+    target.removeChild(target.querySelector('.auto__panel'));
   };
 };
 
