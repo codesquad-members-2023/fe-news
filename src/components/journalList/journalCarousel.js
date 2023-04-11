@@ -2,7 +2,7 @@ export function Carousel() {
   this.container;
   this.leftBtn;
   this.rightBtn;
-  this.directionByNum = 0;
+  this.page = 0;
 }
 
 Carousel.prototype.beElement = function () {
@@ -17,25 +17,23 @@ Carousel.prototype.beElement = function () {
 };
 
 Carousel.prototype.moveCarousel = function (direction) {
+  const WIDTH_PER_PAGE = 900;
+  const FIRST_PAGE = 0;
+  const LAST_PAGE = 3;
+
   this.container = document.querySelector(".journal-container");
   if (direction === "left") {
-    this.directionByNum = 1;
+    this.page--;
   } else if (direction === "right") {
-    this.directionByNum = -1;
+    this.page++;
   }
 
-  const transformStyle = getComputedStyle(this.container).getPropertyValue(
-    "transform"
-  );
-  const transformMatrix = new WebKitCSSMatrix(transformStyle);
-  const currentTranslateX = transformMatrix.m41;
+  const currentPosition = this.page * -WIDTH_PER_PAGE;
+  this.container.style.transform = `translateX(${currentPosition}px)`;
 
-  const newTranslateX = currentTranslateX + 900 * this.directionByNum;
-  this.container.style.transform = `translateX(${newTranslateX}px)`;
-
-  if (newTranslateX === 0) {
+  if (this.page === FIRST_PAGE) {
     this.leftBtn.style.display = "none";
-  } else if (newTranslateX === -2700) {
+  } else if (this.page === LAST_PAGE) {
     this.rightBtn.style.display = "none";
   } else {
     this.leftBtn.style.display = "block";
