@@ -15,8 +15,8 @@ const makeRollingData = () => {
   const dataList = [];
   const rollingData = document.querySelectorAll(".type02 li a strong");
   rollingData.forEach((data) => {
-    const dataObj={headLine:data.innerText};
+    const dataObj = { headLine: data.innerText };
     dataList.push(dataObj);
-});
+  });
   console.log(dataList);
 };

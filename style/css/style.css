@@ -51,12 +51,20 @@
   background: var(--color-off-white);
   border: 1px solid var(--color-gray-100);
 }
+.rolling-bar_left img {
+  width: 49px;
+  height: 17px;
+}
 .rolling-bar_right {
   display: flex;
   width: 461px;
   height: 49px;
   background: var(--color-off-white);
   border: 1px solid var(--color-gray-100);
+}
+.rolling-bar_right img {
+  width: 49px;
+  height: 17px;
 }
 
 html,
@@ -206,3 +214,5 @@ table {
 * {
   font-family: Pretendard, sans-serif;
 }
+
+/*# sourceMappingURL=style.css.map */

@@ -1,14 +1,27 @@
-import { insertNewsHeader } from "../store/insertNewsHeader.js";
-import { insertRollingBar } from "../store/insertRollingBar.js";
-
-const set = { root: document.querySelector(".root"), newsHeader: document.createElement("header"), newsRollingBar: document.createElement("article") };
+const insertDate = () => {
+  const days = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = (today.getMonth() + 1).length == 1 ? "0" + today.getMonth() + 1 : today.getMonth() + 1;
+  let date = today.getDate().length == 1 ? "0" + today.getDate() : today.getDate();
+  let day = days[today.getDay()];
+  return `<span class="date_text">${year}. ${month}. ${date}. ${day}</span>`;
+};
+const newsHeaderTemplate = () =>
+  `<div class="news__header">
+  <div class="heder__logo">
+  <a onClick="window.location.reload()" style="cursor: pointer;">
+  <img class = "logo_img" src="assets/newsPaper.svg"></a>
+  <span class= "logo_text">뉴스스탠드</span>
+  </div>
+  <div class="header__date">${insertDate()}</div>
+  </div>`;
 
 const viewNewsHeader = () => {
-  set.root.appendChild(set.newsHeader);
-  set.newsHeader.innerHTML = insertNewsHeader();
+  const root = document.querySelector(".root");
+  const newsHeader = document.createElement("header");
+  root.appendChild(newsHeader);
+  newsHeader.innerHTML = newsHeaderTemplate();
 };
-const viewRollingBar = () => {
-  set.root.appendChild(set.newsRollingBar);
-  set.newsRollingBar.innerHTML = insertRollingBar();
-};
-export { viewNewsHeader, viewRollingBar };
+
+export { viewNewsHeader };

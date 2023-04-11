@@ -17,9 +17,18 @@
   &_left {
     display: flex;
     @include rollingBar();
+    img {
+      width: 49px;
+      height: 17px;
+    }
   }
+
   &_right {
     display: flex;
     @include rollingBar();
+    img {
+      width: 49px;
+      height: 17px;
+    }
   }
 }
