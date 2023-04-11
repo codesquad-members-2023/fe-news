@@ -51,15 +51,17 @@ export const fetchActionCreator = {
 };
 
 export const displayActionCreator = {
-  gridSubscribeBtnClick: () => {
+  gridSubscribeBtnClick: (payload) => {
     return {
       type: actionTypes.displayActions.GRID_SUBSCRIBE_BUTTON_CLICK,
+      payload,
     };
   },
 
-  gridUnsubscribeBtnClick: () => {
+  gridUnsubscribeBtnClick: (payload) => {
     return {
       type: actionTypes.displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK,
+      payload,
     };
   },
 };
