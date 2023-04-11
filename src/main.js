@@ -3,17 +3,22 @@ import { createNewsStandHeadLine } from "./components/headLine/headLineView.js";
 import createNewsStandJournal from "./components/journalList/journalListView.js";
 
 // main 구성
-const mainTag = document.createElement("main");
-mainTag.classList.add("news-stand");
-document.body.appendChild(mainTag);
+const init = () => {
+  const mainSpace = document.createElement("main");
+  mainSpace.classList.add("news-stand");
+  document.body.appendChild(mainSpace);
 
-const test = createNewsStandJournal();
+  const journalSpace = createNewsStandJournal();
 
-// main에 헤더. 헤드라인, 언론사 추가
-mainTag.append(
-  createNewsStandHeader(),
-  createNewsStandHeadLine(),
-  test.journalListEl
-);
+  // main에 헤더. 헤드라인, 언론사 추가
+  mainSpace.append(
+    createNewsStandHeader(),
+    createNewsStandHeadLine(),
+    journalSpace.journalListEl
+  );
 
-test.journalCarousel.addEvent();
+  // journal 캐러셀에 이벤트 부여
+  journalSpace.journalCarousel.addEvent();
+};
+
+init();
