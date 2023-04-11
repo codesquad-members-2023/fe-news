@@ -29,14 +29,14 @@ export default class Component {
     this.parentElement = dupParentElement;
 
     this.setEvent();
-    this.componentDidMount();
     this.renderChildComponents();
+    this.componentDidMount();
   }
 
   update() {
     this.parentElement.innerHTML = this.template();
-    this.componentDidUpdate();
     this.renderChildComponents();
+    this.componentDidUpdate();
   }
 
   componentDidMount() {}

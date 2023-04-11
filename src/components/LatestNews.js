@@ -1,14 +1,7 @@
 import Component from "../core/Component.js";
-import Bar from "./Bar.js";
+import LatestNewsBar from "./LatestNewsBar.js";
 
 export default class LatestNews extends Component {
-  template() {
-    return `
-    <div class="latest-news__bar"></div>
-    <div class="latest-news__bar"></div>
-  `;
-  }
-
   setup() {
     this.state = {
       headNewses: [],
@@ -34,14 +27,23 @@ export default class LatestNews extends Component {
         headNewses: headerData,
         breakNewses: breakData,
       });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  template() {
+    return `
+    <div class="latest-news__bar"></div>
+    <div class="latest-news__bar"></div>
+  `;
   }
 
   renderChildComponents() {
     const latestNewsBars =
       this.parentElement.querySelectorAll(".latest-news__bar");
     const { headNewses, breakNewses } = this.state;
-    new Bar(latestNewsBars[0], { newses: headNewses });
-    new Bar(latestNewsBars[1], { newses: breakNewses });
+    new LatestNewsBar(latestNewsBars[0], { newses: headNewses });
+    new LatestNewsBar(latestNewsBars[1], { newses: breakNewses });
   }
 }
