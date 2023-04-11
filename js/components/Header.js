@@ -4,19 +4,19 @@ const createHeaderElement = () => {
   const $element = createElement('header', {
     id: 'header',
   });
-  const $leftElement = createLeftElement();
-  const $rightElement = createRightElement();
+  const $newsStandLogo = createNewsStandLogo();
+  const $systemDate = createSystemDate();
 
-  $leftElement.addEventListener('click', () => {
+  $newsStandLogo.addEventListener('click', () => {
     window.location.reload();
   });
 
-  $element.append($leftElement, $rightElement);
+  $element.append($newsStandLogo, $systemDate);
   return $element;
 };
 
-const createLeftElement = () => {
-  const $leftElement = createElement('div', {
+const createNewsStandLogo = () => {
+  const $newsStandLogo = createElement('div', {
     class: 'header__logo',
   });
 
@@ -28,19 +28,19 @@ const createLeftElement = () => {
   const $logoText = createElement('span');
   $logoText.innerText = '뉴스스탠드';
 
-  $leftElement.append($a);
-  $leftElement.childNodes[0].append($logo, $logoText);
+  $newsStandLogo.append($a);
+  $newsStandLogo.childNodes[0].append($logo, $logoText);
 
-  return $leftElement;
+  return $newsStandLogo;
 };
 
-const createRightElement = () => {
-  const $rightElement = createElement('span', {
+const createSystemDate = () => {
+  const $systemDate = createElement('span', {
     class: 'header__current-date',
   });
-  $rightElement.innerText = changeKorFormatDate();
+  $systemDate.innerText = changeKorFormatDate();
 
-  return $rightElement;
+  return $systemDate;
 };
 
 const changeKorFormatDate = () => {
