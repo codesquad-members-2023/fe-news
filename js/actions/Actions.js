@@ -8,10 +8,10 @@ export const fetchActionCreator = {
     return { type: actionTypes.fetchActions.FETCH_AUTO_DATA_REQUEST };
   },
 
-  fetchAutoDataSuccess: (data) => {
+  fetchAutoDataSuccess: (payload) => {
     return {
       type: actionTypes.fetchActions.FETCH_AUTO_DATA_SUCCESS,
-      payload: data,
+      payload,
     };
   },
 
@@ -19,10 +19,11 @@ export const fetchActionCreator = {
     return { type: actionTypes.fetchActions.FETCH_MEDIA_DATA_REQUEST };
   },
 
-  fetchMediaDataSuccess: (data) => {
+  fetchMediaDataSuccess: (payload) => {
+    // Crong Review : payload로 받아서 바로 payload만 작성!
     return {
       type: actionTypes.fetchActions.FETCH_MEDIA_DATA_SUCCESS,
-      payload: data,
+      payload,
     };
   },
 
