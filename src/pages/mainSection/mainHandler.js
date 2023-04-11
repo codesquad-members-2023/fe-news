@@ -16,10 +16,14 @@ class MainHandler {
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        this.#data = data
+        this.#data = this.#shuffleData(data)
         this.#initMainView()
         this.#onClickGridBtn()
       })
+  }
+
+  #shuffleData(data) {
+    return data.sort(() => Math.random() - 0.5)
   }
 
   #initMainView() {
