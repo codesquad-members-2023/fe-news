@@ -4,7 +4,9 @@ export class GridItem extends Component {
   setUp() {
     const { pressIcon, subscribeStatus } = this.props;
     const btnText =
-      subscribeStatus === "구독되어 있지 않습니다." ? "구독하기" : "해지하기";
+      subscribeStatus === "구독되어 있지 않습니다."
+        ? "+ 구독하기"
+        : "- 해지하기";
 
     this._state = {
       currentIcon: pressIcon,
@@ -17,9 +19,12 @@ export class GridItem extends Component {
     const { currentIcon, btnText, btnIcon } = this._state;
     const itemNode =
       currentIcon === btnIcon
-        ? `<div class="subscribe-btn">${btnText}</div>
-           <img src="${currentIcon}" alt="" />`
-        : `<img src="${currentIcon}" alt="" />`;
+        ? `<div class="subscribe-btn">
+             <div class="subscribe-text">${btnText}</div>
+           </div>`
+        : `<div class="press-logo">
+             <img src="${currentIcon}" alt="" />
+           </div>`;
 
     return `${itemNode}`;
   }
@@ -27,28 +32,31 @@ export class GridItem extends Component {
   setEvent() {
     const { btnIcon } = this._state;
     const { pressIcon, subscribePress } = this.props;
-
-    this.target.addEventListener("mouseover", () => {
+    const showSubscribeBtn = () => {
       this.setState({ currentIcon: btnIcon });
-    });
+      this.target.removeEventListener("mouseover", showSubscribeBtn);
+    };
 
+    this.target.addEventListener("mouseover", showSubscribeBtn);
     this.target.addEventListener("mouseleave", () => {
       this.setState({ currentIcon: pressIcon });
+      this.target.addEventListener("mouseover", showSubscribeBtn);
     });
 
-    this.target.addEventListener("click", () => {
-      const { btnText } = this._state;
-      const btnTextToChange = this.getBtnTextToChange(btnText);
-
-      subscribePress(pressIcon);
-      this.setState({
-        currentIcon: btnIcon,
-        btnText: btnTextToChange,
-      });
+    this.target.addEventListener("click", ({ target }) => {
+      if (target.className === "subscribe-btn") {
+        const { btnText } = this._state;
+        const btnTextToChange = this.getBtnTextToChange(btnText);
+        subscribePress(pressIcon);
+        this.setState({
+          currentIcon: btnIcon,
+          btnText: btnTextToChange,
+        });
+      }
     });
   }
 
   getBtnTextToChange(btnState) {
-    return btnState === "구독하기" ? "해지하기" : "구독하기";
+    return btnState === "+ 구독하기" ? "- 해지하기" : "+ 구독하기";
   }
 }
