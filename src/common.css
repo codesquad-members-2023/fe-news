@@ -1,3 +1,5 @@
+@import url(variables.css);
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,8 +7,9 @@
 }
 
 .newsstand {
+  width: 800px;
   display: grid;
-  padding: 20%;
+  padding: 20% 10%;
 }
 
 /*
@@ -27,40 +30,95 @@ main 영역
 
 .main__header {
   display: flex;
-  padding: 3% 0;
+  padding: 3% 1%;
   gap: 2%;
 }
 
-.main__btn.subscribed-data {
+.main__filter-btn__container {
   flex: 1 1;
+  display: flex;
+  gap: 3%;
+  align-items: center;
+}
+
+.main__btn {
+  font-size: var(--font-lg);
+  cursor: pointer;
+}
+
+.main__btn.subscribed-press {
+  color: var(--color-gray-600);
+}
+
+.main__view-btn__container {
+  display: flex;
+  padding: 1% 0;
+}
+
+.clicked {
+  color: var(--color-black) !important;
+  font-weight: var(--weight-extra-bold);
+}
+
+.unclicked {
+  color: var(--color-gray-600);
+  font-weight: 0;
 }
 
 .view__container {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  border: 1px solid #D2DAE0;
+  border: 0.5px solid #D2DAE0;
   position: relative;
 }
 
 .view__container > .item__container {
-  padding: 25% 0;
+  padding: 20% 15%;
+  height: 80px;
   width: 100%;
-  text-align: center;
-  border: 1px solid #D2DAE0;
+  border: 0.5px solid #D2DAE0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.item__container > img {
-  height: 20px;
+.item__container img {
+  max-width: 100%;
   line-height: 16px;
 }
 
-.view-page-btn.left,
 .view-page-btn.right {
   position: absolute;
   top: 42%;
   right: -10%;
 }
 
+.view-page-btn.left {
+  position: absolute;
+  top: 42%;
+  left: -10%;
+}
+
 .subscribe-btn {
-  background-color: gray;
+  height: 20px;
+  width: 60px;
+  font-size: 11px;
+  background-color: var(--color-white);
+  color: #879298;
+  border: 1px solid #879298;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.press-logo {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}
+
+.hovered {
+  background-color: var(--color-gray-300);
 }
