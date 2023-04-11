@@ -1,16 +1,5 @@
-class Observable {
-  _observers: Set<(data: any) => void>;
+import userStore from './user';
 
-  constructor() {
-    this._observers = new Set();
-  }
-  subscribe(observer: (data: any) => void) {
-    this._observers.add(observer);
-  }
-  unsubscribe(observer: (data: any) => void) {
-    this._observers.delete(observer);
-  }
-  notify(data: any) {
-    this._observers.forEach((observer) => observer(data));
-  }
-}
+export default {
+  user: userStore,
+};
