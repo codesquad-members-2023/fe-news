@@ -1,5 +1,5 @@
-import { createElement } from '../../utils/dom.js';
-import { buttonClickEventHandler } from './mainButtonEvents.js';
+import { createElement } from '../../../utils/dom.js';
+import { buttonClickEventHandler } from './mainButtonEventHandlers.js';
 // TODO : 이벤트 등록 해야함.
 
 const createMainHeaderElement = () => {

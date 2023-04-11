@@ -1,11 +1,9 @@
-import { dispatch, getStoreState } from '../../store/store.js';
+import { dispatch, getStoreState } from '../../../store/store.js';
 
 export const buttonClickEventHandler = (event) => {
   const $targetButton = event.target.closest('a');
-
-  const $mainSection = event.currentTarget.parentNode.lastChild;
-
   if (!$targetButton) return;
+  const $mainSection = event.currentTarget.parentNode.lastChild;
 
   // TODO : 전체 언론사 grid일때, list일때, 다 다른 event를 부여해야함.
   // Case 문으로 좀 빼야할듯...

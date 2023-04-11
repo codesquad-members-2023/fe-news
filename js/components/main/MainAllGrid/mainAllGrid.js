@@ -1,6 +1,10 @@
-import { subscribe } from '../../store/store.js';
-import { createElement } from '../../utils/dom.js';
-import { fetchActionCreator } from '../../actions/actions.js';
+import { subscribe } from '../../../store/store.js';
+import { createElement } from '../../../utils/dom.js';
+import { fetchActionCreator } from '../../../actions/actions.js';
+import {
+  mouseEventHandler,
+  cilckEventHandler,
+} from './mainAllGridEventHandlers.js';
 
 const createMainGridElement = () => {
   const $mainGrid = createElement('section', {
@@ -41,7 +45,7 @@ const createPopUpBox = () => {
   });
   $popupWrap.innerHTML = `
   <a class = "subscribe-button">
-    <img  src="./asset/subscribeButton.svg" />
+    <img src="./asset/subscribeButton.svg" alt="subscribe" />
   </a>
     `;
   return $popupWrap;
@@ -67,18 +71,10 @@ const MainGrid = () => {
   const $grid = createMainGridElement();
   subscribe('mediaData', updateMediaContent.bind(null, $grid));
   fetchActionCreator.fetchMediaData();
-  // TODO : width, heigth 해결.
-  // mouseout 이벤트 구현.
-  $grid.addEventListener('mouseover', ({ target }) => {
-    const $targetBox = target.closest('.main-grid__box');
-    $targetBox.firstChild.classList.add('none');
-    $targetBox.lastChild.classList.remove('none');
-  });
-  $grid.addEventListener('mouseout', ({ target }) => {
-    const $targetBox = target.closest('.main-grid__box');
-    $targetBox.firstChild.classList.remove('none');
-    $targetBox.lastChild.classList.add('none');
-  });
+
+  $grid.addEventListener('mouseover', mouseEventHandler);
+  $grid.addEventListener('mouseout', mouseEventHandler);
+  $grid.addEventListener('click', cilckEventHandler);
   return $grid;
 };
 

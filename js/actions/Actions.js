@@ -27,14 +27,15 @@ export const fetchActionCreator = {
     };
   },
 
-  fetchAutoData: async () => {
-    dispatch(fetchActionCreator.fetchAutoDataRequest());
+  fetchAutoData: async function () {
+    dispatch(this.fetchAutoDataRequest());
 
     const response = await fetchAutoRollingData();
-    dispatch(fetchActionCreator.fetchAutoDataSuccess(response.data));
+    dispatch(this.fetchAutoDataSuccess(response.data));
   },
 
   fetchMediaData: async () => {
+    // 여기선 this를 사용 불가.. 왜냐면 화살표 함수를 사용해서...!
     dispatch(fetchActionCreator.fetchMediaDataRequest());
 
     const response = await fetchMediaData();
@@ -45,6 +46,20 @@ export const fetchActionCreator = {
     return {
       type: actionTypes.autoRollingActions.START_AUTO_ROLLING,
       payload: null, // startTime null로 보내주기.
+    };
+  },
+};
+
+export const displayActionCreator = {
+  gridSubscribeBtnClick: () => {
+    return {
+      type: actionTypes.displayActions.GRID_SUBSCRIBE_BUTTON_CLICK,
+    };
+  },
+
+  gridUnsubscribeBtnClick: () => {
+    return {
+      type: actionTypes.displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK,
     };
   },
 };

@@ -1,7 +1,7 @@
 import Header from './header.js';
 import AutoRolling from './autoRolling/autoRolling.js';
-import MainCommon from './main/mainCommon.js';
-import MainGrid from './main/mainGrid.js';
+import MainCommon from './main/MainCommon/mainCommon.js';
+import MainGrid from './main/MainAllGrid/mainAllGrid.js';
 import { createElement } from '../utils/dom.js';
 // 애플리케이션의 root 컴포넌트.
 
