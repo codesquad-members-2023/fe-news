@@ -6,8 +6,8 @@ interface ListView {
 }
 
 class ListView extends HTMLElement {
-  constructor() {
-    super();
+  connectedCallback() {
+    addShadow({ target: this });
     this.render();
   }
 
@@ -23,7 +23,6 @@ class ListView extends HTMLElement {
       <list-view-item-element press="sportalkorea" image="headline"></list-view-item-element>
     </div>
     `;
-    addShadow({ target: this });
     add({
       target: this.shadowRoot,
       template,

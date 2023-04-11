@@ -1,4 +1,4 @@
-import { createStore, ReducerType, ActionType } from '@utils/state';
+import { createStore, ReducerType, ActionType } from '@utils/redux';
 
 interface UserType {
   subscribingPress: string[];
@@ -9,14 +9,11 @@ const initialState: UserType = {
 };
 
 const reducer: ReducerType<UserType> = (
-  state = {
-    subscribingPress: [],
-  },
+  state = initialState,
   action: ActionType
 ): UserType => {
   switch (action.type) {
     case 'SUBSCRIBE':
-      console.log({ state });
       if (state.subscribingPress.length === 0)
         return { subscribingPress: [action.payload] };
       return {

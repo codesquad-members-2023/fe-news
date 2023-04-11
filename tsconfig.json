@@ -40,7 +40,7 @@
       "@utils/*": ["src/utils/*"],
       "@apis/*": ["src/apis/*"],
       "@services/*": ["src/services/*"],
-      "@types/*": ["server/schemas/"],
+      "@type/*": ["src/types/*"],
       "@store": ["src/store/index"],
       "@pages/*": ["src/pages/*"]
     },

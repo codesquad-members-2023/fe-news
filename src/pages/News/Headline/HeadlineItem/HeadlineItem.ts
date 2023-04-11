@@ -1,6 +1,6 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
 import HeadlineItemStyle from './HeadlineItemStyle';
-import { useState } from '@utils/state';
+import { useState } from '@utils/redux';
 
 interface HeadlineItem {
   icon?: string | null;
