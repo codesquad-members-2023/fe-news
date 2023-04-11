@@ -4,7 +4,6 @@ import { getElement, createNode } from '../../script/utils.js'
 class MainView {
   #mainViewContainer
   currentView
-  #data
 
   constructor(data) {
     this.app = getElement('.app')

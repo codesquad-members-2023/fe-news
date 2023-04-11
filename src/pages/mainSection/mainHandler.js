@@ -1,3 +1,4 @@
+import { getElement } from '../../script/utils.js'
 import MainView from './mainView.js'
 
 class MainHandler {
@@ -16,6 +17,7 @@ class MainHandler {
       .then(data => {
         this.#data = data
         this.#initMainView()
+        this.#goToNextPage()
       })
   }
 
@@ -28,6 +30,7 @@ class MainHandler {
 
   #setGridDate(data) {
     const PRESSES_PER_PAGE = 24
+
     const endPress = PRESSES_PER_PAGE * this.#currentPage
     const startPress = endPress - PRESSES_PER_PAGE
 
@@ -42,7 +45,16 @@ class MainHandler {
   }
 
   #goToNextPage() {
-    // direction button에 addEventListener 추가하기
+    const button = getElement('ns-direction-btn')
+
+    button.addEventListener('click', ({ target }) => {
+      const clickedBtn = target.alt
+
+      if (clickedBtn === 'RightButton') this.#currentPage++
+      if (clickedBtn === 'LeftButton') this.#currentPage--
+
+      button.setAttribute('page', this.#currentPage)
+    })
   }
 }
 

@@ -11,12 +11,22 @@ ns-direction-btn {
   left: -5%;
 }
 
+ns-direction-btn img {
+  cursor: pointer;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
 .main-grid {
+  position: inherit;
   width: 930px;
   height: 388px;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, 1fr);
+  z-index: 1;
 }
 
 ns-main-grid-cell {
