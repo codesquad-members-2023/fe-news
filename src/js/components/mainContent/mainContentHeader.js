@@ -59,13 +59,19 @@ export default class MainContentHeader {
 
   setEvent() {
     this.$ele.addEventListener('click', ({ target }) => {
-      const { activePressTab, pressTabHandler } = this.props;
+      const { activePressTab, activeShowTab, pressTabHandler, showTabHandler } = this.props;
       const targetClassList = target.classList;
+
       if (
         (targetClassList.contains('press-tab__all') && activePressTab === 'subscribed') ||
         (targetClassList.contains('press-tab__subscribed') && activePressTab === 'all')
       )
         pressTabHandler();
+      if (
+        (targetClassList.contains('show-tab__grid') && activeShowTab === 'list') ||
+        (targetClassList.contains('show-tab__list') && activeShowTab === 'grid')
+      )
+        showTabHandler();
     });
   }
 }

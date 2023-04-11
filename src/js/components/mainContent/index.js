@@ -14,12 +14,13 @@ export default class MainContent {
 
   mount() {
     const { activePressTab, activeShowTab } = this.state;
-    const { pressTabHandler } = this;
+    const { pressTabHandler, showTabHandler } = this;
 
     this.header = new MainContentHeader(this.$ele, {
       activePressTab,
       activeShowTab,
-      pressTabHandler: pressTabHandler.bind(this)
+      pressTabHandler: pressTabHandler.bind(this),
+      showTabHandler: showTabHandler.bind(this)
     });
     this.header.mount();
 
@@ -43,5 +44,11 @@ export default class MainContent {
     const { activePressTab } = this.state;
     const newActivePressTab = activePressTab === 'all' ? 'subscribed' : 'all';
     this.update({ newState: { activePressTab: newActivePressTab } });
+  }
+
+  showTabHandler() {
+    const { activeShowTab } = this.state;
+    const newActiveShowTab = activeShowTab === 'grid' ? 'list' : 'grid';
+    this.update({ newState: { activeShowTab: newActiveShowTab } });
   }
 }
