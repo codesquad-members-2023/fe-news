@@ -40,9 +40,9 @@ export interface ActionType {
   payload?: any;
 }
 
-export const createStore = <S>(reducer: ReducerType<S>) => {
+export const createStore = <S>(reducer: ReducerType<S>, initialState: S) => {
   var currentReducer = reducer;
-  var currentState: S = null as S;
+  var currentState: S = initialState;
   var currentListeners = [] as ListenerType[];
   var nextListeners = currentListeners;
   var isDispatching = false;

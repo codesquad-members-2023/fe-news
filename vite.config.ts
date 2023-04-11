@@ -25,7 +25,7 @@ export default defineConfig({
       '@apis': path.resolve(__dirname, 'src/apis'),
       '@services': path.resolve(__dirname, 'src/services'),
       '@types': path.resolve(__dirname, 'server/schemas'),
-      '@store': path.resolve(__dirname, 'src/store'),
+      '@store': path.resolve(__dirname, 'src/store/index.ts'),
       '@pages': path.resolve(__dirname, 'src/pages'),
     },
   },

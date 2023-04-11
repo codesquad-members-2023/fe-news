@@ -27,8 +27,6 @@ export class GridViewElementStyle extends Style {
       position: relative;
     }
 
-    
-
     .press-logo {
       height: 20px;
       width: 100%;

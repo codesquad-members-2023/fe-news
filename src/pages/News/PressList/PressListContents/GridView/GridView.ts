@@ -1,13 +1,13 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
 import GridViewStyle from './GridViewStyle';
 
-interface GridViewItem {
+interface GridView {
   icon?: string | null;
 }
 
-class GridViewItem extends HTMLElement {
-  constructor() {
-    super();
+class GridView extends HTMLElement {
+  connectedCallback() {
+    addShadow({ target: this });
     this.render();
   }
 
@@ -17,19 +17,19 @@ class GridViewItem extends HTMLElement {
       name: 'press',
     });
 
+    const ITEM_NUMBER = 24;
+
     const template = `
     <div class="press-container">
-    ${Array.from({ length: 24 })
+    ${Array.from({ length: ITEM_NUMBER })
       .map(
         (_) =>
           `<grid-view-item-element press="sportalkorea"></grid-view-item-element>`
       )
       .join('')}
-    
-      
     </div>
     `;
-    addShadow({ target: this });
+
     add({
       target: this.shadowRoot,
       template,
@@ -41,4 +41,4 @@ class GridViewItem extends HTMLElement {
   }
 }
 
-export default GridViewItem;
+export default GridView;

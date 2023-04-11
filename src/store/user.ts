@@ -9,13 +9,20 @@ const initialState: UserType = {
 };
 
 const reducer: ReducerType<UserType> = (
-  state = initialState,
+  state = {
+    subscribingPress: [],
+  },
   action: ActionType
 ): UserType => {
   switch (action.type) {
-    case 'SUBSCRIBE_PRESS':
-      return { subscribingPress: [...state.subscribingPress, action.payload] };
-    case 'UNSUBSCRIBE_PRESS':
+    case 'SUBSCRIBE':
+      console.log({ state });
+      if (state.subscribingPress.length === 0)
+        return { subscribingPress: [action.payload] };
+      return {
+        subscribingPress: [...state.subscribingPress, action.payload],
+      };
+    case 'UNSUBSCRIBE':
       const newSubscribingPress = state.subscribingPress.filter(
         (press: string) => press !== action.payload
       );
@@ -25,5 +32,5 @@ const reducer: ReducerType<UserType> = (
   }
 };
 
-const store = createStore(reducer);
+const store = createStore(reducer, initialState);
 export default store;
