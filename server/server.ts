@@ -23,7 +23,6 @@ async function main() {
     const collection = db.collection('issues');
     const result = await collection.find().toArray();
     res.json(result);
-    console.log(result);
   });
 
   app.get('/articles', async (req, res) => {

@@ -30,24 +30,20 @@ export class NsIssueContainerComponent implements Component {
   }
 
   async getIssueData() {
-    const json = await customGet(`${BASIC_URL}/issues`).then((res) =>
+    const totalIssueData = await customGet(`${BASIC_URL}/issues`).then((res) =>
       res.json(),
     );
-    const data = await json;
-    return data[0];
+    return totalIssueData[0];
   }
 
   async attachIssueComponents() {
     const { leftRollingData, rightRollingData } = await this.getIssueData();
-
     const leftIssue = new NsIssueComponent({
-      articleTitles: leftRollingData,
+      issues: leftRollingData,
     });
-
     const rightIssue = new NsIssueComponent({
-      articleTitles: rightRollingData,
+      issues: rightRollingData,
     });
-
     leftIssue.attachTo(this);
     rightIssue.attachTo(this);
   }

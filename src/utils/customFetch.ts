@@ -1,4 +1,7 @@
-export const customGet = async (url: string, method = 'GET'): Promise<any> => {
+export const customGet = async (
+  url: string,
+  method = 'GET',
+): Promise<Response> => {
   try {
     const response = await fetch(url, {
       method,

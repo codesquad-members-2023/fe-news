@@ -17,14 +17,14 @@ export class NsIssueView extends AbstractView {
   }
 
   render(state: State) {
-    const { articleTitles } = state;
+    const { issues } = state;
     let issueIndex = 0;
     setInterval(() => {
-      if (issueIndex === (articleTitles as string[]).length) {
+      if (issueIndex === (issues as string[]).length) {
         issueIndex = 0;
       }
       ($('#article__title', this.element) as HTMLParagraphElement).innerText = (
-        articleTitles as string[]
+        issues as string[]
       )[issueIndex];
       issueIndex++;
     }, 1500);

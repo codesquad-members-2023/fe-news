@@ -10,8 +10,8 @@ export class NsIssueComponent implements Component {
     this._model = new NsIssueModel();
     this._view = new NsIssueView();
 
-    const { articleTitles } = props!;
-    this.setState({ articleTitles });
+    const { issues } = props!;
+    this.setState({ issues });
   }
 
   get element() {
