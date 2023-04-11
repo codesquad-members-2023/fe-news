@@ -1,9 +1,7 @@
 import createEl from '../../utils/util.js';
-import { CONSTANTS, API_URL, autoAnimationInfo }  from '../../core/constants.js';
 
 class RollingBar {
   #PANEL_COUNT = 2;
-  flickPanels;
   movePanel;
   constructor(rollingPressName, { autoAnimationInfo }, ...className) {
     this.ROLLING_LINK_PRESS = rollingPressName;
@@ -17,6 +15,7 @@ class RollingBar {
 
   render() {
     this.rollingBar.innerHTML = this.template();
+    //데이터 받아와서 class Left ? = titleLeft, right? = titleRight 갈아치우기
     this.autoMovePanel();
     this.addEventRollingBar();
     return this.rollingBar;

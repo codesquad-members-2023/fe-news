@@ -1,6 +1,6 @@
 import createEl from '../../utils/util.js';
 
-const header = (TITLENAME, systemTime) => {
+const Header = (TITLENAME, systemTime) => {
   const header = createEl("header", "title-area");
   header.innerHTML = `<a class="link-newsstand">${TITLENAME}</a>
   <span class="system-time">${systemTime}</span>`;
@@ -15,4 +15,4 @@ const reloadNewsStand = ({ target }) => {
   location.reload();
 }
 
-export default header;
+export default Header;

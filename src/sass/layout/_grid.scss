@@ -30,6 +30,7 @@
   }
 
   .grid-container {
+    // display: flex;
     max-width: $containerWidth;
 
     .grid-area {
@@ -41,7 +42,7 @@
       grid-gap: 1px;
       overflow-y: hidden;
 
-      li {
+      div {
         width: 100%;
         display: flex;
         justify-content: center;

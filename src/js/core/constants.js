@@ -1,4 +1,4 @@
-const CONSTANTS = {
+export const CONSTANTS = {
   'NEWS_STAND' : '뉴스스탠드',
   'ROLLING_LINK_PRESS' : '연합뉴스',
   'ALL_PRESS' : '전체 언론사',
@@ -6,15 +6,13 @@ const CONSTANTS = {
 }
 
 const URL = 'http://localhost:3001';
-const API_URL = {
+export const API_URL = {
   'rolling' : `${URL}/rollingData`,
   'media' : `${URL}/mediaData`,
 }
 
-const autoAnimationInfo = {
+export const autoAnimationInfo = {
   transitionDuration : '500ms',
   leftDelayTime : 4000,
   timeDiff : 1000,
 }
-
-export { CONSTANTS, API_URL, autoAnimationInfo };

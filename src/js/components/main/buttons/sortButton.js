@@ -1,7 +1,6 @@
 import createEl from "../../../utils/util.js";
 
 const sortButton = (allPress, subscribedPress) => {
-  const main = createEl("main");
   const buttons = createEl("div", "sort-buttons");
   buttons.innerHTML =`
     <div class="press-buttons">
@@ -14,8 +13,7 @@ const sortButton = (allPress, subscribedPress) => {
     </div>`;
 
   // button.addEventListener("click", );
-  main.append(buttons);
-  return main;
+  return buttons;
 }
 
 export default sortButton;
