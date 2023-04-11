@@ -21,18 +21,38 @@ const createMainGridPage = (page) => {
   const $mainGridBox = createElement('div', {
     class: 'main-grid__box',
   });
+  const $thumb = createElement('div', {
+    class: 'thumb',
+  });
+
+  const $popupBox = createPopUpBox();
+
+  $mainGridBox.append($thumb, $popupBox);
+
   for (let boxes = 0; boxes < 24; boxes++) {
     $mainGridPage.append($mainGridBox.cloneNode(true));
   }
   return $mainGridPage;
 };
 
+const createPopUpBox = () => {
+  const $popupWrap = createElement('div', {
+    class: 'popup-wrap none',
+  });
+  $popupWrap.innerHTML = `
+  <a class = "subscribe-button">
+    <img  src="./asset/subscribeButton.svg" />
+  </a>
+    `;
+  return $popupWrap;
+};
+
 const updateMediaContent = ($element, content) => {
   if (!content.loading) {
     const $gridBox = $element;
-    const $boxes = $gridBox.querySelectorAll('.main-grid__box');
+    const $thumbs = $gridBox.querySelectorAll('.thumb');
 
-    $boxes.forEach((item, index) => {
+    $thumbs.forEach((item, index) => {
       const $image = createElement('img', {
         class: 'main-grid__logo',
         src: `${content.data[index].mediaInfo.imgSrc}`,
@@ -47,7 +67,18 @@ const MainGrid = () => {
   const $grid = createMainGridElement();
   subscribe('mediaData', updateMediaContent.bind(null, $grid));
   fetchActionCreator.fetchMediaData();
-
+  // TODO : width, heigth 해결.
+  // mouseout 이벤트 구현.
+  $grid.addEventListener('mouseover', ({ target }) => {
+    const $targetBox = target.closest('.main-grid__box');
+    $targetBox.firstChild.classList.add('none');
+    $targetBox.lastChild.classList.remove('none');
+  });
+  $grid.addEventListener('mouseout', ({ target }) => {
+    const $targetBox = target.closest('.main-grid__box');
+    $targetBox.firstChild.classList.remove('none');
+    $targetBox.lastChild.classList.add('none');
+  });
   return $grid;
 };
 

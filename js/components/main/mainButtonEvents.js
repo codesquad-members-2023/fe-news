@@ -32,6 +32,7 @@ const buttonClickHandler = (direction, $mainSection, $targetButton) => {
   });
 };
 
+// store, state로 보내보자!
 const gridButtonHandler = (index, $targetButton, direction) => {
   switch (index) {
     case 0:
