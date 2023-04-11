@@ -10,26 +10,35 @@ const getDateContent = (data) => {
 export default class Header {
   constructor($parent) {
     this.$parent = $parent;
-    this.state = {
-      today: new Date()
-    };
+    this.$ele = document.createElement('header');
+    this.$ele.id = 'header';
+
+    this.state = {};
+    this.initState();
   }
 
   mount() {
-    this.$parent.insertAdjacentHTML('afterbegin', this.template());
+    this.render();
+    this.$parent.insertAdjacentElement('afterbegin', this.$ele);
+  }
+
+  render() {
+    this.$ele.innerHTML = this.template();
   }
 
   template() {
     const { today } = this.state;
 
     return /* html */ `
-      <header id="header">
-        <a href="/" class="header__logo">
-          <img src="../../src/images/logo.svg">
-          <span>뉴스스탠드</span>
-        </a>
-        <div class="header__today">${getDateContent(today)}</div>
-      </header>
+      <a href="/" class="header__logo">
+        <img src="../../src/images/logo.svg">
+        <span>뉴스스탠드</span>
+      </a>
+      <div class="header__today">${getDateContent(today)}</div>
     `;
+  }
+
+  initState() {
+    this.state = { today: new Date() };
   }
 }
