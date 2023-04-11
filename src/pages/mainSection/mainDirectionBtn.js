@@ -1,13 +1,14 @@
 class MainDirectionBtn extends HTMLElement {
   pageRange
-  #currentPage = 1
 
   constructor() {
     super()
   }
 
   connectedCallback() {
-    this.setAttribute('page', this.#currentPage)
+    const INIT_PAGE = 1
+
+    this.setAttribute('page', INIT_PAGE)
     this.innerHTML = `
       <button class="left-btn hidden">
         <img src="./asset/LeftButton.svg" alt="LeftButton">

@@ -3,7 +3,9 @@ import { getElement, createNode } from '../../script/utils.js'
 
 class MainView {
   #mainViewContainer
+  #directionButton
   currentView
+  #currentPage
 
   constructor(data) {
     this.app = getElement('.app')
@@ -16,8 +18,8 @@ class MainView {
   }
 
   #createDirectionBtn() {
-    const btn = createNode('ns-direction-btn')
-    this.#mainViewContainer.appendChild(btn)
+    this.#directionButton = createNode('ns-direction-btn')
+    this.#mainViewContainer.appendChild(this.#directionButton)
   }
 
   #createGridView(data) {
@@ -31,8 +33,14 @@ class MainView {
 
   #createListView(data) {}
 
-  setNewData(data) {
-    this.#createGridView(data)
+  setCurrentViewData(data) {
+    this.#currentPage = data.currentPage
+    this.setCurrentPage(this.#currentPage)
+    this.#createGridView(data.currentViewData)
+  }
+
+  setCurrentPage(page) {
+    this.#directionButton.setAttribute('page', page)
   }
 
   getCurrentView() {

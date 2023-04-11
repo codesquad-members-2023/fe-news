@@ -58,13 +58,13 @@ class MainHandler {
       if (clickedBtn === 'RightButton') this.#currentPage++
       if (clickedBtn === 'LeftButton') this.#currentPage--
 
-      button.setAttribute('page', this.#currentPage)
       this.#setGridDate()
-      this.#mainView.setNewData(this.#currentViewData)
+      this.#mainView.setCurrentViewData({
+        currentPage: this.#currentPage,
+        currentViewData: this.#currentViewData
+      })
     })
   }
-
-  #setGridCurrentPage(button) {}
 }
 
 export default MainHandler
