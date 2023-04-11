@@ -30,21 +30,25 @@ export default class MainContentHeader {
   }
 
   template() {
-    const { isAllPressTab, isGridTab } = this.props;
+    const { activePressTab, activeShowTab } = this.props;
     const { listBlue, listGray, gridBlue, gridGray } = this.#imgSrc;
 
     return /* html */ `
       <div class="press-tab">
         <span class="press-tab-btn press-tab__all ${
-          isAllPressTab ? 'active' : ''
+          activePressTab === 'all' ? 'active' : ''
         }">전체 언론사</span>
         <span class="press-tab-btn press-tab__subscribed ${
-          !isAllPressTab ? 'active' : ''
+          activePressTab === 'subscribed' ? 'active' : ''
         }">내가 구독한 언론사</span>
       </div>
       <div class="show-tab">
-        <img class="show-tab-btn show-tab__list" src="${isGridTab ? listBlue : listGray}">
-        <img class="show-tab-btn show-tab__grid" src="${!isGridTab ? gridBlue : gridGray}">
+        <img class="show-tab-btn show-tab__list" src="${
+          activeShowTab === 'list' ? listBlue : listGray
+        }">
+        <img class="show-tab-btn show-tab__grid" src="${
+          activeShowTab === 'grid' ? gridBlue : gridGray
+        }">
       </div>
     `;
   }
@@ -55,11 +59,11 @@ export default class MainContentHeader {
 
   setEvent() {
     this.$ele.addEventListener('click', ({ target }) => {
-      const { isAllPressTab, pressTabHandler } = this.props;
+      const { activePressTab, pressTabHandler } = this.props;
       const targetClassList = target.classList;
       if (
-        (targetClassList.contains('press-tab__all') && !isAllPressTab) ||
-        (targetClassList.contains('press-tab__subscribed') && isAllPressTab)
+        (targetClassList.contains('press-tab__all') && activePressTab === 'subscribed') ||
+        (targetClassList.contains('press-tab__subscribed') && activePressTab === 'all')
       )
         pressTabHandler();
     });

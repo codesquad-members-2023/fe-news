@@ -13,12 +13,12 @@ export default class MainContent {
   }
 
   mount() {
-    const { isAllPressTab, isGridTab } = this.state;
+    const { activePressTab, activeShowTab } = this.state;
     const { pressTabHandler } = this;
 
     this.header = new MainContentHeader(this.$ele, {
-      isAllPressTab,
-      isGridTab,
+      activePressTab,
+      activeShowTab,
       pressTabHandler: pressTabHandler.bind(this)
     });
     this.header.mount();
@@ -32,7 +32,7 @@ export default class MainContent {
   }
 
   initState() {
-    this.state = { isAllPressTab: true, isGridTab: true };
+    this.state = { activePressTab: 'all', activeShowTab: 'grid' };
   }
 
   setState(newState) {
@@ -40,7 +40,8 @@ export default class MainContent {
   }
 
   pressTabHandler() {
-    const { isAllPressTab } = this.state;
-    this.update({ newState: { isAllPressTab: !isAllPressTab } });
+    const { activePressTab } = this.state;
+    const newActivePressTab = activePressTab === 'all' ? 'subscribed' : 'all';
+    this.update({ newState: { activePressTab: newActivePressTab } });
   }
 }
