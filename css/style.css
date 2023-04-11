@@ -161,12 +161,29 @@ main {
   display: grid; }
 
 .main-grid__box {
+  position: relative;
+  border: 1px solid #d2dae0;
   width: 100%;
   height: 100%;
-  border: 1px solid #d2dae0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; }
+
+.main-grid__logo {
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center; }
 
-.main-grid__logo {
-  height: 20px; }
+.popup-wrap {
+  position: relative;
+  background-color: #f5f7f9;
+  width: inherit;
+  height: inherit; }
+
+.subscribe-button,
+.unsubscribe-button {
+  position: absolute;
+  top: 36px;
+  left: 40px; }
