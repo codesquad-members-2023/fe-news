@@ -66,7 +66,8 @@ export default class GridView extends Component {
 
     const isFirstPage = pageNum === INITIAL_PAGE_NUM;
     const isLastPage =
-      pageNum === Math.ceil(presses.length / LOGOS_NUM_PER_PAGE) - 1;
+      pageNum === Math.ceil(presses.length / LOGOS_NUM_PER_PAGE) - 1 ||
+      Math.ceil(presses.length / LOGOS_NUM_PER_PAGE) === 0;
     const leftButton = this.parentElement.querySelector(".button--left");
     const rightButton = this.parentElement.querySelector(".button--right");
 
@@ -78,10 +79,6 @@ export default class GridView extends Component {
     const startIdx = pageNum * LOGOS_NUM_PER_PAGE;
     const endIdx = startIdx + LOGOS_NUM_PER_PAGE;
     const singleSlidePresses = presses.slice(startIdx, endIdx);
-
-    console.log(presses);
-
-    console.log(singleSlidePresses);
 
     singleSlidePresses.forEach((press, idx) => {
       const src = press?.logo_src;

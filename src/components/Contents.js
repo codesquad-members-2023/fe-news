@@ -19,7 +19,7 @@ export default class Contents extends Component {
     this.state = {
       subscribingPresses: [],
       presses: [],
-      viewOption: GRID,
+      viewOption: LIST,
       subscriptionOption: ALL,
     };
   }
@@ -110,6 +110,9 @@ export default class Contents extends Component {
           addSubscribing: this.addSubscribing.bind(this),
           removeSubscribing: this.removeSubscribing.bind(this),
         })
-      : new ListView(viewContainer);
+      : new ListView(viewContainer, {
+          presses,
+          subscribingPresses,
+        });
   }
 }
