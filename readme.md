@@ -23,7 +23,7 @@
 ### 아키텍쳐 공부
 
 - [ ] MVC 패턴 공부
-- [ ]Observer Pattern 공부
+- [ ] Observer Pattern 공부
 - [ ] FLUX 패턴에서의 각 요소들의 역할 정확히 나누기
 
 ### 내 코드 리팩토링

@@ -13,18 +13,16 @@ main {
 .main-header__media {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   .main-header__all-media {
     font-weight: 700;
     font-size: 16px;
-    line-height: 19px;
     margin-right: 24px;
     color: $black;
   }
   .main-header__my-media {
     font-weight: 500;
     font-size: 16px;
-    line-height: 22px;
     color: $gray200;
   }
 }
