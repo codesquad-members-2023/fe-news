@@ -1,16 +1,21 @@
 class Observable {
-  _observers: Set<(data: any) => void>;
-
   constructor() {
     this._observers = new Set();
   }
-  subscribe(observer: (data: any) => void) {
+  subscribe(observer) {
     this._observers.add(observer);
   }
-  unsubscribe(observer: (data: any) => void) {
+  unsubscribe(observer) {
     this._observers.delete(observer);
   }
-  notify(data: any) {
+  notify(data) {
     this._observers.forEach((observer) => observer(data));
   }
 }
+
+const dispatch = ({ type, payload }) => {};
+
+// dispatch({
+//   type: GET_CONTRACT_LIST_SUCCESS,
+//   payload: response,
+// });

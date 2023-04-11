@@ -13,12 +13,9 @@ class PressListHeader extends HTMLElement {
 
   render() {
     const template = `
-    <grid-view-element></grid-view-element>
-    
+    <grid-view-element></grid-view-element>  
     <controller-element></controller-element>
-    
     `;
-    // <list-view-element></list-view-element>;
 
     addShadow({ target: this });
     add({
