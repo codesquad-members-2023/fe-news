@@ -31,6 +31,10 @@ class MainView {
 
   #createListView(data) {}
 
+  setNewData(data) {
+    this.#createGridView(data)
+  }
+
   getCurrentView() {
     return this.currentView
   }

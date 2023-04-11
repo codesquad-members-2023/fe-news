@@ -4,6 +4,7 @@ import MainView from './mainView.js'
 class MainHandler {
   #data
   #mainView
+  #currentView
   #currentViewData
   #currentPage = 1
 
@@ -17,34 +18,34 @@ class MainHandler {
       .then(data => {
         this.#data = data
         this.#initMainView()
-        this.#goToNextPage()
+        this.#onClickGridBtn()
       })
   }
 
   #initMainView() {
-    this.#setGridDate(this.#data)
+    this.#setGridDate()
 
-    const mainView = new MainView(this.#currentViewData)
-    this.#mainView = mainView.getCurrentView()
+    this.#mainView = new MainView(this.#currentViewData)
+    this.#currentView = this.#mainView.getCurrentView()
   }
 
-  #setGridDate(data) {
+  #setGridDate() {
     const PRESSES_PER_PAGE = 24
 
     const endPress = PRESSES_PER_PAGE * this.#currentPage
     const startPress = endPress - PRESSES_PER_PAGE
 
-    this.#currentViewData = data.slice(startPress, endPress)
+    this.#currentViewData = this.#data.slice(startPress, endPress)
   }
 
   #onSubscribe() {
-    this.#mainView.addEventListener('click', () => {
+    this.#currentView.addEventListener('click', () => {
       // get img alt
       // 구독 언론사에 추가
     })
   }
 
-  #goToNextPage() {
+  #onClickGridBtn() {
     const button = getElement('ns-direction-btn')
 
     button.addEventListener('click', ({ target }) => {
@@ -54,8 +55,12 @@ class MainHandler {
       if (clickedBtn === 'LeftButton') this.#currentPage--
 
       button.setAttribute('page', this.#currentPage)
+      this.#setGridDate()
+      this.#mainView.setNewData(this.#currentViewData)
     })
   }
+
+  #setGridCurrentPage(button) {}
 }
 
 export default MainHandler
