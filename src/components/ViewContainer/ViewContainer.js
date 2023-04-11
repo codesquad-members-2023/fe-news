@@ -5,8 +5,10 @@ export class ViewContainer extends Component {
   templete() {
     return `
       <div class="main__header">
-        <div class="main__btn all-press">전체 언론사</div>
-        <div class="main__btn subscribed-press">내가 구독한 언론사</div>
+        <div class="main__filter-btn__container">
+          <div class="main__btn all-press clicked">전체 언론사</div>
+          <div class="main__btn subscribed-press">내가 구독한 언론사</div>
+        </div>
         <img src="src/images/list_btn.svg" alt="" />
         <img src="src/images/grid_btn.svg" alt="" />
       </div>
@@ -16,41 +18,52 @@ export class ViewContainer extends Component {
 
   setEvent() {
     const viewContainer = this.target.querySelector(".view__container");
-    const subscribedPressSrcsBtn = this.target.querySelector(
-      ".main__btn.subscribed-press"
+    const filterBtns = this.target.querySelector(
+      ".main__filter-btn__container"
     );
-    const allPressBtn = this.target.querySelector(".main__btn.all-press");
     const { subscribePress } = this;
     const { pressData, subscribedPressSrcs } = this.props;
 
-    subscribedPressSrcsBtn.addEventListener("click", () => {
-      const subscribePressSubscribeStatus = this.getSubscribeStatus(
-        subscribedPressSrcs,
-        subscribedPressSrcs
+    filterBtns.addEventListener("click", ({ target, currentTarget }) => {
+      const isBtnClickedBefore = target.className.endsWith("clicked");
+      const filterBtns = [...currentTarget.childNodes].filter(
+        ({ nodeName }) => nodeName != "#text"
       );
-      new GridView(viewContainer, {
-        page: 1,
-        pageItemLimit: 24,
-        press: subscribedPressSrcs,
-        btnDir: ["left", "right"],
-        subscribeStatus: subscribePressSubscribeStatus,
-        subscribePress: subscribePress.bind(this),
-      });
-    });
+      const otherBtn = filterBtns.find((element) => element != target);
 
-    allPressBtn.addEventListener("click", () => {
-      const allPressSubscribeStatus = this.getSubscribeStatus(
-        pressData,
-        subscribedPressSrcs
-      );
-      new GridView(viewContainer, {
-        page: 1,
-        pageItemLimit: 24,
-        press: pressData,
-        btnDir: ["left", "right"],
-        subscribeStatus: allPressSubscribeStatus,
-        subscribePress: subscribePress.bind(this),
-      });
+      if (!isBtnClickedBefore) {
+        target.classList.add("clicked");
+        otherBtn.classList.remove("clicked");
+      }
+
+      if (target.closest(".main__btn.subscribed-press")) {
+        const subscribePressSubscribeStatus = this.getSubscribeStatus(
+          subscribedPressSrcs,
+          subscribedPressSrcs
+        );
+        new GridView(viewContainer, {
+          page: 1,
+          pageItemLimit: 24,
+          press: subscribedPressSrcs,
+          btnDir: ["left", "right"],
+          subscribeStatus: subscribePressSubscribeStatus,
+          subscribePress: subscribePress.bind(this),
+        });
+      }
+      if (target.closest(".main__btn.all-press")) {
+        const allPressSubscribeStatus = this.getSubscribeStatus(
+          pressData,
+          subscribedPressSrcs
+        );
+        new GridView(viewContainer, {
+          page: 1,
+          pageItemLimit: 24,
+          press: pressData,
+          btnDir: ["left", "right"],
+          subscribeStatus: allPressSubscribeStatus,
+          subscribePress: subscribePress.bind(this),
+        });
+      }
     });
   }
 
