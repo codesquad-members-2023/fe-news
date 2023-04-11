@@ -12,9 +12,6 @@ export class NsIssueContainerView extends AbstractView {
   }
 
   render(state: State) {
-    const { title } = state;
-    if (typeof title === 'string') {
-      ($('p', this.element) as HTMLParagraphElement).innerText = title;
-    }
+    return;
   }
 }

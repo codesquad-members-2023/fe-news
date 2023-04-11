@@ -3,6 +3,8 @@ import { Component } from '@src/types/interfaces';
 import { NsIssueContainerModel } from '@components/main/main__left/ns__issue-container/NsIssueContainerModel.js';
 import { NsIssueContainerView } from '@components/main/main__left/ns__issue-container/NsIssueContainerView.js';
 import { NsIssueComponent } from '@components/main/main__left/ns__issue-container/ns__issue/NsIssueComponent.js';
+import { customGet } from '@utils/customFetch.js';
+import { BASIC_URL } from '@src/constants/constants.js';
 
 export class NsIssueContainerComponent implements Component {
   private _model: NsIssueContainerModel;
@@ -11,17 +13,7 @@ export class NsIssueContainerComponent implements Component {
     this._model = new NsIssueContainerModel();
     this._view = new NsIssueContainerView();
 
-    const leftIssue = new NsIssueComponent({
-      press: '연합뉴스',
-      articleTitle: '[1보] 김기현·안철수·천하람·황교안, 與전대 본경선 진출',
-    });
-    const rightIssue = new NsIssueComponent({
-      press: '연합뉴스',
-      articleTitle: '[속보] 與최고위원 본경선, 김병민·김용태·김재원·민영삼',
-    });
-
-    leftIssue.attachTo(this);
-    rightIssue.attachTo(this);
+    this.attachIssueComponents();
   }
 
   get element() {
@@ -35,5 +27,28 @@ export class NsIssueContainerComponent implements Component {
 
   attachTo(component: Component, position: InsertPosition = 'beforeend') {
     component.element.insertAdjacentElement(position, this.element);
+  }
+
+  async getIssueData() {
+    const json = await customGet(`${BASIC_URL}/issues`).then((res) =>
+      res.json(),
+    );
+    const data = await json;
+    return data[0];
+  }
+
+  async attachIssueComponents() {
+    const { leftRollingData, rightRollingData } = await this.getIssueData();
+
+    const leftIssue = new NsIssueComponent({
+      articleTitles: leftRollingData,
+    });
+
+    const rightIssue = new NsIssueComponent({
+      articleTitles: rightRollingData,
+    });
+
+    leftIssue.attachTo(this);
+    rightIssue.attachTo(this);
   }
 }

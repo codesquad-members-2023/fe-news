@@ -7,9 +7,7 @@ import { MongoClient } from 'mongodb';
 dotenv.config();
 
 async function main() {
-  const client = new MongoClient(
-    `mongodb+srv://${process.env.MONGO_USER_NAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER_NAME}.iuwtymy.mongodb.net/?retryWrites=true&w=majority`,
-  );
+  const client = new MongoClient(process.env.MONGO_URL!);
   await client.connect();
   const db = client.db('newsStandDB');
 
