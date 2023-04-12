@@ -9,7 +9,7 @@
 .newsstand {
   width: 800px;
   display: grid;
-  padding: 20% 10%;
+  margin: 20% 5%;
 }
 
 /*
@@ -17,12 +17,66 @@ header 영역
 */
 
 .newsstand-header {
+  display: grid;
+  grid-template-columns: repeat(14,1fr);
+  justify-items: end;
+  align-items: end;
+  padding: 25px 6px;
+}
+
+.header-logo {
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 5;
   display: flex;
+  gap: 2%;
+  justify-content: flex-start;
 }
 
 .header-title {
-  flex: 1 1;
+  font-size: 20px;
+  font-weight: var(--weight-extra-bold);
 }
+
+.header-date {
+  font-size: 16px;
+  font-weight: 500px;
+  grid-column-start: 12;
+  grid-column-end: 15;
+}
+
+/*
+trend news 영역
+*/
+
+.newsstand-trendnews {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1%;
+  padding: 6px;
+}
+
+.trend-section {
+  display: flex;
+  height: 40px;
+  border: 1px solid #D2DAE0;
+  font-size: var(--font-md);
+  justify-items: center;
+  align-items: center;
+  background-color: var(--off-white);
+}
+
+.trend-pressname {
+  font-weight: var(--weight-extra-bold);
+  padding: 10px;
+}
+.trend-title {
+  flex: 1;
+  color: var(--color-gray-700)
+}
+
+
+
 
 /*
 main 영역
@@ -87,16 +141,41 @@ main 영역
   line-height: 16px;
 }
 
+.view-page-btn {
+  user-select:none;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px #D2DAE0;
+  color: var(--color-gray-700);
+}
+
 .view-page-btn.right {
   position: absolute;
-  top: 42%;
-  right: -10%;
+  top: 140px;
+  right: -3%;
+  font-size: 20px;
+  background-color: white;
+  border: 0.5px solid #D2DAE0;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  line-height: 42px;
 }
 
 .view-page-btn.left {
   position: absolute;
-  top: 42%;
-  left: -10%;
+  top: 140px;
+  left: -3%;
+  font-size: 20px;
+  background-color: white;
+  border: 0.5px solid #D2DAE0;
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  line-height: 42px;
 }
 
 .subscribe-btn {
@@ -110,6 +189,7 @@ main 영역
   align-items: center;
   justify-content: center;
   display: flex;
+  cursor: pointer;
 }
 
 .press-logo {
@@ -120,5 +200,5 @@ main 영역
 }
 
 .hovered {
-  background-color: var(--color-gray-300);
+  background-color: var(--off-white);
 }
