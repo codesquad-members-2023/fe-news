@@ -6,10 +6,13 @@ class MainHandler {
   #mainView
   #currentView
   #currentViewData
-  #currentPage = 1
+  #currentPage
+  #subscriptionList
 
   constructor() {
     this.#fetchData('http://localhost:3001/presses')
+    this.#currentPage = 1
+    this.#subscriptionList = new Set()
   }
 
   #fetchData(url) {
@@ -77,6 +80,13 @@ class MainHandler {
 
     grid.addEventListener('mouseout', ({ target }) => {
       toggleClass(target, 'none')
+    })
+
+    // 구독하기 누르면 -> 구독 리스트에 추가
+    grid.addEventListener('click', ({ target }) => {
+      const cell = target.closest('.grid-cell')
+      const pressName = cell?.querySelector('.press img').alt
+      this.#subscriptionList.add(pressName)
     })
   }
 }
