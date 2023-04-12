@@ -1,4 +1,4 @@
-const insertDate = () => {
+const makeDate = () => {
   const today = new Date();
   const options = { weekday: "long", year: "numeric", month: "2-digit", day: "2-digit" };
   return `<span class="date_text">${today.toLocaleDateString("ko-KO", options)}</span>`;
@@ -10,7 +10,7 @@ const newsHeaderTemplate = () =>
   <img class = "logo_img" src="assets/newsPaper.svg"></a>
   <span class= "logo_text">뉴스스탠드</span>
   </div>
-  <div class="header__date">${insertDate()}</div>
+  <div class="header__date">${makeDate()}</div>
   </div>`;
 
 const viewNewsHeader = () => {
