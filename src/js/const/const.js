@@ -6,6 +6,7 @@ const headerElement = {
 
 const headlineElement = {
   title: '연합뉴스',
+  headlineLength: 5,
 };
 
 const headlineAnimationInfo = {
@@ -17,4 +18,8 @@ const headlineAnimationInfo = {
 
 const dataUrl = 'http://localhost:3001/';
 
-export { headerElement, headlineElement, headlineAnimationInfo, dataUrl };
+const ref = {
+  newsstandContainer: document.querySelector('.newsstand_container'),
+};
+
+export { headerElement, headlineElement, headlineAnimationInfo, dataUrl, ref };

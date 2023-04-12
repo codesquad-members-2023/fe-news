@@ -1,25 +1,16 @@
-export default class HeaderMaker {
+export default class HEADERModel {
   constructor({ headerElement }) {
-    this.headerElement = headerElement;
-    this.template;
-    this.date;
+    this._state = {
+      logoImgSrc: headerElement.logoImgSrc,
+      imgAlt: headerElement.imgAlt,
+      title: headerElement.title,
+      date: this.getDate(),
+    };
+    this._headerElement = headerElement;
   }
 
-  getHeaderTemplate() {
-    this.getDate();
-    this.createHeader();
-    return this.template;
-  }
-
-  createHeader() {
-    this.template = `<div class="newsstand_header">
-    <span class="newsstand_header_title">
-      <a onClick="window.location.reload()">
-      <img class="header_title_logo" src="${this.headerElement.logoImgSrc}" alt="${this.headerElement.imgAlt}" />
-      <span class="header_title_text">${this.headerElement.title}</span></a>
-    </span>
-    <span class="newsstand_header_date">${this.date}</span>
-  </div>`;
+  getState() {
+    return this._state;
   }
 
   getDate() {
@@ -31,6 +22,8 @@ export default class HeaderMaker {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
     const dayOfWeek = days[today.getDay()];
 
-    this.date = `${year}.${month}.${date} ${dayOfWeek}요일`;
+    return `${year}.${month}.${date} ${dayOfWeek}요일`;
   }
 }
+
+// headline과 동일하게 getInitialState 매서드를 만들어야하나

@@ -1,23 +1,18 @@
-import HeaderMaker from './src/js/domMaker/headerMaker.js';
-import NewsStandView from './src/js/newsStandView.js';
-import HeadlineMaker from './src/js/domMaker/headlineMaker.js';
+import HEADERModel from './src/js/domMaker/headerMaker.js';
+import HEADERView from './src/js/view/headerView.js';
+import HEADLINEModel from './src/js/domMaker/headlineMaker.js';
+import HEADLINEView from './src/js/view/headlineView.js';
 import DataFetcher from './src/js/dataFetcher/dataFetcher.js';
-import {
-  headerElement,
-  headlineElement,
-  headlineAnimationInfo,
-  dataUrl,
-} from './src/js/const/const.js';
 
-const ref = {
-  newsStandContainer: document.querySelector('.newsstand_container'),
-};
+import { headerElement, headlineElement, dataUrl, ref } from './src/js/const/const.js';
 
 const main = () => {
   const dataFetcher = new DataFetcher(dataUrl);
-  const header = new HeaderMaker({ headerElement });
-  const headline = new HeadlineMaker({ headlineElement }, dataFetcher);
-  const view = new NewsStandView(ref, header, headline, headlineAnimationInfo);
+  const headerModel = new HEADERModel({ headerElement });
+  const headlineModel = new HEADLINEModel({ headlineElement }, dataFetcher);
+
+  new HEADERView({ headerModel }, ref);
+  new HEADLINEView({ headlineModel }, ref);
 };
 
 main();

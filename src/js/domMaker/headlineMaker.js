@@ -1,48 +1,24 @@
-export default class HeadlineMaker {
+export default class HEADLINEModel {
   constructor({ headlineElement }, dataFetcher) {
-    this.headlineElement = headlineElement;
-    this.dataFetcher = dataFetcher;
-    this.headlineLiLength = 5;
-    this.headlineData;
-    this.template;
+    this._state = {
+      title: headlineElement.title,
+      headlineLeftList: '',
+      headlineRightList: '',
+    };
+    this._headlineLength = headlineElement.headlineLength;
+    this._dataFetcher = dataFetcher;
   }
 
-  async getHeadlineTemplate() {
-    await this.setHeadlineData();
-    this.createHeadline();
-    return this.template;
+  getState() {
+    return this._state;
   }
 
-  async setHeadlineData() {
-    await this.dataFetcher.fetchData('headline');
-    this.headlineData = this.dataFetcher.getResult();
-  }
-
-  createHeadline() {
-    let headlineLeftLi = '';
-    let headlineRightLi = '';
-
-    this.headlineData.forEach((data) => {
-      data.id <= this.headlineLiLength
-        ? (headlineLeftLi += `<li>${data.title}</li>`)
-        : (headlineRightLi += `<li>${data.title}</li>`);
+  async getInitialState() {
+    await this._dataFetcher.fetchData('headline');
+    this._dataFetcher.getResult().forEach((headline) => {
+      headline.id <= this._headlineLength
+        ? (this._state.headlineLeftList += `<li>${headline.title}</li>`)
+        : (this._state.headlineRightList += `<li>${headline.title}</li>`);
     });
-
-    this.template = `<div class="newsstand_headline_container">
-    <div class="newsstand_headline left">
-      <a class="headline_press">${this.headlineElement.title}</a>
-      <div class="headline_rolling_container">
-        <ul class="headline_rolling_news left">${headlineLeftLi}
-        </ul>
-      </div>
-    </div>
-    <div class="newsstand_headline right">
-      <a class="headline_press">${this.headlineElement.title}</a>
-      <div class="headline_rolling_container">
-        <ul class="headline_rolling_news right">${headlineRightLi}
-        </ul>
-      </div>
-    </div>
-  </div>`;
   }
 }
