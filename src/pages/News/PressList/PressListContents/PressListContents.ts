@@ -51,7 +51,7 @@ class PressListContents extends HTMLElement {
     `;
 
     add({
-      target: this.shadowRoot,
+      target: this.wrap,
       template,
     });
   }

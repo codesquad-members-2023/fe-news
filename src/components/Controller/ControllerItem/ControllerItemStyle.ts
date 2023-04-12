@@ -1,17 +1,12 @@
-import Style from '@components/Style/Style';
 import { getProperty } from '@utils/dom';
 
-interface constructorProp {
-  target: HTMLElement;
-}
+export default function style(target: HTMLElement) {
+  const style = document.createElement('style');
+  const position = getProperty({ target, name: 'position' });
+  const rotate = position === 'right' ? '-90' : '90';
 
-export class PressListStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const position = getProperty({ target, name: 'position' });
-    const rotate = position === 'right' ? '-90' : '90';
-
-    const content = `
-   @import 'src/styles/index.css';
+  const content = `
+    @import 'src/styles/index.css';
 
     :host {
       display: flex;
@@ -62,8 +57,6 @@ export class PressListStyle extends Style {
     }
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default PressListStyle;

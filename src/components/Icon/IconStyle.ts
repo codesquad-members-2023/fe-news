@@ -1,17 +1,12 @@
-import Style from '@components/Style/Style';
 import { getProperty, add, addStyle } from '@utils/dom';
 
-interface constructorProp {
-  target: HTMLElement;
-}
+export default function style(target: HTMLElement) {
+  const style = document.createElement('style');
+  const width = getProperty({ target, name: 'width' });
+  const height = getProperty({ target, name: 'height' });
+  const size = getProperty({ target, name: 'size' });
 
-export class IconStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const width = getProperty({ target, name: 'width' });
-    const height = getProperty({ target, name: 'height' });
-    const size = getProperty({ target, name: 'size' });
-
-    const content = `
+  const content = `
     @import 'src/styles/index.css';
 
     icon-element {
@@ -21,8 +16,6 @@ export class IconStyle extends Style {
     }
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default IconStyle;

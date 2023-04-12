@@ -20,11 +20,12 @@ class GridViewItem extends HTMLElement {
 
   connectedCallback() {
     this.wrap = createWrap();
+    this.wrap.classList.add('grid-view-item');
     this.shadowRoot?.append(this.wrap);
     this.render();
     addStyle({
       target: this.wrap,
-      style: style(),
+      style: style.call(this, this),
     });
     this.append(this.wrap);
   }
@@ -34,6 +35,18 @@ class GridViewItem extends HTMLElement {
       target: this,
       name: 'image',
     });
+
+    const index = getProperty({
+      target: this,
+      name: 'index',
+    });
+
+    const isRightItem = (Number(index) + 1) % 6 === 0;
+    const isBottomItem = Number(index) + 1 > 18;
+    if (this.wrap) {
+      isRightItem && this.wrap.classList.add('right-item');
+      isBottomItem && this.wrap.classList.add('bottom-item');
+    }
 
     const template = `
     <button>

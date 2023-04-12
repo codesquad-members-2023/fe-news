@@ -1,5 +1,5 @@
 import { addShadow, getProperty, add, addStyle } from '@utils/dom';
-import ButtonStyle from './ButtonStyle';
+import style from './ButtonStyle';
 
 interface Button {
   icon?: string | null;
@@ -32,7 +32,7 @@ class Button extends HTMLElement {
 
     addStyle({
       target: this.shadowRoot,
-      style: new ButtonStyle({ target: this }).element,
+      style: style(),
     });
   }
 }

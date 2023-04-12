@@ -8,7 +8,7 @@ export default function style() {
       display: flex;
       flex-direction: column;
       border: 1px solid var(--gray100);
-      height: var(--presslist-conent-height);
+      height: var(--presslist-content-height);
     }
     `;
 

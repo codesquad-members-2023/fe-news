@@ -12,6 +12,7 @@ class GridView extends HTMLElement {
   connectedCallback() {
     addShadow({ target: this });
     this.wrap = createWrap();
+    this.wrap.classList.add('grid-view');
     this.shadowRoot?.append(this.wrap);
     this.render();
 
@@ -44,8 +45,8 @@ class GridView extends HTMLElement {
     <div class="press-container">
     ${pressList
       .map(
-        (press: PressType) =>
-          `<grid-view-item-element id='${press.pid}' image='${press.newMainLogo}'></grid-view-item-element>`
+        (press: PressType, i: number) =>
+          `<grid-view-item-element id='${press.pid}' image='${press.newMainLogo}' index='${i}'></grid-view-item-element>`
       )
       .join('')}
     </div>

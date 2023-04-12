@@ -1,5 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import ListViewStyle from './ControllerItemStyle';
+import style from './ControllerItemStyle';
 
 interface ControllerItem {}
 
@@ -13,8 +13,8 @@ class ControllerItem extends HTMLElement {
     const template = `
 
     <div class="controller-container">
-          <slider-controller-element position="left"></slider-controller-element>
-          <slider-controller-element position="right"></slider-controller-element>
+      <slider-controller-element position="left"></slider-controller-element>
+      <slider-controller-element position="right"></slider-controller-element>
     </div>
     <div class="controller"></div>
     `;
@@ -26,7 +26,7 @@ class ControllerItem extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new ListViewStyle({ target: this }).element,
+      style: style.call(this, this),
     });
   }
 }

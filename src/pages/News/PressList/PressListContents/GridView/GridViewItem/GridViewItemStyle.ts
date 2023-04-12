@@ -1,16 +1,31 @@
-export default function style() {
+import { getProperty } from '@utils/dom';
+
+export default function style(target: HTMLElement) {
   const style = document.createElement('style');
 
   const content = `
    @import 'src/styles/index.css';
 
-    .wrap {
+    .wrap.grid-view-item {
       width: 100%;
       min-width: 154px;
-      height: 96px;
+      height: 100%;
       display: inline-block;
       background-color: var(--white);
+      border-color: var(--gray100);
+      border-style: solid;
+      border-right-width: 1px;
+      border-bottom-width: 1px;
     }
+
+    .wrap.grid-view-item.right-item {
+      border-right-width: 0;
+    }
+
+    .wrap.grid-view-item.bottom-item {
+      border-bottom-width: 0;
+    }
+
 
     button {
       width: 100%;

@@ -1,12 +1,7 @@
-import Style from '@components/Style/Style';
+export default function style() {
+  const style = document.createElement('style');
 
-interface constructorProp {
-  target: HTMLElement;
-}
-
-export class ButtonStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const content = `
+  const content = `
     @import 'src/styles/index.css';
 
     button-element {
@@ -36,8 +31,6 @@ export class ButtonStyle extends Style {
 
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default ButtonStyle;

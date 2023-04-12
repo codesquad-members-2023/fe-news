@@ -1,5 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import ListViewStyle from './NewsStyle';
+import style from './NewsStyle';
 
 interface PressListHeader {
   icon?: string | null;
@@ -25,7 +25,7 @@ class PressListHeader extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new ListViewStyle({ target: this }).element,
+      style: style(),
     });
   }
 }

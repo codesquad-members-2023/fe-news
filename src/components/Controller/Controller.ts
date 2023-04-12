@@ -1,5 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import ListViewStyle from './ControllerStyle';
+import style from './ControllerStyle';
 
 interface Controller {}
 
@@ -24,7 +24,7 @@ class Controller extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new ListViewStyle({ target: this }).element,
+      style: style(),
     });
   }
 }

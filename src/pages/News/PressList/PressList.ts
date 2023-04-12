@@ -1,5 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import ListViewStyle from './PressListStyle';
+import style from './PressListStyle';
 import { useState } from '@utils/hooks';
 import { TabType, Tab } from '@type/news';
 
@@ -25,7 +25,7 @@ class PressList extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new ListViewStyle({ target: this }).element,
+      style: style(),
     });
   }
 }

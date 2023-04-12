@@ -1,6 +1,6 @@
 import { getProperty, add, addStyle } from '@utils/dom';
 import { icons } from '@assets/icons/index';
-import IconStyle from './IconStyle';
+import style from './IconStyle';
 
 interface setSvgProps {
   name: string;
@@ -20,7 +20,7 @@ class Icon extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     const name = getProperty({ target: this, name: 'name' });
     if (name) this.setSvg({ name });
-    addStyle({ target: this, style: new IconStyle({ target: this }).element });
+    addStyle({ target: this, style: style.call(this, this) });
   }
 
   async setSvg({ name }: setSvgProps) {

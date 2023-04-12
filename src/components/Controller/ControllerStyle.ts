@@ -1,13 +1,7 @@
-import Style from '@components/Style/Style';
-import { getProperty } from '@utils/dom';
+export default function style() {
+  const style = document.createElement('style');
 
-interface constructorProp {
-  target: HTMLElement;
-}
-
-export class PressListStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const content = `
+  const content = `
     @import 'src/styles/index.css';
 
     .controller {
@@ -20,12 +14,10 @@ export class PressListStyle extends Style {
       align-items: center;
 
       width: calc(100% + 72px + 72px);
-      height: var(--presslist-conent-height);
+      height: var(--presslist-content-height);
     }
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default PressListStyle;
