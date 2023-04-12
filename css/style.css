@@ -243,11 +243,11 @@ main {
       .main-list__news .main-list__media-content .main-news .main-news__img {
         width: 100%;
         height: 200px;
-        margin-bottom: 16px; }
+        margin-bottom: 16px;
+        border: 1px solid #d2dae0; }
       .main-list__news .main-list__media-content .main-news .main-news__title {
         font-weight: 500;
         font-size: 16px;
-        margin-top: 16px;
         color: #14212b; }
     .main-list__news .main-list__media-content .sub-news .sub-news__items {
       display: flex;
@@ -266,3 +266,6 @@ main {
       font-size: 14px;
       line-height: 17px;
       color: #879298; }
+
+.list__subscribe-button {
+  height: 24px; }
