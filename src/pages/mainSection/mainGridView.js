@@ -17,13 +17,26 @@ class MainGridView {
   }
 
   #createGridCell(logoId, name) {
-    const gridCell = createNode('ns-main-grid-cell')
-    gridCell.mainGridCellData = {
+    const container = createNode('div')
+    container.classList.add('grid-cell')
+
+    const subCell = createNode('ns-main-grid-cell')
+    subCell.classList.add('subscribe-btn', 'none')
+    subCell.mainGridCellData = {
+      logoId: './asset/SubscribeButton.svg',
+      name: 'subscribe'
+    }
+    container.appendChild(subCell)
+
+    const mainCell = createNode('ns-main-grid-cell')
+    mainCell.classList.add('press')
+    mainCell.mainGridCellData = {
       logoId,
       name
     }
+    container.appendChild(mainCell)
 
-    this.#mainGridView.appendChild(gridCell)
+    this.#mainGridView.appendChild(container)
   }
 
   getGridView() {

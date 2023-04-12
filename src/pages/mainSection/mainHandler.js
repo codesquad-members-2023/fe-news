@@ -18,7 +18,6 @@ class MainHandler {
       .then(data => {
         this.#data = this.#shuffleData(data)
         this.#initMainView()
-        this.#onClickGridBtn()
       })
   }
 
@@ -31,6 +30,8 @@ class MainHandler {
 
     this.#mainView = new MainView(this.#currentViewData)
     this.#currentView = this.#mainView.getCurrentView()
+    this.#onClickGridBtn()
+    this.#onGridEvent()
   }
 
   #setGridDate() {
@@ -40,13 +41,6 @@ class MainHandler {
     const startPress = endPress - PRESSES_PER_PAGE
 
     this.#currentViewData = this.#data.slice(startPress, endPress)
-  }
-
-  #onSubscribe() {
-    this.#currentView.addEventListener('click', () => {
-      // get img alt
-      // 구독 언론사에 추가
-    })
   }
 
   #onClickGridBtn() {
@@ -63,6 +57,26 @@ class MainHandler {
         currentPage: this.#currentPage,
         currentViewData: this.#currentViewData
       })
+    })
+  }
+
+  #onGridEvent() {
+    const grid = getElement('.main-view')
+
+    const toggleClass = (target, className) => {
+      const cell = target.closest('.grid-cell')
+      if (cell) {
+        cell.firstChild.classList.toggle(className)
+        cell.lastChild.classList.toggle(className)
+      }
+    }
+
+    grid.addEventListener('mouseover', ({ target }) => {
+      toggleClass(target, 'none')
+    })
+
+    grid.addEventListener('mouseout', ({ target }) => {
+      toggleClass(target, 'none')
     })
   }
 }
