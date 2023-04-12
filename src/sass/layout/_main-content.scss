@@ -6,6 +6,7 @@
 }
 
 .main-content__header {
+  padding: 10px 0;
   .press-tab,
   .show-tab {
     @include flex-row($justify-content: space-between, $align-items: center);
