@@ -1,9 +1,12 @@
 import createEl from '../../utils/util.js';
+import { RollingStore } from '../../stores/rollingStore.js'
 
 class RollingBar {
   #PANEL_COUNT = 2;
+  #titles;
   movePanel;
-  constructor(rollingPressName, { autoAnimationInfo }, ...className) {
+  constructor(rollingData, rollingPressName, { autoAnimationInfo }, ...className) {
+    this.#titles = rollingData;
     this.ROLLING_LINK_PRESS = rollingPressName;
     this.TRANSLATE_TIME = autoAnimationInfo.transitionDuration;
     this.LEFT_DELAY_TIME =autoAnimationInfo.leftDelayTime;
@@ -13,9 +16,16 @@ class RollingBar {
     this.rafState = true;
   }
 
+  setState() {
+    // RollingStore.dispatch('START_ROLLINGBAR', { rollingData });
+    // RollingStore.subscribe(() => {
+    //   this.titles = { ...RollingStore.getState() };
+    //   return this.titles;
+    // });
+  }
+
   render() {
     this.rollingBar.innerHTML = this.template();
-    //데이터 받아와서 class Left ? = titleLeft, right? = titleRight 갈아치우기
     this.autoMovePanel();
     this.addEventRollingBar();
     return this.rollingBar;
@@ -23,12 +33,15 @@ class RollingBar {
 
   template() {
     return this.classNames.reduce((template, className) => {
+      const titleData = className === 'left' ? this.#titles.leftTitle : this.#titles.rightTitle;
       template += `<div class="rolling-box">
       <a class="link-press">${this.ROLLING_LINK_PRESS}</a>
       <div class="flick-container">
         <ul class="flick-panels ${className}">
-          <li class="flick-panel">1</li>
-          <li class="flick-panel">2</li>
+        ${titleData.reduce((acc, cur) => {
+          acc += `<li class="flick-panel">${cur}</li>`;
+          return acc;
+        }, '')}
         </ul>
       </div>
     </div>`
