@@ -65,7 +65,7 @@ const createNewsHeaderElement = (mediaInfo) => {
   const headerInnerHTML = `
     <img class="main-list__logo" src="${mediaInfo.imgSrc}" />
       <span class="main-list__edit-time">${mediaInfo.modifiedTime}</span>
-      <a class="subscribe-button">
+      <a class="list__subscribe-button">
         <img src="./asset/subscribeButton.svg" alt="subscribe" />
       </a>
       `;
@@ -107,7 +107,7 @@ const renderMainAllList = ($main, content) => {
     content.viewOption.allOrMine === 'all';
   if (!breakCondition) return;
 
-  const $mainList = createMainListElement(mediaData[0]);
+  const $mainList = createMainListElement(mediaData[1]);
   $main.replaceChild($mainList, $main.lastChild);
 };
 
