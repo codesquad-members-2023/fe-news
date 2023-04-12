@@ -8,25 +8,21 @@ export class GridView extends Component {
   }
 
   templete() {
-    const { pageItemLimit } = this.props;
-    const { originalData, btnDir } = this._state;
+    const { itemLimitPerPage } = this.props;
+    const { allPressData, btnDir } = this._state;
 
     const btnNodes =
-      originalData.length > pageItemLimit
-        ? btnDir.reduce(
-            (acc, btnDir) =>
+      allPressData.length > itemLimitPerPage
+        ? Object.entries(btnDir).reduce(
+            (acc, [btnDir, btnDirSymbol]) =>
               acc +
-              `
-          <div class="view-page-btn ${btnDir}">
-            <img src="src/images/lg_${btnDir}_dir_btn.svg" alt="" />
-          </div>
-        `,
+              `<div class="view-page-btn ${btnDir}">${btnDirSymbol}</div>`,
             ""
           )
         : "";
 
     const itemContainers = Array.from(
-      { length: pageItemLimit },
+      { length: itemLimitPerPage },
       (_, index) =>
         `<div class="item__container" data-index-number="${index}"></div>`
     ).join("");
@@ -51,6 +47,7 @@ export class GridView extends Component {
       const itemContainer = this.target.querySelector(
         `[data-index-number="${index}"]`
       );
+
       const subscribeStatus = targetSubscribeStatus[index];
       new GridItem(itemContainer, {
         pressIcon: logo_src,
@@ -62,41 +59,51 @@ export class GridView extends Component {
   }
 
   getGridViewState(pressData, dir) {
-    let { page, press, originalData, btnDir, pageItemLimit, subscribeStatus } =
-      pressData;
-
-    const data = originalData ? originalData : press;
-    const nextPageNumber = dir ? this.setPageNumberBy(dir, page) : page;
-    const endIndex = nextPageNumber * pageItemLimit;
-    const firstIndex = endIndex - pageItemLimit;
-    const sortedItems = data.slice(firstIndex, endIndex);
-    const btnState = this.getBtnState(nextPageNumber, btnDir);
-    const subscribedPress = [];
+    const {
+      pageLimit,
+      itemLimitPerPage,
+      currentPageNumber,
+      press,
+      allPressData,
+      btnDir,
+      subscribeStatus,
+    } = pressData;
+    const currentPage = currentPageNumber ? currentPageNumber : 1;
+    const originalData = allPressData ? allPressData : press;
+    const nextPageNumber = dir
+      ? this.setPageNumberBy(dir, currentPage)
+      : currentPage;
+    const endIndex = nextPageNumber * itemLimitPerPage;
+    const firstIndex = endIndex - itemLimitPerPage;
+    const sortedItems = originalData.slice(firstIndex, endIndex);
+    const btnState = this.getBtnState(pageLimit, nextPageNumber, btnDir);
 
     const targetSubscribeStatus = subscribeStatus.slice(firstIndex, endIndex);
 
     return {
-      page: nextPageNumber,
+      pageLimit: pageLimit,
+      currentPageNumber: nextPageNumber,
       press: sortedItems,
-      originalData: data,
+      allPressData: allPressData,
       btnDir: btnState,
-      subscribedPress: subscribedPress,
-      pageItemLimit: pageItemLimit,
+      itemLimitPerPage: itemLimitPerPage,
       subscribeStatus: subscribeStatus,
       targetSubscribeStatus: targetSubscribeStatus,
     };
   }
 
   setPageNumberBy(dir, page) {
-    const result = dir === "right" ? (page += 1) : (page -= 1);
-    return result;
+    return dir === "right" ? (page += 1) : (page -= 1);
   }
 
-  getBtnState(nextPageNumber, btnDir) {
-    // 하드코딩? 수정 고민 필요
-    if (nextPageNumber === 1) btnDir = ["right"];
-    else if (nextPageNumber === 4) btnDir = ["left"];
-    else btnDir = ["left", "right"];
+  getBtnState(pageLimit, nextPageNumber, btnDir) {
+    const FIRST_PAGE = 1;
+    const LAST_PAGE = pageLimit;
+
+    if (nextPageNumber === FIRST_PAGE) btnDir = { right: ">" };
+    else if (nextPageNumber === LAST_PAGE) btnDir = { left: "<" };
+    else btnDir = { left: "<", right: ">" };
+
     return btnDir;
   }
 }
