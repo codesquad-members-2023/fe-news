@@ -20,13 +20,25 @@ const insertNewsData = (newsData, rollingBox) => {
   });
 };
 
-const rollingData = () => {
-  const rollingBar = document.querySelector(".data_list_left");
-  setInterval(() => {
-    rollingBar.style.transform = `translate3d(0, -31px, 0)`;
-    rollingBar.style.transitionDuration = "500ms";
-    rollingBar.appendChild(rollingBar.firstChild);
-  }, 5000);
-};
+const rollingData = (className) => {
+  const rollingBar = document.querySelector(className);
+  let startTime = null;
+  const autoRolling = (timestamp) => {
+    if (!startTime) startTime = timestamp;
 
+    const progress = timestamp - startTime;
+    if (progress >= 5000) {
+      rollingBar.style.transform = `translate3d(0, -31px, 0)`;
+      rollingBar.style.transitionDuration = "500ms";
+
+      startTime = timestamp;
+    }
+    rollingBar.ontransitionend = () => {
+      rollingBar.removeAttribute("style");
+      rollingBar.appendChild(rollingBar.firstChild);
+    };
+    requestAnimationFrame(autoRolling);
+  };
+  autoRolling();
+};
 export { viewRollingBar, insertNewsData, rollingData };
