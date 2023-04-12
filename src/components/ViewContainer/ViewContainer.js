@@ -25,13 +25,18 @@ export class ViewContainer extends Component {
     const { pressData, subscribedPressSrcs } = this.props;
 
     filterBtns.addEventListener("click", ({ target, currentTarget }) => {
-      const isBtnClickedBefore = target.className.endsWith("clicked");
+      const [elementName, type] = target.className.split(" ");
       const filterBtns = [...currentTarget.childNodes].filter(
         ({ nodeName }) => nodeName != "#text"
       );
-      const otherBtn = filterBtns.find((element) => element != target);
+      const otherBtn = filterBtns.find((element) => element !== target);
 
-      if (!isBtnClickedBefore) {
+      if (elementName === "main__btn" && type !== "clicked") {
+        target.classList.add("clicked");
+        otherBtn.classList.remove("clicked");
+        otherBtn.classList.add("unclicked");
+      } else if (elementName === "main__btn" && type === "unclicked") {
+        target.classList.remove("unclicked");
         target.classList.add("clicked");
         otherBtn.classList.remove("clicked");
       }
@@ -42,9 +47,9 @@ export class ViewContainer extends Component {
           subscribedPressSrcs
         );
         new GridView(viewContainer, {
-          page: 1,
-          pageItemLimit: 24,
-          press: subscribedPressSrcs,
+          pageLimit: 4,
+          itemLimitPerPage: 24,
+          allPressData: subscribedPressSrcs,
           btnDir: ["left", "right"],
           subscribeStatus: subscribePressSubscribeStatus,
           subscribePress: subscribePress.bind(this),
@@ -56,9 +61,9 @@ export class ViewContainer extends Component {
           subscribedPressSrcs
         );
         new GridView(viewContainer, {
-          page: 1,
-          pageItemLimit: 24,
-          press: pressData,
+          pageLimit: 4,
+          itemLimitPerPage: 24,
+          allPressData: pressData,
           btnDir: ["left", "right"],
           subscribeStatus: allPressSubscribeStatus,
           subscribePress: subscribePress.bind(this),
@@ -77,9 +82,9 @@ export class ViewContainer extends Component {
     );
 
     new GridView(viewContainer, {
-      page: 1,
-      pageItemLimit: 24,
-      press: pressData,
+      pageLimit: 4,
+      itemLimitPerPage: 24,
+      allPressData: pressData,
       btnDir: ["left", "right"],
       subscribeStatus: subscribeStatus,
       subscribePress: subscribePress.bind(this),
