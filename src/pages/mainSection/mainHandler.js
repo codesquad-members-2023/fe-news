@@ -43,7 +43,13 @@ class MainHandler {
     const endPress = PRESSES_PER_PAGE * this.#currentPage
     const startPress = endPress - PRESSES_PER_PAGE
 
-    this.#currentViewData = this.#data.slice(startPress, endPress)
+    const slicedData = this.#data.slice(startPress, endPress)
+
+    this.#currentViewData = slicedData.map(press => {
+      const isSubscription = [...this.#subscriptionList].includes(press.name)
+      press.isSubscription = isSubscription
+      return press
+    })
   }
 
   #onClickGridBtn() {
@@ -55,11 +61,15 @@ class MainHandler {
       if (clickedBtn === 'RightButton') this.#currentPage++
       if (clickedBtn === 'LeftButton') this.#currentPage--
 
-      this.#setGridDate()
-      this.#mainView.setCurrentViewData({
-        currentPage: this.#currentPage,
-        currentViewData: this.#currentViewData
-      })
+      this.#renderGridView()
+    })
+  }
+
+  #renderGridView() {
+    this.#setGridDate()
+    this.#mainView.setCurrentViewData({
+      currentPage: this.#currentPage,
+      currentViewData: this.#currentViewData
     })
   }
 
@@ -82,11 +92,16 @@ class MainHandler {
       toggleClass(target, 'none')
     })
 
-    // 구독하기 누르면 -> 구독 리스트에 추가
     grid.addEventListener('click', ({ target }) => {
       const cell = target.closest('.grid-cell')
       const pressName = cell?.querySelector('.press img').alt
-      this.#subscriptionList.add(pressName)
+      const subscriptionStatus = cell?.querySelector('.subscribe-btn img').alt
+
+      subscriptionStatus === 'subscription'
+        ? this.#subscriptionList.delete(pressName)
+        : this.#subscriptionList.add(pressName)
+
+      this.#renderGridView()
     })
   }
 }
