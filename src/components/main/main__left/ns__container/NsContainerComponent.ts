@@ -3,7 +3,7 @@ import { Component } from '@src/types/interfaces';
 import { NsContainerModel } from '@components/main/main__left/ns__container/NsContainerModel.js';
 import { NsContainerView } from '@components/main/main__left/ns__container/NsContainerView.js';
 import { NsNavbarComponent } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarComponent.js';
-import { NsPressPressContainerComponent } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerComponent.js';
+import { NsPressContainerComponent } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerComponent.js';
 
 export class NsContainerComponent implements Component {
   private _model: NsContainerModel;
@@ -13,13 +13,17 @@ export class NsContainerComponent implements Component {
     this._view = new NsContainerView();
 
     const nsNavbar = new NsNavbarComponent();
-    const nsPressContainer = new NsPressPressContainerComponent();
+    const nsPressContainer = new NsPressContainerComponent();
     nsNavbar.attachTo(this);
     nsPressContainer.attachTo(this);
   }
 
   get element() {
     return this._view.element;
+  }
+
+  get state() {
+    return this._model.state;
   }
 
   setState(state: State) {

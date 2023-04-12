@@ -18,4 +18,5 @@ export interface Component {
   // private setState(state: State): void;
   get element(): HTMLElement;
   attachTo(component: Component): void;
+  get state(): State;
 }

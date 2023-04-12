@@ -1,5 +1,6 @@
 import { State } from '@src/types/types';
 import { Model, View } from '@src/types/interfaces';
+import { $ } from '@utils/dom.js';
 
 export abstract class AbstractModel implements Model {
   protected _state: State;
@@ -42,5 +43,13 @@ export abstract class AbstractView implements View {
 
   get element() {
     return this._element;
+  }
+
+  setEvent(
+    selector: string,
+    eventName: keyof WindowEventMap,
+    handler: EventListener,
+  ) {
+    $(selector, this.element)!.addEventListener(eventName, handler);
   }
 }

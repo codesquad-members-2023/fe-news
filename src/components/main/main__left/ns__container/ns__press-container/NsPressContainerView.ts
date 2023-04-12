@@ -8,7 +8,7 @@ export class NsPressContainerView extends AbstractView {
     super();
   }
 
-  protected setTemplate() {
+  setTemplate() {
     this._templateElement.innerHTML = `<section class="py-2 flex-auto flex flex-row justify-between items-center">
                                          <button id="btn-prev" class=""><</button>
                                          <ul id="ns__grid-container" class="grid grid-cols-6 grid-rows-4 w-full h-full">
@@ -18,20 +18,25 @@ export class NsPressContainerView extends AbstractView {
   }
 
   render(state: State) {
-    const { randomArticles } = state;
-    const imgSources = (randomArticles as Article[]).map(
-      (article) => article.mediaInfo.imgSrc,
-    );
-
-    ($('#ns__grid-container', this.element) as HTMLUListElement).innerHTML +=
-      imgSources.slice(0, PRESS_GRID_ITEM_COUNT).reduce((acc, cur) => {
-        return (
-          acc +
-          `<li class="border border-gray-100 grid place-content-center"><img src="${cur}" alt="${cur}"></li>`
-        );
-      }, '');
-    console.log(imgSources);
-
-    return;
+    const { articles, page, handleToPrev, handleToNext } = state;
+    if (articles) {
+      const imgSources = (articles as Article[]).map(
+        (article) => article.mediaInfo.imgSrc,
+      );
+      ($('#ns__grid-container', this.element) as HTMLUListElement).innerHTML =
+        imgSources
+          .slice(
+            +page * PRESS_GRID_ITEM_COUNT,
+            (+page + 1) * PRESS_GRID_ITEM_COUNT,
+          )
+          .reduce((acc, cur) => {
+            return (
+              acc +
+              `<li class="border border-gray-100 grid place-content-center"><img src="${cur}" alt="${cur}"></li>`
+            );
+          }, '');
+    }
+    this.setEvent('#btn-prev', 'click', handleToPrev as EventListener);
+    this.setEvent('#btn-next', 'click', handleToNext as EventListener);
   }
 }

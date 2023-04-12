@@ -8,7 +8,8 @@
     "watch:ts": "tsc --watch",
     "watch:tw": "npx tailwindcss -i ./src/styles/global.css -o ./dist/styles/output.css --watch",
     "watch:tsa": "tsc-alias --watch",
-    "watch": "npm-run-all -p watch:*"
+    "watch": "npm-run-all -p watch:*",
+    "serve": "ts-node server/server.ts"
   },
   "keywords": [],
   "author": "",

@@ -25,6 +25,10 @@ export class MainLeftComponent implements Component {
     return this._view.element;
   }
 
+  get state() {
+    return this._model.state;
+  }
+
   private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
