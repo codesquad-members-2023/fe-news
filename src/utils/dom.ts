@@ -4,12 +4,18 @@ interface createProps {
 
 interface selectProps {
   selector: string;
-  parent?: HTMLElement;
+  parent?: HTMLElement | ShadowRoot | null;
 }
 
 interface getPropertyProps {
   target: HTMLElement | null;
   name: string;
+}
+
+interface setPropertyProps {
+  target: HTMLElement | Element | null;
+  name: string;
+  value: string;
 }
 
 interface addProps {
@@ -39,6 +45,10 @@ export function select({ selector, parent }: selectProps) {
 export function getProperty({ target, name }: getPropertyProps) {
   if (!target?.hasAttribute(name)) return null;
   return target.getAttribute(name);
+}
+
+export function setProperty({ target, name, value }: setPropertyProps) {
+  target?.setAttribute(name, value);
 }
 
 export function add({ target, template }: addProps) {
