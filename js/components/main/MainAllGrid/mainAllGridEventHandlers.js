@@ -19,7 +19,8 @@ export const cilckEventHandler = ({ target }) => {
     .closest('.main-grid__box')
     .querySelector('.thumb img').alt;
   if (target.alt === SUBSCRIBE) subscribeBtnClickHandler(target, mediaName);
-  else if (target.alt === UNSUBSCRIBE) unsubscribeBtnClickHandler(target);
+  else if (target.alt === UNSUBSCRIBE)
+    unsubscribeBtnClickHandler(target, mediaName);
 };
 
 const subscribeBtnClickHandler = (target, mediaName) => {
@@ -31,12 +32,15 @@ const subscribeBtnClickHandler = (target, mediaName) => {
   dispatch(displayActionCreator.gridSubscribeBtnClick(mediaName));
 };
 
-const unsubscribeBtnClickHandler = (target) => {
+const unsubscribeBtnClickHandler = (target, mediaName) => {
   // TODO : modal창도 띄워야함.....
   // DOM조작 : 해지하기 버튼 -> 구독하기 버튼.
   target.alt = 'subscribe';
   target.src = './asset/subscribeButton.svg';
+
   // 구독 List에서 Pop -> how?
+  // TODO : 이 로직은 팝업 창 나오고 나서 실행시켜야함.
+  dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaName));
 };
 
 const mouseOverHandler = ($targetBox) => {

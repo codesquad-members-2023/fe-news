@@ -60,7 +60,7 @@ const updateMediaContent = ($element, content) => {
       const $image = createElement('img', {
         class: 'main-grid__logo',
         src: `${content.data[index].mediaInfo.imgSrc}`,
-        alt: `${content.data[index].mediaInfo.name}`,
+        alt: `${content.data[index].mediaId}`,
       });
       item.append($image);
     });
