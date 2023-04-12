@@ -3,6 +3,7 @@ import { Component } from "../../core/Component.js";
 export class GridItem extends Component {
   setUp() {
     const { pressIcon, subscribeStatus } = this.props;
+
     const btnText =
       subscribeStatus === "구독되어 있지 않습니다."
         ? "+ 구독하기"
@@ -33,18 +34,20 @@ export class GridItem extends Component {
     const { btnIcon } = this._state;
     const { pressIcon, subscribePress } = this.props;
     const showSubscribeBtn = () => {
+      this.target.classList.add("hovered");
       this.setState({ currentIcon: btnIcon });
       this.target.removeEventListener("mouseover", showSubscribeBtn);
     };
 
     this.target.addEventListener("mouseover", showSubscribeBtn);
     this.target.addEventListener("mouseleave", () => {
+      this.target.classList.remove("hovered");
       this.setState({ currentIcon: pressIcon });
       this.target.addEventListener("mouseover", showSubscribeBtn);
     });
 
     this.target.addEventListener("click", ({ target }) => {
-      if (target.className === "subscribe-btn") {
+      if (target.closest(".subscribe-btn")) {
         const { btnText } = this._state;
         const btnTextToChange = this.getBtnTextToChange(btnText);
         subscribePress(pressIcon);
