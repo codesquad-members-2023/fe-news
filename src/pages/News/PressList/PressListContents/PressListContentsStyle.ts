@@ -24,6 +24,14 @@ export default function style() {
       display: block;
     }
 
+    .view {
+      display: none;
+    }
+
+    .view.show {
+      display: block;
+    }
+
     `;
 
   style.textContent = content;

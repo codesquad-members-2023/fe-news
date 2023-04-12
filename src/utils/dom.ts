@@ -74,6 +74,18 @@ export function addStyle({ target, style }: addStyleProps) {
   target?.append(style);
 }
 
+export const toggleClass = (
+  target: Element | null,
+  action: 'show' | 'hide'
+) => {
+  if (action === 'hide') {
+    if (target?.classList.contains('show')) target?.classList.remove('show');
+  }
+  if (action === 'show') {
+    if (!target?.classList.contains('show')) target?.classList.add('show');
+  }
+};
+
 export default {
   create,
   select,
@@ -81,4 +93,5 @@ export default {
   add,
   addShadow,
   addStyle,
+  toggleClass,
 };

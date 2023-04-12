@@ -5,6 +5,7 @@ import {
   select,
   create,
   createWrap,
+  toggleClass,
 } from '@utils/dom';
 import list from './PressListContentsStyle';
 import { StroeType } from '@utils/redux';
@@ -83,7 +84,9 @@ class PressListContents extends HTMLElement {
       target: gridViewContainer,
       template,
     });
-    this.wrap?.querySelector('section.general')?.append(gridViewContainer);
+    this.wrap
+      ?.querySelector('section.general .view.grid')
+      ?.append(gridViewContainer);
   }
 
   getCurrentPressList(page: number) {
@@ -96,9 +99,12 @@ class PressListContents extends HTMLElement {
     const template = `
     <controller-element></controller-element>
     <section class="general show">
+      <div class="view grid show"></div>
+      <div class="view list"></div>
     </section>
     <section class="custom">
-      custom
+      <div class="view grid show"></div>
+      <div class="view list"></div>
     </section>
     `;
 
@@ -139,7 +145,6 @@ class PressListContents extends HTMLElement {
       const newDisplayContainer = this.wrap?.querySelector(
         `.grid-view-container[page='${this.currentPage}']`
       );
-
       displayContainer?.classList.remove('show');
       newDisplayContainer?.classList.add('show');
     });
@@ -147,9 +152,36 @@ class PressListContents extends HTMLElement {
 
   async changeCurrentTab() {
     const toggleShowClass = async () => {
-      this.wrap?.querySelectorAll('section').forEach((section) => {
-        section.classList.toggle('show');
-      });
+      const displayStates = this.displayStore.getState();
+      const activeTab = displayStates.tab.find((tab) => tab.isActive)?.name;
+      const activeView = displayStates.view.find((view) => view.isActive)?.name;
+      const isGeneral = activeTab === '전체 언론사';
+      const isGrid = activeView === 'gridView';
+
+      const generalSection = this.wrap?.querySelector('section.general');
+      const customSection = this.wrap?.querySelector('section.custom');
+      const gridView = this.wrap?.querySelector('section.show .view.grid');
+      const listView = this.wrap?.querySelector('section.show .view.list');
+
+      if (isGeneral) {
+        generalSection && toggleClass(generalSection, 'show');
+        customSection && toggleClass(customSection, 'hide');
+        gridView && toggleClass(gridView, 'show');
+        listView && toggleClass(listView, 'hide');
+      } else {
+        generalSection && toggleClass(generalSection, 'hide');
+        customSection && toggleClass(customSection, 'show');
+        gridView && toggleClass(gridView, 'hide');
+        listView && toggleClass(listView, 'show');
+      }
+
+      if (isGrid) {
+        gridView && toggleClass(gridView, 'show');
+        listView && toggleClass(listView, 'hide');
+      } else {
+        gridView && toggleClass(gridView, 'hide');
+        listView && toggleClass(listView, 'show');
+      }
     };
     this.displayStore.subscribe(toggleShowClass);
   }
