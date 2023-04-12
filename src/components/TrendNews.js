@@ -1,5 +1,7 @@
 import { Component } from "../core/Component.js";
 
+// 초기 세팅만 진행
+
 export class TrendNews extends Component {
   setUp() {
     this._state = {
