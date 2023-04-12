@@ -11,19 +11,19 @@ export class GridViewElementStyle extends Style {
     const content = `
     @import 'src/styles/index.css';
 
-    :host {
+    .wrap {
       width: 100%;
       min-width: 154px;
       height: 96px;
       display: inline-block;
+      background-color: var(--white);
     }
 
     button {
       width: 100%;
       height: 100%;
       background-color: var(--white);
-      border-right: 1px solid var(--gray100);
-      border-bottom: 1px solid var(--gray100);
+      
       position: relative;
     }
 
@@ -53,10 +53,7 @@ export class GridViewElementStyle extends Style {
 
     .press-subscribe-btn-container:hover {
       background-color: var(--offwhite);
-    }
-
-
-    
+    }    
     `;
 
     super({ content });

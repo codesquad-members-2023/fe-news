@@ -7,9 +7,32 @@ export default function style() {
     .press-container {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      border-top: 1px solid var(--gray100);
-      border-left: 1px solid var(--gray100);
+      gap: 1px;
+      background-color: var(--gray100);
+      
       height: var(--presslist-conent-height);
+    }
+
+    .press-container.no-press {
+      display: block;
+    }
+
+    .empty {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--white);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .empty h3 {
+      color: var(--black);
+    }
+
+    .empty p {
+      color: var(--gray500);
     }
     `;
 

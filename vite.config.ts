@@ -27,6 +27,7 @@ export default defineConfig({
       '@type': path.resolve(__dirname, 'src/types'),
       '@store': path.resolve(__dirname, 'src/store'),
       '@pages': path.resolve(__dirname, 'src/pages'),
+      '@schemas': path.resolve(__dirname, 'server/schemas'),
     },
   },
 });

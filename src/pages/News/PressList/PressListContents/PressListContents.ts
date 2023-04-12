@@ -13,7 +13,7 @@ import { TabType, Tab } from '@type/news';
 import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
-import { getPress, getCustomPress } from '@apis/news';
+import { getPress } from '@apis/news';
 
 interface PressListContents {
   icon?: string | null;
@@ -41,9 +41,12 @@ class PressListContents extends HTMLElement {
     this.changeCurrentTab();
   }
 
-  render({ tab }: any = this.displayStore.getState()) {
+  async render() {
+    const pressList = await getPress({ page: this.page });
+    const pressListStr = JSON.stringify(pressList);
+
     const template = `
-    <grid-view-element current-tab="${tab[0].name}"></grid-view-element>
+    <grid-view-element press-list='${pressListStr ?? []}'></grid-view-element>
     <controller-element></controller-element>
     `;
 
@@ -62,16 +65,15 @@ class PressListContents extends HTMLElement {
         parent: this.shadowRoot,
       });
       const isAllTab = activeTab?.name === newTab[0].name;
-
-      const data = isAllTab
+      const pressList = isAllTab
         ? await getPress({ page: this.page })
-        : await getCustomPress({ page: this.page });
+        : store.user.getState().subscribingPress;
 
       activeTab &&
         setProperty({
           target,
-          name: 'current-tab',
-          value: activeTab.name,
+          name: 'press-list',
+          value: JSON.stringify(pressList),
         });
     };
     this.displayStore.subscribe(rerender);

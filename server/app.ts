@@ -104,7 +104,6 @@ app.patch('/unsubscribe', async (req, res) => {
 
 app.get('/user', async (req, res) => {
   const id = req.query.id;
-
   try {
     const result = await UserModel.find({
       id,

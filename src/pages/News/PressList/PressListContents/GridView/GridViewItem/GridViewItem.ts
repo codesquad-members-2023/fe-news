@@ -1,31 +1,44 @@
-import { add, addStyle, addShadow, getProperty, createWrap } from '@utils/dom';
+import {
+  add,
+  addStyle,
+  addShadow,
+  getProperty,
+  createWrap,
+  select,
+} from '@utils/dom';
 import GridViewItemStyle from './GridViewItemStyle';
 import store from '@store/index';
+import { PressType } from '@store/news/newsType';
 
 interface GridViewItem {
   icon?: string | null;
 }
 
 class GridViewItem extends HTMLElement {
+  wrap: HTMLElement | null = null;
+  press: PressType | null = null;
+
   connectedCallback() {
-    addShadow({ target: this });
+    this.wrap = createWrap();
+    this.shadowRoot?.append(this.wrap);
     this.render();
-    this.handleHover();
-    this.handleClick();
+    addStyle({
+      target: this.wrap,
+      style: new GridViewItemStyle({ target: this }).element,
+    });
+    this.append(this.wrap);
   }
 
   render() {
-    const press = getProperty({
+    const image = getProperty({
       target: this,
-      name: 'press',
+      name: 'image',
     });
 
     const template = `
     <button>
       <div class="press-logo" ${
-        press
-          ? `style="background-image: url(src/assets/images/press-logo/${press}.png)"`
-          : ''
+        image ? `style="background-image: url(${image})"` : ''
       }></div>
       <div class="press-subscribe-btn-container hide">
         <button-element icon="plus">구독하기</button-element>
@@ -33,22 +46,20 @@ class GridViewItem extends HTMLElement {
     </button>
     `;
     add({
-      target: this.shadowRoot,
+      target: this.wrap,
       template,
     });
-    addStyle({
-      target: this.shadowRoot,
-      style: new GridViewItemStyle({ target: this }).element,
-    });
+    this.handleHover();
+    this.handleClick();
   }
 
   handleHover = () => {
-    this.addEventListener('mouseenter', () => {
-      this.shadowRoot
+    this.wrap?.addEventListener('mouseenter', () => {
+      this.wrap
         ?.querySelector('.press-subscribe-btn-container')
         ?.classList.remove('hide');
       this.addEventListener('mouseleave', () => {
-        this.shadowRoot
+        this.wrap
           ?.querySelector('.press-subscribe-btn-container')
           ?.classList.add('hide');
       });
@@ -59,14 +70,16 @@ class GridViewItem extends HTMLElement {
     const storeUser = store.user;
 
     this.addEventListener('click', () => {
-      const press = this.getAttribute('press');
+      const id = this.getAttribute('id');
+      if (!id) return;
+
       storeUser.subscribe(() => {
         console.log(storeUser.getState());
       });
 
       storeUser.dispatch({
         type: 'SUBSCRIBE',
-        payload: press,
+        payload: id,
       });
     });
   };
