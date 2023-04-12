@@ -9,11 +9,15 @@ export class NsPressContainerView extends AbstractView {
   }
 
   setTemplate() {
-    this._templateElement.innerHTML = `<section class="py-2 flex-auto flex flex-row justify-between items-center">
-                                         <button id="btn-prev" class=""><</button>
+    this._templateElement.innerHTML = `<section class="px-3 flex-auto flex flex-row justify-between items-center relative">
+                                         <button id="btn-prev" class="absolute left-0 border rounded-full bg-white drop-shadow-very-xl">
+                                           <img src="/public/images/symbols/chevron-left.svg" alt="chevron-left" class="h-6 w-6"/>
+                                         </button>
                                          <ul id="ns__grid-container" class="grid grid-cols-6 grid-rows-4 w-full h-full">
                                          </ul>                                      
-                                         <button id="btn-next" class="">></button>
+                                         <button id="btn-next" class="absolute right-0 border rounded-full bg-white drop-shadow-very-xl">
+                                           <img src="/public/images/symbols/chevron-right.svg" alt="chevron-right" class="h-6 w-6"/>
+                                         </button>
                                        </section>`;
   }
 
