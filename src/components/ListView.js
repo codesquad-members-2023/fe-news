@@ -2,16 +2,22 @@ import Component from "../core/Component.js";
 import LeftButton from "./LeftButton.js";
 import RightButton from "./RightButton.js";
 import NewsContent from "./NewsContent.js";
-import Tab from "./Tab.js";
+import AllTab from "./AllTab.js";
+import SubscriptionTab from "./SubscriptionTab.js";
 
 const LEFT = -1;
 const RIGHT = 1;
 
 export default class ListView extends Component {
   setup() {
-    const { presses } = this.props;
-    const sortedPresses = [...presses];
-    sortedPresses.sort((a, b) => (a.category_id < b.category_id ? -1 : 1));
+    const { presses, subscribingPresses, subscriptionOption } = this.props;
+
+    let sortedPresses =
+      subscriptionOption === "all"
+        ? [...presses].sort((a, b) => (a.category_id < b.category_id ? -1 : 1))
+        : subscribingPresses.map((subscribingPress) =>
+            presses.find((press) => press.name === subscribingPress)
+          );
 
     const categoriesId = [
       ...new Set(sortedPresses.map((press) => press.category_id)),
@@ -66,14 +72,35 @@ export default class ListView extends Component {
     new RightButton(rightButton);
 
     const { idx, categories, sortedPresses } = this.state;
-    const { subscribingPresses } = this.props;
+    const {
+      subscribingPresses,
+      addSubscribing,
+      removeSubscribing,
+      subscriptionOption,
+    } = this.props;
 
     const press = sortedPresses[idx];
 
     const tabContainer = this.parentElement.querySelector(".tab-container");
-    new Tab(tabContainer);
+
+    subscriptionOption === "all"
+      ? new AllTab(tabContainer, {
+          press,
+          categories,
+        })
+      : new SubscriptionTab(tabContainer, {
+          press,
+          categories,
+          subscribingPresses,
+        });
 
     const newsContent = this.parentElement.querySelector(".news-content");
-    new NewsContent(newsContent, { press, subscribingPresses });
+    new NewsContent(newsContent, {
+      press,
+      subscribingPresses,
+      subscriptionOption,
+      addSubscribing,
+      removeSubscribing,
+    });
   }
 }

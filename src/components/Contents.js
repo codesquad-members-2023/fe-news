@@ -102,17 +102,23 @@ export default class Contents extends Component {
     const { presses, subscribingPresses, viewOption, subscriptionOption } =
       this.state;
 
+    const addSubscribing = this.addSubscribing.bind(this);
+    const removeSubscribing = this.removeSubscribing.bind(this);
+
     viewOption === GRID
       ? new GridView(viewContainer, {
           presses,
           subscribingPresses,
           subscriptionOption,
-          addSubscribing: this.addSubscribing.bind(this),
-          removeSubscribing: this.removeSubscribing.bind(this),
+          addSubscribing,
+          removeSubscribing,
         })
       : new ListView(viewContainer, {
           presses,
           subscribingPresses,
+          subscriptionOption,
+          addSubscribing,
+          removeSubscribing,
         });
   }
 }

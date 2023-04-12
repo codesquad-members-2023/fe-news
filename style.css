@@ -192,3 +192,19 @@ button {
   color: #879298;
   font-size: 14px;
 }
+
+.tab-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+  border: 1px solid black;
+}
+
+.selected-category {
+  color: red;
+}
+
+.selected-press-name {
+  color: blue;
+}
