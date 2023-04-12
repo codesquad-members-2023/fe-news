@@ -16,14 +16,17 @@ export class App extends Component {
   async mounted() {
     const header = this.target.querySelector(".newsstand-header");
     const trendNews = this.target.querySelector(".newsstand-trendnews");
-    const view = this.target.querySelector(".newsstand-main");
-
-    const pressData = await getPressData();
+    const mainView = this.target.querySelector(".newsstand-main");
 
     new Header(header);
     new TrendNews(trendNews);
-    new ViewContainer(view, {
+
+    const pressData = await getPressData();
+
+    new ViewContainer(mainView, {
       pressData: pressData,
+      pageLimit: 4,
+      itemLimitPerPage: 24,
       // 빈배열을 props로 주는게 맞는 선택일까?
       subscribedPressSrcs: [],
     });
