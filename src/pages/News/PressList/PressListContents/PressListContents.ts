@@ -53,15 +53,15 @@ class PressListContents extends HTMLElement {
   appendGridViewContainer() {
     this.createGridViewContainer(0);
 
-    let i = 1;
-    const callInterval = setInterval(() => {
-      this.createGridViewContainer(i);
-      i++;
-    }, 0);
+    // let i = 1;
+    // const callInterval = setInterval(() => {
+    //   this.createGridViewContainer(i);
+    //   i++;
+    // }, 0);
 
-    if (callInterval) {
-      i === this.maxPage - 1 && clearInterval(callInterval);
-    }
+    // if (callInterval) {
+    //   i === this.maxPage - 1 && clearInterval(callInterval);
+    // }
   }
 
   createGridViewContainer(page: number) {
@@ -139,7 +139,7 @@ class PressListContents extends HTMLElement {
       const newDisplayContainer = this.wrap?.querySelector(
         `.grid-view-container[page='${this.currentPage}']`
       );
-      console.log(displayContainer, newDisplayContainer);
+
       displayContainer?.classList.remove('show');
       newDisplayContainer?.classList.add('show');
     });

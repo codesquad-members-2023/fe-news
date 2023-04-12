@@ -35,7 +35,7 @@ class PressListHeader extends HTMLElement {
         .map(
           (item: any) =>
             `<li>
-              <button class="${
+              <button class="tab${
                 item.isActive ? ' is-active typo-title-md' : ' typo-body-md'
               }">${item.name}</button>
             </li>`
@@ -47,7 +47,7 @@ class PressListHeader extends HTMLElement {
       .map(
         (item: any) =>
           `<li>
-            <button>
+            <button class="view">
               <icon-element name="${item.name}" size="24"  fill="${
             item.isActive ? 'var(--primary)' : 'var(--gray100)'
           }"></icon-element>
@@ -61,28 +61,58 @@ class PressListHeader extends HTMLElement {
       target: this.wrap,
       template,
     });
-    this.handleClick();
+    this.handleTabClick();
+    this.handleViewClick();
   }
 
-  handleClick = () => {
+  handleTabClick = () => {
     this.shadowRoot?.querySelectorAll('button').forEach((button) => {
-      const buttonClickHandler = (e: MouseEvent) => {
-        const tab = e.currentTarget as HTMLElement;
+      if (button.classList.contains('tab')) {
+        const buttonClickHandler = (e: MouseEvent) => {
+          const tab = e.currentTarget as HTMLElement;
 
-        const rerender = () => {
-          const state = this.displayStore.getState();
-          this.render({
-            ...state,
-            tab: this.displayStore.getState().tab,
+          const rerender = () => {
+            const state = this.displayStore.getState();
+            this.render({
+              ...state,
+              tab: this.displayStore.getState().tab,
+            });
+          };
+          this.displayStore.subscribe(rerender);
+          this.displayStore.dispatch({
+            type: 'CHANGE_TAB',
+            payload: tab.innerText,
           });
         };
-        this.displayStore.subscribe(rerender);
-        this.displayStore.dispatch({
-          type: 'CHANGE_TAB',
-          payload: tab.innerText,
-        });
-      };
-      button.addEventListener('click', buttonClickHandler);
+        button.addEventListener('click', buttonClickHandler);
+      }
+    });
+  };
+
+  handleViewClick = () => {
+    this.shadowRoot?.querySelectorAll('button').forEach((button) => {
+      if (button.classList.contains('view')) {
+        const buttonClickHandler = (e: MouseEvent) => {
+          const view = e.currentTarget as HTMLElement;
+          const viewName = view
+            .querySelector('icon-element')
+            ?.getAttribute('name');
+
+          const rerender = () => {
+            const state = this.displayStore.getState();
+            this.render({
+              ...state,
+              view: this.displayStore.getState().view,
+            });
+          };
+          this.displayStore.subscribe(rerender);
+          this.displayStore.dispatch({
+            type: 'CHANGE_VIEW',
+            payload: viewName,
+          });
+        };
+        button.addEventListener('click', buttonClickHandler);
+      }
     });
   };
 }
