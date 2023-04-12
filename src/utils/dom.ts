@@ -35,6 +35,11 @@ interface addStyleProps {
 export function create({ tagName }: createProps) {
   return document.createElement(tagName);
 }
+export function createWrap() {
+  const wrap = create({ tagName: 'div' });
+  wrap.classList.add('wrap');
+  return wrap;
+}
 
 export function select({ selector, parent }: selectProps) {
   return parent

@@ -1,15 +1,8 @@
-import Style from '@components/Style/Style';
-import { getProperty } from '@utils/dom';
+export default function style() {
+  const style = document.createElement('style');
 
-interface constructorProp {
-  target: HTMLElement;
-}
-
-export class GridViewElementStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const press = getProperty({ target, name: 'press' });
-    const content = `
-    @import 'src/styles/index.css';
+  const content = `
+     @import 'src/styles/index.css';
 
     .press-container {
       display: grid;
@@ -18,11 +11,8 @@ export class GridViewElementStyle extends Style {
       border-left: 1px solid var(--gray100);
       height: var(--presslist-conent-height);
     }
-    
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default GridViewElementStyle;

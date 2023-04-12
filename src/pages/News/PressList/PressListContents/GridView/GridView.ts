@@ -1,22 +1,36 @@
-import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import GridViewStyle from './GridViewStyle';
+import { add, addStyle, addShadow, getProperty, createWrap } from '@utils/dom';
+import style from './GridViewStyle';
 
 interface GridView {
   icon?: string | null;
 }
 
 class GridView extends HTMLElement {
+  wrap: HTMLElement | null = null;
+
   connectedCallback() {
     addShadow({ target: this });
+    this.wrap = createWrap();
+    this.shadowRoot?.append(this.wrap);
     this.render();
+
+    addStyle({
+      target: this.shadowRoot,
+      style: style(),
+    });
+  }
+
+  static get observedAttributes() {
+    return ['current-tab'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'current-tab') {
+      return this.render();
+    }
   }
 
   render() {
-    const press = getProperty({
-      target: this,
-      name: 'press',
-    });
-
     const ITEM_NUMBER = 24;
 
     const template = `
@@ -31,12 +45,8 @@ class GridView extends HTMLElement {
     `;
 
     add({
-      target: this.shadowRoot,
+      target: this.wrap,
       template,
-    });
-    addStyle({
-      target: this.shadowRoot,
-      style: new GridViewStyle({ target: this }).element,
     });
   }
 }

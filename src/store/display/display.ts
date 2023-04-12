@@ -1,5 +1,5 @@
 import { createStore, ReducerType, ActionType } from '@utils/redux';
-import { DisplayType, ElementType } from './display.type';
+import { DisplayType, ElementType } from './displayType';
 
 const initialState: DisplayType = {
   tab: [

@@ -1,6 +1,6 @@
-import { add, addStyle, addShadow, getProperty } from '@utils/dom';
+import { add, addStyle, addShadow, getProperty, createWrap } from '@utils/dom';
 import GridViewItemStyle from './GridViewItemStyle';
-import store from '@store';
+import store from '@store/index';
 
 interface GridViewItem {
   icon?: string | null;

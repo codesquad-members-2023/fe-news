@@ -56,9 +56,9 @@ function createStore(reducer, preloadedState) {
   }
 
   return {
-    dispatch: dispatch,
-    subscribe: subscribe,
-    getState: getState,
+    subscribe,
+    dispatch,
+    getState,
   };
 }
 
@@ -79,9 +79,8 @@ const store = createStore(counterReducer);
 
 store.subscribe(() => {
   console.log('Current state:', store.getState());
-}).unsubscribe;
+});
 
 store.dispatch({ type: 'INCREMENT' }); // Current state: { count: 1 }
 store.dispatch({ type: 'INCREMENT' }); // Current state: { count: 2 }
-
 store.dispatch({ type: 'DECREMENT' }); // Current state: { count: 1 }
