@@ -1,5 +1,6 @@
 import { Component } from "../../core/Component.js";
 import { GridView } from "./GridView.js";
+import { ViewBtns } from "./ViewBtns.js";
 
 export class ViewContainer extends Component {
   templete() {
@@ -9,8 +10,7 @@ export class ViewContainer extends Component {
           <div class="main__btn all-press clicked">전체 언론사</div>
           <div class="main__btn subscribed-press">내가 구독한 언론사</div>
         </div>
-        <img src="src/images/list_btn.svg" alt="" />
-        <img src="src/images/grid_btn.svg" alt="" />
+        <div class="main__view-btn__container"></div>
       </div>
       <div class="view__container"></div>
     `;
@@ -22,7 +22,8 @@ export class ViewContainer extends Component {
       ".main__filter-btn__container"
     );
     const { subscribePress } = this;
-    const { pressData, subscribedPressSrcs } = this.props;
+    const { pressData, pageLimit, itemLimitPerPage, subscribedPressSrcs } =
+      this.props;
 
     filterBtns.addEventListener("click", ({ target, currentTarget }) => {
       const [elementName, type] = target.className.split(" ");
@@ -47,10 +48,10 @@ export class ViewContainer extends Component {
           subscribedPressSrcs
         );
         new GridView(viewContainer, {
-          pageLimit: 4,
-          itemLimitPerPage: 24,
+          pageLimit: pageLimit,
+          itemLimitPerPage: itemLimitPerPage,
           allPressData: subscribedPressSrcs,
-          btnDir: ["left", "right"],
+          btnDir: this.btnDir,
           subscribeStatus: subscribePressSubscribeStatus,
           subscribePress: subscribePress.bind(this),
         });
@@ -61,10 +62,10 @@ export class ViewContainer extends Component {
           subscribedPressSrcs
         );
         new GridView(viewContainer, {
-          pageLimit: 4,
-          itemLimitPerPage: 24,
+          pageLimit: pageLimit,
+          itemLimitPerPage: itemLimitPerPage,
           allPressData: pressData,
-          btnDir: ["left", "right"],
+          btnDir: this.btnDir,
           subscribeStatus: allPressSubscribeStatus,
           subscribePress: subscribePress.bind(this),
         });
@@ -73,7 +74,8 @@ export class ViewContainer extends Component {
   }
 
   mounted() {
-    const { pressData, subscribedPressSrcs } = this.props;
+    const { pressData, pageLimit, itemLimitPerPage, subscribedPressSrcs } =
+      this.props;
     const viewContainer = this.target.querySelector(".view__container");
     const { subscribePress } = this;
     const subscribeStatus = this.getSubscribeStatus(
@@ -82,13 +84,19 @@ export class ViewContainer extends Component {
     );
 
     new GridView(viewContainer, {
-      pageLimit: 4,
-      itemLimitPerPage: 24,
+      pageLimit: pageLimit,
+      itemLimitPerPage: itemLimitPerPage,
       allPressData: pressData,
-      btnDir: ["left", "right"],
+      btnDir: this.btnDir,
       subscribeStatus: subscribeStatus,
       subscribePress: subscribePress.bind(this),
     });
+
+    const viewBtnContainer = this.target.querySelector(
+      ".main__view-btn__container"
+    );
+
+    new ViewBtns(viewBtnContainer);
   }
 
   subscribePress(pressSrc) {

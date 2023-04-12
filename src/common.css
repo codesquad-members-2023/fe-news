@@ -85,14 +85,20 @@ main 영역
 .main__header {
   display: flex;
   padding: 3% 1%;
-  gap: 2%;
+  justify-content: space-between;
 }
 
 .main__filter-btn__container {
-  flex: 1 1;
   display: flex;
-  gap: 3%;
   align-items: center;
+  justify-content: space-between;
+  width: 25%;
+}
+
+.main__view-btn__container {
+  display: flex;
+  justify-content: space-between;
+  width: 7%;
 }
 
 .main__btn {
@@ -102,11 +108,6 @@ main 영역
 
 .main__btn.subscribed-press {
   color: var(--color-gray-600);
-}
-
-.main__view-btn__container {
-  display: flex;
-  padding: 1% 0;
 }
 
 .clicked {
