@@ -48,16 +48,6 @@ app.get('/press', async (req, res) => {
   }
 });
 
-app.get('/custom-press', async (req, res) => {
-  const page = req.query.page;
-  try {
-    const press = await getPress(Number(page));
-    res.status(200).json(press);
-  } catch (error) {
-    res.status(400).json({ message: error });
-  }
-});
-
 app.post('/user', async (req, res) => {
   const id = req.query.id;
   try {
@@ -120,10 +110,10 @@ const getPress = async (page = 0) => {
   try {
     const data = await fs.readFile('./mock/press.json', 'utf8');
     let press = JSON.parse(data) as PressInfoInterface[];
-    press = press.slice(
-      page * ITEM_AMOUNT_PER_PAGE,
-      (page + 1) * ITEM_AMOUNT_PER_PAGE
-    );
+    // press = press.slice(
+    //   page * ITEM_AMOUNT_PER_PAGE,
+    //   (page + 1) * ITEM_AMOUNT_PER_PAGE
+    // );
 
     return press;
   } catch (error) {

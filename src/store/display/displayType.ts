@@ -6,4 +6,5 @@ export interface ElementType {
 export interface DisplayType {
   tab: ElementType[];
   view: ElementType[];
+  currentPage: number;
 }

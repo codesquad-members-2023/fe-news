@@ -1,5 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import ListViewStyle from './ListViewStyle';
+import style from './ListViewStyle';
 
 interface ListView {
   icon?: string | null;
@@ -29,7 +29,7 @@ class ListView extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new ListViewStyle({ target: this }).element,
+      style: style(),
     });
   }
 }

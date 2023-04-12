@@ -47,6 +47,12 @@ export function select({ selector, parent }: selectProps) {
     : document.querySelector(selector);
 }
 
+export function selectAll({ selector, parent }: selectProps) {
+  return parent
+    ? parent.querySelectorAll(selector)
+    : document.querySelectorAll(selector);
+}
+
 export function getProperty({ target, name }: getPropertyProps) {
   if (!target?.hasAttribute(name)) return null;
   return target.getAttribute(name);

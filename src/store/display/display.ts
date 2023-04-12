@@ -10,6 +10,7 @@ const initialState: DisplayType = {
     { name: 'listView', isActive: true },
     { name: 'gridView', isActive: false },
   ],
+  currentPage: 0,
 };
 
 const reducer: ReducerType<DisplayType> = (
@@ -39,6 +40,24 @@ const reducer: ReducerType<DisplayType> = (
         ...state,
         view: newView,
       };
+    case 'NEXT_PAGE':
+      // todo: total page 설정 필요
+      return {
+        ...state,
+        currentPage: state.currentPage + 1,
+      };
+    case 'PREV_PAGE':
+      if (state.currentPage === 0) return state;
+      return {
+        ...state,
+        currentPage: state.currentPage - 1,
+      };
+    case 'RESET_PAGE':
+      return {
+        ...state,
+        currentPage: 0,
+      };
+
     default:
       return state;
   }

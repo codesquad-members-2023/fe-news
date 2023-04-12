@@ -4,10 +4,26 @@ export default function style() {
   const content = `
     @import 'src/styles/index.css';
 
-    :host {
+    .wrap {
       position: relative;
-      
     }
+
+    .grid-view-container {
+      display: none;
+    }
+
+    .grid-view-container.show {
+      display: block;
+    }
+
+    section {
+      display: none;
+    }
+
+    section.show {
+      display: block;
+    }
+
     `;
 
   style.textContent = content;

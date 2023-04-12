@@ -23,7 +23,7 @@ class GridView extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['press-list'];
+    return ['press-list', 'current-page'];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
