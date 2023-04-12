@@ -22,7 +22,12 @@ export class NsPressContainerView extends AbstractView {
   }
 
   render(state: State) {
-    const { articles, page, handleToPrev, handleToNext } = state;
+    this.addGridItems(state);
+    this.addGridButtonEvent(state);
+  }
+
+  addGridItems(state: State) {
+    const { articles, page } = state;
     if (articles) {
       const imgSources = (articles as Article[]).map(
         (article) => article.mediaInfo.imgSrc,
@@ -36,10 +41,14 @@ export class NsPressContainerView extends AbstractView {
           .reduce((acc, cur) => {
             return (
               acc +
-              `<li class="border border-gray-100 grid place-content-center"><img src="${cur}" alt="${cur}"></li>`
+              `<li class="border border-gray-100 grid place-content-center"><img class="h-4" src="${cur}" alt="${cur}"></li>`
             );
           }, '');
     }
+  }
+
+  addGridButtonEvent(state: State) {
+    const { handleToPrev, handleToNext } = state;
     this.setEvent('#btn-prev', 'click', handleToPrev as EventListener);
     this.setEvent('#btn-next', 'click', handleToNext as EventListener);
   }
