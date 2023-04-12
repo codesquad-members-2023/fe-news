@@ -6,3 +6,21 @@ export const getNews = async () => {
   const data = await customFetch({ path, method });
   return data;
 };
+
+interface getPressProps {
+  page: number;
+}
+
+export const getPress = async ({ page }: getPressProps) => {
+  const path = `/press?page=${page}`;
+  const method = 'GET';
+  const data = await customFetch({ path, method });
+  return data;
+};
+
+export const getCustomPress = async ({ page }: getPressProps) => {
+  const path = `/custom-press?page=${page}`;
+  const method = 'GET';
+  const data = await customFetch({ path, method });
+  return data;
+};

@@ -30,10 +30,10 @@ export interface ArticleInterface {
 
 export interface UserInterface {
   id: string;
-  subscribingPressIds: PressInterface[];
+  subscribingPressIds: string[];
 }
 
-const SectionShema = new Schema<SectionInterface>({
+const SectionSchema = new Schema<SectionInterface>({
   id: { type: String, required: true },
   pressId: { type: String, required: true },
   lastEdited: { type: Date, required: true },
@@ -48,4 +48,10 @@ const SectionShema = new Schema<SectionInterface>({
   ],
 });
 
-export const SectionModel = model<SectionInterface>('Sections', SectionShema);
+const UserSchema = new Schema<UserInterface>({
+  id: { type: String, required: true },
+  subscribingPressIds: [{ type: String, required: true }],
+});
+
+export const SectionModel = model<SectionInterface>('Sections', SectionSchema);
+export const UserModel = model<UserInterface>('Users', UserSchema);

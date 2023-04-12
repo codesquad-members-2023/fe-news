@@ -13,6 +13,7 @@ import { TabType, Tab } from '@type/news';
 import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
+import { getPress, getCustomPress } from '@apis/news';
 
 interface PressListContents {
   icon?: string | null;
@@ -21,6 +22,7 @@ interface PressListContents {
 class PressListContents extends HTMLElement {
   wrap: HTMLElement | null = null;
   displayStore: StroeType<DisplayType>;
+  page: number = 0;
 
   constructor() {
     super();
@@ -51,14 +53,19 @@ class PressListContents extends HTMLElement {
     });
   }
 
-  changeCurrentTab() {
-    const rerender = () => {
+  async changeCurrentTab() {
+    const rerender = async () => {
       const newTab = this.displayStore.getState().tab;
       const activeTab = newTab.find((menu: any) => menu.isActive);
       const target = select({
         selector: 'grid-view-element',
         parent: this.shadowRoot,
       });
+      const isAllTab = activeTab?.name === newTab[0].name;
+
+      const data = isAllTab
+        ? await getPress({ page: this.page })
+        : await getCustomPress({ page: this.page });
 
       activeTab &&
         setProperty({

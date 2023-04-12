@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { SectionModel, PressInfoInterface } from './schemas/index';
+import { SectionModel, PressInfoInterface, UserModel } from './schemas/index';
 const uuid = require('uuid');
 import fs from 'fs/promises';
 
@@ -44,6 +44,74 @@ app.get('/press', async (req, res) => {
     const press = await getPress(Number(page));
     res.status(200).json(press);
   } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
+app.get('/custom-press', async (req, res) => {
+  const page = req.query.page;
+  try {
+    const press = await getPress(Number(page));
+    res.status(200).json(press);
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
+app.post('/user', async (req, res) => {
+  const id = req.query.id;
+  try {
+    const result = await UserModel.create({
+      id,
+      subscribingPressIds: [],
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
+app.patch('/subscribe', async (req, res) => {
+  const id = req.query.id;
+  const pressId = req.query.pressId;
+  try {
+    const result = await UserModel.updateOne(
+      { id },
+      { $push: { subscribingPressIds: pressId } }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
+app.patch('/unsubscribe', async (req, res) => {
+  const id = req.query.id;
+  const pressId = req.query.pressId;
+  try {
+    const result = await UserModel.updateOne(
+      { id },
+      { $pull: { subscribingPressIds: pressId } }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
+app.get('/user', async (req, res) => {
+  const id = req.query.id;
+
+  try {
+    const result = await UserModel.find({
+      id,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
     res.status(400).json({ message: error });
   }
 });
