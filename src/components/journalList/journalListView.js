@@ -1,8 +1,9 @@
 import { getJournal } from "../../api/getData.js";
 import { Carousel } from "./journalCarousel.js";
+import { Journal } from "./journalClass.js";
 
 const createNewsStandJournal = () => {
-  const journalURL = " http://localhost:3000/journal";
+  const journalURL = "http://localhost:3000/journal";
 
   // 언론사 영역
   const journalListEl = document.createElement("article");
@@ -30,7 +31,10 @@ const createNewsStandJournal = () => {
   const journalCarousel = new Carousel();
   journalListEl.innerHTML += journalCarousel.beElement();
 
-  getJournal(journalURL).then((journalItems) => {
+  // 각 언론사 생성
+  getJournal(journalURL).then((journalData) => {
+    const journal = new Journal(journalData);
+    const journalItems = journal.makeJournal();
     const journalContainer = document.querySelector(".journal-container");
     const shuffledItems = journalItems.sort(() => 0.5 - Math.random());
     shuffledItems.forEach((item) => {
