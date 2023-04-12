@@ -2,20 +2,15 @@ import {
   add,
   addStyle,
   addShadow,
-  getProperty,
   select,
-  setProperty,
   create,
   createWrap,
 } from '@utils/dom';
 import list from './PressListContentsStyle';
-import { TabType, Tab } from '@type/news';
 import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
 import { getPress } from '@apis/news';
-import { useState } from '@utils/hooks';
-import { createCurrentPageIndex } from '@utils/common';
 
 interface PressListContents {
   icon?: string | null;
@@ -50,7 +45,45 @@ class PressListContents extends HTMLElement {
       target: this.shadowRoot,
       style: list(),
     });
+
     this.changeCurrentTab();
+    this.appendGridViewContainer();
+  }
+
+  appendGridViewContainer() {
+    this.createGridViewContainer(0);
+
+    let i = 1;
+    const callInterval = setInterval(() => {
+      this.createGridViewContainer(i);
+      i++;
+    }, 0);
+
+    if (callInterval) {
+      i === this.maxPage - 1 && clearInterval(callInterval);
+    }
+  }
+
+  createGridViewContainer(page: number) {
+    const gridViewContainer = create({ tagName: 'div' });
+    gridViewContainer.classList.add('grid-view-container');
+    gridViewContainer.setAttribute('page', `${page}`);
+    if (page === 0) {
+      gridViewContainer.classList.add('show');
+    }
+    const currentPressList = this.getCurrentPressList(page);
+
+    const template = `
+      <grid-view-element press-list='${JSON.stringify(
+        currentPressList
+      )}'></grid-view-element>
+    `;
+
+    add({
+      target: gridViewContainer,
+      template,
+    });
+    this.wrap?.querySelector('section.general')?.append(gridViewContainer);
   }
 
   getCurrentPressList(page: number) {
@@ -63,32 +96,9 @@ class PressListContents extends HTMLElement {
     const template = `
     <controller-element></controller-element>
     <section class="general show">
-    ${Array.from({ length: this.maxPage + 1 }, (_, i) => i)
-      .map(
-        (page) => `
-      <div class="grid-view-container${
-        page === 0 ? ' show' : ''
-      }" page='${page}'>
-        <grid-view-element press-list='${JSON.stringify(
-          this.getCurrentPressList(page)
-        )}'></grid-view-element>
-      </div>`
-      )
-      .join('')}
     </section>
     <section class="custom">
-      ${Array.from({ length: 1 }, (_, i) => i)
-        .map(
-          (page) => `
-      <div class="grid-view-container${
-        page === 0 ? ' show' : ''
-      }" page='${page}'>
-        <grid-view-element press-list='${JSON.stringify(
-          this.getCurrentPressList(page)
-        )}'></grid-view-element>
-      </div>`
-        )
-        .join('')}
+      custom
     </section>
     `;
 
@@ -136,31 +146,12 @@ class PressListContents extends HTMLElement {
   }
 
   async changeCurrentTab() {
-    const rerender = async () => {
-      // const newTab = this.displayStore.getState().tab;
-      // const activeTab = newTab.find((menu: any) => menu.isActive);
-      // const target = select({
-      //   selector: 'grid-view-element',
-      //   parent: this.shadowRoot,
-      // });
-      // const isAllTab = activeTab?.name === newTab[0].name;
-
-      // const pressList = isAllTab
-      //   ? this.pressList
-      //   : store.user.getState().subscribingPress;
-
-      // activeTab &&
-      //   setProperty({
-      //     target,
-      //     name: 'press-list',
-      //     value: JSON.stringify(pressList),
-      //   });
-
+    const toggleShowClass = async () => {
       this.wrap?.querySelectorAll('section').forEach((section) => {
         section.classList.toggle('show');
       });
     };
-    this.displayStore.subscribe(rerender);
+    this.displayStore.subscribe(toggleShowClass);
   }
 }
 

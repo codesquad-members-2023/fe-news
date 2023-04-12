@@ -22,16 +22,6 @@ class GridView extends HTMLElement {
     });
   }
 
-  static get observedAttributes() {
-    return ['press-list', 'current-page'];
-  }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'press-list') {
-      return this.render();
-    }
-  }
-
   render() {
     const pressListStr = getProperty({
       target: this,
