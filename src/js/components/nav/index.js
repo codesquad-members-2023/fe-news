@@ -18,9 +18,9 @@ export default class Nav {
 
     this.leftBar = new NavBar(this.$ele, { navBarData: left });
     this.rightBar = new NavBar(this.$ele, { navBarData: right });
-
     this.leftBar.mount();
     this.rightBar.mount();
+
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 }
