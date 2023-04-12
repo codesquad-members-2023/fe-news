@@ -75,6 +75,7 @@ const MainGrid = () => {
   $grid.addEventListener('mouseover', mouseEventHandler);
   $grid.addEventListener('mouseout', mouseEventHandler);
   $grid.addEventListener('click', cilckEventHandler);
+
   return $grid;
 };
 

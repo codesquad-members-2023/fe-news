@@ -64,4 +64,9 @@ export const displayActionCreator = {
       payload,
     };
   },
+  headerAllListBtnClick() {
+    return {
+      type: actionTypes.displayActions.HEADER_LIST_BUTTON_CLICK,
+    };
+  },
 };

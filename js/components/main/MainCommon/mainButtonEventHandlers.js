@@ -36,6 +36,7 @@ const gridButtonHandler = (index, $targetButton, direction) => {
     case 0:
       $targetButton.classList.add('none');
       break;
+
     case 1:
       if (direction === 'right') {
         $targetButton.parentNode
@@ -43,6 +44,7 @@ const gridButtonHandler = (index, $targetButton, direction) => {
           .classList.remove('none');
       }
       break;
+
     case 2:
       if (direction === 'left') {
         $targetButton.parentNode
@@ -50,9 +52,11 @@ const gridButtonHandler = (index, $targetButton, direction) => {
           .classList.remove('none');
       }
       break;
+
     case 3:
       $targetButton.classList.add('none');
       break;
+
     default:
       break;
   }

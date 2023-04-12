@@ -1,7 +1,8 @@
 import { createElement } from '../../../utils/dom.js';
 import { buttonClickEventHandler } from './mainButtonEventHandlers.js';
 // TODO : 이벤트 등록 해야함.
-
+import { displayActionCreator } from '../../../actions/actions.js';
+import { dispatch } from '../../../store/store.js';
 const createMainHeaderElement = () => {
   const $mainHeader = createElement('header', {
     class: 'main-header',
@@ -18,11 +19,11 @@ const createMainHeaderElement = () => {
   </div>
 
   <div class="main-header__buttons">
-    <a>
-        <img class="main-header__list-button" src="./asset/listIcon.svg" />
+    <a class="main-header__list-button">
+        <img src="./asset/listIcon.svg" />
     </a>
-    <a>
-        <img class="main-header__grid-button" src="./asset/gridIcon.svg" />
+    <a class="main-header__grid-button">
+        <img  src="./asset/gridIcon.svg" />
     </a>
 </div>
   `;
@@ -50,6 +51,11 @@ const MainCommon = () => {
 
   $mainButtons.forEach((button) => {
     button.addEventListener('click', buttonClickEventHandler);
+  });
+  $mainHeader.addEventListener('click', ({ target }) => {
+    if (target.closest('a')) {
+      dispatch(displayActionCreator.headerAllListBtnClick());
+    }
   });
   return [$mainHeader, $mainButtons];
 };
