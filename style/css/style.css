@@ -1,5 +1,6 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css");
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css");
 * {
   font-family: Pretendard, sans-serif;
 }
@@ -36,12 +37,17 @@
   color: var(--color-gray-500);
 }
 
+* {
+  font-family: Pretendard, sans-serif;
+}
+
 .news__rolling-bar {
   display: flex;
   margin: 0 auto;
   margin-top: 50px;
   width: 930px;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .rolling-bar_left {
@@ -54,6 +60,7 @@
 .rolling-bar_left img {
   width: 49px;
   height: 17px;
+  margin: 15px;
 }
 .rolling-bar_right {
   display: flex;
@@ -65,6 +72,20 @@
 .rolling-bar_right img {
   width: 49px;
   height: 17px;
+  margin: 15px;
+}
+
+.data_list_left li {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  margin: 15px;
+}
+.data_list_right li {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  margin: 15px;
 }
 
 html,

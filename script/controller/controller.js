@@ -1,32 +1,27 @@
 import { insertNewsData } from "../view/rollingBar.js";
-
-const rollingController = (URL) => {
-  fetch(URL)
+const rollingController = () => {
+  fetch("http://localhost:3001/rollingData")
     .then((res) => res.json())
     .then((data) => {
-      if ((URL = "http://localhost:3001/rollingData")) {
-        rollingDataLeft(data);
-        rollingDataRight(data);
-      }
+      rollingRightData(data);
+      rollingLeftData(data);
     })
-    .catch((error) => consol.error("Error:", error));
+    .catch((error) => console.error("Error:", error));
 };
 
-const rollingDataLeft = (data) => {
+const rollingRightData = (data) => {
   const leftData = [];
   for (let i = 0; i < data.length / 2; i++) {
     leftData.push(data[i].headLine);
   }
-  insertNewsData(leftData, data_list_left);
+  insertNewsData(leftData, ".data_list_left");
 };
 
-const rollingDataRight = (data) => {
+const rollingLeftData = (data) => {
   const rightData = [];
   for (let i = data.length / 2; i < data.length; i++) {
     rightData.push(data[i].headLine);
   }
-  insertNewsData(rightData, data_list_right);
+  insertNewsData(rightData, ".data_list_right");
 };
-insertRollingData();
-
 export { rollingController };

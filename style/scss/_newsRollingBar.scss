@@ -1,8 +1,15 @@
+@import "font.scss";
 @mixin rollingBar() {
   width: 461px;
   height: 49px;
   background: var(--color-off-white);
   border: 1px solid var(--color-gray-100);
+}
+
+@mixin rollingImg() {
+  width: 49px;
+  height: 17px;
+  margin: 15px;
 }
 
 .news__rolling-bar {
@@ -11,6 +18,7 @@
   margin-top: 50px;
   width: 930px;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .rolling-bar {
@@ -18,8 +26,7 @@
     display: flex;
     @include rollingBar();
     img {
-      width: 49px;
-      height: 17px;
+      @include rollingImg();
     }
   }
 
@@ -27,8 +34,24 @@
     display: flex;
     @include rollingBar();
     img {
-      width: 49px;
-      height: 17px;
+      @include rollingImg();
+    }
+  }
+}
+
+.data_list {
+  &_left {
+    li {
+      @include font(14px, 500);
+      line-height: 17px;
+      margin: 15px;
+    }
+  }
+  &_right {
+    li {
+      @include font(14px, 500);
+      line-height: 17px;
+      margin: 15px;
     }
   }
 }
