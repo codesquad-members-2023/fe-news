@@ -20,4 +20,13 @@ const insertNewsData = (newsData, rollingBox) => {
   });
 };
 
-export { viewRollingBar, insertNewsData };
+const rollingData = () => {
+  const rollingBar = document.querySelector(".data_list_left");
+  setInterval(() => {
+    rollingBar.style.transform = `translate3d(0, -31px, 0)`;
+    rollingBar.style.transitionDuration = "500ms";
+    rollingBar.appendChild(rollingBar.firstChild);
+  }, 5000);
+};
+
+export { viewRollingBar, insertNewsData, rollingData };
