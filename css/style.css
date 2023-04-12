@@ -188,3 +188,81 @@ main {
   position: absolute;
   top: 36px;
   left: 40px; }
+
+.main-list {
+  margin-top: 26.5px;
+  width: 930px;
+  height: 388px;
+  display: flex;
+  flex-direction: column; }
+  .main-list .main-list__nav-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    background: #f5f7f9;
+    border: 1px solid #d2dae0; }
+    .main-list .main-list__nav-items .main-list__nav-item {
+      padding: 0px 16px;
+      font-weight: 500;
+      font-size: 14px;
+      color: #6e8091; }
+
+.main-list__news {
+  height: 348px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid #d2dae0; }
+  .main-list__news-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 24px; }
+    .main-list__news-header .main-list__logo {
+      height: 20px;
+      margin-right: 16px; }
+    .main-list__news-header .main-list__edit-time {
+      font-weight: 500;
+      font-size: 12px;
+      margin-right: 16px;
+      line-height: 14px;
+      color: #5f6e76; }
+  .main-list__news .main-list__media-content {
+    margin-top: 16px;
+    height: 260px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; }
+    .main-list__news .main-list__media-content .main-news {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-right: 32px;
+      width: 320px; }
+      .main-list__news .main-list__media-content .main-news .main-news__img {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 16px; }
+      .main-list__news .main-list__media-content .main-news .main-news__title {
+        font-weight: 500;
+        font-size: 16px;
+        margin-top: 16px;
+        color: #14212b; }
+    .main-list__news .main-list__media-content .sub-news .sub-news__items {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; }
+      .main-list__news .main-list__media-content .sub-news .sub-news__items .sub-news__item {
+        height: 22px;
+        margin-bottom: 16px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        color: #4b5966; }
+    .main-list__news .main-list__media-content .sub-news .news-footer {
+      height: 17px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: #879298; }
