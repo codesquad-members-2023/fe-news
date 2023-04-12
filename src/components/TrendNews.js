@@ -15,7 +15,11 @@ export class TrendNews extends Component {
   templete() {
     const { news } = this._state;
     return `
-      <div class="trend">
+      <div class="trend-section left">
+        <div class="trend-pressname">${news[0].pressname}</div>
+        <div class="trend-title">${news[0].title}</div>
+      </div>
+      <div class="trend-section right">
         <div class="trend-pressname">${news[0].pressname}</div>
         <div class="trend-title">${news[0].title}</div>
       </div>
