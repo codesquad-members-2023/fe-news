@@ -59,6 +59,10 @@
 
 **:two: 화요일 학습계획**
 
+- [x] : 기능 구현
+  - [x] : main view header 영역 font style 구현
+  - [x] : 자주 쓰이는 css 속성 모아 놓은 variable.css 파일 생성
+  - [x] : fix: grid view click 이벤트 오류 해결
 - [ ] : scss 개념 학습 및 설치
 - [ ] : scss 프로젝트에 적용
   - [ ] : header 영역 적용
@@ -67,8 +71,14 @@
 
 **:three: 수요일 학습계획**
 
+- [x] : 기능 구현
+  - [x] : mainView 버튼 css 구현, 클릭 이벤트 추가
+  - [x] : grid item hover시 배경 색깔 변경되도록 구현
+  - [x] : main-view 버튼, header영역, trendnews영역 css 구현
+  - [x] : 전체언론사, 내가구독한언론사 버튼 클릭시 font style 변경 이벤트 구현
+  - [x] : header, trendnews 영역 css, html 초기 구현 진행
 - [ ] : store 개념 학습
-- [ ] : store 개념 코드에 적용
+  - [ ] : store 개념 코드에 적용
 
 **:four: 목요일 학습계획**
 
