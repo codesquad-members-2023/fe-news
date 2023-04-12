@@ -1,5 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import ListViewTabItemStyle from './ListViewTabItemStyle';
+import style from './ListViewTabItemStyle';
 
 interface ListViewTabItem {
   icon?: string | null;
@@ -41,7 +41,7 @@ class ListViewTabItem extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new ListViewTabItemStyle({ target: this }).element,
+      style: style.call(this, this),
     });
   }
 }

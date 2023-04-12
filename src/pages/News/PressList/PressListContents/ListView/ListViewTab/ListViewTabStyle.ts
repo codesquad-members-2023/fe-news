@@ -1,14 +1,8 @@
-import Style from '@components/Style/Style';
-import { getProperty } from '@utils/dom';
+export default function style() {
+  const style = document.createElement('style');
 
-interface constructorProp {
-  target: HTMLElement;
-}
-
-export class ListViewItemStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const content = `
-    @import 'src/styles/index.css';
+  const content = `
+   @import 'src/styles/index.css';
 
     .tab-wrap {
       height: 40px;
@@ -16,13 +10,8 @@ export class ListViewItemStyle extends Style {
       background-color: var(--offwhite);
       border-bottom: 1px solid var(--gray100);
     }
-
-
-
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default ListViewItemStyle;

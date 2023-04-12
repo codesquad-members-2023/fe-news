@@ -1,5 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import GridViewStyle from './HeaderStyle';
+import style from './HeaderStyle';
 
 interface HeaderItem {
   icon?: string | null;
@@ -26,7 +26,7 @@ class HeaderItem extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new GridViewStyle({ target: this }).element,
+      style: style(),
     });
   }
 }

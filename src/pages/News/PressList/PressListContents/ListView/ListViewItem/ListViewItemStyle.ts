@@ -1,14 +1,8 @@
-import Style from '@components/Style/Style';
-import { getProperty } from '@utils/dom';
+export default function style() {
+  const style = document.createElement('style');
 
-interface constructorProp {
-  target: HTMLElement;
-}
-
-export class ListViewItemStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const content = `
-    @import 'src/styles/index.css';
+  const content = `
+   @import 'src/styles/index.css';
     
     :host {
       padding: 24px;
@@ -51,13 +45,8 @@ export class ListViewItemStyle extends Style {
     .articles-container > .caption {
       color: var(--gray200);
     }
-
-
-
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default ListViewItemStyle;

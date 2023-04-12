@@ -1,5 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import HeadlineItemStyle from './HeadlineStyle';
+import style from './HeadlineStyle';
 
 interface HeadlineItem {
   icon?: string | null;
@@ -23,7 +23,7 @@ class HeadlineItem extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new HeadlineItemStyle({ target: this }).element,
+      style: style(),
     });
   }
 }

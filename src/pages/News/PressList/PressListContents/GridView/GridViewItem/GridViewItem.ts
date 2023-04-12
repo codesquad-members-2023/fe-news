@@ -6,7 +6,7 @@ import {
   createWrap,
   select,
 } from '@utils/dom';
-import GridViewItemStyle from './GridViewItemStyle';
+import style from './GridViewItemStyle';
 import store from '@store/index';
 import { PressType } from '@store/news/newsType';
 
@@ -24,7 +24,7 @@ class GridViewItem extends HTMLElement {
     this.render();
     addStyle({
       target: this.wrap,
-      style: new GridViewItemStyle({ target: this }).element,
+      style: style(),
     });
     this.append(this.wrap);
   }

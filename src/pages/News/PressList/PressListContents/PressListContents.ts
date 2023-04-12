@@ -8,7 +8,7 @@ import {
   create,
   createWrap,
 } from '@utils/dom';
-import ListViewStyle from './PressListContentsStyle';
+import list from './PressListContentsStyle';
 import { TabType, Tab } from '@type/news';
 import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
@@ -36,7 +36,7 @@ class PressListContents extends HTMLElement {
     this.render();
     addStyle({
       target: this.shadowRoot,
-      style: new ListViewStyle({ target: this }).element,
+      style: list(),
     });
     this.changeCurrentTab();
   }

@@ -1,6 +1,5 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
-import HeadlineItemStyle from './HeadlineItemStyle';
-import { useState } from '@utils/redux';
+import style from './HeadlineItemStyle';
 
 interface HeadlineItem {
   icon?: string | null;
@@ -25,7 +24,7 @@ class HeadlineItem extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: new HeadlineItemStyle({ target: this }).element,
+      style: style(),
     });
   }
 }

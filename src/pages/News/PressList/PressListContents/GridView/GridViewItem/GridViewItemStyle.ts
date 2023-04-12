@@ -1,15 +1,8 @@
-import Style from '@components/Style/Style';
-import { getProperty } from '@utils/dom';
+export default function style() {
+  const style = document.createElement('style');
 
-interface constructorProp {
-  target: HTMLElement;
-}
-
-export class GridViewElementStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const press = getProperty({ target, name: 'press' });
-    const content = `
-    @import 'src/styles/index.css';
+  const content = `
+   @import 'src/styles/index.css';
 
     .wrap {
       width: 100%;
@@ -56,8 +49,6 @@ export class GridViewElementStyle extends Style {
     }    
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default GridViewElementStyle;

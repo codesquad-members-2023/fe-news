@@ -1,16 +1,11 @@
-import Style from '@components/Style/Style';
 import { getProperty } from '@utils/dom';
 
-interface constructorProp {
-  target: HTMLElement;
-}
+export default function style(target: HTMLElement) {
+  const style = document.createElement('style');
+  const progress = getProperty({ target, name: 'progress' }) ?? '0';
 
-export class ListViewItemStyle extends Style {
-  constructor({ target }: constructorProp) {
-    const progress = getProperty({ target, name: 'progress' }) ?? '0';
-
-    const content = `
-    @import 'src/styles/index.css';
+  const content = `
+   @import 'src/styles/index.css';
     
     .tab-container {
       display: flex;
@@ -40,8 +35,6 @@ export class ListViewItemStyle extends Style {
 
     `;
 
-    super({ content });
-  }
+  style.textContent = content;
+  return style;
 }
-
-export default ListViewItemStyle;
