@@ -1,6 +1,6 @@
 import { rollingController } from "./controller.js";
-const fetchManeger = () => {
+const fetchManager = () => {
   rollingController();
 };
 
-export { fetchManeger };
+export { fetchManager };
