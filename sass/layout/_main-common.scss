@@ -55,6 +55,10 @@ main {
   height: 18px;
   background-image: icon(list, 'd2dae0');
 }
+.list-icon:hover {
+  background-image: icon(list, '6e8091');
+}
+
 .grid-icon {
   display: inline-block;
   width: 18px;
@@ -62,10 +66,20 @@ main {
   background-image: icon(grid, 'd2dae0');
 }
 
+.grid-icon:hover {
+  background-image: icon(grid, '6e8091');
+}
+
 .list-icon__enable {
+  background-image: icon(list, '4362d0');
+}
+.list-icon__enable:hover {
   background-image: icon(list, '4362d0');
 }
 
 .grid-icon__enable {
+  background-image: icon(grid, '4362d0');
+}
+.grid-icon__enable:hover {
   background-image: icon(grid, '4362d0');
 }

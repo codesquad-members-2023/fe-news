@@ -18,6 +18,9 @@
       font-size: 14px;
       color: $gray300;
     }
+    .main-list__nav-item:hover {
+      text-decoration: underline;
+    }
   }
 }
 
