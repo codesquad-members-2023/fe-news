@@ -9,8 +9,8 @@ class MainHandler {
   #currentPage
   #subscriptionList
 
-  constructor() {
-    this.#fetchData('http://localhost:3001/presses')
+  constructor(url) {
+    this.#fetchData(url)
     this.#currentPage = 1
     this.#subscriptionList = new Set()
   }

@@ -1,4 +1,4 @@
-class MainDirectionBtn extends HTMLElement {
+class DirectionBtn extends HTMLElement {
   pageRange
 
   constructor() {
@@ -54,4 +54,4 @@ class MainDirectionBtn extends HTMLElement {
   }
 }
 
-customElements.define('ns-direction-btn', MainDirectionBtn)
+customElements.define('ns-direction-btn', DirectionBtn)

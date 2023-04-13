@@ -1,3 +1,9 @@
+.btn__view-type {
+  display: flex;
+  justify-content: space-between;
+  width: 930px;
+}
+
 .main-view {
   position: relative;
 }

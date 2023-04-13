@@ -1,4 +1,4 @@
-import MainGridView from './mainGridView.js'
+import PressesGridView from './pressesGridView.js'
 import { getElement, createNode } from '../../script/utils.js'
 
 class MainView {
@@ -25,7 +25,7 @@ class MainView {
   #createGridView(data) {
     this.currentView && this.#mainViewContainer.removeChild(this.currentView)
 
-    const gridView = new MainGridView(data)
+    const gridView = new PressesGridView(data)
     this.currentView = gridView.getGridView()
 
     this.#mainViewContainer.appendChild(this.currentView)

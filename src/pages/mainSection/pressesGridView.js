@@ -1,6 +1,6 @@
 import { createNode } from '../../script/utils.js'
 
-class MainGridView {
+class PressesGridView {
   #mainGridView
 
   constructor(data) {
@@ -51,4 +51,4 @@ class MainGridView {
   }
 }
 
-export default MainGridView
+export default PressesGridView
