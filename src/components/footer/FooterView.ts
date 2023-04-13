@@ -7,13 +7,10 @@ export class FooterView extends AbstractView {
   }
 
   protected setTemplate() {
-    this._templateElement.innerHTML = `<footer class="h-1/6 bg-green-100 border border-green-500 text-3xl text-gray-500 text-center"></footer>`;
+    this._templateElement.innerHTML = `<footer class="h-1/6 bg-green-100 border border-green-500 text-3xl text-gray-500 text-center">Footer</footer>`;
   }
 
   render(state: State) {
-    const { title } = state;
-    if (typeof title === 'string') {
-      this.element.textContent = title;
-    }
+    return;
   }
 }

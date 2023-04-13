@@ -9,9 +9,6 @@ export class MainRightComponent implements Component {
   constructor(props?: Props) {
     this._model = new MainRightModel();
     this._view = new MainRightView();
-
-    const title = 'MainRight';
-    this.setState({ title });
   }
 
   get element() {

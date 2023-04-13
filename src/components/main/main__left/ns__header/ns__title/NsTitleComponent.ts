@@ -9,9 +9,6 @@ export class NsTitleComponent implements Component {
   constructor(props?: Props) {
     this._model = new NsTitleModel();
     this._view = new NsTitleView();
-
-    const title = '뉴스스탠드';
-    this.setState({ title });
   }
 
   get element() {

@@ -9,9 +9,6 @@ export class HeaderComponent implements Component {
   constructor(props?: Props) {
     this._model = new HeaderModel();
     this._view = new HeaderView();
-
-    const title = 'Header';
-    this.setState({ title });
   }
 
   get element() {

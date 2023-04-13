@@ -9,9 +9,6 @@ export class FooterComponent implements Component {
   constructor(props?: Props) {
     this._model = new FooterModel();
     this._view = new FooterView();
-
-    const title = 'Footer';
-    this.setState({ title });
   }
 
   get element() {
