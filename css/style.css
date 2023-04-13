@@ -243,9 +243,8 @@ main {
       margin-right: 16px; }
     .main-list__news-header .main-list__edit-time {
       font-weight: 500;
-      font-size: 12px;
+      font-size: 13px;
       margin-right: 16px;
-      padding-top: 3px;
       color: #5f6e76; }
   .main-list__news .main-list__media-content {
     margin-top: 16px;

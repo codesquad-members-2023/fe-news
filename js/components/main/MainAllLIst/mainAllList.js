@@ -81,7 +81,7 @@ const createNewsContentElement = (mainContent, subContent) => {
   const mainNewsHTML = `
   <section class="main-news">
     <div class="main-news__img">
-      <a>
+      <a href="#">
         <img src="${mainContent.mainImgSrc}" />
       </a>
     </div>
@@ -92,7 +92,7 @@ const createNewsContentElement = (mainContent, subContent) => {
     <section class="sub-news">
         <ul class="sub-news__items">
             ${subContent.subNewsList.reduce((html, text) => {
-              html += `<li class="sub-news__item"><a>${text}</a></li>`;
+              html += `<li class="sub-news__item"><a href="#">${text}</a></li>`;
               return html;
             }, ``)}
         </ul>
