@@ -1,27 +1,17 @@
 import createEl from "../../../utils/util.js";
-import { CONSTANTS } from '../../../core/constants.js';
+import randomData from '../../../utils/randomData.js';
+import { CONSTANTS, TOTAL_GRID_COUNT } from '../../../core/constants.js';
 import sortButton from '../buttons/sortButton.js'
-import gridView from "./grid/grid.js";
+import GridView from './grid/grid.js';
 
 const mainView = ({ media }) => {
+  const gridData = randomData(media, TOTAL_GRID_COUNT);
+
   const main = createEl("main");
-  const sortButtons = sortButton(
-    CONSTANTS['ALL_PRESS'],
-    CONSTANTS['SUBSCRIBED_PRESS'],
-  );
-  const viewContainer = createEl('div', 'view-container');
-  const moveToPageButton = `<a class="prev-button"></a>
-    <a class="next-button"></a>`;
-  const grid = gridView(media);
+  const sortButtons = sortButton(CONSTANTS['ALL_PRESS'], CONSTANTS['SUBSCRIBED_PRESS']);
+  const viewContainer = new GridView(gridData).render();
 
-  viewContainer.insertAdjacentHTML('beforeend', moveToPageButton);
-  viewContainer.insertAdjacentElement('afterbegin', grid);
-
-  const prev = viewContainer.querySelector('.prev-button');
-  const next = viewContainer.querySelector('.next-button');
-
-  main.append(sortButtons);
-  main.append(viewContainer);
+  main.append(sortButtons, viewContainer);
   return main;
 }
 

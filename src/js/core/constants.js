@@ -18,3 +18,5 @@ export const autoAnimationInfo = {
   leftDelayTime : 4000,
   timeDiff : 1000,
 }
+
+export const TOTAL_GRID_COUNT = 96;

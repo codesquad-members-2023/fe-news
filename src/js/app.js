@@ -17,6 +17,7 @@ const app = async () => {
     rollingPosition,
     { autoAnimationInfo },
   ).render();
+  // const main = mainView(mediaData);
   const main = mainView(mediaData);
 
   root.append(header, section, main);
