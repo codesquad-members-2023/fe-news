@@ -1,9 +1,9 @@
 export const $ = (
   selector: string,
-  parent: Document | HTMLElement = document,
-) => parent.querySelector(selector);
+  baseElement: Document | HTMLElement = document,
+) => baseElement.querySelector(selector);
 
 export const $$ = (
   selector: string,
-  parent: Document | HTMLElement = document,
-) => parent.querySelectorAll(selector);
+  baseElement: Document | HTMLElement = document,
+) => baseElement.querySelectorAll(selector);
