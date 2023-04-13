@@ -1,6 +1,6 @@
-import Component from "../core/Component.js";
-import LeftButton from "./LeftButton.js";
-import RightButton from "./RightButton.js";
+import Component from "../../../core/Component.js";
+import LeftButton from "../button/LeftButton.js";
+import RightButton from "../button/RightButton.js";
 import Logo from "./Logo.js";
 
 const LOGOS_NUM_PER_PAGE = 24;
@@ -36,7 +36,7 @@ export default class GridView extends Component {
   }
 
   setEvent() {
-    this.addEvent("click", ".news-list__grid", ({ target }) => {
+    const handleButtonClick = ({ target }) => {
       if (!target.closest(".button")) return;
 
       const { pageNum } = this.state;
@@ -44,7 +44,9 @@ export default class GridView extends Component {
       this.setState({
         pageNum: (pageNum + direction + MAX_PAGE_NUM) % MAX_PAGE_NUM,
       });
-    });
+    };
+
+    this.addEvent("click", ".news-list__grid", handleButtonClick);
   }
 
   template() {

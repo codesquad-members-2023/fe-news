@@ -1,4 +1,4 @@
-import Component from "../core/Component.js";
+import Component from "../../core/Component.js";
 
 export default class LatestNewsBar extends Component {
   // 매직넘버 다 빼기
@@ -9,12 +9,14 @@ export default class LatestNewsBar extends Component {
   }
 
   setEvent() {
-    this.addEvent("transitionend", ".latest-news__container", () => {
+    const increaseIdx = () => {
       const prevIdx = this.state.idx;
       this.setState({
         idx: (prevIdx + 1) % 5,
       });
-    });
+    };
+
+    this.addEvent("transitionend", ".latest-news__container", increaseIdx);
   }
 
   componentDidMount() {

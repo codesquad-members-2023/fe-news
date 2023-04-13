@@ -1,6 +1,6 @@
-import Component from "../core/Component.js";
-import LeftButton from "./LeftButton.js";
-import RightButton from "./RightButton.js";
+import Component from "../../../core/Component.js";
+import LeftButton from "../button/LeftButton.js";
+import RightButton from "../button/RightButton.js";
 import NewsContent from "./NewsContent.js";
 import AllTab from "./AllTab.js";
 import SubscriptionTab from "./SubscriptionTab.js";
@@ -20,29 +20,29 @@ export default class ListView extends Component {
           );
 
     const categoriesId = [
-      ...new Set(sortedPresses.map((press) => press.category_id)),
+      ...new Set(sortedPresses.map((press) => press?.category_id)),
     ];
 
     const categories = categoriesId.map((categoryId) => {
       return {
         categoryId,
         newses: sortedPresses.filter(
-          (press) => press.category_id === categoryId
+          (press) => press?.category_id === categoryId
         ),
       };
     });
 
     const idx = 0;
 
-    this.setState({
+    this.state = {
       idx,
       categories,
       sortedPresses,
-    });
+    };
   }
 
   setEvent() {
-    this.addEvent("click", ".news-list__list", ({ target }) => {
+    const handleButtonClick = ({ target }) => {
       if (!target.closest(".button")) return;
 
       const { idx, sortedPresses } = this.state;
@@ -50,10 +50,19 @@ export default class ListView extends Component {
       this.setState({
         idx: (idx + direction + sortedPresses.length) % sortedPresses.length,
       });
-    });
+    };
+
+    this.addEvent("click", ".news-list__list", handleButtonClick);
+  }
+
+  setIdx(idx) {
+    const { subscribingPresses } = this.props;
+    const len = subscribingPresses.length;
+    this.setState({ idx: (idx + len) % len });
   }
 
   template() {
+    console.log(this.state.idx, "render!!");
     return `
         <div class="news-list__list">
             <div class="button button--left"></div>
@@ -80,7 +89,6 @@ export default class ListView extends Component {
     } = this.props;
 
     const press = sortedPresses[idx];
-
     const tabContainer = this.parentElement.querySelector(".tab-container");
 
     subscriptionOption === "all"
@@ -96,6 +104,8 @@ export default class ListView extends Component {
 
     const newsContent = this.parentElement.querySelector(".news-content");
     new NewsContent(newsContent, {
+      idx,
+      setIdx: this.setIdx.bind(this),
       press,
       subscribingPresses,
       subscriptionOption,

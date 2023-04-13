@@ -1,4 +1,4 @@
-import Component from "../core/Component.js";
+import Component from "../../../core/Component.js";
 
 export default class StyleMenu extends Component {
   setEvent() {

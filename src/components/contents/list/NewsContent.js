@@ -1,8 +1,9 @@
-import Component from "../core/Component.js";
+import Component from "../../../core/Component.js";
 
 export default class NewsContent extends Component {
   setup() {
     const { subscribingPresses, press } = this.props;
+
     const isSubscribing = subscribingPresses.some(
       (subscribingPress) => subscribingPress === press.name
     );
@@ -16,10 +17,9 @@ export default class NewsContent extends Component {
     const { addSubscribing, removeSubscribing, press, subscriptionOption } =
       this.props;
 
-    this.addEvent("click", ".list-button", () => {
+    const toggleSubscribing = () => {
       if (!press) return;
       const name = press.name;
-      console.log(subscriptionOption);
 
       this.state.isSubscribing
         ? removeSubscribing(name, subscriptionOption !== "all")
@@ -28,13 +28,17 @@ export default class NewsContent extends Component {
       this.setState({
         isSubscribing: !this.state.isSubscribing,
       });
-    });
+    };
+
+    this.addEvent("click", ".list-button", toggleSubscribing);
   }
 
   template() {
-    const { press } = this.props;
+    const { press, subscriptionOption } = this.props;
     const { isSubscribing } = this.state;
 
+    if (!press && subscriptionOption === "sub")
+      return `<span>구독한 언론사가 없습니다.</span>`;
     if (!press) return `<span>loading...</span>`;
 
     const {
@@ -43,6 +47,7 @@ export default class NewsContent extends Component {
       main_news_image,
       main_news_title,
       sub_news_titles,
+      name,
     } = press;
 
     const listHtml = sub_news_titles.reduce(
@@ -67,7 +72,7 @@ export default class NewsContent extends Component {
                 <ul class="sub-news">
                   ${listHtml}
                 </ul>
-                <span class="caption">UPI뉴스 언론사에서 직접 편집한 뉴스입니다.</span>
+                <span class="caption">${name} 언론사에서 직접 편집한 뉴스입니다.</span>
             </div>
         </div>
     

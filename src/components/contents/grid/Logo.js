@@ -1,4 +1,4 @@
-import Component from "../core/Component.js";
+import Component from "../../../core/Component.js";
 
 export default class Logo extends Component {
   setup() {
@@ -25,7 +25,7 @@ export default class Logo extends Component {
     this.addEvent("mouseleave", ".news-list__item", toggleHidden);
 
     const { addSubscribing, removeSubscribing } = this.props;
-    this.addEvent("click", ".subscribe", ({ target, currentTarget }) => {
+    const toggleSubscribing = ({ target, currentTarget }) => {
       if (!target.closest(".subscribe__button")) return;
 
       const { name } = currentTarget.querySelector(".news-list__image").dataset;
@@ -37,7 +37,9 @@ export default class Logo extends Component {
       this.setState({
         isSubscribing: !this.state.isSubscribing,
       });
-    });
+    };
+
+    this.addEvent("click", ".subscribe", toggleSubscribing);
   }
 
   template() {

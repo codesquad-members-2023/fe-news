@@ -1,13 +1,13 @@
-import Component from "../core/Component.js";
+import Component from "../../core/Component.js";
 import {
   SUBSCRIBING_PRESSES_KEY,
   getLocalData,
   setLocalData,
-} from "../storage/storageUtils.js";
-import GridView from "./GridView.js";
-import ListView from "./ListView.js";
-import StyleMenu from "./StyleMenu.js";
-import SubscriptionMenu from "./SubscriptionMenu.js";
+} from "../../../utils/sotrageManager.js";
+import GridView from "./grid/GridView.js";
+import ListView from "./list/ListView.js";
+import StyleMenu from "./menu/StyleMenu.js";
+import SubscriptionMenu from "./menu/SubscriptionMenu.js";
 
 const ALL = "all";
 const SUBSCRIBING = "sub";

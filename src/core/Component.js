@@ -20,7 +20,7 @@ export default class Component {
   }
 
   render() {
-    const dupParentElement = this.parentElement.cloneNode(true);
+    const dupParentElement = this.parentElement.cloneNode();
     dupParentElement.innerHTML = this.template();
     this.parentElement.parentNode.replaceChild(
       dupParentElement,

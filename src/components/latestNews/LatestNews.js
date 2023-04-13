@@ -1,4 +1,4 @@
-import Component from "../core/Component.js";
+import Component from "../../core/Component.js";
 import LatestNewsBar from "./LatestNewsBar.js";
 
 export default class LatestNews extends Component {

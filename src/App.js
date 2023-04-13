@@ -1,7 +1,7 @@
 import Component from "./core/Component.js";
-import LatestNews from "./components/LatestNews.js";
-import Label from "./components/Label.js";
-import Contents from "./components/Contents.js";
+import LatestNews from "./components/latestNews/LatestNews.js";
+import Label from "./components/label/Label.js";
+import Contents from "./components/contents/Contents.js";
 
 export default class App extends Component {
   template() {
