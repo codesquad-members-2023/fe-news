@@ -78,6 +78,10 @@ const renderAllGridElement = ($main, content) => {
   const $grid = createMainGridElement();
   updateMediaContent($grid, mediaData);
 
+  $grid.addEventListener('mouseover', mouseEventHandler);
+  $grid.addEventListener('mouseout', mouseEventHandler);
+  $grid.addEventListener('click', cilckEventHandler);
+
   $main.replaceChild($grid, $main.lastChild);
 };
 

@@ -8,6 +8,7 @@ import { createElement } from '../utils/dom.js';
 
 const App = () => {
   const root = document.querySelector('#root');
+
   const $header = Header();
   const $autoRolling = AutoRolling();
   const $main = createElement('main');
