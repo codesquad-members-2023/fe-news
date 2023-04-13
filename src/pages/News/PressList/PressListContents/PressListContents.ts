@@ -33,90 +33,6 @@ class PressListContents extends HTMLElement {
     this.displayStore = store.display;
   }
 
-  async connectedCallback() {
-    const pressList = await getPress({ page: 0 });
-    this.pressList = pressList;
-    this.maxPage = Math.ceil(pressList.length / 24);
-
-    addShadow({ target: this });
-    this.wrap = createWrap();
-    this.shadowRoot?.append(this.wrap);
-    this.render();
-    addStyle({
-      target: this.shadowRoot,
-      style: list(),
-    });
-
-    this.changeCurrentTab();
-    this.appendGridViewContainer();
-  }
-
-  appendGridViewContainer() {
-    Array.from({ length: this.maxPage }).forEach((_, i) => {
-      this.createGridViewContainer(i);
-    });
-  }
-
-  createGridViewContainer(page: number) {
-    const gridViewContainer = create({ tagName: 'div' });
-    gridViewContainer.classList.add('grid-view-container');
-    gridViewContainer.setAttribute('page', `${page}`);
-    if (page === 0) {
-      gridViewContainer.classList.add('show');
-    }
-    const currentPressList = this.getCurrentPressList(page);
-
-    const template = `
-      <grid-view-element press-list='${JSON.stringify(
-        currentPressList
-      )}'></grid-view-element>
-    `;
-
-    add({
-      target: gridViewContainer,
-      template,
-    });
-    this.wrap
-      ?.querySelector('section.general .view.grid')
-      ?.append(gridViewContainer);
-  }
-
-  createListViewContainer(page: number) {
-    const listViewContainer = create({ tagName: 'div' });
-    listViewContainer.classList.add('grid-view-container');
-    listViewContainer.setAttribute('page', `${page}`);
-    if (page === 0) {
-      listViewContainer.classList.add('show');
-    }
-    const pressId = null;
-    // const currentSection = this.getCurrentSection(pressId);
-
-    const template = `
-      <grid-view-element press-list='${JSON.stringify(
-        'currentSection'
-      )}'></grid-view-element>
-    `;
-
-    add({
-      target: null,
-      template,
-    });
-    // this.wrap
-    //   ?.querySelector('section.general .view.grid')
-    //   ?.append(gridViewContainer);
-  }
-
-  getCurrentPressList(page: number) {
-    const start = page * 24;
-    const end = start + 24;
-    return this.pressList.slice(start, end);
-  }
-
-  async getCurrentSection(pressId: string) {
-    const section = await getSection({ pressId });
-    return section;
-  }
-
   render() {
     const template = `
     <controller-element></controller-element>
@@ -136,6 +52,24 @@ class PressListContents extends HTMLElement {
     });
 
     this.handleClick();
+  }
+
+  async connectedCallback() {
+    const pressList = await getPress({ page: 0 });
+    this.pressList = pressList;
+    this.maxPage = Math.ceil(pressList.length / 24);
+
+    addShadow({ target: this });
+    this.wrap = createWrap();
+    this.shadowRoot?.append(this.wrap);
+    this.render();
+    addStyle({
+      target: this.shadowRoot,
+      style: list(),
+    });
+
+    this.changeCurrentTab();
+    this.appendGridViewContainer();
   }
 
   handleClick() {
@@ -206,6 +140,74 @@ class PressListContents extends HTMLElement {
       }
     };
     this.displayStore.subscribe(toggleShowClass);
+  }
+
+  appendGridViewContainer() {
+    Array.from({ length: this.maxPage }).forEach((_, i) => {
+      this.createGridViewContainer(i);
+    });
+  }
+
+  appendListViewContainer() {}
+
+  createListViewContainer(page: number) {
+    const listViewContainer = create({ tagName: 'div' });
+    listViewContainer.classList.add('grid-view-container');
+    listViewContainer.setAttribute('page', `${page}`);
+    if (page === 0) {
+      listViewContainer.classList.add('show');
+    }
+    const pressId = null;
+    // const currentSection = this.getCurrentSection(pressId);
+
+    const template = `
+      <grid-view-element press-list='${JSON.stringify(
+        'currentSection'
+      )}'></grid-view-element>
+    `;
+
+    add({
+      target: null,
+      template,
+    });
+    // this.wrap
+    //   ?.querySelector('section.general .view.grid')
+    //   ?.append(gridViewContainer);
+  }
+
+  createGridViewContainer(page: number) {
+    const gridViewContainer = create({ tagName: 'div' });
+    gridViewContainer.classList.add('grid-view-container');
+    gridViewContainer.setAttribute('page', `${page}`);
+    if (page === 0) {
+      gridViewContainer.classList.add('show');
+    }
+    const currentPressList = this.getCurrentPressList(page);
+
+    const template = `
+      <grid-view-element press-list='${JSON.stringify(
+        currentPressList
+      )}'></grid-view-element>
+    `;
+
+    add({
+      target: gridViewContainer,
+      template,
+    });
+    this.wrap
+      ?.querySelector('section.general .view.grid')
+      ?.append(gridViewContainer);
+  }
+
+  getCurrentPressList(page: number) {
+    const start = page * 24;
+    const end = start + 24;
+    return this.pressList.slice(start, end);
+  }
+
+  async getCurrentSection(pressId: string) {
+    const section = await getSection({ pressId });
+    return section;
   }
 }
 
