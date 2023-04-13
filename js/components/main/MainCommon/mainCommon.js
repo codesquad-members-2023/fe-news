@@ -23,10 +23,10 @@ const createMainHeaderElement = () => {
 
   <div class="main-header__buttons">
     <a class="main-header__list-button">
-        <img src="./asset/listIcon.svg" />
+        <i class="list-icon"></i>
     </a>
     <a class="main-header__grid-button">
-        <img  src="./asset/gridIcon.svg" />
+        <i class="grid-icon grid-icon__enable"></i>
     </a>
 </div>
   `;

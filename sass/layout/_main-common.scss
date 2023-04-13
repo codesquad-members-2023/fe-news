@@ -1,5 +1,5 @@
 @import '../abstracts/variables';
-
+@import '../abstracts/functions';
 main {
   position: relative;
 }
@@ -47,4 +47,25 @@ main {
 }
 .right-button {
   right: -47px;
+}
+
+.list-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-image: icon(list, 'd2dae0');
+}
+.grid-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-image: icon(grid, 'd2dae0');
+}
+
+.list-icon__enable {
+  background-image: icon(list, '4362d0');
+}
+
+.grid-icon__enable {
+  background-image: icon(grid, '4362d0');
 }

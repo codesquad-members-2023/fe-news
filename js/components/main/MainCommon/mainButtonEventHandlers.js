@@ -30,21 +30,32 @@ export const headerViewChangeBtnClickEventHandler = ({ target }) => {
   // 이 이벤트 핸들러는 이벤트 헨들러 js 파일로 옮기기!
   // 아마 case 문으로 싹 바꿔서 해야할듯!
 
-  const $button = target.closest('a');
-  if (!$button) return;
-  switch ($button.classList.value) {
+  const $clickedBtn = target.closest('a');
+  let $unClickedBtn;
+  if (!$clickedBtn) return;
+  switch ($clickedBtn.classList.value) {
     case VIEW_BTN_CLASS.all:
       dispatch(displayActionCreator.headerAllBtnClick());
       break;
+
     case VIEW_BTN_CLASS.mine:
       dispatch(displayActionCreator.headerMineBtnClick());
       break;
+
     case VIEW_BTN_CLASS.list:
+      $unClickedBtn = $clickedBtn.nextElementSibling;
+      $clickedBtn.querySelector('i').classList.add('list-icon__enable');
+      $unClickedBtn.querySelector('i').classList.remove('grid-icon__enable');
       dispatch(displayActionCreator.headerListBtnClick());
       break;
+
     case VIEW_BTN_CLASS.gird:
+      $unClickedBtn = $clickedBtn.previousElementSibling;
+      $clickedBtn.querySelector('i').classList.add('grid-icon__enable');
+      $unClickedBtn.querySelector('i').classList.remove('list-icon__enable');
       dispatch(displayActionCreator.headerGridBtnClick());
       break;
+
     default:
       break;
   }
