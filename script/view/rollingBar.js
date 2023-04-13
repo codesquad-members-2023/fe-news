@@ -6,7 +6,7 @@ const rollingBarTemplate = () =>
   <img src="assets/rollingLogo.svg" /><ul class="data_list_right"></ul></div>
   </div>`;
 
-const viewRollingBar = () => {
+const renderRollingBar = () => {
   const root = document.querySelector(".root");
   const newsRollingBar = document.createElement("article");
   root.appendChild(newsRollingBar);
@@ -57,4 +57,4 @@ const rollingData = (className) => {
   eventHandler();
 };
 
-export { viewRollingBar, insertNewsData, rollingData };
+export { renderRollingBar, insertNewsData, rollingData };

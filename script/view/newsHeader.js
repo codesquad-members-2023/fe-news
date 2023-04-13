@@ -13,11 +13,11 @@ const newsHeaderTemplate = () =>
   <div class="header__date">${makeDate()}</div>
   </div>`;
 
-const viewNewsHeader = () => {
+const renderNewsHeader = () => {
   const root = document.querySelector(".root");
   const newsHeader = document.createElement("header");
   root.appendChild(newsHeader);
   newsHeader.innerHTML = newsHeaderTemplate();
 };
 
-export { viewNewsHeader };
+export { renderNewsHeader };

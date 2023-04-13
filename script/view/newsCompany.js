@@ -12,15 +12,15 @@ const newsCompanyTemplate = () => `
   </div>
   <div class="news-company__gride">
     <div class="gride_set"></div>
-    <div class="gride_btn"><img class="girde_btn-left"/><img class="girde_btn-right"/></div>
+    <div class="gride_btn"><img class="girde_btn-left" src="assets/leftButton.svg"/><img class="girde_btn-right" src="assets/rightButton.svg"/></div>
   </div>
 </div>
 `;
-const viewNewsCompanyBar = () => {
+const renderNewsCompanyBar = () => {
   const root = document.querySelector(".root");
   const newsCompanyBar = document.createElement("section");
   root.appendChild(newsCompanyBar);
   newsCompanyBar.innerHTML = newsCompanyTemplate();
 };
 
-export { viewNewsCompanyBar };
+export { renderNewsCompanyBar };

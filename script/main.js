@@ -1,11 +1,11 @@
 import { fetchManager } from "./controller/fetchManager.js";
-import { viewNewsHeader } from "./view/newsHeader.js";
-import { rollingData, viewRollingBar } from "./view/rollingBar.js";
-import { viewNewsCompanyBar } from "./view/newsCompany.js";
+import { renderNewsHeader } from "./view/newsHeader.js";
+import { rollingData, renderRollingBar } from "./view/rollingBar.js";
+import { renderNewsCompanyBar } from "./view/newsCompany.js";
 const main = () => {
-  viewNewsHeader();
-  viewRollingBar();
-  viewNewsCompanyBar();
+  renderNewsHeader();
+  renderRollingBar();
+  renderNewsCompanyBar();
   fetchManager();
 };
 
