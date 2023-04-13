@@ -12,7 +12,8 @@ view(component)를 작게 나누고 최소한의 view에 대해 feature 작성
 
 ### Architecture
 
-- 작성 예정
+- 컴포넌트 별로 MVC 패턴 구현
+  - 이 때, Model과 View의 역할은 각각 상태관리와 화면관리로 명확히 하되, Controller는 Component라고 명명하고 model과 view를 통한 다양한 조작을 맡긴다.
 
 ## Tech Stack
 
@@ -22,13 +23,13 @@ view(component)를 작게 나누고 최소한의 view에 대해 feature 작성
   - [tailwindCSS](https://tailwindcss.com/)
   - [TypeScript](https://www.typescriptlang.org/)
 
-- Bundler
+- Bundler(예정)
   - [Vite](https://vitejs-kr.github.io/)
 
-- Back
+- Back(예정)
   - [Nodejs](https://nodejs.org/ko)
   - [Express](https://expressjs.com/ko/)
   - [Mongoose](https://mongoosejs.com/)
 
-- DataBase
+- DataBase(예정)
   - [MongoDB](https://www.mongodb.com/)

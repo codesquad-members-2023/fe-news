@@ -1,8 +1,9 @@
-import { Props, State } from '@utils/types';
-import { Component } from '@utils/interfaces';
+import { Props, State } from '@src/types/types';
+import { Component } from '@src/types/interfaces';
 import { MainModel } from '@components/main/MainModel.js';
 import { MainView } from '@components/main/MainView.js';
-import { MainRightComponent } from '@components/main/Main__right/MainRightComponent.js';
+import { MainRightComponent } from '@components/main/main__right/MainRightComponent.js';
+import { MainLeftComponent } from '@components/main/main__left/MainLeftComponent.js';
 
 export class MainComponent implements Component {
   private _model: MainModel;
@@ -11,12 +12,18 @@ export class MainComponent implements Component {
     this._model = new MainModel();
     this._view = new MainView();
 
-    const state = {};
-    this.setState(state);
+    const left = new MainLeftComponent();
+    const right = new MainRightComponent();
+    left.attachTo(this);
+    right.attachTo(this);
+  }
 
-    const mainRight = new MainRightComponent();
-    this.element.appendChild(mainRight.element);
-    mainRight.setState({ title: 123 });
+  get element() {
+    return this._view.element;
+  }
+
+  get state() {
+    return this._model.state;
   }
 
   setState(state: State) {
@@ -24,11 +31,7 @@ export class MainComponent implements Component {
     this._view.render(this._model.state);
   }
 
-  get state() {
-    return this._model.state;
-  }
-
-  get element() {
-    return this._view.element;
+  attachTo(component: Component, position: InsertPosition = 'beforeend') {
+    component.element.insertAdjacentElement(position, this.element);
   }
 }

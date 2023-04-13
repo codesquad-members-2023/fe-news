@@ -1,17 +1,7 @@
-import { State } from '@utils/types';
-import { Model } from '@utils/interfaces';
+import { AbstractModel } from '@src/types/abstracts.js';
 
-export class FooterModel implements Model {
-  private _state: State;
+export class FooterModel extends AbstractModel {
   constructor() {
-    this._state = {};
-  }
-
-  setState(newState: State) {
-    this._state = { ...this._state, ...newState };
-  }
-
-  get state() {
-    return this._state;
+    super();
   }
 }
