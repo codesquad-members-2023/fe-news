@@ -2,6 +2,8 @@ import { createNewsStandHeader } from "./components/header/headerView.js";
 import { createNewsStandHeadLine } from "./components/headLine/headLineView.js";
 import {
   createNewsStandJournal,
+  createJournalHeader,
+  createJournalCarousel,
   renderJournal,
 } from "./components/journalList/journalListView.js";
 
@@ -11,20 +13,29 @@ const init = () => {
   mainSpace.classList.add("news-stand");
   document.body.appendChild(mainSpace);
 
-  const journalSpace = createNewsStandJournal();
+  const journalListEl = createNewsStandJournal();
+  const journalHeader = createJournalHeader();
+
+  journalListEl.innerHTML += journalHeader;
 
   // main에 헤더. 헤드라인, 언론사 추가
   mainSpace.append(
     createNewsStandHeader(),
     createNewsStandHeadLine(),
-    journalSpace.journalListEl
+    journalListEl
   );
 
-  // journal 캐러셀에 이벤트 부여
-  journalSpace.journalCarousel.addEvent();
+  const journalCarousel = createJournalCarousel();
+  journalListEl.innerHTML += journalCarousel.beElement();
+  journalCarousel.addEvent();
 
-  // 언론사 렌더링
-  renderJournal();
+  renderJournal().then((journalItems) => {
+    const journalContainer = document.querySelector(".journal-container");
+    const shuffledItems = journalItems.sort(() => 0.5 - Math.random());
+    shuffledItems.forEach((item) => {
+      journalContainer.appendChild(item);
+    });
+  });
 };
 
 init();
