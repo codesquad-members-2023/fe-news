@@ -64,7 +64,7 @@ const createNewsHeaderElement = (mediaInfo) => {
   });
   const headerInnerHTML = `
     <img class="main-list__logo" src="${mediaInfo.imgSrc}" />
-      <span class="main-list__edit-time">${mediaInfo.modifiedTime}</span>
+      <div class="main-list__edit-time">${mediaInfo.modifiedTime}</div>
       <a class="list__subscribe-button">
         <img src="./asset/subscribeButton.svg" alt="subscribe" />
       </a>
