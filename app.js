@@ -6,13 +6,8 @@ import DataFetcher from './src/js/dataFetcher/dataFetcher.js';
 
 import { headerElement, headlineElement, dataUrl, ref } from './src/js/const/const.js';
 
-const main = () => {
-  const dataFetcher = new DataFetcher(dataUrl);
-  const headerModel = new HEADERModel({ headerElement });
-  const headlineModel = new HEADLINEModel({ headlineElement }, dataFetcher);
-
-  new HEADERView({ headerModel }, ref);
-  new HEADLINEView({ headlineModel }, ref);
-};
-
-main();
+const dataFetcher = new DataFetcher(dataUrl);
+const headerModel = new HEADERModel({ headerElement });
+const headlineModel = new HEADLINEModel({ headlineElement }, dataFetcher);
+new HEADERView({ headerModel }, ref);
+new HEADLINEView({ headlineModel }, ref);
