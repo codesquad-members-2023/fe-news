@@ -11,13 +11,17 @@
   height: 49px;
   background-color: $off-white;
   border: 1px solid $gray100;
+  overflow: hidden;
 }
 
 .media {
+  margin-left: 16px;
   font-size: $title-sm;
   font-weight: $bold;
 }
+
 .issue {
+  line-height: 40px;
   font-size: $title-sm;
   font-weight: $medium;
   color: $gray500;
