@@ -13,11 +13,11 @@ export class NsPressContainerView extends AbstractView {
   }
 
   setTemplate() {
-    this._templateElement.innerHTML = `<section class="px-3 flex-auto flex flex-row justify-between items-center relative">
+    this._templateElement.innerHTML = `<section class="px-3 py-3 flex-auto flex flex-row justify-between items-center relative">
                                          <button id="btn-prev" class="absolute left-0 border rounded-full bg-white drop-shadow-very-xl">
                                            <img src="/public/images/symbols/chevron-left.svg" alt="chevron-left" class="h-6 w-6"/>
                                          </button>
-                                         <ul id="ns__grid-container" class="grid grid-cols-6 grid-rows-4 w-full h-full">
+                                         <ul id="ns__grid-container" class="grid grid-cols-6 grid-rows-4 w-full h-full gap-px bg-gray-200 border border-gray-200">
                                          </ul>                                      
                                          <button id="btn-next" class="absolute right-0 border rounded-full bg-white drop-shadow-very-xl">
                                            <img src="/public/images/symbols/chevron-right.svg" alt="chevron-right" class="h-6 w-6"/>
@@ -45,7 +45,7 @@ export class NsPressContainerView extends AbstractView {
         .reduce((acc, cur) => {
           return (
             acc +
-            `<li class="border border-gray-100 grid place-content-center"><img class="h-5" src="${cur}" alt="${cur}"></li>`
+            `<li class="grid place-content-center bg-white"><img class="h-5" src="${cur}" alt="${cur}"></li>`
           );
         }, '');
   }
