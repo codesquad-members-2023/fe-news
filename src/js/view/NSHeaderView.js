@@ -1,25 +1,36 @@
-export default class HEADERView {
-  constructor({ headerModel }, ref) {
-    this._target = ref.newsstandContainer;
-    this._model = headerModel;
-    this._markUp;
+export default class NSHeaderView {
+  constructor({ NS_HEADER_INFO }, REFERENCE) {
+    this._parentElem = REFERENCE.NS_CONTAINER;
+    this._info = NS_HEADER_INFO;
     this.render();
   }
 
-  render() {
-    const state = this._model.getState();
-    this._markUp = this.generateMarkup(state);
-    this._target.insertAdjacentHTML('afterbegin', this._markUp);
+  getDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const date = today.getDate();
+
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    const dayOfWeek = days[today.getDay()];
+
+    return `${year}.${month}.${date} ${dayOfWeek}요일`;
   }
 
-  generateMarkup(state) {
+  render() {
+    const date = this.getDate();
+    const markUp = this.generateMarkup(date);
+    this._parentElem.insertAdjacentHTML('afterbegin', markUp);
+  }
+
+  generateMarkup(date) {
     return `<div class="newsstand_header">
     <span class="newsstand_header_title">
       <a onClick="window.location.reload()">
-      <img class="header_title_logo" src="${state.logoImgSrc}" alt="${state.imgAlt}" />
-      <span class="header_title_text">${state.title}</span></a>
+      <img class="header_title_logo" src="${this._info.LOGO_IMG_SRC}" alt="${this._info.imgAlt}" />
+      <span class="header_title_text">${this._info.TITLE}</span></a>
     </span>
-    <span class="newsstand_header_date">${state.date}</span>
+    <span class="newsstand_header_date">${date}</span>
   </div>`;
   }
 }

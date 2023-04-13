@@ -1,44 +1,56 @@
-import { headlineAnimationInfo } from '../const/const.js';
+export default class NSHeadlineView {
+  constructor({ NS_HEADLINE_INFO }, dataFetcher, REFERENCE, API_PATH) {
+    this._parentElem = REFERENCE.NS_CONTAINER;
+    this._info = NS_HEADLINE_INFO;
+    this._dataFetcher = dataFetcher;
+    this._API_PATH = API_PATH;
 
-export default class HEADLINEView {
-  constructor({ headlineModel }, ref) {
-    this._target = ref.newsstandContainer;
-    this._model = headlineModel;
-    this._markUp;
-
-    this._headlineContainer;
-    this._headlineLeft;
-    this._headlineRight;
     this._animationStartTime = {
       left: null,
       right: null,
     };
+
     this._animationId;
     this.render();
   }
 
+  async fetchData() {
+    const headlineList = {
+      left: '',
+      right: '',
+    };
+
+    await this._dataFetcher.fetchData(this._API_PATH.HEADLINE);
+    this._dataFetcher.getResult().forEach((headline) => {
+      headline.id <= this._info.HEADLINE_LENGTH
+        ? (headlineList.left += `<li>${headline.title}</li>`)
+        : (headlineList.right += `<li>${headline.title}</li>`);
+    });
+
+    return headlineList;
+  }
+
   async render() {
-    await this._model.getInitialState();
-    const state = this._model.getState();
-    this._markUp = this.generateMarkup(state);
-    this._target.insertAdjacentHTML('beforeend', this._markUp);
+    const headlineList = await this.fetchData();
+    const markUp = this.generateMarkup(headlineList);
+    this._parentElem.insertAdjacentHTML('beforeend', markUp);
     this.setHeadlineSection();
     this.setHeadlineAnimation();
   }
 
-  generateMarkup(state) {
+  generateMarkup(headlineList) {
     return `<div class="newsstand_headline_container">
     <div class="newsstand_headline left">
-      <a class="headline_press">${state.title}</a>
+      <a class="headline_press">${this._info.TITLE}</a>
       <div class="headline_rolling_container">
-        <ul class="headline_rolling_news left">${state.headlineLeftList}
+        <ul class="headline_rolling_news left">${headlineList.left}
         </ul>
       </div>
     </div>
     <div class="newsstand_headline right">
-      <a class="headline_press">${state.title}</a>
+      <a class="headline_press">${this._info.TITLE}</a>
       <div class="headline_rolling_container">
-        <ul class="headline_rolling_news right">${state.headlineRightList}
+        <ul class="headline_rolling_news right">${headlineList.right}
         </ul>
       </div>
     </div>
@@ -51,24 +63,28 @@ export default class HEADLINEView {
   }
 
   setHeadlineSection() {
-    this._headlineContainer = this._target.querySelector('.newsstand_headline_container');
-    this._headlineLeft = this._headlineContainer.querySelector('.headline_rolling_news.left');
-    this._headlineRight = this._headlineContainer.querySelector('.headline_rolling_news.right');
+    const headlineSection = {
+      container: this._parentElem.querySelector('.newsstand_headline_container'),
+      left: null,
+      right: null,
+    };
+    headlineSection.left = headlineSection.container.querySelector('.headline_rolling_news.left');
+    headlineSection.right = headlineSection.container.querySelector('.headline_rolling_news.right');
+    return headlineSection;
   }
 
-  translateHeadline(location) {
-    location.style.transitionDuration = `${headlineAnimationInfo.transitionDuration}ms`;
-    location.style.transform = `translateY(-${headlineAnimationInfo.headlineLiWidth}px)`;
-    location.ontransitionend = () => this.resortHeadlineList(location);
+  translateHeadline(target) {
+    target.style.transitionDuration = `${this._info.ANIMATION.TRANSITION_DURATION}ms`;
+    target.style.transform = `translateY(-${this._info.ANIMATION.HEADLINE_LIST_HEIGHT}px)`;
+    target.ontransitionend = () => this.resortHeadlineList(target);
   }
 
-  headlineRollingHandler(location) {
-    location === 'left'
-      ? this.translateHeadline(this._headlineLeft)
-      : this.translateHeadline(this._headlineRight);
+  headlineRollingHandler(direction, target) {
+    direction === 'left' ? this.translateHeadline(target) : this.translateHeadline(target);
   }
 
   setHeadlineAnimation() {
+    const headlineSection = this.setHeadlineSection();
     const animateHeadline = (timestamp) => {
       if (!this._animationStartTime.left) this._animationStartTime.left = timestamp;
       const leftElapsedTime = timestamp - this._animationStartTime.left;
@@ -76,14 +92,14 @@ export default class HEADLINEView {
         ? 0
         : timestamp - this._animationStartTime.right;
 
-      if (leftElapsedTime >= headlineAnimationInfo.leftDelayDuration) {
-        this.headlineRollingHandler('left');
+      if (leftElapsedTime >= this._info.ANIMATION.LEFT_DELAY_DURATION) {
+        this.headlineRollingHandler('left', headlineSection.left);
         this._animationStartTime.left = null;
         this._animationStartTime.right = timestamp;
       }
 
-      if (rightElapseTime >= headlineAnimationInfo.rightDelayDuration) {
-        this.headlineRollingHandler('right');
+      if (rightElapseTime >= this._info.ANIMATION.RIGHT_DELAY_DURATION) {
+        this.headlineRollingHandler('right', headlineSection.right);
         this._animationStartTime.right = null;
       }
       this._animationId = requestAnimationFrame(animateHeadline);
