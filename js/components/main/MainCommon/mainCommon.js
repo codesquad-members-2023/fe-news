@@ -49,13 +49,14 @@ const createMainButtonElement = () => {
   return [$leftButton, $rightButton];
 };
 
-const listViewButtonRender = ($leftButton, content) => {
+const listViewButtonRender = ($mainButtons, content) => {
   // grid 4page에서 list 누르면 오른쪽 버튼 안나오는 버그 존재~!
-  const breakCondition =
-    content.viewOption.gridOrList === 'grid' &&
-    $leftButton.classList.contains('none');
-  if (breakCondition) return;
-  $leftButton.classList.remove('none');
+  // 1. gird -> list 무조건 두개다 none 없어야함.
+  // 2. list -> grid 첫번째 거 무조건 none 해야함. 얘는 그냥 됨. grid에서 구현해놓음
+  // 왼쪽 버튼에 넣기!
+  if (content.viewOption.gridOrList === 'grid')
+    $mainButtons[0].classList.add('none');
+  else $mainButtons.forEach(($button) => $button.classList.remove('none'));
 };
 
 const MainCommon = () => {
@@ -67,7 +68,8 @@ const MainCommon = () => {
   });
 
   $mainHeader.addEventListener('click', headerViewChangeBtnClickEventHandler);
-  subscribe('viewOptionData', listViewButtonRender.bind(null, $mainButtons[0]));
+  subscribe('viewOptionData', listViewButtonRender.bind(null, $mainButtons));
+
   return [$mainHeader, $mainButtons];
 };
 
