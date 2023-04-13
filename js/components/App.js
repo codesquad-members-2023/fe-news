@@ -12,7 +12,7 @@ const App = () => {
   const $autoRolling = AutoRolling();
   const $main = createElement('main');
   const [$mainHeader, $mainButtons] = MainCommon();
-  const $mainGrid = MainGrid();
+  const $mainGrid = MainGrid($main);
   $main.append($mainHeader, $mainButtons[0], $mainButtons[1], $mainGrid);
 
   const documentFragment = new DocumentFragment();
