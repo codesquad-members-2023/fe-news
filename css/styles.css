@@ -15,3 +15,11 @@ body {
   display: flex;
   height: 100vh;
 }
+
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}

@@ -1,10 +1,9 @@
 import { getJournal } from "../../api/getData.js";
 import { Carousel } from "./journalCarousel.js";
 import { Journal } from "./journalClass.js";
+import JournalStore from "../../store/journalStore.js";
 
 const createNewsStandJournal = () => {
-  const journalURL = "http://localhost:3000/journal";
-
   // 언론사 영역
   const journalListEl = document.createElement("article");
   journalListEl.classList.add("news-stand-jounalList");
@@ -27,11 +26,17 @@ const createNewsStandJournal = () => {
 
   journalListEl.innerHTML += journalHeader;
 
-  // 언론사 리스트
+  // 언론사 캐러셀
   const journalCarousel = new Carousel();
   journalListEl.innerHTML += journalCarousel.beElement();
 
-  // 각 언론사 생성
+  return { journalListEl, journalCarousel };
+};
+
+// 각 언론사 생성
+const renderJournal = () => {
+  const journalURL = "http://localhost:3000/journal";
+
   getJournal(journalURL).then((journalData) => {
     const journal = new Journal(journalData);
     const journalItems = journal.makeJournal();
@@ -39,10 +44,14 @@ const createNewsStandJournal = () => {
     const shuffledItems = journalItems.sort(() => 0.5 - Math.random());
     shuffledItems.forEach((item) => {
       journalContainer.appendChild(item);
+
+      // JournalStore에 Journal 인스턴스 저장
+      JournalStore.dispatch({
+        type: "SET_JOURNAL_LIST",
+        journalList: [...JournalStore.getState().journalList, item],
+      });
     });
   });
-
-  return { journalListEl, journalCarousel };
 };
 
-export default createNewsStandJournal;
+export { createNewsStandJournal, renderJournal };

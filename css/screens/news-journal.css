@@ -28,15 +28,27 @@
 }
 
 .journal-item {
+  border: 1px solid var(--gray100);
+}
+
+.journal-item_show,
+.journal-item_hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--gray100);
   width: 100%;
   height: 100%;
 }
 
-.journal-item img {
+.journal-item_hover button {
+  font-size: 15px;
+}
+
+.journal-item_hover button:first-child {
+  margin-right: 7px;
+}
+
+.journal-item_show img {
   width: 50%;
 }
 

@@ -1,6 +1,9 @@
 import { createNewsStandHeader } from "./components/header/headerView.js";
 import { createNewsStandHeadLine } from "./components/headLine/headLineView.js";
-import createNewsStandJournal from "./components/journalList/journalListView.js";
+import {
+  createNewsStandJournal,
+  renderJournal,
+} from "./components/journalList/journalListView.js";
 
 // main 구성
 const init = () => {
@@ -19,6 +22,9 @@ const init = () => {
 
   // journal 캐러셀에 이벤트 부여
   journalSpace.journalCarousel.addEvent();
+
+  // 언론사 렌더링
+  renderJournal();
 };
 
 init();
