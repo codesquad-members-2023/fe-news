@@ -23,13 +23,14 @@ view(component)를 작게 나누고 최소한의 view에 대해 feature 작성
   - [tailwindCSS](https://tailwindcss.com/)
   - [TypeScript](https://www.typescriptlang.org/)
 
+- Back
+  - [Nodejs](https://nodejs.org/ko)
+  - [Express](https://expressjs.com/ko/)
+
+- DataBase
+  - [MongoDB](https://www.mongodb.com/)
+
 - Bundler(예정)
   - [Vite](https://vitejs-kr.github.io/)
 
-- Back(예정)
-  - [Nodejs](https://nodejs.org/ko)
-  - [Express](https://expressjs.com/ko/)
-  - [Mongoose](https://mongoosejs.com/)
 
-- DataBase(예정)
-  - [MongoDB](https://www.mongodb.com/)
