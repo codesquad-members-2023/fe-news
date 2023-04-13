@@ -18,7 +18,7 @@
 
 - [x] [루카스 용어 공부](https://amber-pyrite-e34.notion.site/2-W01-a8a27f0d709947dba986858b5fb82a01)
 
-- [ ] prototype 공부
+- [ ] [prototype 공부](https://amber-pyrite-e34.notion.site/6-f4b7342dec3b4ba38831588ee5170efd)
 - [ ] promise 공부
 - [ ] fetch 공부
 
