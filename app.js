@@ -1,13 +1,9 @@
-import HEADERModel from './src/js/domMaker/headerMaker.js';
-import HEADERView from './src/js/view/headerView.js';
-import HEADLINEModel from './src/js/domMaker/headlineMaker.js';
-import HEADLINEView from './src/js/view/headlineView.js';
-import DataFetcher from './src/js/dataFetcher/dataFetcher.js';
+import DataFetcher from './src/js/utils/dataFetcher.js';
+import { NS_HEADER_INFO, NS_HEADLINE_INFO, REFERENCE } from './src/js/constant/dom.js';
+import { API_BASE_URL, API_PATH } from './src/js/constant/api.js';
+import NSHeaderView from './src/js/view/NSHeaderView.js';
+import NSHeadlineView from './src/js/view/NSHeadlineView.js';
 
-import { headerElement, headlineElement, dataUrl, ref } from './src/js/const/const.js';
-
-const dataFetcher = new DataFetcher(dataUrl);
-const headerModel = new HEADERModel({ headerElement });
-const headlineModel = new HEADLINEModel({ headlineElement }, dataFetcher);
-new HEADERView({ headerModel }, ref);
-new HEADLINEView({ headlineModel }, ref);
+const dataFetcher = new DataFetcher(API_BASE_URL);
+new NSHeaderView({ NS_HEADER_INFO }, REFERENCE);
+new NSHeadlineView({ NS_HEADLINE_INFO }, dataFetcher, REFERENCE, API_PATH);
