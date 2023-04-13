@@ -31,14 +31,16 @@ const createJournalCarousel = () => {
   return journalCarousel;
 };
 
-const renderJournal = () => {
-  const journalURL = "http://localhost:3000/journal";
-
-  return getJournal(journalURL).then((journalData) => {
+const renderJournal = async () => {
+  try {
+    const journalURL = "http://localhost:3000/journal";
+    const journalData = await getJournal(journalURL);
     const journal = new Journal(journalData);
     const journalItems = journal.makeJournal();
     return journalItems;
-  });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export {
