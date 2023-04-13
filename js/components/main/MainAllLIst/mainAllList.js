@@ -107,12 +107,19 @@ const renderMainAllList = ($main, content) => {
     content.viewOption.allOrMine === 'all';
   if (!breakCondition) return;
 
-  const $mainList = createMainListElement(mediaData[1]);
+  const $mainList = createMainListElement(mediaData[content.page]);
+  $main.replaceChild($mainList, $main.lastChild);
+};
+
+const renderNextPage = ($main, content) => {
+  const mediaData = getStoreState('mediaData').data;
+  const $mainList = createMainListElement(mediaData[content.page]);
   $main.replaceChild($mainList, $main.lastChild);
 };
 
 const MainAllList = ($main) => {
   subscribe('viewOptionData', renderMainAllList.bind(null, $main));
+  subscribe('listPageData', renderNextPage.bind(null, $main));
 };
 
 export default MainAllList;

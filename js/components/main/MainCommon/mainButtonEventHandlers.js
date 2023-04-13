@@ -15,13 +15,28 @@ export const pageControlBtnClickEventHandler = ({ target, currentTarget }) => {
 
   // TODO : 전체 언론사 grid일때, list일때, 다 다른 event를 부여해야함.
   // Case 문으로 좀 빼야할듯...
-  if ($targetButton.classList.contains('left-button')) {
+  if (
+    $targetButton.classList.contains('left-button') &&
+    $mainSection.classList.contains('main-grid')
+  ) {
     const direction = 'left';
-    buttonClickHandler(direction, $mainSection, $targetButton);
-  }
-  if ($targetButton.classList.contains('right-button')) {
+    gridButtonClickHandler(direction, $mainSection, $targetButton);
+  } else if (
+    $targetButton.classList.contains('right-button') &&
+    $mainSection.classList.contains('main-grid')
+  ) {
     const direction = 'right';
-    buttonClickHandler(direction, $mainSection, $targetButton);
+    gridButtonClickHandler(direction, $mainSection, $targetButton);
+  } else if (
+    $targetButton.classList.contains('left-button') &&
+    $mainSection.classList.contains('main-list')
+  ) {
+    dispatch(displayActionCreator.listLeftBtnClick());
+  } else if (
+    $targetButton.classList.contains('right-button') &&
+    $mainSection.classList.contains('main-list')
+  ) {
+    dispatch(displayActionCreator.listRightBtnClick());
   }
 };
 
@@ -61,7 +76,7 @@ export const headerViewChangeBtnClickEventHandler = ({ target }) => {
   }
 };
 
-const buttonClickHandler = (direction, $mainSection, $targetButton) => {
+const gridButtonClickHandler = (direction, $mainSection, $targetButton) => {
   const directionNum = direction === 'left' ? -1 : 1;
   // some 메서드 : true가 중간에 return 되면 break!
   Array.from($mainSection.childNodes).some((node, idx, arr) => {

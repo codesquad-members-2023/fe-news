@@ -88,4 +88,18 @@ export const displayActionCreator = {
       type: actionTypes.displayActions.HEADER_MY_MEDIA_BUTTON_CLICK,
     };
   },
+
+  listLeftBtnClick(payload) {
+    return {
+      type: actionTypes.displayActions.LIST_LEFT_BUTTON_CLICK,
+      payload,
+    };
+  },
+
+  listRightBtnClick(payload) {
+    return {
+      type: actionTypes.displayActions.LIST_RIGHT_BUTTON_CLICK,
+      payload,
+    };
+  },
 };
