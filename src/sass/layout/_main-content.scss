@@ -22,3 +22,15 @@
     margin-right: 14px;
   }
 }
+
+.main-content__grid {
+  @include flex-row();
+}
+.press-grid {
+  display: grid;
+  grid-template-columns: repeat($grid-columns-count, calc($app-width/$grid-columns-count));
+
+  &__item {
+    @include flex-row($justify-content: center, $align-items: center);
+  }
+}

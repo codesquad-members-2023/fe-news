@@ -1,0 +1,9 @@
+.press-grid {
+  height: 388px;
+}
+.press-grid__item {
+  border: 1px solid $gray200;
+  .press-logo {
+    height: 25px;
+  }
+}
