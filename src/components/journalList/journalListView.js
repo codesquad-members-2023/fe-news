@@ -9,12 +9,12 @@ const createNewsStandJournal = () => {
 };
 
 const createJournalHeader = () => {
-  const journalHeader = `<header class="journal-header">
-    <div class="journal-area">
+  const journalHeader = `<header class="journal-header display-flex">
+    <div class="journal-area display-flex">
         <div class="journal-all Title-MD">전체 언론사</div>
         <div class="journal-subList Body-MD">내가 구독한 언론사</div>
     </div>
-    <div class="journal-btns">
+    <div class="journal-btns display-flex">
         <div class="journal-btn__detail">
             <img src="src/assets/icons/list-view.svg" />
         </div>

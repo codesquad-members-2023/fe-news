@@ -4,18 +4,15 @@
 }
 
 .journal-header {
-  display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
 .journal-area {
-  display: flex;
   gap: 20px;
 }
 
 .journal-btns {
-  display: flex;
   gap: 10px;
 }
 
@@ -50,26 +47,4 @@
 
 .journal-item_show img {
   width: 50%;
-}
-
-.journal-carousel {
-  position: relative;
-}
-
-.journal-carousel-btn:first-child {
-  position: absolute;
-  z-index: 1;
-  left: 1px;
-  top: 44%;
-  background-color: white;
-  border: none;
-}
-
-.journal-carousel-btn:nth-child(2) {
-  position: absolute;
-  z-index: 1;
-  right: 1px;
-  top: 44%;
-  background-color: white;
-  border: none;
 }

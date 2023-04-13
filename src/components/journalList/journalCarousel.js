@@ -31,14 +31,12 @@ Carousel.prototype.moveCarousel = function (direction) {
   const currentPosition = this.page * -WIDTH_PER_PAGE;
   this.container.style.transform = `translateX(${currentPosition}px)`;
 
-  if (this.page === FIRST_PAGE) {
-    this.leftBtn.style.display = "none";
-  } else if (this.page === LAST_PAGE) {
-    this.rightBtn.style.display = "none";
-  } else {
-    this.leftBtn.style.display = "block";
-    this.rightBtn.style.display = "block";
-  }
+  const isOnFirstPage = this.page === FIRST_PAGE;
+  const isOnLastPage = this.page === LAST_PAGE;
+  this.leftBtn.classList.toggle("display-none", isOnFirstPage);
+  this.rightBtn.classList.toggle("display-none", isOnLastPage);
+  this.leftBtn.classList.toggle("display-block", !isOnFirstPage);
+  this.rightBtn.classList.toggle("display-block", !isOnLastPage);
 };
 
 Carousel.prototype.addEvent = function () {
@@ -51,7 +49,7 @@ Carousel.prototype.addEvent = function () {
     ".journal-carousel-btn:nth-child(2)"
   );
 
-  this.leftBtn.style.display = "none";
+  this.leftBtn.classList.add("display-none");
 
   this.leftBtn.addEventListener("click", this.moveCarousel.bind(this, "left"));
   this.rightBtn.addEventListener(

@@ -1,11 +1,3 @@
-.news-stand-headLine {
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
 .headLine-column {
   width: 440px;
   padding: 16px;
@@ -20,5 +12,5 @@
 }
 
 .headLine-column span:first-child {
-  margin-right: 3px;
+  margin-right: 10px;
 }

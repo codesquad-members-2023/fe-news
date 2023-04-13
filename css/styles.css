@@ -1,26 +1,18 @@
 @import "reset.css";
 @import "common/fonts.css";
 @import "common/root.css";
+@import "common/display.css";
 
 /* COMPONENTS */
-@import "components/news-journal-carousel.css";
-@import "components/news-header.css/news-header.css";
-@import "components/news-head-line/news-head-line.css";
-@import "components/news-journal/news-journal.css";
-@import "components/news-journal/news-journal-carousel.css";
+@import "news-stand/components/news-header.css/news-header.css";
+@import "news-stand/components/news-head-line/news-head-line.css";
+@import "news-stand/components/news-journal/news-journal.css";
+@import "news-stand/components/news-journal/carousel.css";
 
 /* SCREENS */
-@import "screens/news-stand.css";
+@import "news-stand/news-stand.css";
 
 body {
   display: flex;
   height: 100vh;
-}
-
-.display-flex {
-  display: none;
-}
-
-.display-block {
-  display: block;
 }

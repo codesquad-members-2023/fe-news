@@ -4,7 +4,7 @@ export class HeadLine {
   }
 
   toBeElement(title) {
-    const div = `<div class="headLine-column headLine-left">
+    const div = `<div class="headLine-column">
                     <span class="Title-SM">연합뉴스</span>
                     <span class="Body-SM">
                     ${title}

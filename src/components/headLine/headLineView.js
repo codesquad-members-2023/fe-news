@@ -7,6 +7,7 @@ export const createNewsStandHeadLine = () => {
 
   const headLineEl = document.createElement("div");
   headLineEl.classList.add("news-stand-headLine");
+  headLineEl.classList.add("news-stand-component_size");
 
   getHeadLine(headLineHotURL).then((jsonData) => {
     const hotHeadLine = new HeadLine(jsonData);
