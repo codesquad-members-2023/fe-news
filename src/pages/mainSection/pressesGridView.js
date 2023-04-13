@@ -11,6 +11,7 @@ class PressesGridView {
     this.#mainGridView = createNode('div')
     this.#mainGridView.classList.add('main-grid', 'current-view')
 
+    // 무조건 24번 만들게해야 될 것 같다.
     data.forEach(press => {
       this.#createGridCell({
         logoId: press.logo_src,

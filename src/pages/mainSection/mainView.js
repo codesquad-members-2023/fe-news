@@ -39,6 +39,7 @@ class MainView {
   #createListView(data) {}
 
   setCurrentViewData(data) {
+    // TODO: list or grid type을 받아서 처리해줘야 함
     this.#currentPage = data.currentPage
     this.setCurrentPage(this.#currentPage)
     this.#createGridView(data.currentViewData)
