@@ -59,12 +59,11 @@ export const createStore = <S>(reducer: ReducerType<S>, initialState: S) => {
       isDispatching = false;
     }
 
-    var listeners = (currentListeners = nextListeners);
+    const listeners = (currentListeners = nextListeners);
 
-    for (let i = 0; i < listeners.length; i++) {
-      var listener = listeners[i];
+    listeners.forEach((listener, i) => {
       listener();
-    }
+    });
 
     return action;
   };
