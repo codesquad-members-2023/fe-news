@@ -1,13 +1,12 @@
-function getHeadLineData() {
-  fetch('http://localhost:3001/headLine')
-    .then((response) => response.json())
-    .then((data) => {
-      const leftData = data.leftData;
-      const rightData = data.rightData;
-      return data;
-    })
-    .catch((error) => console.error(error));
-}
+const fetchData = async (url) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+};
 
-getHeadLineData();
-export { data };
+export { fetchData };
