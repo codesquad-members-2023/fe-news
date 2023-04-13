@@ -80,15 +80,19 @@ const createNewsContentElement = (mainContent, subContent) => {
 
   const mainNewsHTML = `
   <section class="main-news">
-    <img class="main-news__img" src="${mainContent.mainImgSrc}" />
-    <span class="main-news__title">${mainContent.mainTitle}</span>
+    <div class="main-news__img">
+      <a>
+        <img src="${mainContent.mainImgSrc}" />
+      </a>
+    </div>
+    <span class="main-news__title"><a>${mainContent.mainTitle}</a></span>
   </section>`;
 
   const subNewsHTML = `
     <section class="sub-news">
         <ul class="sub-news__items">
             ${subContent.subNewsList.reduce((html, text) => {
-              html += `<li class="sub-news__item">${text}</li>`;
+              html += `<li class="sub-news__item"><a>${text}</a></li>`;
               return html;
             }, ``)}
         </ul>
@@ -108,12 +112,14 @@ const renderMainAllList = ($main, content) => {
   if (!breakCondition) return;
 
   const $mainList = createMainListElement(mediaData[content.page]);
+  $mainList.addEventListener('click', () => {});
   $main.replaceChild($mainList, $main.lastChild);
 };
 
 const renderNextPage = ($main, content) => {
   const mediaData = getStoreState('mediaData').data;
   const $mainList = createMainListElement(mediaData[content.page]);
+  $mainList.addEventListener('click', () => {});
   $main.replaceChild($mainList, $main.lastChild);
 };
 
