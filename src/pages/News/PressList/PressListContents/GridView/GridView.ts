@@ -1,6 +1,6 @@
 import { add, addStyle, addShadow, getProperty, createWrap } from '@utils/dom';
 import style from './GridViewStyle';
-import { PressType } from '@store/news/newsType';
+import { PressType } from '@store/section/sectionType';
 
 interface GridView {
   icon?: string | null;

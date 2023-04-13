@@ -12,10 +12,12 @@ class ListView extends HTMLElement {
   }
 
   render() {
-    const press = getProperty({
+    const sectionData = getProperty({
       target: this,
-      name: 'press',
+      name: 'section-data',
     });
+
+    console.log({ sectionData });
 
     const template = `
     <div class="listview-container">

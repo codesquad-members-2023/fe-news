@@ -17,6 +17,10 @@ interface PressListContents {
   icon?: string | null;
 }
 
+interface getCurrentSectionProps {
+  page: number;
+}
+
 class PressListContents extends HTMLElement {
   wrap: HTMLElement | null = null;
   displayStore: StroeType<DisplayType>;
@@ -74,6 +78,7 @@ class PressListContents extends HTMLElement {
 
     this.changeContentsSubscribingDisplayChange();
     this.appendGridViewContainer();
+    this.appendListViewContainer();
   }
 
   handlePage(view: string = 'grid', tab: string = 'general') {
@@ -118,6 +123,7 @@ class PressListContents extends HTMLElement {
 
   async changeContentsSubscribingDisplayChange() {
     // 탭이 변화하면 감지하여 그에 맞는 컨텐츠를 보여줌
+    // 자식 컴포넌트에서 custom event 발생하면 변경하는 것으로 코드 수정 필요
     const toggleShowClass = async () => {
       const displayStates = this.displayStore.getState();
       const isGeneral = displayStates.tab.general.isActive;
@@ -159,31 +165,33 @@ class PressListContents extends HTMLElement {
     });
   }
 
-  appendListViewContainer() {}
+  appendListViewContainer() {
+    this.createListViewContainer(0);
+  }
 
-  createListViewContainer(page: number) {
+  async createListViewContainer(page: number) {
     const listViewContainer = create({ tagName: 'div' });
     listViewContainer.classList.add('grid-view-container');
     listViewContainer.setAttribute('page', `${page}`);
     if (page === 0) {
       listViewContainer.classList.add('show');
     }
-    const pressId = null;
-    const currentSection = this.getCurrentSection(0);
-
+    const currentSection = await this.getCurrentSection({ page: 0 });
+    // console.log(currentSection.articles.title);
     const template = `
-      <grid-view-element press-list='${JSON.stringify(
-        'currentSection'
-      )}'></grid-view-element>
+      <grid-list-element section-data='${JSON.stringify(
+        currentSection
+      )}'></grid-list-element>
     `;
 
+    const gridViewContainer = this.wrap?.querySelector(
+      'section.general .view.list'
+    );
+
     add({
-      target: null,
+      target: gridViewContainer ?? null,
       template,
     });
-    // this.wrap
-    //   ?.querySelector('section.general .view.grid')
-    //   ?.append(gridViewContainer);
   }
 
   createGridViewContainer(page: number) {
@@ -216,7 +224,7 @@ class PressListContents extends HTMLElement {
     return this.pressList.slice(start, end);
   }
 
-  async getCurrentSection(page: number) {
+  async getCurrentSection({ page }: getCurrentSectionProps) {
     const section = await getSection({ page });
     return section;
   }

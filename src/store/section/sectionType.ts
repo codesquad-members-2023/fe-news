@@ -1,0 +1,17 @@
+import { PressType } from '../press/pressType';
+
+export interface SectionType {
+  id: string;
+  pressId: string;
+  lastEdited: Date;
+  articles: ArticleInterface[];
+  category: string;
+  press: PressType;
+}
+
+export interface ArticleInterface {
+  id: string;
+  title: string;
+  img: string;
+  link: string;
+}

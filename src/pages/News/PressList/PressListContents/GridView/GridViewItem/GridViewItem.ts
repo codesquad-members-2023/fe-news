@@ -8,7 +8,7 @@ import {
 } from '@utils/dom';
 import style from './GridViewItemStyle';
 import store from '@store/index';
-import { PressType } from '@store/news/newsType';
+import { PressType } from '@store/section/sectionType';
 
 interface GridViewItem {
   icon?: string | null;

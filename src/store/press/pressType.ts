@@ -1,3 +1,7 @@
+export interface PressListType {
+  pressList: PressType[];
+}
+
 export interface PressType {
   pid: string;
   pname: string;
