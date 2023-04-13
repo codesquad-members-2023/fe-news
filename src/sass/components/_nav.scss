@@ -1,0 +1,26 @@
+.nav-bar {
+  background-color: $gray100;
+  width: 460px;
+  height: 49px;
+
+  &__press,
+  &__headLine,
+  &__headLine-wrapper {
+    height: 14px;
+  }
+
+  &__headLine {
+    overflow-y: hidden;
+  }
+
+  &__headLine-wrapper {
+    a {
+      display: inline-block;
+    }
+
+    &.rolling {
+      transform: translate3d(0, -100%, 0);
+      transition: transform 1s linear;
+    }
+  }
+}

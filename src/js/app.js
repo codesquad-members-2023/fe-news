@@ -1,18 +1,15 @@
-import Header from './components/header.js';
-import MainContent from './components/mainContent/mainContent.js';
+import Header from './components/header/index.js';
+import Nav from './components/nav/index.js';
+import MainContent from './components/mainContent/index.js';
 
-export default class App {
-  constructor($targetEle) {
-    this.$targetEle = $targetEle;
+const app = async ($targetEle) => {
+  const header = new Header($targetEle);
+  const nav = new Nav($targetEle);
+  const mainContent = new MainContent($targetEle);
 
-    this.header = new Header(this.$targetEle);
-    this.mainContent = new MainContent(this.$targetEle);
+  header.mount();
+  await nav.mount();
+  mainContent.mount();
+};
 
-    this.initRender();
-  }
-
-  initRender() {
-    this.header.initRender();
-    this.mainContent.initRender();
-  }
-}
+export default app;
