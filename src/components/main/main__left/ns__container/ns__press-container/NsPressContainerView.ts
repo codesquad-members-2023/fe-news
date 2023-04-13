@@ -2,8 +2,9 @@ import { Article, State } from '@src/types/types';
 import { AbstractView } from '@src/types/abstracts.js';
 import { $ } from '@utils/dom.js';
 import {
-  PRESS_GRID_CONTAINER_COUNT,
-  PRESS_GRID_ITEM_COUNT,
+  PRESS_CONTAINER_PAGE_END,
+  PRESS_CONTAINER_ITEM_COUNT,
+  PRESS_CONTAINER_PAGE_START,
 } from '@src/constants/constants.js';
 
 export class NsPressContainerView extends AbstractView {
@@ -27,7 +28,7 @@ export class NsPressContainerView extends AbstractView {
   render(state: State) {
     this.addGridItems(state);
     this.addGridButtonEvent(state);
-    this.toggleButton(state);
+    this.toggleGridButton(state);
   }
 
   addGridItems(state: State) {
@@ -38,8 +39,8 @@ export class NsPressContainerView extends AbstractView {
     ($('#ns__grid-container', this.element) as HTMLUListElement).innerHTML =
       imgSources
         .slice(
-          +page * PRESS_GRID_ITEM_COUNT,
-          (+page + 1) * PRESS_GRID_ITEM_COUNT,
+          +page * PRESS_CONTAINER_ITEM_COUNT,
+          (+page + 1) * PRESS_CONTAINER_ITEM_COUNT,
         )
         .reduce((acc, cur) => {
           return (
@@ -55,7 +56,8 @@ export class NsPressContainerView extends AbstractView {
     this.setEvent('#btn-next', 'click', handleToNext as EventListener);
   }
 
-  toggleButton(state: State) {
+  toggleGridButton(state: State) {
+    // 추후 코드 리팩토링
     const { page } = state;
     ($('#btn-prev', this.element) as HTMLButtonElement).classList.remove(
       'invisible',
@@ -63,12 +65,12 @@ export class NsPressContainerView extends AbstractView {
     ($('#btn-next', this.element) as HTMLButtonElement).classList.remove(
       'invisible',
     );
-    if (page === 0) {
+    if (page === PRESS_CONTAINER_PAGE_START) {
       ($('#btn-prev', this.element) as HTMLButtonElement).classList.add(
         'invisible',
       );
     }
-    if (page === PRESS_GRID_CONTAINER_COUNT - 1) {
+    if (page === PRESS_CONTAINER_PAGE_END - 1) {
       ($('#btn-next', this.element) as HTMLButtonElement).classList.add(
         'invisible',
       );

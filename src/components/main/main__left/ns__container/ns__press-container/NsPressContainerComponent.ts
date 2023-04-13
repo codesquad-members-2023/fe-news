@@ -5,9 +5,12 @@ import { NsPressContainerView } from '@components/main/main__left/ns__container/
 import { customGet } from '@utils/customFetch.js';
 import {
   BASIC_URL,
-  PRESS_GRID_CONTAINER_COUNT,
-  PRESS_GRID_ITEM_COUNT,
+  PRESS_CONTAINER_PAGE_END,
+  PRESS_CONTAINER_ITEM_COUNT,
+  PRESS_CONTAINER_PAGE_UNIT,
+  PRESS_CONTAINER_PAGE_START,
 } from '@src/constants/constants.js';
+
 import { pickRandomData } from '@utils/pickRandomData.js';
 
 export class NsPressContainerComponent implements Component {
@@ -19,7 +22,7 @@ export class NsPressContainerComponent implements Component {
 
     this.setInitState({
       articlesPromise: this.getRandomArticles(),
-      page: 0,
+      page: PRESS_CONTAINER_PAGE_START,
       handleToPrev: this.handleToPrev.bind(this),
       handleToNext: this.handleToNext.bind(this),
     });
@@ -51,7 +54,8 @@ export class NsPressContainerComponent implements Component {
 
   async getRandomArticles() {
     const articleData = await this.getArticles();
-    const totalItemCount = PRESS_GRID_CONTAINER_COUNT * PRESS_GRID_ITEM_COUNT;
+    const totalItemCount =
+      PRESS_CONTAINER_PAGE_END * PRESS_CONTAINER_ITEM_COUNT;
     return pickRandomData(articleData, totalItemCount);
   }
 
@@ -71,16 +75,19 @@ export class NsPressContainerComponent implements Component {
   }
 
   handleToPrev() {
-    const page = +this.state.page - 1 < 0 ? 0 : +this.state.page - 1;
+    const page =
+      +this.state.page - PRESS_CONTAINER_PAGE_UNIT < PRESS_CONTAINER_PAGE_START
+        ? PRESS_CONTAINER_PAGE_START
+        : +this.state.page - PRESS_CONTAINER_PAGE_UNIT;
     this.setState({ page });
   }
 
   handleToNext() {
     const page =
-      +this.state.page + 1 > PRESS_GRID_CONTAINER_COUNT
-        ? PRESS_GRID_CONTAINER_COUNT
-        : +this.state.page + 1;
-    if (page === PRESS_GRID_CONTAINER_COUNT) return;
+      +this.state.page + PRESS_CONTAINER_PAGE_UNIT > PRESS_CONTAINER_PAGE_END
+        ? PRESS_CONTAINER_PAGE_END
+        : +this.state.page + PRESS_CONTAINER_PAGE_UNIT;
+    if (page === PRESS_CONTAINER_PAGE_END) return;
     this.setState({ page });
   }
 }
