@@ -2,7 +2,7 @@ import NavBar from './navBar.js';
 import { getData } from '../../utils/getData.js';
 
 export default class Nav {
-  #url = 'src/mock/navBarData.json';
+  #url = 'http://localhost:3001/navBarData';
 
   constructor($parent) {
     this.$parent = $parent;
