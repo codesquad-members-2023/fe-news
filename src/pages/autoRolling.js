@@ -9,11 +9,21 @@ class AutoRolling {
     <div class="auto-rolling">
       <div class="rolling__container">
         <div class="media">연합뉴스</div>
-        <div class="issue">${this.leftData}</div>
+        <ul class="issue">
+          ${this.leftData.reduce((acc, cur) => {
+            acc += `<li class="issue__item">${cur}</li>`;
+            return acc;
+          }, '')}
+        </ul>
       </div>
       <div class="rolling__container">
       <div class="media">연합뉴스</div>
-      <div class="issue">${this.rightData}</div>
+      <ul class="issue">
+        ${this.rightData.reduce((acc, cur) => {
+          acc += `<li class="issue__item">${cur}</li>`;
+          return acc;
+        }, '')}
+      </ul>
     </div>
     </div>
     `;
