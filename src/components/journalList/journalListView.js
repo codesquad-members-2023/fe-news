@@ -37,7 +37,7 @@ const renderJournal = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalData = await getJournal(journalURL);
     const journal = new Journal(journalData);
-    const journalItems = journal.makeJournal();
+    const journalItems = journal.getJournalItem();
     return journalItems;
   } catch (error) {
     console.error(error);

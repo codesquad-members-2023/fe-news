@@ -13,9 +13,9 @@ export class HeadLine {
     return div;
   }
 
-  makeHeadline = function () {
+  getHeadlineHTML() {
     const randomNub = Math.floor(Math.random() * this.headLineList.length);
     const title = this.headLineList[randomNub].headLineTitle;
     return this.toBeElement(title);
-  };
+  }
 }

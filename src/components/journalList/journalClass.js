@@ -3,7 +3,7 @@ export class Journal {
     this.journalList = jsonData;
   }
 
-  makeJournal() {
+  getJournalItem() {
     const journalItems = this.journalList.map((journalData) => {
       const journalItem = document.createElement("div");
       journalItem.classList.add("journal-item");

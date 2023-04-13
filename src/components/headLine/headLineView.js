@@ -11,13 +11,13 @@ export const createNewsStandHeadLine = () => {
 
   getHeadLine(headLineHotURL).then((jsonData) => {
     const hotHeadLine = new HeadLine(jsonData);
-    const hotHeadLineEl = hotHeadLine.makeHeadline();
+    const hotHeadLineEl = hotHeadLine.getHeadlineHTML();
     headLineEl.innerHTML += hotHeadLineEl;
   });
 
   getHeadLine(headLineNomalURL).then((jsonData) => {
     const nomalHeadLine = new HeadLine(jsonData);
-    const nomalHeadLineEl = nomalHeadLine.makeHeadline();
+    const nomalHeadLineEl = nomalHeadLine.getHeadlineHTML();
     headLineEl.innerHTML += nomalHeadLineEl;
   });
 
