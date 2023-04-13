@@ -2,7 +2,6 @@ export default function style() {
   const style = document.createElement('style');
 
   const content = `
-   @import 'src/styles/index.css';
 
     .listview-container {
       display: flex;

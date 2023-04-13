@@ -5,7 +5,6 @@ export default function style(target: HTMLElement) {
   const progress = getProperty({ target, name: 'progress' }) ?? '0';
 
   const content = `
-   @import 'src/styles/index.css';
     
     .tab-container {
       display: flex;

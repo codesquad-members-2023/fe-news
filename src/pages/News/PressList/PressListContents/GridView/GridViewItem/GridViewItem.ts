@@ -21,13 +21,12 @@ class GridViewItem extends HTMLElement {
   connectedCallback() {
     this.wrap = createWrap();
     this.wrap.classList.add('grid-view-item');
-    this.shadowRoot?.append(this.wrap);
+    this.append(this.wrap);
     this.render();
     addStyle({
       target: this.wrap,
       style: style.call(this, this),
     });
-    this.append(this.wrap);
   }
 
   render() {

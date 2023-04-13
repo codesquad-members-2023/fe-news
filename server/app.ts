@@ -105,11 +105,13 @@ app.get('/user', async (req, res) => {
   }
 });
 
-const ITEM_AMOUNT_PER_PAGE = 24;
+const ITEM_AMOUNT_PER_PAGE = 24 * 4;
+const TOTAL_ITEM_AMOUNT = 24 * 4;
 const getPress = async (page = 0) => {
   try {
     const data = await fs.readFile('./mock/press.json', 'utf8');
     let press = JSON.parse(data) as PressInfoInterface[];
+    press = press.slice(0, TOTAL_ITEM_AMOUNT);
     // press = press.slice(
     //   page * ITEM_AMOUNT_PER_PAGE,
     //   (page + 1) * ITEM_AMOUNT_PER_PAGE

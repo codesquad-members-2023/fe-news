@@ -7,7 +7,7 @@ export default function style(target: HTMLElement) {
   const size = getProperty({ target, name: 'size' });
 
   const content = `
-    @import 'src/styles/index.css';
+
 
     icon-element {
       display: inline-flex;

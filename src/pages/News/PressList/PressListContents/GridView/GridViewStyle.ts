@@ -2,14 +2,11 @@ export default function style() {
   const style = document.createElement('style');
 
   const content = `
-    @import 'src/styles/index.css';
+
 
     .wrap.grid-view {
       border: 1px solid var(--gray100);
     }
-
-    
-
 
     .press-container {
       display: grid;

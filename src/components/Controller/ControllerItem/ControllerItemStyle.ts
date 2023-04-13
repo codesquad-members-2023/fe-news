@@ -6,7 +6,7 @@ export default function style(target: HTMLElement) {
   const rotate = position === 'right' ? '-90' : '90';
 
   const content = `
-    @import 'src/styles/index.css';
+
 
     :host {
       display: flex;

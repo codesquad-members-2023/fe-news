@@ -11,7 +11,7 @@ import list from './PressListContentsStyle';
 import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
-import { getPress } from '@apis/news';
+import { getPress, getSection } from '@apis/news';
 
 interface PressListContents {
   icon?: string | null;
@@ -54,15 +54,15 @@ class PressListContents extends HTMLElement {
   appendGridViewContainer() {
     this.createGridViewContainer(0);
 
-    // let i = 1;
-    // const callInterval = setInterval(() => {
-    //   this.createGridViewContainer(i);
-    //   i++;
-    // }, 0);
+    let i = 1;
+    const callInterval = setInterval(() => {
+      this.createGridViewContainer(i);
+      i++;
+    }, 0);
 
-    // if (callInterval) {
-    //   i === this.maxPage - 1 && clearInterval(callInterval);
-    // }
+    if (callInterval) {
+      i === this.maxPage - 1 && clearInterval(callInterval);
+    }
   }
 
   createGridViewContainer(page: number) {
@@ -89,10 +89,40 @@ class PressListContents extends HTMLElement {
       ?.append(gridViewContainer);
   }
 
+  createListViewContainer(page: number) {
+    const listViewContainer = create({ tagName: 'div' });
+    listViewContainer.classList.add('grid-view-container');
+    listViewContainer.setAttribute('page', `${page}`);
+    if (page === 0) {
+      listViewContainer.classList.add('show');
+    }
+    const pressId = null;
+    // const currentSection = this.getCurrentSection(pressId);
+
+    const template = `
+      <grid-view-element press-list='${JSON.stringify(
+        'currentSection'
+      )}'></grid-view-element>
+    `;
+
+    add({
+      target: null,
+      template,
+    });
+    // this.wrap
+    //   ?.querySelector('section.general .view.grid')
+    //   ?.append(gridViewContainer);
+  }
+
   getCurrentPressList(page: number) {
     const start = page * 24;
     const end = start + 24;
     return this.pressList.slice(start, end);
+  }
+
+  async getCurrentSection(pressId: string) {
+    const section = await getSection({ pressId });
+    return section;
   }
 
   render() {

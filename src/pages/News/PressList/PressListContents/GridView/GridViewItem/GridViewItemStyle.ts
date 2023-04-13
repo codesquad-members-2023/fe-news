@@ -4,8 +4,6 @@ export default function style(target: HTMLElement) {
   const style = document.createElement('style');
 
   const content = `
-   @import 'src/styles/index.css';
-
     .wrap.grid-view-item {
       width: 100%;
       min-width: 154px;
