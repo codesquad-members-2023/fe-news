@@ -16,7 +16,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@components': path.resolve(__dirname, 'src/components'),
+      '@component': path.resolve(__dirname, 'src/components'),
+      '@common': path.resolve(__dirname, 'src/components/common'),
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@constant': path.resolve(__dirname, 'src/constant'),
       '@mock': path.resolve(__dirname, 'src/mock'),
@@ -26,7 +27,6 @@ export default defineConfig({
       '@services': path.resolve(__dirname, 'src/services'),
       '@type': path.resolve(__dirname, 'src/types'),
       '@store': path.resolve(__dirname, 'src/store'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
       '@schemas': path.resolve(__dirname, 'server/schemas'),
     },
   },

@@ -36,11 +36,9 @@ class Icon extends HTMLElement {
 
   replaceAttributes({ svgString }: replaceSvgStringAttributesProps) {
     const defaultSize = 24;
-    const size = getProperty({ target: this, name: 'size' });
-    const width = getProperty({ target: this, name: 'width' });
-    const height = getProperty({ target: this, name: 'height' });
-    const fill = getProperty({ target: this, name: 'fill' });
-
+    const [size, width, height, fill] = ['size', 'width', 'height', 'fill'].map(
+      (name) => getProperty({ target: this, name })
+    );
     let result = svgString
       .replace(/width=".*?"/g, `width="${width ?? size ?? defaultSize}"`)
       .replace(/height=".*?"/g, `height="${height ?? size ?? defaultSize}"`);

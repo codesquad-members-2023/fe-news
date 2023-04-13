@@ -1,2 +1,2 @@
+import './components/common/index';
 import './components/index';
-import './pages/index';
