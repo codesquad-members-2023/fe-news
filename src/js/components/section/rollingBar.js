@@ -16,14 +16,6 @@ class RollingBar {
     this.rafState = true;
   }
 
-  setState() {
-    // RollingStore.dispatch('START_ROLLINGBAR', { rollingData });
-    // RollingStore.subscribe(() => {
-    //   this.titles = { ...RollingStore.getState() };
-    //   return this.titles;
-    // });
-  }
-
   render() {
     this.rollingBar.innerHTML = this.template();
     this.autoMovePanel();
@@ -33,7 +25,7 @@ class RollingBar {
 
   template() {
     return this.classNames.reduce((template, className) => {
-      const titleData = className === 'left' ? this.#titles.leftTitle : this.#titles.rightTitle;
+      const titleData = className === 'left' ? this.#titles.titleLeft : this.#titles.titleRight;
       template += `<div class="rolling-box">
       <a class="link-press">${this.ROLLING_LINK_PRESS}</a>
       <div class="flick-container">

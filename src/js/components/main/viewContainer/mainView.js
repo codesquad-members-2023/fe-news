@@ -3,7 +3,7 @@ import { CONSTANTS } from '../../../core/constants.js';
 import sortButton from '../buttons/sortButton.js'
 import gridView from "./grid/grid.js";
 
-const main = () => {
+const mainView = () => {
   const main = createEl("main");
   const sortButtons = sortButton(
     CONSTANTS['ALL_PRESS'],
@@ -25,4 +25,4 @@ const main = () => {
   return main;
 }
 
-export default main;
+export default mainView;
