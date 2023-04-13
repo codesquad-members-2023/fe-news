@@ -1,4 +1,4 @@
-import { fetchAutoRollingData } from '../api/request.js';
+import { fetchAutoRollingData, fetchMediaData } from '../api/request.js';
 import * as actionTypes from './actionTypes.js';
 import { dispatch } from '../store/store.js';
 
@@ -8,10 +8,10 @@ export const fetchActionCreator = {
     return { type: actionTypes.fetchActions.FETCH_AUTO_DATA_REQUEST };
   },
 
-  fetchAutoDataSuccess: (data) => {
+  fetchAutoDataSuccess: (payload) => {
     return {
       type: actionTypes.fetchActions.FETCH_AUTO_DATA_SUCCESS,
-      payload: data,
+      payload,
     };
   },
 
@@ -19,24 +19,54 @@ export const fetchActionCreator = {
     return { type: actionTypes.fetchActions.FETCH_MEDIA_DATA_REQUEST };
   },
 
-  fetchMediaDataSuccess: (data) => {
+  fetchMediaDataSuccess: (payload) => {
+    // Crong Review : payload로 받아서 바로 payload만 작성!
     return {
       type: actionTypes.fetchActions.FETCH_MEDIA_DATA_SUCCESS,
-      payload: data,
+      payload,
     };
   },
 
-  fetchAutoData: async () => {
-    dispatch(fetchActionCreator.fetchAutoDataRequest());
+  fetchAutoData: async function () {
+    dispatch(this.fetchAutoDataRequest());
 
     const response = await fetchAutoRollingData();
-    dispatch(fetchActionCreator.fetchAutoDataSuccess(response.data));
+    dispatch(this.fetchAutoDataSuccess(response.data));
+  },
+
+  fetchMediaData: async () => {
+    // 여기선 this를 사용 불가.. 왜냐면 화살표 함수를 사용해서...!
+    dispatch(fetchActionCreator.fetchMediaDataRequest());
+
+    const response = await fetchMediaData();
+    dispatch(fetchActionCreator.fetchMediaDataSuccess(response.data));
   },
 
   startActionCreator: () => {
     return {
       type: actionTypes.autoRollingActions.START_AUTO_ROLLING,
       payload: null, // startTime null로 보내주기.
+    };
+  },
+};
+
+export const displayActionCreator = {
+  gridSubscribeBtnClick: (payload) => {
+    return {
+      type: actionTypes.displayActions.GRID_SUBSCRIBE_BUTTON_CLICK,
+      payload,
+    };
+  },
+
+  gridUnsubscribeBtnClick: (payload) => {
+    return {
+      type: actionTypes.displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK,
+      payload,
+    };
+  },
+  headerAllListBtnClick() {
+    return {
+      type: actionTypes.displayActions.HEADER_LIST_BUTTON_CLICK,
     };
   },
 };

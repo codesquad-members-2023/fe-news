@@ -1,0 +1,53 @@
+@import '../abstracts/variables';
+
+.main-grid {
+  margin-top: 26.5px;
+  width: 930px;
+  height: 388px;
+}
+
+.main-grid__page {
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(6, 1fr);
+  border-top: 1px solid $gray100;
+  border-left: 1px solid $gray100;
+}
+
+.none {
+  display: none;
+}
+.grid {
+  display: grid;
+}
+.main-grid__box {
+  position: relative;
+  border-right: 1px solid $gray100;
+  border-bottom: 1px solid $gray100;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.main-grid__logo {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-wrap {
+  position: relative;
+  background-color: $off-white;
+  width: inherit;
+  height: inherit;
+}
+.subscribe-button,
+.unsubscribe-button {
+  position: absolute;
+  top: 36px;
+  left: 40px;
+}

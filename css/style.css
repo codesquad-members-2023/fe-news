@@ -11,30 +11,30 @@ body {
   box-sizing: border-box; }
 
 a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
   cursor: pointer; }
 
 ul {
-  padding: 0;
-  margin: 0; }
+  margin: 0;
+  padding: 0; }
 
 li {
   list-style: none; }
 
 button {
-  cursor: pointer;
   border: none;
-  background-color: inherit;
-  font: inherit; }
+  font: inherit;
+  cursor: pointer;
+  background-color: inherit; }
 
 html,
 body {
+  display: grid;
+  position: relative;
   width: 100%;
   height: 100%;
   margin: 0;
-  position: relative;
-  display: grid;
   place-items: center;
   min-height: 100vh; }
 
@@ -43,59 +43,229 @@ body {
 
 #header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
   margin-bottom: 40px; }
 
 .header__logo img {
   margin-right: 8px; }
 
 .header__logo span {
+  font-size: 24px;
   color: #14212b;
   font-weight: 700;
-  font-size: 24px;
   line-height: 29px; }
 
 .header__current-date {
+  font-size: 16px;
   color: #4b5966;
   font-weight: 500;
-  font-size: 16px;
   line-height: 22px; }
 
 #auto-rolling {
   display: flex;
+  justify-content: space-between;
   width: 100%;
-  flex-direction: row;
-  justify-content: space-between; }
+  flex-direction: row; }
 
 .auto__box {
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
-  padding: 16px;
   width: 461px;
   height: 49px;
+  padding: 16px;
+  background: #f5f7f9;
   font-size: 14px;
-  background: #f5f7f9; }
+  flex-direction: row; }
   .auto__box .auto__media {
     width: 49px;
-    margin-right: 16px;
+    color: #14212b;
     font-weight: 700;
-    color: #14212b; }
+    margin-right: 16px; }
 
 .auto__viewport {
-  position: relative;
   overflow: hidden;
+  position: relative;
   height: 100%;
+  color: #4b5966;
   font-weight: 500;
-  min-width: 80%;
-  color: #4b5966; }
+  min-width: 80%; }
   .auto__viewport .auto__camera {
     width: auto;
     will-change: transform;
     transform: translate3d(0px, 0px, 0px); }
   .auto__viewport .auto__panel {
-    width: auto;
     position: absolute;
-    top: 0px; }
+    top: 0px;
+    width: auto; }
+
+main {
+  position: relative; }
+
+.main-header {
+  margin-top: 34.5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; }
+
+.main-header__media {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end; }
+  .main-header__media .main-header__all-media {
+    font-weight: 700;
+    font-size: 16px;
+    margin-right: 24px;
+    color: #14212b; }
+  .main-header__media .main-header__my-media {
+    font-weight: 500;
+    font-size: 16px;
+    color: #879298; }
+
+.main-header__buttons {
+  display: flex;
+  align-items: center; }
+  .main-header__buttons .main-header__list-button {
+    margin-right: 14px; }
+
+.left-button,
+.right-button {
+  position: absolute;
+  width: 24px;
+  height: 40px;
+  top: 50%; }
+
+.left-button {
+  left: -47px; }
+
+.right-button {
+  right: -47px; }
+
+.main-grid {
+  margin-top: 26.5px;
+  width: 930px;
+  height: 388px; }
+
+.main-grid__page {
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(6, 1fr);
+  border-top: 1px solid #d2dae0;
+  border-left: 1px solid #d2dae0; }
+
+.none {
+  display: none; }
+
+.grid {
+  display: grid; }
+
+.main-grid__box {
+  position: relative;
+  border-right: 1px solid #d2dae0;
+  border-bottom: 1px solid #d2dae0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; }
+
+.main-grid__logo {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.popup-wrap {
+  position: relative;
+  background-color: #f5f7f9;
+  width: inherit;
+  height: inherit; }
+
+.subscribe-button,
+.unsubscribe-button {
+  position: absolute;
+  top: 36px;
+  left: 40px; }
+
+.main-list {
+  margin-top: 26.5px;
+  width: 930px;
+  height: 388px;
+  display: flex;
+  flex-direction: column; }
+  .main-list .main-list__nav-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 40px;
+    background: #f5f7f9;
+    border: 1px solid #d2dae0; }
+    .main-list .main-list__nav-items .main-list__nav-item {
+      padding: 0px 16px;
+      font-weight: 500;
+      font-size: 14px;
+      color: #6e8091; }
+
+.main-list__news {
+  height: 348px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid #d2dae0; }
+  .main-list__news-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 24px; }
+    .main-list__news-header .main-list__logo {
+      height: 20px;
+      margin-right: 16px; }
+    .main-list__news-header .main-list__edit-time {
+      font-weight: 500;
+      font-size: 12px;
+      margin-right: 16px;
+      line-height: 14px;
+      color: #5f6e76; }
+  .main-list__news .main-list__media-content {
+    margin-top: 16px;
+    height: 260px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; }
+    .main-list__news .main-list__media-content .main-news {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-right: 32px;
+      width: 320px; }
+      .main-list__news .main-list__media-content .main-news .main-news__img {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 16px;
+        border: 1px solid #d2dae0; }
+      .main-list__news .main-list__media-content .main-news .main-news__title {
+        font-weight: 500;
+        font-size: 16px;
+        color: #14212b; }
+    .main-list__news .main-list__media-content .sub-news .sub-news__items {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; }
+      .main-list__news .main-list__media-content .sub-news .sub-news__items .sub-news__item {
+        height: 22px;
+        margin-bottom: 16px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        color: #4b5966; }
+    .main-list__news .main-list__media-content .sub-news .news-footer {
+      height: 17px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: #879298; }
+
+.list__subscribe-button {
+  height: 24px; }
