@@ -1,5 +1,8 @@
 import { createElement } from '../../../utils/dom.js';
-import { buttonClickEventHandler } from './mainButtonEventHandlers.js';
+import {
+  pageControlBtnClickEventHandler,
+  headerViewChangeBtnClickEventHandler,
+} from './mainButtonEventHandlers.js';
 // TODO : 이벤트 등록 해야함.
 import { displayActionCreator } from '../../../actions/actions.js';
 import { dispatch, subscribe } from '../../../store/store.js';
@@ -47,6 +50,7 @@ const createMainButtonElement = () => {
 };
 
 const listViewButtonRender = ($leftButton, content) => {
+  // grid 4page에서 list 누르면 오른쪽 버튼 안나오는 버그 존재~!
   const breakCondition =
     content.viewOption.gridOrList === 'grid' &&
     $leftButton.classList.contains('none');
@@ -59,14 +63,10 @@ const MainCommon = () => {
   const $mainButtons = createMainButtonElement();
 
   $mainButtons.forEach((button) => {
-    button.addEventListener('click', buttonClickEventHandler);
+    button.addEventListener('click', pageControlBtnClickEventHandler);
   });
 
-  $mainHeader.addEventListener('click', ({ target }) => {
-    if (target.closest('a')) {
-      dispatch(displayActionCreator.headerAllListBtnClick());
-    }
-  });
+  $mainHeader.addEventListener('click', headerViewChangeBtnClickEventHandler);
   subscribe('viewOptionData', listViewButtonRender.bind(null, $mainButtons[0]));
   return [$mainHeader, $mainButtons];
 };
