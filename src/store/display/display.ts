@@ -15,7 +15,7 @@ const initialState: DisplayType = {
       general: { currentPage: 0, totalPage: 0 },
       custom: { currentPage: 0, totalPage: 0 },
     },
-    view: {
+    list: {
       general: { currentPage: 0, totalPage: 0 },
       custom: { currentPage: 0, totalPage: 0 },
     },
@@ -42,6 +42,7 @@ const reducer: ReducerType<DisplayType> = (
       };
     case 'NEXT_PAGE':
       state.page[action.payload.view][action.payload.tab].currentPage++;
+
       return {
         ...state,
       };

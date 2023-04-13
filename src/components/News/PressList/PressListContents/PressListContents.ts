@@ -12,6 +12,8 @@ import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
 import { getPress, getSection } from '@apis/news';
+import { parseQuotationMarks } from '@utils/parser';
+import { ArticleInterface, SectionType } from '@store/section/sectionType';
 
 interface PressListContents {
   icon?: string | null;
@@ -81,7 +83,7 @@ class PressListContents extends HTMLElement {
     this.appendListViewContainer();
   }
 
-  handlePage(view: string = 'grid', tab: string = 'general') {
+  handlePage() {
     const controllerElement = select({
       selector: 'controller-element',
       parent: document
@@ -91,6 +93,13 @@ class PressListContents extends HTMLElement {
     });
 
     controllerElement?.shadowRoot?.addEventListener('click', (e: any) => {
+      const tab = this.displayStore.getState().tab.general.isActive
+        ? 'general'
+        : 'custom';
+      const view = this.displayStore.getState().view.grid.isActive
+        ? 'grid'
+        : 'list';
+
       const target = e.target;
       const position = target.getAttribute('position');
       const isLeft = position === 'left';
@@ -106,6 +115,8 @@ class PressListContents extends HTMLElement {
           payload: { view, tab },
         });
       }
+
+      console.log(this.displayStore.getState().page);
 
       const currentPage =
         this.displayStore.getState().page[view][tab].currentPage;
@@ -124,6 +135,7 @@ class PressListContents extends HTMLElement {
   async changeContentsSubscribingDisplayChange() {
     // 탭이 변화하면 감지하여 그에 맞는 컨텐츠를 보여줌
     // 자식 컴포넌트에서 custom event 발생하면 변경하는 것으로 코드 수정 필요
+
     const toggleShowClass = async () => {
       const displayStates = this.displayStore.getState();
       const isGeneral = displayStates.tab.general.isActive;
@@ -177,11 +189,13 @@ class PressListContents extends HTMLElement {
       listViewContainer.classList.add('show');
     }
     const currentSection = await this.getCurrentSection({ page: 0 });
-    // console.log(currentSection.articles.title);
+    currentSection.articles.forEach((article: ArticleInterface) => {
+      article.title = parseQuotationMarks(article.title);
+    });
     const template = `
-      <grid-list-element section-data='${JSON.stringify(
+      <list-view-element section-data='${JSON.stringify(
         currentSection
-      )}'></grid-list-element>
+      )}'></list-view-element>
     `;
 
     const gridViewContainer = this.wrap?.querySelector(

@@ -1,7 +1,5 @@
-import { add, addStyle, addShadow, getProperty } from '@utils/dom';
+import { add, addStyle, addShadow } from '@utils/dom';
 import style from './PressListStyle';
-import { useState } from '@utils/hooks';
-import { TabType, Tab } from '@type/news';
 
 interface PressList {
   icon?: string | null;

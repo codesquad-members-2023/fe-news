@@ -107,7 +107,6 @@ class PressListHeader extends HTMLElement {
           const viewName = view
             .querySelector('icon-element')
             ?.getAttribute('name');
-          console.log({ viewName });
 
           const rerender = () => {
             const state = this.displayStore.getState();

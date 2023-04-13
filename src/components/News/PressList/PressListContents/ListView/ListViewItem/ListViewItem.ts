@@ -1,5 +1,6 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
 import style from './ListViewItemStyle';
+import { ArticleInterface } from '@store/section/sectionType';
 
 interface ListViewItem {
   icon?: string | null;
@@ -12,45 +13,56 @@ class ListViewItem extends HTMLElement {
   }
 
   render() {
-    const press =
-      getProperty({
-        target: this,
-        name: 'press',
-      }) ?? '';
+    const sectionDataStr = getProperty({
+      target: this,
+      name: 'section-data',
+    });
 
-    const image =
-      getProperty({
-        target: this,
-        name: 'image',
-      }) ?? '';
+    const sectionData = sectionDataStr
+      ? JSON.parse(JSON.parse(sectionDataStr))
+      : null;
+
+    const lastEdited = sectionData?.lastEdited;
+    const press = sectionData?.press;
+    const articles = sectionData?.articles;
+    const mainArticle = articles?.[0];
+    const otherArticles = articles?.slice(1);
+
+    console.log(articles.slice(1));
 
     const template = `
     <div class="header">
       <img ${
-        press ? `src="src/assets/images/press-logo/${press}.png"` : ''
+        press ? `src="${press.newMainLogo}"` : ''
       } height="20px" width="auto">
-      <p class="typo-body-xs">2023.02.10. 18:53 편집</p>
-      <button-element icon="plus">구독하기</button-element>
+      <p class="typo-body-xs">${lastEdited ?? ''} 편집</p>
+      <button-element icon="plus" id='${
+        press ? press.pid : ''
+      }'>구독하기</button-element>
     </div>
     <div class="contents">
-      <div class="headliner">
-        <button class="image" ${
-          image
-            ? `style="background-image: url(src/assets/images/headlines/${image}.png)"`
-            : ''
-        }></button>
-        <div class="title typo-body-md"><a href="/">봇물처럼 터지는 공공요금 인상…꼭 지금이어야 하나</a></div>
-      </div>
+      ${[mainArticle].map(
+        (article: ArticleInterface) =>
+          `<div class="headliner">
+            <button class="image" ${`style="background-image: url('${article.img}')"`}></button>
+            <div class="title typo-body-md">
+            <a href='${article.link}'>${article.title}</a>
+          </div>`
+      )}
+    </div>
       <div class="articles-container">
         <ul>
-        ${[...Array(6)]
+        ${otherArticles
+          .slice(1)
           .map(
-            () =>
-              `<li class="typo-body-md"><a href="/">[단독] 美복권 키오스크 "불법"인데…정부 방치에 '우후죽순'</a></li>`
+            (article: ArticleInterface, i: number) =>
+              `<li class="typo-body-md" id='${article.id}'><a href='${article.link}'>${article.title}</a></li>`
           )
           .join('')}
         </ul>
-        <span class="caption typo-body-sm">SBS Biz 언론사에서 직접 편집한 뉴스입니다.</span>
+        <span class="caption typo-body-sm">${
+          press.pname ?? ''
+        } 언론사에서 직접 편집한 뉴스입니다.</span>
       </div>
     </div>
     `;

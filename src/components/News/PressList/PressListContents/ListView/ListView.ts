@@ -17,12 +17,12 @@ class ListView extends HTMLElement {
       name: 'section-data',
     });
 
-    console.log({ sectionData });
-
     const template = `
     <div class="listview-container">
       <list-view-tab-element></list-view-tab-element>
-      <list-view-item-element press="sportalkorea" image="headline"></list-view-item-element>
+      <list-view-item-element section-data='${JSON.stringify(
+        sectionData
+      )}' image="headline"></list-view-item-element>
     </div>
     `;
     add({

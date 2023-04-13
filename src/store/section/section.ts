@@ -1,5 +1,6 @@
 import { createStore, ReducerType, ActionType } from '@utils/redux';
 import { SectionType } from './sectionType';
+import { getSection } from '@apis/news';
 
 const initialState: SectionType = {
   id: '',
@@ -23,7 +24,10 @@ const reducer: ReducerType<SectionType> = (
   action: ActionType
 ): SectionType => {
   switch (action.type) {
-    case 'SUBSCRIBE':
+    case 'SET_SECTION':
+      return {
+        ...action.payload,
+      };
 
     case 'UNSUBSCRIBE':
 
