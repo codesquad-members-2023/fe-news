@@ -64,9 +64,28 @@ export const displayActionCreator = {
       payload,
     };
   },
-  headerAllListBtnClick() {
+
+  headerListBtnClick() {
     return {
       type: actionTypes.displayActions.HEADER_LIST_BUTTON_CLICK,
+    };
+  },
+
+  headerGridBtnClick() {
+    return {
+      type: actionTypes.displayActions.HEADER_GRID_BUTTON_CLICK,
+    };
+  },
+
+  headerAllBtnClick() {
+    return {
+      type: actionTypes.displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK,
+    };
+  },
+
+  headerMineBtnClick() {
+    return {
+      type: actionTypes.displayActions.HEADER_MY_MEDIA_BUTTON_CLICK,
     };
   },
 };
