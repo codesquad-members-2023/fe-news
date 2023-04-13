@@ -1,8 +1,10 @@
-import PressesGridView from './pressesGridView.js'
 import { getElement, createNode } from '../../script/utils.js'
+import PressesGridView from './pressesGridView.js'
+import ViewSelectionBtn from './viewSelectionBtn.js'
 
 class MainView {
   #mainViewContainer
+  #viewSelectButton
   #directionButton
   currentView
   #currentPage
@@ -12,12 +14,15 @@ class MainView {
     this.#mainViewContainer = createNode('div')
     this.#mainViewContainer.classList.add('main-view')
 
-    this.#createDirectionBtn()
+    this.#createMainViewBtn()
     this.#createGridView(data)
     this.app.appendChild(this.#mainViewContainer)
   }
 
-  #createDirectionBtn() {
+  #createMainViewBtn() {
+    this.#viewSelectButton = new ViewSelectionBtn().createButtons()
+    this.#mainViewContainer.appendChild(this.#viewSelectButton)
+
     this.#directionButton = createNode('ns-direction-btn')
     this.#mainViewContainer.appendChild(this.#directionButton)
   }

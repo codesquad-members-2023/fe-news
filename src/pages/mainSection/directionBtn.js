@@ -32,7 +32,6 @@ class DirectionBtn extends HTMLElement {
 
       if (currentPage === FIRST_PAGE) {
         this.#hiddenButton(leftBtn)
-        return
       }
 
       if (currentPage === LAST_PAGE) {

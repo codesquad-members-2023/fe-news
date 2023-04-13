@@ -4,6 +4,10 @@
   width: 930px;
 }
 
+.btn__view-type button {
+  cursor: pointer;
+}
+
 .main-view {
   position: relative;
 }
