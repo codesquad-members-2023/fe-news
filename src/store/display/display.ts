@@ -7,8 +7,8 @@ const initialState: DisplayType = {
     { name: '내가 구독한 언론사', isActive: false },
   ],
   view: [
-    { name: 'listView', isActive: true },
-    { name: 'gridView', isActive: false },
+    { name: 'listView', isActive: false },
+    { name: 'gridView', isActive: true },
   ],
   currentPage: 0,
 };

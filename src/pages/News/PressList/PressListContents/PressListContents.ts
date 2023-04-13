@@ -36,7 +36,7 @@ class PressListContents extends HTMLElement {
   async connectedCallback() {
     const pressList = await getPress({ page: 0 });
     this.pressList = pressList;
-    this.maxPage = Math.ceil(pressList.length / 24) - 1;
+    this.maxPage = Math.ceil(pressList.length / 24);
 
     addShadow({ target: this });
     this.wrap = createWrap();
@@ -52,17 +52,9 @@ class PressListContents extends HTMLElement {
   }
 
   appendGridViewContainer() {
-    this.createGridViewContainer(0);
-
-    let i = 1;
-    const callInterval = setInterval(() => {
+    Array.from({ length: this.maxPage }).forEach((_, i) => {
       this.createGridViewContainer(i);
-      i++;
-    }, 0);
-
-    if (callInterval) {
-      i === this.maxPage - 1 && clearInterval(callInterval);
-    }
+    });
   }
 
   createGridViewContainer(page: number) {
