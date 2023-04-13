@@ -15,13 +15,15 @@ class MainHandler {
     this.#subscriptionList = new Set()
   }
 
-  #fetchData(url) {
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        this.#data = this.#shuffleData(data)
-        this.#initMainView()
-      })
+  async #fetchData(url) {
+    try {
+      const res = await fetch(url)
+      const data = await res.json()
+      this.#data = this.#shuffleData(data)
+      this.#initMainView()
+    } catch (error) {
+      throw new Error(`Error occurred while fetching data: ${error}`)
+    }
   }
 
   #shuffleData(data) {
