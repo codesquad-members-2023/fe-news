@@ -1,5 +1,8 @@
 import { State } from './types';
 
+/**
+ * MVC
+ */
 export interface Model {
   setState(state: State): void;
   get state(): State;
@@ -20,3 +23,26 @@ export interface Component {
   attachTo(component: Component): void;
   get state(): State;
 }
+
+/**
+ * Observer Pattern
+ */
+export interface ObservableModel extends Model {
+  _subscribers: Set<(state: State) => void>;
+  addSubscriber(subscriber: (state: State) => void): void;
+  deleteSubscriber(subscriber: (state: State) => void): void;
+  notify(state: State): void;
+}
+
+// 마찬가지로 View와 Component 역할을 하는 ObserverViewComponent는 interface로만 관리
+export interface ObserverViewComponent extends View, Component {}
+
+/**
+ * Flux
+ */
+// export interface Store extends Observable {
+//   // private _state: State;
+//   get state(): State;
+//   // action type은 추후에 정의해보기
+//   dispatch(action: string): void;
+// }
