@@ -1,3 +1,5 @@
+import { API_URL } from '../core/constants.js';
+
 const fetchData = async (...url) => {
   const requests = [...url].map(url => fetch(url));
   const requestObject = await Promise.all(requests);
@@ -5,4 +7,10 @@ const fetchData = async (...url) => {
   return jsonObject;
 }
 
-export default fetchData;
+const getData = async () => {
+  const responseData = await fetchData(API_URL['rolling'], API_URL['media']);
+  return responseData;
+}
+
+const responseData = getData();
+export default responseData;

@@ -3,7 +3,7 @@ import { CONSTANTS } from '../../../core/constants.js';
 import sortButton from '../buttons/sortButton.js'
 import gridView from "./grid/grid.js";
 
-const mainView = () => {
+const mainView = ({ media }) => {
   const main = createEl("main");
   const sortButtons = sortButton(
     CONSTANTS['ALL_PRESS'],
@@ -12,7 +12,7 @@ const mainView = () => {
   const viewContainer = createEl('div', 'view-container');
   const moveToPageButton = `<a class="prev-button"></a>
     <a class="next-button"></a>`;
-  const grid = gridView();
+  const grid = gridView(media);
 
   viewContainer.insertAdjacentHTML('beforeend', moveToPageButton);
   viewContainer.insertAdjacentElement('afterbegin', grid);
