@@ -29,31 +29,40 @@ class PressListHeader extends HTMLElement {
   }
 
   render({ tab, view }: any = this.displayStore.getState()) {
+    const tabInfo = Object.entries(tab);
+    const viewInfo = Object.entries(view);
+
     const template = `
     <ul class="tab">
-      ${tab
-        .map(
-          (item: any) =>
-            `<li>
-              <button class="tab${
-                item.isActive ? ' is-active typo-title-md' : ' typo-body-md'
-              }">${item.name}</button>
-            </li>`
-        )
+      ${tabInfo
+        .map((item: any) => {
+          const name = item[0];
+          const title =
+            item[0] === 'general' ? '전체 언론사' : '내가 구독한 구독사';
+          const isActive = item[1].isActive;
+          return `
+          <li>
+            <button class="tab ${name}${
+            isActive ? ' is-active typo-title-md' : ' typo-body-md'
+          }">${title}</button>
+          </li>`;
+        })
         .join('')}
     </ul>
     <ul class="view">
-    ${view
-      .map(
-        (item: any) =>
-          `<li>
-            <button class="view">
-              <icon-element name="${item.name}" size="24"  fill="${
-            item.isActive ? 'var(--primary)' : 'var(--gray100)'
-          }"></icon-element>
-            </button>
-          </li>`
-      )
+    ${viewInfo
+      .map((item: any) => {
+        const name = item[0];
+        const isActive = item[1].isActive;
+        return `
+        <li>
+          <button class="view">
+            <icon-element name="${name}" size="24"  fill="${
+          isActive ? 'var(--primary)' : 'var(--gray100)'
+        }"></icon-element>
+          </button>
+        </li>`;
+      })
       .join('')}
     </ul>
     `;
@@ -79,9 +88,10 @@ class PressListHeader extends HTMLElement {
             });
           };
           this.displayStore.subscribe(rerender);
+          const isGeneral = tab.classList.contains('general');
           this.displayStore.dispatch({
             type: 'CHANGE_TAB',
-            payload: tab.innerText,
+            payload: isGeneral ? 'general' : 'custom',
           });
         };
         button.addEventListener('click', buttonClickHandler);
@@ -97,6 +107,7 @@ class PressListHeader extends HTMLElement {
           const viewName = view
             .querySelector('icon-element')
             ?.getAttribute('name');
+          console.log({ viewName });
 
           const rerender = () => {
             const state = this.displayStore.getState();

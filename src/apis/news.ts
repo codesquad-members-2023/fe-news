@@ -12,7 +12,7 @@ interface getPressProps {
 }
 
 interface getSectionProps {
-  page: string;
+  page: number;
 }
 
 export const getPress = async ({ page }: getPressProps) => {

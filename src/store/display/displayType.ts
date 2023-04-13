@@ -1,10 +1,15 @@
 export interface ElementType {
-  name: string;
-  isActive: boolean;
+  [key: string]: {
+    isActive: boolean;
+  };
 }
 
 export interface DisplayType {
-  tab: ElementType[];
-  view: ElementType[];
-  currentPage: number;
+  tab: ElementType;
+  view: ElementType;
+  page: {
+    [key: string]: {
+      [key: string]: { currentPage: number; totalPage: number };
+    };
+  };
 }

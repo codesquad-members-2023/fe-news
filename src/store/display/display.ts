@@ -1,16 +1,25 @@
 import { createStore, ReducerType, ActionType } from '@utils/redux';
-import { DisplayType, ElementType } from './displayType';
+import { DisplayType } from './displayType';
 
 const initialState: DisplayType = {
-  tab: [
-    { name: '전체 언론사', isActive: true },
-    { name: '내가 구독한 언론사', isActive: false },
-  ],
-  view: [
-    { name: 'listView', isActive: false },
-    { name: 'gridView', isActive: true },
-  ],
-  currentPage: 0,
+  tab: {
+    general: { isActive: true },
+    custom: { isActive: false },
+  },
+  view: {
+    list: { isActive: false },
+    grid: { isActive: true },
+  },
+  page: {
+    grid: {
+      general: { currentPage: 0, totalPage: 0 },
+      custom: { currentPage: 0, totalPage: 0 },
+    },
+    view: {
+      general: { currentPage: 0, totalPage: 0 },
+      custom: { currentPage: 0, totalPage: 0 },
+    },
+  },
 };
 
 const reducer: ReducerType<DisplayType> = (
@@ -19,45 +28,39 @@ const reducer: ReducerType<DisplayType> = (
 ): DisplayType => {
   switch (action.type) {
     case 'CHANGE_TAB':
-      const newTab = state.tab.map((item: ElementType) => {
-        if (item.name === action.payload) {
-          return { ...item, isActive: true };
-        }
-        return { ...item, isActive: false };
-      });
+      state.tab[action.payload].isActive = true;
+      state.tab[action.payload === 'general' ? 'custom' : 'general'].isActive =
+        false;
       return {
         ...state,
-        tab: newTab,
       };
     case 'CHANGE_VIEW':
-      const newView = state.view.map((item: ElementType) => {
-        if (item.name === action.payload) {
-          return { ...item, isActive: true };
-        }
-        return { ...item, isActive: false };
-      });
+      state.view[action.payload].isActive = true;
+      state.view[action.payload === 'grid' ? 'list' : 'grid'].isActive = false;
       return {
         ...state,
-        view: newView,
       };
     case 'NEXT_PAGE':
-      // todo: total page 설정 필요
+      state.page[action.payload.view][action.payload.tab].currentPage++;
       return {
         ...state,
-        currentPage: state.currentPage + 1,
       };
     case 'PREV_PAGE':
-      if (state.currentPage === 0) return state;
+      state.page[action.payload.view][action.payload.tab].currentPage--;
       return {
         ...state,
-        currentPage: state.currentPage - 1,
       };
     case 'RESET_PAGE':
+      state.page[action.payload.view][action.payload.tab].currentPage = 0;
       return {
         ...state,
-        currentPage: 0,
       };
-
+    case 'SET_TOTAL_PAGE':
+      state.page[action.payload.view][action.payload.tab].totalPage =
+        action.payload.totalPage;
+      return {
+        ...state,
+      };
     default:
       return state;
   }

@@ -19,17 +19,14 @@ interface PressListContents {
 
 class PressListContents extends HTMLElement {
   wrap: HTMLElement | null = null;
-  currentPage: number = 0;
-  pressList: any[] = [];
-  maxPage: number = 0;
   displayStore: StroeType<DisplayType>;
+  pressList: any[] = [];
+  section: any;
 
   constructor() {
     super();
-
-    this.currentPage = 0;
     this.pressList = [];
-    this.maxPage = 0;
+    this.section = null;
     this.displayStore = store.display;
   }
 
@@ -51,13 +48,20 @@ class PressListContents extends HTMLElement {
       template,
     });
 
-    this.handleClick();
+    this.handlePage();
   }
 
   async connectedCallback() {
     const pressList = await getPress({ page: 0 });
     this.pressList = pressList;
-    this.maxPage = Math.ceil(pressList.length / 24);
+    this.displayStore.dispatch({
+      type: 'SET_TOTAL_PAGE',
+      payload: {
+        view: 'grid',
+        tab: 'general',
+        totalPage: Math.ceil(pressList.length / 24),
+      },
+    });
 
     addShadow({ target: this });
     this.wrap = createWrap();
@@ -68,11 +72,11 @@ class PressListContents extends HTMLElement {
       style: list(),
     });
 
-    this.changeCurrentTab();
+    this.changeContentsSubscribingDisplayChange();
     this.appendGridViewContainer();
   }
 
-  handleClick() {
+  handlePage(view: string = 'grid', tab: string = 'general') {
     const controllerElement = select({
       selector: 'controller-element',
       parent: document
@@ -85,65 +89,72 @@ class PressListContents extends HTMLElement {
       const target = e.target;
       const position = target.getAttribute('position');
       const isLeft = position === 'left';
-      const maxPage = Math.ceil(this.pressList.length / 24) - 1;
 
       if (!isLeft) {
-        if (this.currentPage === maxPage) return;
-        this.currentPage++;
+        this.displayStore.dispatch({
+          type: 'NEXT_PAGE',
+          payload: { view, tab },
+        });
       } else {
-        if (this.currentPage === 0) return;
-        this.currentPage--;
+        this.displayStore.dispatch({
+          type: 'PREV_PAGE',
+          payload: { view, tab },
+        });
       }
+
+      const currentPage =
+        this.displayStore.getState().page[view][tab].currentPage;
 
       const displayContainer = this.wrap?.querySelector(
         '.grid-view-container.show'
       );
       const newDisplayContainer = this.wrap?.querySelector(
-        `.grid-view-container[page='${this.currentPage}']`
+        `.grid-view-container[page='${currentPage}']`
       );
       displayContainer?.classList.remove('show');
       newDisplayContainer?.classList.add('show');
     });
   }
 
-  async changeCurrentTab() {
+  async changeContentsSubscribingDisplayChange() {
+    // 탭이 변화하면 감지하여 그에 맞는 컨텐츠를 보여줌
     const toggleShowClass = async () => {
       const displayStates = this.displayStore.getState();
-      const activeTab = displayStates.tab.find((tab) => tab.isActive)?.name;
-      const activeView = displayStates.view.find((view) => view.isActive)?.name;
-      const isGeneral = activeTab === '전체 언론사';
-      const isGrid = activeView === 'gridView';
+      const isGeneral = displayStates.tab.general.isActive;
+      const isGrid = displayStates.view.grid.isActive;
 
       const generalSection = this.wrap?.querySelector('section.general');
       const customSection = this.wrap?.querySelector('section.custom');
       const gridView = this.wrap?.querySelector('section.show .view.grid');
       const listView = this.wrap?.querySelector('section.show .view.list');
-
-      if (isGeneral) {
-        generalSection && toggleClass(generalSection, 'show');
-        customSection && toggleClass(customSection, 'hide');
-        gridView && toggleClass(gridView, 'show');
-        listView && toggleClass(listView, 'hide');
-      } else {
-        generalSection && toggleClass(generalSection, 'hide');
-        customSection && toggleClass(customSection, 'show');
-        gridView && toggleClass(gridView, 'hide');
-        listView && toggleClass(listView, 'show');
+      if (!generalSection || !customSection || !gridView || !listView) {
+        return;
       }
-
-      if (isGrid) {
-        gridView && toggleClass(gridView, 'show');
-        listView && toggleClass(listView, 'hide');
+      if (isGeneral) {
+        toggleClass(generalSection, 'show');
+        toggleClass(customSection, 'hide');
+        toggleClass(gridView, 'show');
+        toggleClass(listView, 'hide');
       } else {
-        gridView && toggleClass(gridView, 'hide');
-        listView && toggleClass(listView, 'show');
+        toggleClass(generalSection, 'hide');
+        toggleClass(customSection, 'show');
+        toggleClass(gridView, 'hide');
+        toggleClass(listView, 'show');
+      }
+      if (isGrid) {
+        toggleClass(gridView, 'show');
+        toggleClass(listView, 'hide');
+      } else {
+        toggleClass(gridView, 'hide');
+        toggleClass(listView, 'show');
       }
     };
     this.displayStore.subscribe(toggleShowClass);
   }
 
   appendGridViewContainer() {
-    Array.from({ length: this.maxPage }).forEach((_, i) => {
+    const maxPage = this.displayStore.getState().page.grid.general.totalPage;
+    Array.from({ length: maxPage }).forEach((_, i) => {
       this.createGridViewContainer(i);
     });
   }
@@ -158,7 +169,7 @@ class PressListContents extends HTMLElement {
       listViewContainer.classList.add('show');
     }
     const pressId = null;
-    // const currentSection = this.getCurrentSection(pressId);
+    const currentSection = this.getCurrentSection(0);
 
     const template = `
       <grid-view-element press-list='${JSON.stringify(
@@ -205,8 +216,8 @@ class PressListContents extends HTMLElement {
     return this.pressList.slice(start, end);
   }
 
-  async getCurrentSection(pressId: string) {
-    const section = await getSection({ pressId });
+  async getCurrentSection(page: number) {
+    const section = await getSection({ page });
     return section;
   }
 }
