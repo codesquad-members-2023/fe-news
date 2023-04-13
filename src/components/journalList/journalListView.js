@@ -27,7 +27,8 @@ const createJournalHeader = () => {
 };
 
 const createJournalCarousel = () => {
-  const journalCarousel = new Carousel();
+  const journalContainerEl = document.querySelector(".journal-container");
+  const journalCarousel = new Carousel(journalContainerEl);
   return journalCarousel;
 };
 

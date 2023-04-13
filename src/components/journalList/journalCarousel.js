@@ -1,5 +1,5 @@
-export function Carousel() {
-  this.container;
+export function Carousel(toApplyEl) {
+  this.container = toApplyEl;
   this.leftBtn;
   this.rightBtn;
   this.page = 0;
@@ -21,7 +21,6 @@ Carousel.prototype.moveCarousel = function (direction) {
   const FIRST_PAGE = 0;
   const LAST_PAGE = 3;
 
-  this.container = document.querySelector(".journal-container");
   if (direction === "left") {
     this.page--;
   } else if (direction === "right") {
