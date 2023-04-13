@@ -1,5 +1,5 @@
 import { State } from '@src/types/types';
-import { Model, View } from '@src/types/interfaces';
+import { Component, Model, View } from '@src/types/interfaces';
 import { $ } from '@utils/dom.js';
 
 export abstract class AbstractModel implements Model {
