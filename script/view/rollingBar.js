@@ -23,6 +23,8 @@ const insertNewsData = (newsData, rollingBox) => {
 const rollingData = (className) => {
   const rollingBar = document.querySelector(className);
   let startTime = null;
+  let handle = null;
+
   const autoRolling = (timestamp) => {
     if (!startTime) startTime = timestamp;
 
@@ -37,8 +39,22 @@ const rollingData = (className) => {
       rollingBar.removeAttribute("style");
       rollingBar.appendChild(rollingBar.firstChild);
     };
-    requestAnimationFrame(autoRolling);
+    handle = requestAnimationFrame(autoRolling);
   };
   autoRolling();
+
+  const start = () => {
+    if (!handle) handle = requestAnimationFrame(autoRolling);
+  };
+  const stop = () => {
+    if (handle) cancelAnimationFrame(handle);
+    handle = null;
+  };
+  const eventHandler = () => {
+    rollingBar.addEventListener("mouseover", stop);
+    rollingBar.addEventListener("mouseout", start);
+  };
+  eventHandler();
 };
+
 export { viewRollingBar, insertNewsData, rollingData };
