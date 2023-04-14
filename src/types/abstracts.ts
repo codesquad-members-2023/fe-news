@@ -66,6 +66,7 @@ export abstract class AbstractObservableModel implements ObservableModel {
 
   setState(newState: State) {
     this._state = { ...this._state, ...newState };
+    this.notify(this._state);
   }
 
   get state() {

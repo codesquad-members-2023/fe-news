@@ -35,7 +35,9 @@ export interface ObservableModel extends Model {
 }
 
 // 마찬가지로 View와 Component 역할을 하는 ObserverViewComponent는 interface로만 관리
-export interface ObserverViewComponent extends View, Component {}
+export interface ObserverViewComponent extends View, Component {
+  subscribe(): void;
+}
 
 /**
  * Flux

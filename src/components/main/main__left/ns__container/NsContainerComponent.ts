@@ -4,6 +4,7 @@ import { NsContainerModel } from '@components/main/main__left/ns__container/NsCo
 import { NsContainerView } from '@components/main/main__left/ns__container/NsContainerView.js';
 import { NsNavbarComponent } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarComponent.js';
 import { NsPressContainerComponent } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerComponent.js';
+import { NsCategoryContainerObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/NsCategoryContainerObserverViewComponent.js';
 
 export class NsContainerComponent implements Component {
   private _model: NsContainerModel;
@@ -16,6 +17,9 @@ export class NsContainerComponent implements Component {
     const nsPressContainer = new NsPressContainerComponent();
     nsNavbar.attachTo(this);
     nsPressContainer.attachTo(this);
+
+    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent();
+    nsCategoryContainer.attachTo(this);
   }
 
   get element() {
