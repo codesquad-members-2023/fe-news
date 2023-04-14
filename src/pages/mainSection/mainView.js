@@ -38,20 +38,15 @@ class MainView {
   }
 
   #createListView(data) {
-    this.currentView && this.#mainViewContainer.removeChild(this.currentView)
+    const pressListView = new PressListView(data)
+    const listView = pressListView.getListView()
 
-    const listView = new PressListView(data)
-    this.currentView = listView.getListView()
-
-    // this.#mainViewContainer.appendChild(this.currentView)
-    this.#mainViewContainer.innerHTML = this.currentView
+    this.currentView.innerHTML = listView
   }
 
   setCurrentViewData(data) {
-    // TODO: list or grid type을 받아서 처리해줘야 함
     this.#currentPage = data.currentPage
     this.setCurrentPage(this.#currentPage)
-    // this.#createGridView(data.currentViewData) // 함수완성되면 지우기
 
     if (data.currentViewType === 'grid') {
       this.#createGridView(data.currentViewData)
@@ -65,10 +60,6 @@ class MainView {
 
   setCurrentPage(page) {
     this.#directionButton.setAttribute('page', page)
-  }
-
-  getCurrentView() {
-    return this.currentView
   }
 }
 

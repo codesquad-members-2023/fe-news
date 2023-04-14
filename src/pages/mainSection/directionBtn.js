@@ -30,7 +30,7 @@ class DirectionBtn extends HTMLElement {
     if (leftBtn && rightBtn) {
       this.#showButton([leftBtn, rightBtn])
 
-      if (currentPage === FIRST_PAGE) {
+      if (currentPage <= FIRST_PAGE) {
         this.#hiddenButton(leftBtn)
       }
 
