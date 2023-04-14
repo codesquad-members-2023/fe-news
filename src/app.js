@@ -1,8 +1,9 @@
-import { Header } from "./components/header.js";
-import { TrendNews } from "./components/TrendNews.js";
-import { GridView } from "./components/ViewContainer/GridView.js";
+import { Header } from "./components/Header/Header.js";
+import { TrendNews } from "./components/TrendNews/TrendNews.js";
+import { MainView } from "./components/MainView/MainView.js";
 import { Component } from "./core/Component.js";
-import { getPressData } from "./api.js";
+import { getPressData } from "./api/api.js";
+import { suffleData } from "./utils/utils.js";
 
 export class App extends Component {
   templete() {
@@ -16,16 +17,20 @@ export class App extends Component {
   async mounted() {
     const header = this.target.querySelector(".newsstand-header");
     const trendNews = this.target.querySelector(".newsstand-trendnews");
-    const view = this.target.querySelector(".newsstand-main");
-
-    const pressData = await getPressData();
+    const mainView = this.target.querySelector(".newsstand-main");
 
     new Header(header);
     new TrendNews(trendNews);
-    new GridView(view, {
-      page: 1,
-      press: pressData,
-      btnDir: ["left", "right"],
+
+    const pressData = await getPressData();
+    const suffledPressData = suffleData(pressData);
+
+    new MainView(mainView, {
+      pressData: suffledPressData,
+      pageLimit: 4,
+      itemLimitPerPage: 24,
+      // 빈배열을 props로 주는게 맞는 선택일까?
+      subscribedPressSrcs: [],
     });
   }
 }

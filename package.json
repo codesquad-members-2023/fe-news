@@ -1,9 +1,11 @@
 {
   "dependencies": {
-    "eslint": "^8.37.0",
+    "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.7"
+    "json": "^11.0.0",
+    "prettier": "^2.8.7",
+    "server": "^1.0.38"
   },
   "scripts": {
     "watch": "json-server --watch db.json"
