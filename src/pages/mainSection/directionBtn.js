@@ -24,18 +24,18 @@ class DirectionBtn extends HTMLElement {
     const LAST_PAGE = '4'
 
     const currentPage = this.getAttribute('page')
-    const leftBtn = this.firstElementChild
-    const rightBtn = this.lastElementChild
+    const prevButton = this.firstElementChild
+    const nextButton = this.lastElementChild
 
-    if (leftBtn && rightBtn) {
-      this.#showButton([leftBtn, rightBtn])
+    if (prevButton && nextButton) {
+      this.#showButton([prevButton, nextButton])
 
       if (currentPage <= FIRST_PAGE) {
-        this.#hiddenButton(leftBtn)
+        this.#hiddenButton(prevButton)
       }
 
       if (currentPage === LAST_PAGE) {
-        this.#hiddenButton(rightBtn)
+        this.#hiddenButton(nextButton)
       }
     }
   }

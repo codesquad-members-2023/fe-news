@@ -1,11 +1,20 @@
 .btn__view-type {
+  width: 930px;
+  margin: 32px 0 24px 0;
   display: flex;
   justify-content: space-between;
-  width: 930px;
 }
 
 .btn__view-type button {
   cursor: pointer;
+}
+
+.btn__view-type .all-presses {
+  margin-right: 24px;
+}
+
+.btn__view-type .list-view {
+  margin-right: 14px;
 }
 
 .main-view {
