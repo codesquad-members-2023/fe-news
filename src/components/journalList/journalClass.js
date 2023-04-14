@@ -3,14 +3,38 @@ export class Journal {
     this.journalList = jsonData;
   }
 
-  makeJournal() {
-    return this.journalList.reduce((acc, cur) => {
-      const journalDiv = document.createElement("div");
-      journalDiv.classList.add("journal-item");
-      journalDiv.innerHTML = `<img src="${cur.journalSrc}" alt="${cur.journalAlt}">`;
-      acc.push(journalDiv);
-      //   console.log(acc);
-      return acc;
-    }, []);
+  getJournalItem() {
+    const journalItems = this.journalList.map((journalData) => {
+      const journalItem = document.createElement("div");
+      journalItem.classList.add("journal-item");
+
+      const showDiv = document.createElement("div");
+      showDiv.classList.add("journal-item_show");
+      journalItem.appendChild(showDiv);
+      showDiv.innerHTML = `<img src="${journalData.journalSrc}" alt="${journalData.journalAlt}">`;
+      showDiv.style.display = "flex";
+
+      const hoverDiv = document.createElement("div");
+      hoverDiv.classList.add("journal-item_hover");
+      hoverDiv.innerHTML = `
+        <button class="subscribe-btn">구독</button>
+        <button class="unsubscribe-btn">해지</button>`;
+      hoverDiv.style.display = "none";
+
+      journalItem.appendChild(hoverDiv);
+
+      journalItem.addEventListener("mouseover", () => {
+        showDiv.style.display = "none";
+        hoverDiv.style.display = "flex";
+      });
+
+      journalItem.addEventListener("mouseout", () => {
+        hoverDiv.style.display = "none";
+        showDiv.style.display = "flex";
+      });
+
+      return journalItem;
+    });
+    return journalItems;
   }
 }

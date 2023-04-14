@@ -1,14 +1,25 @@
-import { getHeadLine } from "../../api/getHeadLineData.js";
+import { getHeadLine } from "../../api/getData.js";
+import { HeadLine } from "./headLineClass.js";
 
-const headLineHotURL = "http://localhost:3000/headLineHot";
-const headLineURL = "http://localhost:3000/headLine";
+export const createNewsStandHeadLine = () => {
+  const headLineHotURL = "http://localhost:3000/headLineHot";
+  const headLineNomalURL = "http://localhost:3000/headLine";
 
-export const headLineEl = document.createElement("div");
-headLineEl.classList.add("news-stand-headLine");
+  const headLineEl = document.createElement("div");
+  headLineEl.classList.add("news-stand-headLine");
+  headLineEl.classList.add("news-stand-component_size");
 
-getHeadLine(headLineHotURL).then((hotHeadLine) => {
-  headLineEl.innerHTML += hotHeadLine;
-});
-getHeadLine(headLineURL).then((headLine) => {
-  headLineEl.innerHTML += headLine;
-});
+  getHeadLine(headLineHotURL).then((jsonData) => {
+    const hotHeadLine = new HeadLine(jsonData);
+    const hotHeadLineEl = hotHeadLine.getHeadlineHTML();
+    headLineEl.innerHTML += hotHeadLineEl;
+  });
+
+  getHeadLine(headLineNomalURL).then((jsonData) => {
+    const nomalHeadLine = new HeadLine(jsonData);
+    const nomalHeadLineEl = nomalHeadLine.getHeadlineHTML();
+    headLineEl.innerHTML += nomalHeadLineEl;
+  });
+
+  return headLineEl;
+};

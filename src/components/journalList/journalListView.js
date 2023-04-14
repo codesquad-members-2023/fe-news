@@ -1,18 +1,20 @@
-import { getJournal } from "../../api/getJournalListData.js";
+import { getJournal } from "../../api/getData.js";
+import { Carousel } from "./journalCarousel.js";
+import { Journal } from "./journalClass.js";
 
-const journalURL = " http://localhost:3000/journal";
+const createNewsStandJournal = () => {
+  const journalListEl = document.createElement("article");
+  journalListEl.classList.add("news-stand-jounalList");
+  return journalListEl;
+};
 
-// 언론사 영역
-export const journalListEl = document.createElement("article");
-journalListEl.classList.add("news-stand-jounalList");
-
-// 언론사 헤더
-const journalHeader = `<header class="journal-header">
-    <div class="journal-area">
+const createJournalHeader = () => {
+  const journalHeader = `<header class="journal-header display-flex">
+    <div class="journal-area display-flex">
         <div class="journal-all Title-MD">전체 언론사</div>
-        <div class="journal-mine Body-MD">내가 구독한 언론사</div>
+        <div class="journal-subList Body-MD">내가 구독한 언론사</div>
     </div>
-    <div class="journal-btns">
+    <div class="journal-btns display-flex">
         <div class="journal-btn__detail">
             <img src="src/assets/icons/list-view.svg" />
         </div>
@@ -21,20 +23,30 @@ const journalHeader = `<header class="journal-header">
         </div>
     </div>
 </header>`;
+  return journalHeader;
+};
 
-journalListEl.innerHTML = journalHeader;
+const createJournalCarousel = () => {
+  const journalContainerEl = document.querySelector(".journal-container");
+  const journalCarousel = new Carousel(journalContainerEl);
+  return journalCarousel;
+};
 
-// 언론사 리스트
-const journalCarousel = document.createElement("div");
-journalCarousel.classList.add("journal-carousel");
-journalListEl.appendChild(journalCarousel);
-const journalContainer = document.createElement("div");
-journalContainer.classList.add("journal-container");
-journalCarousel.appendChild(journalContainer);
+const renderJournal = async () => {
+  try {
+    const journalURL = "http://localhost:3000/journal";
+    const journalData = await getJournal(journalURL);
+    const journal = new Journal(journalData);
+    const journalItems = journal.getJournalItem();
+    return journalItems;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-getJournal(journalURL).then((journalItems) => {
-  const shuffledItems = journalItems.sort(() => 0.5 - Math.random());
-  shuffledItems.forEach((item) => {
-    journalContainer.appendChild(item);
-  });
-});
+export {
+  createNewsStandJournal,
+  createJournalHeader,
+  createJournalCarousel,
+  renderJournal,
+};

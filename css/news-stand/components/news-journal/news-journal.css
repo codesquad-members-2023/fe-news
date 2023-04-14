@@ -4,18 +4,15 @@
 }
 
 .journal-header {
-  display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
 }
 
 .journal-area {
-  display: flex;
   gap: 20px;
 }
 
 .journal-btns {
-  display: flex;
   gap: 10px;
 }
 
@@ -24,18 +21,30 @@
   grid-template-columns: repeat(24, minmax(150px, 150px));
   grid-template-rows: repeat(4, minmax(95px, 95px));
   position: relative;
-  left: -900px;
+  transition: transform 0.5s ease-in-out;
 }
 
 .journal-item {
+  border: 1px solid var(--gray100);
+}
+
+.journal-item_show,
+.journal-item_hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--gray100);
   width: 100%;
   height: 100%;
 }
 
-.journal-item img {
+.journal-item_hover button {
+  font-size: 15px;
+}
+
+.journal-item_hover button:first-child {
+  margin-right: 7px;
+}
+
+.journal-item_show img {
   width: 50%;
 }

@@ -1,0 +1,24 @@
+.journal-carousel {
+  width: 900px;
+  overflow-x: hidden;
+}
+
+.journal-carousel {
+  position: relative;
+}
+
+.journal-carousel-btn {
+  position: absolute;
+  z-index: 1;
+  top: 44%;
+  background-color: white;
+  border: none;
+}
+
+.journal-carousel-btn:first-child {
+  left: 1px;
+}
+
+.journal-carousel-btn:nth-child(2) {
+  right: 1px;
+}

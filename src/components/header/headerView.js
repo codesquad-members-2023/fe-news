@@ -1,13 +1,16 @@
 import { getTodayNotice } from "./todayNotice.js";
 
-export const headerEl = document.createElement("header");
-
-headerEl.classList.add("news-stand-header");
-const headerElHtml = `<div class="header-left display">
+export const createNewsStandHeader = () => {
+  const headerEl = document.createElement("header");
+  headerEl.classList.add("news-stand-header");
+  headerEl.classList.add("news-stand-component_size");
+  const headerElHtml = `<div class="flex-start header-left Font_display">
     <img src="src/assets/icons/NewsLogo.svg" /><span>뉴스스탠드</span>
  </div>
- <div class="header-right">
+ <div class="flex-center">
     ${getTodayNotice()}
  </div>`;
 
-headerEl.innerHTML = headerElHtml;
+  headerEl.innerHTML = headerElHtml;
+  return headerEl;
+};

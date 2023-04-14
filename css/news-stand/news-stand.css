@@ -7,3 +7,11 @@
   justify-content: center;
   margin: 0 auto;
 }
+
+.news-stand-component_size {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  align-items: center;
+  margin-bottom: 40px;
+}
