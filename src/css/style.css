@@ -57,6 +57,13 @@ body {
   color: #4b5966;
 }
 
+.subscribe-toggle-btn {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: #879298;
+}
+
 #app {
   margin: 0 auto;
 }
@@ -127,7 +134,19 @@ body {
   display: grid;
   grid-template-columns: repeat(6, 155px);
 }
+
 .press-grid__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+}
+.press-grid__item .subscribe-toggle-btn-container {
+  display: none;
+  position: absolute;
+}
+.press-grid__item:hover .subscribe-toggle-btn-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -166,6 +185,18 @@ body {
 }
 .press-grid__item .press-logo {
   height: 25px;
+}
+.press-grid__item .subscribe-toggle-btn-container {
+  width: 100%;
+  height: 100%;
+  background-color: #f5f7f9;
+}
+.press-grid__item .subscribe-toggle-btn-container .subscribe-toggle-btn {
+  width: 74px;
+  height: 24px;
+  border: 1px solid #d2dae0;
+  border-radius: 50px;
+  background-color: #ffffff;
 }
 
 /*# sourceMappingURL=style.css.map */

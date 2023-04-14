@@ -37,3 +37,8 @@ body {
     color: $gray500;
   }
 }
+
+.subscribe-toggle-btn {
+  @include fontType($body-XS);
+  color: $gray200;
+}

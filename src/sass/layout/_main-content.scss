@@ -29,8 +29,16 @@
 .press-grid {
   display: grid;
   grid-template-columns: repeat($grid-columns-count, calc($app-width/$grid-columns-count));
+}
+.press-grid__item {
+  @include flex-row($justify-content: center, $align-items: center);
+  position: relative;
 
-  &__item {
+  .subscribe-toggle-btn-container {
+    display: none;
+    position: absolute;
+  }
+  &:hover .subscribe-toggle-btn-container {
     @include flex-row($justify-content: center, $align-items: center);
   }
 }
