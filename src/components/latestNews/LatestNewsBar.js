@@ -1,22 +1,7 @@
-import Component from "../core/Component.js";
+import Component from "../../core/Component.js";
 
-export default class Bar extends Component {
+export default class LatestNewsBar extends Component {
   // 매직넘버 다 빼기
-
-  template() {
-    const { idx } = this.state;
-    const { newses } = this.props;
-
-    return `
-    <div class="latest-news__window">
-        <div class="latest-news__container">
-            ${newses.length ? `<div>${newses[idx].title}</div>` : ""}
-            ${newses.length ? `<div>${newses[(idx + 1) % 5].title}</div>` : ""}
-        </div>
-    </div>
-  `;
-  }
-
   setup() {
     this.state = {
       idx: 0,
@@ -24,12 +9,14 @@ export default class Bar extends Component {
   }
 
   setEvent() {
-    this.addEvent("transitionend", ".latest-news__container", () => {
+    const increaseIdx = () => {
       const prevIdx = this.state.idx;
       this.setState({
         idx: (prevIdx + 1) % 5,
       });
-    });
+    };
+
+    this.addEvent("transitionend", ".latest-news__container", increaseIdx);
   }
 
   componentDidMount() {
@@ -50,5 +37,19 @@ export default class Bar extends Component {
 
       container.classList.add("slide");
     }, 3000);
+  }
+
+  template() {
+    const { idx } = this.state;
+    const { newses } = this.props;
+
+    return `
+    <div class="latest-news__window">
+        <div class="latest-news__container">
+            ${newses.length ? `<div>${newses[idx].title}</div>` : ""}
+            ${newses.length ? `<div>${newses[(idx + 1) % 5].title}</div>` : ""}
+        </div>
+    </div>
+  `;
   }
 }

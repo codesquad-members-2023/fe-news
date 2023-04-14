@@ -15,6 +15,10 @@ li {
   list-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .wrapper {
   position: absolute;
   top: 50%;
@@ -74,7 +78,7 @@ li {
   transform: translateY(-50%);
 }
 
-.view-option {
+.options {
   display: flex;
   justify-content: space-between;
   height: 24px;
@@ -95,18 +99,23 @@ li {
   grid-template-columns: repeat(6, 1fr);
 }
 
-.news-list__button {
+.button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.news-list__button--left {
+.button--left {
   left: -47px;
 }
 
-.news-list__button--right {
+.button--right {
   right: -47px;
+}
+
+.button__image {
+  height: 40px;
+  width: 24px;
 }
 
 .news-list__item {
@@ -127,6 +136,8 @@ li {
   width: 100%;
   height: 100%;
 
+  z-index: 1;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,4 +146,65 @@ li {
 
 .hidden {
   display: none;
+}
+
+.news-list__list {
+  width: 980px;
+  height: 388px;
+  position: relative;
+}
+
+.tab-container {
+  height: 40px;
+}
+
+.press-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.newses {
+  display: flex;
+  gap: 32px;
+}
+
+.main-news {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.thumbnail {
+  width: 320px;
+  height: 200px;
+}
+
+.sub-news {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.caption {
+  color: #879298;
+  font-size: 14px;
+}
+
+.tab-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px;
+  border: 1px solid black;
+}
+
+.selected-category {
+  color: red;
+}
+
+.selected-press-name {
+  color: blue;
 }
