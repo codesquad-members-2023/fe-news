@@ -64,12 +64,15 @@ export class MainView extends Component {
         subscribePress: subscribePress.bind(this),
       });
     } else if (viewState === "list" && isSubscribePressExist) {
+      const { pressCategories } = this.props;
+
       new ListView(viewContainer, {
         btnState: btnState,
         viewState: viewState,
         pressData: targetPressData,
         allPressSubscribeStatus: allPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
+        pressCategories,
       });
     } else {
       new NoticeView(viewContainer);

@@ -40,13 +40,14 @@ export class ListView extends Component {
       currentCategoryData,
       subscribeStatus,
     } = this._state;
-    const { subscribePress } = this.props;
+    const { subscribePress, pressCategories } = this.props;
 
     new ListViewHeader(listViewHeader, {
       currentPageInCategory: currentPageInCategory,
       currentCategory: currentCategory,
       currentCategoryTotalPage: currentCategoryTotalPage,
       categoryIds: categoryIds,
+      pressCategories,
       btnState: btnState,
     });
 

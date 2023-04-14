@@ -2,7 +2,7 @@ import { Header } from "./components/Header/Header.js";
 import { TrendNews } from "./components/TrendNews/TrendNews.js";
 import { MainView } from "./components/MainView/MainView.js";
 import { Component } from "./core/Component.js";
-import { getPressData } from "./api/api.js";
+import { getPressCategories, getPressData } from "./api/api.js";
 import { suffleData } from "./utils/utils.js";
 
 export class App extends Component {
@@ -24,6 +24,7 @@ export class App extends Component {
 
     const pressData = await getPressData();
     const suffledPressData = suffleData(pressData);
+    const pressCategories = await getPressCategories();
 
     new MainView(mainView, {
       pressData: suffledPressData,
@@ -31,6 +32,7 @@ export class App extends Component {
       itemLimitPerPage: 24,
       // 빈배열을 props로 주는게 맞는 선택일까?
       subscribedPressSrcs: [],
+      pressCategories,
     });
   }
 }
