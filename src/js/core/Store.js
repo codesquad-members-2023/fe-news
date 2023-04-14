@@ -17,9 +17,7 @@ class Store {
   }
 
   publish() {
-    this.#listeners.forEach((fn) => {
-      fn();
-    });
+    this.#listeners.forEach((fn) => fn());
   }
 
   async dispatch(actionKey, { ...payload } = {}) {

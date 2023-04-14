@@ -2,6 +2,8 @@ import createEl from '../utils/util.js';
 import { RollingStore } from '../stores/rollingStore.js';
 
 class RollingBar {
+  LEFT = 'left';
+  RIGHT = 'right';
   #titles;
   movePanel;
   constructor(
@@ -29,7 +31,7 @@ class RollingBar {
 
   template() {
     return this.classNames.reduce((template, className) => {
-      const titleData = className === 'left' ?
+      const titleData = className === this.LEFT ?
       this.#titles.titleLeft : this.#titles.titleRight;
       template += `<div class="rolling-box">
       <a class="link-press">${this.ROLLING_LINK_PRESS}</a>
@@ -55,12 +57,12 @@ class RollingBar {
       const rightTimeDiff = !rightTime ? 0 : currentTime - rightTime;
 
       if (leftTimeDiff >= this.LEFT_DELAY_TIME) {
-        this.translatePanel.bind(this)('left');
+        this.translatePanel.bind(this)(this.LEFT);
         leftTime = null;
         rightTime = currentTime;
       }
       if (rightTimeDiff >= this.TIME_DIFF) {
-        this.translatePanel.bind(this)('right');
+        this.translatePanel.bind(this)(this.RIGHT);
         rightTime = null;
       }
       if (this.rafState) requestAnimationFrame(this.movePanel);
@@ -70,7 +72,7 @@ class RollingBar {
 
   translatePanel(className) {
     const panel =
-      className === 'left'
+      className === this.LEFT
         ? this.rollingBar.querySelector('.left')
         : this.rollingBar.querySelector('.right');
     panel.style.transitionDuration = this.TRANSLATE_TIME;

@@ -5,7 +5,7 @@ export const CONSTANTS = {
   'SUBSCRIBED_PRESS' : '내가 구독한 언론사',
 }
 
-export const rollingPosition = ['left', 'right'];
+export const rollingPositionClassName = ['left', 'right'];
 
 const URL = 'http://localhost:3001';
 export const API_URL = {

@@ -1,11 +1,12 @@
 import createEl from '../../../../utils/util.js';
 
 class GridView {
+  #gridData;
   page = 0;
   FIRST_PAGE = 0;
   LAST_PAGE = 3;
   constructor(gridData) {
-    this.gridData = gridData;
+    this.#gridData = gridData;
     this.viewContainer = createEl('div', 'view-container');
     this.moveToPage();
   }
@@ -13,7 +14,7 @@ class GridView {
   render() {
     this.viewContainer.innerHTML = ``;
     const gridView = this.getGrid();
-    const buttons = this.getButton();
+    const buttons = this.getButtons();
 
     this.viewContainer.append(gridView);
     this.viewContainer.insertAdjacentHTML('beforeend', buttons);
@@ -23,12 +24,12 @@ class GridView {
   getGrid() {
     const GRID_COUNT = 24;
     const gridArea = createEl('div', 'grid-area');
-    const pressLogoData = this.gridData.slice(GRID_COUNT * this.page, GRID_COUNT * (this.page + 1));
+    const pressLogoData = this.#gridData.slice(GRID_COUNT * this.page, GRID_COUNT * (this.page + 1));
     gridArea.innerHTML = pressLogoData.map((press) => `<div><img src=${press.mediaInfo.pressLogo}></div>`).join('');
     return gridArea;
   }
 
-  getButton() {
+  getButtons() {
     return `<a class=prev-button style="visibility:${this.page === this.FIRST_PAGE ? "hidden" : "visible"}"></a>
     <a class=next-button style="visibility:${this.page === this.LAST_PAGE ? "hidden" : "visible"}"></a>`;
   }
