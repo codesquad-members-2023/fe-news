@@ -11,6 +11,18 @@ class ListView extends HTMLElement {
     this.render();
   }
 
+  static get observedAttributes() {
+    return ['section-data'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'section-data') {
+      this.shadowRoot
+        ?.querySelector('list-view-item-element')
+        ?.setAttribute('section-data', JSON.stringify(newValue));
+    }
+  }
+
   render() {
     const sectionData = getProperty({
       target: this,

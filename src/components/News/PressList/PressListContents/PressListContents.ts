@@ -86,15 +86,6 @@ class PressListContents extends HTMLElement {
     this.handleListView().appendListViewContainer();
   }
 
-  handlePageOnGridView() {}
-
-  async changeSection(page: number, dispatch: (action: ActionType) => void) {
-    const data = await getSection({ page });
-
-    dispatch({ type: 'CHANGE_SECTION', payload: data });
-    this.sectionStore.subscribe(() => {});
-  }
-
   handleGridView() {
     return {
       appendGridViewContainer: () => {
@@ -169,6 +160,17 @@ class PressListContents extends HTMLElement {
       getCurrentSection: async ({ page }: getCurrentSectionProps) => {
         const section = await getSection({ page });
         return section;
+      },
+      changeCurrentSection: async (page: number) => {
+        const data = await getSection({ page });
+        this.sectionStore.dispatch({ type: 'CHANGE_SECTION', payload: data });
+
+        this.shadowRoot
+          ?.querySelector('list-view-element')
+          ?.setAttribute(
+            'section-data',
+            JSON.stringify(this.sectionStore.getState())
+          );
       },
     };
   }
@@ -262,7 +264,7 @@ class PressListContents extends HTMLElement {
       if (view === 'list') {
         this.sectionStore = store.section;
         store.section.dispatch;
-        this.changeSection(currentPage, this.sectionStore.dispatch);
+        this.handleListView().changeCurrentSection(currentPage);
       }
     });
   }
