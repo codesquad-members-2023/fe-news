@@ -29,25 +29,23 @@
     background-image: url('/src/assets/icons/RightButton.svg');
   }
 
-  .grid-container {
-    max-width: $containerWidth;
+  .grid-area {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    background-color: $gray100;
+    border: 1px solid $gray100;
+    grid-gap: 1px;
 
-    .grid-area {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      background-color: $gray100;
-      border: 1px solid $gray100;
-      grid-gap: 1px;
-      overflow-y: hidden;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $white;
+    }
 
-      li {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: $white;
-      }
+    img {
+      height: 20px;
     }
   }
 }

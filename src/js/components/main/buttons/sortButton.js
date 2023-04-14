@@ -1,4 +1,4 @@
-import createEl from '../../utils/util.js';
+import createEl from "../../../utils/util.js";
 
 const sortButton = (allPress, subscribedPress) => {
   const buttons = createEl("div", "sort-buttons");
