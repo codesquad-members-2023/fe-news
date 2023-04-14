@@ -2,7 +2,7 @@ import { Header } from "./components/Header/Header.js";
 import { TrendNews } from "./components/TrendNews/TrendNews.js";
 import { MainView } from "./components/MainView/MainView.js";
 import { Component } from "./core/Component.js";
-import { getPressData } from "./api.js";
+import { getPressData } from "./api/api.js";
 import { suffleData } from "./utils/utils.js";
 
 export class App extends Component {
