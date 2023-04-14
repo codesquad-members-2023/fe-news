@@ -1,8 +1,9 @@
 import { Header } from "./components/header.js";
 import { TrendNews } from "./components/TrendNews.js";
-import { ViewContainer } from "./components/ViewContainer/ViewContainer.js";
+import { MainView } from "./components/MainView/MainView.js";
 import { Component } from "./core/Component.js";
 import { getPressData } from "./api.js";
+import { suffleData } from "./utils/utils.js";
 
 export class App extends Component {
   templete() {
@@ -22,9 +23,10 @@ export class App extends Component {
     new TrendNews(trendNews);
 
     const pressData = await getPressData();
+    const suffledPressData = suffleData(pressData);
 
-    new ViewContainer(mainView, {
-      pressData: pressData,
+    new MainView(mainView, {
+      pressData: suffledPressData,
       pageLimit: 4,
       itemLimitPerPage: 24,
       // 빈배열을 props로 주는게 맞는 선택일까?
