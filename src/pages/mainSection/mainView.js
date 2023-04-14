@@ -1,5 +1,6 @@
 import { getElement, createNode } from '../../script/utils.js'
 import PressesGridView from './pressesGridView.js'
+import PressListView from './pressListView.js'
 import ViewSelectionBtn from './viewSelectionBtn.js'
 
 class MainView {
@@ -36,13 +37,30 @@ class MainView {
     this.#mainViewContainer.appendChild(this.currentView)
   }
 
-  #createListView(data) {}
+  #createListView(data) {
+    this.currentView && this.#mainViewContainer.removeChild(this.currentView)
+
+    const listView = new PressListView(data)
+    this.currentView = listView.getListView()
+
+    // this.#mainViewContainer.appendChild(this.currentView)
+    this.#mainViewContainer.innerHTML = this.currentView
+  }
 
   setCurrentViewData(data) {
     // TODO: list or grid type을 받아서 처리해줘야 함
     this.#currentPage = data.currentPage
     this.setCurrentPage(this.#currentPage)
-    this.#createGridView(data.currentViewData)
+    // this.#createGridView(data.currentViewData) // 함수완성되면 지우기
+
+    if (data.currentViewType === 'grid') {
+      this.#createGridView(data.currentViewData)
+      return
+    }
+
+    if (data.currentViewType === 'list') {
+      this.#createListView(data.currentViewData)
+    }
   }
 
   setCurrentPage(page) {

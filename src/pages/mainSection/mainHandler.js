@@ -1,6 +1,5 @@
 import { getElement } from '../../script/utils.js'
 import MainView from './mainView.js'
-
 class MainHandler {
   #data
   #mainView
@@ -14,6 +13,7 @@ class MainHandler {
     this.#fetchData(url)
     this.#currentPage = 1
     this.#subscriptionList = new Set()
+    this.#currentViewType = 'grid'
   }
 
   async #fetchData(url) {
@@ -32,29 +32,13 @@ class MainHandler {
   }
 
   #initMainView() {
-    this.#setGridDate(this.#data)
+    this.#setGridViewDate(this.#data)
 
     this.#mainView = new MainView(this.#currentViewData)
     this.#currentView = this.#mainView.getCurrentView()
     this.#onClickGridBtn()
-    this.#onGridEvent()
+    this.#onMainViewEvent()
     this.onViewTypeEvent()
-  }
-
-  #setGridDate(data) {
-    const PRESSES_PER_PAGE = 24
-
-    const endPress = PRESSES_PER_PAGE * this.#currentPage
-    const startPress = endPress - PRESSES_PER_PAGE
-
-    const slicedData = data.slice(startPress, endPress)
-
-    this.#currentViewData = slicedData.map(press => {
-      const isSubscription = [...this.#subscriptionList].includes(press.name)
-      press.isSubscription = isSubscription
-
-      return press
-    })
   }
 
   #onClickGridBtn() {
@@ -70,19 +54,50 @@ class MainHandler {
     })
   }
 
-  #renderGridView() {
-    this.#setGridDate(this.#data)
-    this.#mainView.setCurrentViewData({
-      currentPage: this.#currentPage,
-      currentViewData: this.#currentViewData
+  #setGridViewDate(data) {
+    const PRESSES_PER_PAGE = 24
+
+    const endPress = PRESSES_PER_PAGE * this.#currentPage
+    const startPress = endPress - PRESSES_PER_PAGE
+
+    const slicedData = data.slice(startPress, endPress)
+
+    this.#currentViewData = slicedData.map(press => {
+      const isSubscription = [...this.#subscriptionList].includes(press.name)
+      press.isSubscription = isSubscription
+
+      return press
     })
   }
 
-  #onGridEvent() {
+  #renderGridView() {
+    this.#setGridViewDate(this.#data)
+    this.#mainView.setCurrentViewData({
+      currentPage: this.#currentPage,
+      currentViewData: this.#currentViewData,
+      currentViewType: this.#currentViewType
+    })
+  }
+
+  #setListViewData(data) {
+    this.#currentViewData = data[this.#currentPage]
+  }
+
+  #renderListView() {
+    this.#setListViewData(this.#data)
+    this.#mainView.setCurrentViewData({
+      currentPage: this.#currentPage,
+      currentViewData: this.#currentViewData,
+      currentViewType: this.#currentViewType
+    })
+  }
+
+  #onMainViewEvent() {
     const mainView = getElement('.main-view')
 
-    const toggleClass = (target, className) => {
+    const toggleSubscription = (target, className) => {
       const cell = target.closest('.grid-cell')
+      // TODO: cell && subscription button
       if (cell) {
         cell.firstChild.classList.toggle(className)
         cell.lastChild.classList.toggle(className)
@@ -90,11 +105,11 @@ class MainHandler {
     }
 
     mainView.addEventListener('mouseover', ({ target }) => {
-      toggleClass(target, 'none')
+      toggleSubscription(target, 'none')
     })
 
     mainView.addEventListener('mouseout', ({ target }) => {
-      toggleClass(target, 'none')
+      toggleSubscription(target, 'none')
     })
 
     mainView.addEventListener('click', ({ target }) => {
@@ -117,6 +132,10 @@ class MainHandler {
       const viewType = cell?.dataset?.type
 
       if (!viewType) return
+      if (viewType === 'list') {
+        this.#currentViewType = 'list'
+        this.#renderListView()
+      }
 
       if (viewType === 'my') {
         this.#currentPage = 1

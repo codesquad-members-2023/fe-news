@@ -11,7 +11,7 @@ class PressesGridView {
     this.#mainGridView = createNode('div')
     this.#mainGridView.classList.add('main-grid', 'current-view')
 
-    // 무조건 24번 만들게해야 될 것 같다.
+    // TODO: 무조건 24번 만들게해야 될 것 같다.
     data.forEach(press => {
       this.#createGridCell({
         logoId: press.logo_src,
@@ -27,18 +27,18 @@ class PressesGridView {
 
     const subCell = createNode('ns-main-grid-cell')
     subCell.classList.add('subscribe-btn', 'none')
-    subCell.mainGridCellData = {
+    subCell.pressesData = {
       logoId: data.isSubscription
         ? './asset/unsubscribeButton.svg'
         : './asset/SubscribeButton.svg',
-      name: data.isSubscription ? 'subscription' : 'unsubscription'
+      name: data.isSubscription ? 'subscription' : 'cancellation'
     }
 
     container.appendChild(subCell)
 
     const mainCell = createNode('ns-main-grid-cell')
     mainCell.classList.add('press')
-    mainCell.mainGridCellData = {
+    mainCell.pressesData = {
       logoId: data.logoId,
       name: data.name
     }
