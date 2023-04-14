@@ -63,13 +63,21 @@ export const listPageReducer = (state, action) => {
   switch (action.type) {
     case displayActions.LIST_LEFT_BUTTON_CLICK:
       if (listPage === 0) listPage = mediaDataLength - 1;
-      listPage -= 1;
-      return { page: listPage };
+      else listPage -= 1;
+      return { ...state, page: listPage };
     case displayActions.LIST_RIGHT_BUTTON_CLICK:
       if (listPage === mediaDataLength - 1) listPage = 0;
-      listPage += 1;
-      return { page: listPage };
+      else listPage += 1;
+      return { ...state, page: listPage };
+    case displayActions.LIST_TAB_BUTTON_CLICK:
+      // TODO: 탭한 언론사 type의 1페이지를 state로 바꿔야함.
+      action.payload;
     default:
       return state;
   }
+};
+
+const checkMediaType = () => {
+  // 이동한 페이지의 언론사가 무슨 type인지 계속 검사!!
+  // 왼쪽 오른쪽 버튼 눌러도 검사해야함!
 };

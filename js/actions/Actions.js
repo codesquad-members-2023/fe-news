@@ -89,16 +89,22 @@ export const displayActionCreator = {
     };
   },
 
-  listLeftBtnClick(payload) {
+  listLeftBtnClick() {
     return {
       type: actionTypes.displayActions.LIST_LEFT_BUTTON_CLICK,
-      payload,
     };
   },
 
-  listRightBtnClick(payload) {
+  listRightBtnClick() {
     return {
       type: actionTypes.displayActions.LIST_RIGHT_BUTTON_CLICK,
+    };
+  },
+
+  listTabBtnClick(payload) {
+    // 여기서 payload는 탭 한 놈의 미디어 타입 정보.
+    return {
+      type: actionTypes.displayActions.LIST_TAB_BUTTON_CLICK,
       payload,
     };
   },

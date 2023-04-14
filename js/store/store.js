@@ -29,6 +29,8 @@ const defaultViewOptionData = {
 
 const defaultListPageData = {
   page: 0,
+  typePage: 1,
+  currentMediaType: '종합/경제',
 };
 
 // Store의 State 초기화.
