@@ -1,4 +1,4 @@
-import { Component } from "../core/Component.js";
+import { Component } from "../../core/Component.js";
 
 // 초기 세팅만 진행
 

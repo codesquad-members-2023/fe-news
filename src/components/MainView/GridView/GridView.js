@@ -1,4 +1,4 @@
-import { Component } from "../../core/Component.js";
+import { Component } from "../../../core/Component.js";
 import { GridItem } from "./GridItem.js";
 
 export class GridView extends Component {
@@ -27,7 +27,7 @@ export class GridView extends Component {
         `<div class="item__container" data-index-number="${index}"></div>`
     ).join("");
 
-    return `${btnNodes}${itemContainers}`;
+    return `<div class="grid-view">${btnNodes}${itemContainers}</div>`;
   }
 
   setEvent() {

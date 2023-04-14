@@ -1,5 +1,5 @@
-import { Header } from "./components/header.js";
-import { TrendNews } from "./components/TrendNews.js";
+import { Header } from "./components/Header/Header.js";
+import { TrendNews } from "./components/TrendNews/TrendNews.js";
 import { MainView } from "./components/MainView/MainView.js";
 import { Component } from "./core/Component.js";
 import { getPressData } from "./api.js";

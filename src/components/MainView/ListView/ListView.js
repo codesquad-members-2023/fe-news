@@ -1,6 +1,6 @@
 import { Component } from "../../../core/Component.js";
 import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
-import { Header } from "./Header.js";
+import { ListViewHeader } from "./ListViewHeader.js";
 import { ListViewMain } from "./ListViewMain.js";
 
 export class ListView extends Component {
@@ -30,7 +30,7 @@ export class ListView extends Component {
       currentCategoryData,
     } = this._state;
 
-    new Header(listViewHeader, {
+    new ListViewHeader(listViewHeader, {
       currentPageInCategory: currentPageInCategory,
       currentCategory: currentCategory,
       currentCategoryTotalPage: currentCategoryTotalPage,
