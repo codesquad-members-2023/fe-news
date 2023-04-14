@@ -4,7 +4,7 @@ interface createProps {
 
 interface selectProps {
   selector: string;
-  parent?: HTMLElement;
+  parent?: HTMLElement | ShadowRoot | null;
 }
 
 interface getPropertyProps {
@@ -12,8 +12,14 @@ interface getPropertyProps {
   name: string;
 }
 
+interface setPropertyProps {
+  target: HTMLElement | Element | null;
+  name: string;
+  value: string;
+}
+
 interface addProps {
-  target: HTMLElement | ShadowRoot | null;
+  target: HTMLElement | ShadowRoot | null | Element;
   template: string;
 }
 
@@ -29,6 +35,11 @@ interface addStyleProps {
 export function create({ tagName }: createProps) {
   return document.createElement(tagName);
 }
+export function createWrap() {
+  const wrap = create({ tagName: 'div' });
+  wrap.classList.add('wrap');
+  return wrap;
+}
 
 export function select({ selector, parent }: selectProps) {
   return parent
@@ -36,9 +47,19 @@ export function select({ selector, parent }: selectProps) {
     : document.querySelector(selector);
 }
 
+export function selectAll({ selector, parent }: selectProps) {
+  return parent
+    ? parent.querySelectorAll(selector)
+    : document.querySelectorAll(selector);
+}
+
 export function getProperty({ target, name }: getPropertyProps) {
   if (!target?.hasAttribute(name)) return null;
   return target.getAttribute(name);
+}
+
+export function setProperty({ target, name, value }: setPropertyProps) {
+  target?.setAttribute(name, value);
 }
 
 export function add({ target, template }: addProps) {
@@ -53,6 +74,18 @@ export function addStyle({ target, style }: addStyleProps) {
   target?.append(style);
 }
 
+export const toggleClass = (
+  target: Element | null,
+  action: 'show' | 'hide'
+) => {
+  if (action === 'hide') {
+    if (target?.classList.contains('show')) target?.classList.remove('show');
+  }
+  if (action === 'show') {
+    if (!target?.classList.contains('show')) target?.classList.add('show');
+  }
+};
+
 export default {
   create,
   select,
@@ -60,4 +93,5 @@ export default {
   add,
   addShadow,
   addStyle,
+  toggleClass,
 };

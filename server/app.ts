@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { SectionModel, PressInfoInterface } from './schemas/index';
+import { SectionModel, PressInfoInterface, UserModel } from './schemas/index';
 const uuid = require('uuid');
 import fs from 'fs/promises';
 
@@ -39,29 +39,108 @@ app.post('/section', async (req, res) => {
 });
 
 app.get('/press', async (req, res) => {
+  const page = req.query.page;
+  const TOTAL_ITEM_AMOUNT = 24 * 4;
   try {
-    const press = await getPress();
+    const press = await getPress({ sliceNumber: TOTAL_ITEM_AMOUNT });
     res.status(200).json(press);
   } catch (error) {
     res.status(400).json({ message: error });
   }
 });
 
-const getPress = async () => {
+app.post('/user', async (req, res) => {
+  const id = req.query.id;
+  try {
+    const result = await UserModel.create({
+      id,
+      subscribingPressIds: [],
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
+app.patch('/subscribe', async (req, res) => {
+  const id = req.query.id;
+  const pressId = req.query.pressId;
+  try {
+    const result = await UserModel.updateOne(
+      { id },
+      { $push: { subscribingPressIds: pressId } }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
+app.patch('/unsubscribe', async (req, res) => {
+  const id = req.query.id;
+  const pressId = req.query.pressId;
+  try {
+    const result = await UserModel.updateOne(
+      { id },
+      { $pull: { subscribingPressIds: pressId } }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
+app.get('/user', async (req, res) => {
+  const id = req.query.id;
+  try {
+    const result = await UserModel.find({
+      id,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
+const ITEM_AMOUNT_PER_PAGE = 24 * 4;
+const TOTAL_ITEM_AMOUNT = 24 * 4;
+
+interface getPressProps {
+  sliceNumber?: number;
+}
+const getPress = async ({ sliceNumber }: getPressProps) => {
   try {
     const data = await fs.readFile('./mock/press.json', 'utf8');
-    const press = JSON.parse(data) as PressInfoInterface[];
+    let press = JSON.parse(data) as PressInfoInterface[];
+    if (!sliceNumber) {
+      return press;
+    }
+    press = press.slice(0, sliceNumber);
+    // press = press.slice(
+    //   page * ITEM_AMOUNT_PER_PAGE,
+    //   (page + 1) * ITEM_AMOUNT_PER_PAGE
+    // );
+
     return press;
   } catch (error) {
     throw error;
   }
 };
-const getPressInfo = (pressId: string) => {
+
+interface getPressInfoProps {
+  pressId?: string;
+  page?: number;
+}
+const getPressInfo = ({ pressId }: getPressInfoProps) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const press: PressInfoInterface[] = await getPress();
-      const result = press.filter((item: any) => item.pid === pressId);
-      resolve(result[0]);
+      const press: PressInfoInterface[] = await getPress({ sliceNumber: -1 });
+      const result = press.find((item: any) => item['pid'] === pressId);
+      resolve(result);
     } catch (error) {
       reject({ message: error });
     }
@@ -89,20 +168,18 @@ interface SectionInfoInterface {
 }
 
 app.get('/section', async (req, res) => {
-  const { pressId } = req.query;
+  const { page } = req.query;
   try {
-    const [press, section] = await Promise.all([
-      getPressInfo(String(pressId)),
-      SectionModel.findOne({ pressId }),
-    ]);
+    const section = await SectionModel.find().skip(Number(page)).limit(1);
     if (section) {
-      const data = section.toObject() as unknown extends SectionInfoInterface
+      const pressId = section[0].pressId;
+      const press = await getPressInfo({ pressId });
+      const data = section[0].toObject() as unknown extends SectionInfoInterface
         ? SectionInfoInterface
         : { press: unknown };
       data.press = press;
       res.status(200).json(data);
     }
-    res.status(404).json({ message: '섹션을 찾을 수 없습니다.' });
   } catch (error) {
     res.status(400).json({ message: error });
   }
