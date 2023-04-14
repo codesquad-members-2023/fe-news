@@ -66,7 +66,7 @@ export class GridView extends Component {
       press,
       allPressData,
       btnDir,
-      subscribeStatus,
+      allPressSubscribeStatus,
     } = pressData;
     const currentPage = currentPageNumber ? currentPageNumber : 1;
     const originalData = allPressData ? allPressData : press;
@@ -78,7 +78,10 @@ export class GridView extends Component {
     const sortedItems = originalData.slice(firstIndex, endIndex);
     const btnState = this.getBtnState(pageLimit, nextPageNumber, btnDir);
 
-    const targetSubscribeStatus = subscribeStatus.slice(firstIndex, endIndex);
+    const targetSubscribeStatus = allPressSubscribeStatus.slice(
+      firstIndex,
+      endIndex
+    );
 
     return {
       pageLimit: pageLimit,
@@ -87,7 +90,7 @@ export class GridView extends Component {
       allPressData: allPressData,
       btnDir: btnState,
       itemLimitPerPage: itemLimitPerPage,
-      subscribeStatus: subscribeStatus,
+      allPressSubscribeStatus: allPressSubscribeStatus,
       targetSubscribeStatus: targetSubscribeStatus,
     };
   }

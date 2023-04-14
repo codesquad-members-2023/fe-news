@@ -47,7 +47,7 @@ export class MainView extends Component {
 
     const targetPressData =
       btnState === "all-press" ? pressData : subscribedPressSrcs;
-    const subscribeStatus = this.getSubscribeStatus(
+    const allPressSubscribeStatus = this.getSubscribeStatus(
       targetPressData,
       subscribedPressSrcs
     );
@@ -59,7 +59,7 @@ export class MainView extends Component {
         itemLimitPerPage: itemLimitPerPage,
         allPressData: targetPressData,
         btnDir: this.btnDir,
-        subscribeStatus: subscribeStatus,
+        allPressSubscribeStatus: allPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
       });
     } else if (viewState === "list") {
@@ -67,6 +67,8 @@ export class MainView extends Component {
         btnState: btnState,
         viewState: viewState,
         pressData: targetPressData,
+        allPressSubscribeStatus: allPressSubscribeStatus,
+        subscribePress: subscribePress.bind(this),
       });
     }
   }
@@ -96,16 +98,16 @@ export class MainView extends Component {
   }
 
   getSubscribeStatus(pressData, subscribedPressSrcs) {
-    const subscribeStatus = [];
+    const allPressSubscribeStatus = [];
     pressData.forEach(({ logo_src }) => {
       const pressSrc = logo_src;
       const isPressSubscribed = subscribedPressSrcs.some(({ logo_src }) => {
         const subscribedSrc = logo_src;
         return subscribedSrc === pressSrc;
       });
-      if (isPressSubscribed) subscribeStatus.push("구독되어 있습니다.");
-      else subscribeStatus.push("구독되어 있지 않습니다.");
+      if (isPressSubscribed) allPressSubscribeStatus.push("구독되어 있습니다.");
+      else allPressSubscribeStatus.push("구독되어 있지 않습니다.");
     });
-    return subscribeStatus;
+    return allPressSubscribeStatus;
   }
 }

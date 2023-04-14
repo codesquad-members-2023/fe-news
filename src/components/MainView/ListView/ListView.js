@@ -28,7 +28,9 @@ export class ListView extends Component {
       categoryIds,
       btnState,
       currentCategoryData,
+      subscribeStatus,
     } = this._state;
+    const { subscribePress } = this.props;
 
     new ListViewHeader(listViewHeader, {
       currentPageInCategory: currentPageInCategory,
@@ -42,6 +44,8 @@ export class ListView extends Component {
 
     new ListViewMain(listViewMain, {
       currentCategoryData: currentCategoryData,
+      subscribeStatus: subscribeStatus,
+      subscribePress: subscribePress,
     });
   }
 
@@ -52,6 +56,7 @@ export class ListView extends Component {
       currentCategory,
       pressData,
       btnState,
+      allPressSubscribeStatus,
     } = listViewData;
 
     const categoryIds =
@@ -79,6 +84,8 @@ export class ListView extends Component {
         : currentPageInCategory;
     const nextCategoryData = allPressContents[nextPageInAllCategories - 1];
     const nextCategoryTotalPage = categoryLengths[nextCategory];
+    const targetPressSubscribeStatus =
+      allPressSubscribeStatus[nextPageInAllCategories - 1];
 
     return {
       currentPageInCategory: nextPageInCategory,
@@ -88,6 +95,8 @@ export class ListView extends Component {
       currentCategoryData: nextCategoryData,
       pressData: pressData,
       btnState: btnState,
+      subscribeStatus: targetPressSubscribeStatus,
+      allPressSubscribeStatus: allPressSubscribeStatus,
     };
   }
 
