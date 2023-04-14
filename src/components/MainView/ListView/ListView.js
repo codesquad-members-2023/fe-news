@@ -1,14 +1,11 @@
 import { Component } from "../../../core/Component.js";
-import {
-  listUpCategoryIds,
-  listUpPressName,
-} from "../../../processingutils/shuffle.js";
+import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
 import { Header } from "./Header.js";
+import { ListViewMain } from "./ListViewMain.js";
 
 export class ListView extends Component {
   setUp() {
     this._state = this.getCurrentListViewData(this.props);
-    console.log(this._state);
   }
 
   templete() {
@@ -17,7 +14,7 @@ export class ListView extends Component {
         <div class="view-page-btn left"><</div>
         <div class="view-page-btn right">></div>
         <div class="list-view__header"></div>
-        <div class="list-view__main></div>
+        <div class="list-view__main"></div>
       </div>
     `;
   }
@@ -30,6 +27,7 @@ export class ListView extends Component {
       currentCategoryTotalPage,
       categoryIds,
       btnState,
+      currentCategoryData,
     } = this._state;
 
     new Header(listViewHeader, {
@@ -38,6 +36,12 @@ export class ListView extends Component {
       currentCategoryTotalPage: currentCategoryTotalPage,
       categoryIds: categoryIds,
       btnState: btnState,
+    });
+
+    const listViewMain = this.target.querySelector(".list-view__main");
+
+    new ListViewMain(listViewMain, {
+      currentCategoryData: currentCategoryData,
     });
   }
 
@@ -73,7 +77,7 @@ export class ListView extends Component {
       currentCategory != nextCategory && !currentPageInCategory
         ? 1
         : currentPageInCategory;
-    const nextCategoryData = allPressContents[nextPageInAllCategories];
+    const nextCategoryData = allPressContents[nextPageInAllCategories - 1];
     const nextCategoryTotalPage = categoryLengths[nextCategory];
 
     return {
