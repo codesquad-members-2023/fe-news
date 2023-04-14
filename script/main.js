@@ -1,6 +1,12 @@
-import NewsHeader from "./newsHeader/newsHeader.js";
+import { fetchManager } from "./controller/fetchManager.js";
+import { renderNewsHeader } from "./view/newsHeader.js";
+import { rollingData, renderRollingBar } from "./view/rollingBar.js";
+import { renderNewsCompanyBar } from "./view/newsCompany.js";
 const main = () => {
-  new NewsHeader().init();
+  renderNewsHeader();
+  renderRollingBar();
+  renderNewsCompanyBar();
+  fetchManager();
 };
 
 main();

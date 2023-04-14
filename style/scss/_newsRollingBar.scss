@@ -1,0 +1,57 @@
+@import "_font.scss";
+@mixin rollingBar() {
+  width: 461px;
+  height: 49px;
+  background: var(--color-off-white);
+  border: 1px solid var(--color-gray-100);
+}
+
+@mixin rollingImg() {
+  width: 49px;
+  height: 17px;
+  margin: 15px;
+}
+
+.news__rolling-bar {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 930px;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.rolling-bar {
+  &_left {
+    display: flex;
+    @include rollingBar();
+    img {
+      @include rollingImg();
+    }
+  }
+
+  &_right {
+    display: flex;
+    @include rollingBar();
+    img {
+      @include rollingImg();
+    }
+  }
+}
+
+.data_list {
+  &_left {
+    li {
+      @include font(14px, 500);
+      line-height: 17px;
+      margin: 15px;
+    }
+  }
+  &_right {
+    li {
+      @include font(14px, 500);
+      line-height: 17px;
+      margin: 15px;
+    }
+  }
+}

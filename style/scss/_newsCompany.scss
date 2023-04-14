@@ -1,0 +1,22 @@
+@import "_font.scss";
+.news-company {
+  &__bar {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 930px;
+    padding-top: 50px;
+  }
+}
+.company__choice {
+  &_all {
+    @include font(16px, 700);
+    line-height: 19px;
+    margin-right: 18px;
+  }
+  &_subscribe {
+    @include font(16px, 500);
+    line-height: 22px;
+    color: var(--color-gray-200);
+  }
+}
