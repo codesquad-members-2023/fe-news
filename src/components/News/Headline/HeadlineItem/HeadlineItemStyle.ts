@@ -15,6 +15,15 @@ export default function style() {
       align-items: center;
     }
 
+    li {
+      list-style-type: none;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
     .press {
       flex-grow: 0;
       color: var(--black);
