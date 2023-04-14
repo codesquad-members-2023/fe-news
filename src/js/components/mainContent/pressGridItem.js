@@ -1,3 +1,5 @@
+import { $ } from '../../utils/dom.js';
+
 export default class PressGridItem {
   constructor($parent, props) {
     this.$parent = $parent;
@@ -10,6 +12,7 @@ export default class PressGridItem {
   mount() {
     this.render();
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    this.setEvent();
   }
 
   render() {
@@ -17,7 +20,21 @@ export default class PressGridItem {
   }
 
   template() {
-    const { pressName, pressLogo } = this.props;
-    return /* html */ `<img class="press-logo" src="${pressLogo}" alt="${pressName}"/>`;
+    const { pressName, pressLogo, isSubscribed } = this.props;
+
+    return /* html */ `
+      <img class="press-logo" src="${pressLogo}" alt="${pressName}"/>
+      <div class="subscribe-toggle-btn-container">
+        <button class="subscribe-toggle-btn">+ ${isSubscribed ? '해지하기' : '구독하기'}</button>
+      </div>
+    `;
+  }
+
+  setEvent() {
+    const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$ele });
+    $subscribeToggleBtn.addEventListener('click', () => {
+      // 확인
+      console.log('click');
+    });
   }
 }
