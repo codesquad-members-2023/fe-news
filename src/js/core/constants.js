@@ -20,3 +20,8 @@ export const autoAnimationInfo = {
 }
 
 export const TOTAL_GRID_COUNT = 96;
+
+export const PRESS_BUTTON = {
+  'subscribe' : '구독하기',
+  'unsubscribe' : '해지하기',
+}
