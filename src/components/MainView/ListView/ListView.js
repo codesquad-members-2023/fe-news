@@ -2,6 +2,7 @@ import { Component } from "../../../core/Component.js";
 import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
 import { ListViewHeader } from "./ListViewHeader.js";
 import { ListViewMain } from "./ListViewMain.js";
+import { getPageNumberBy } from "../../../utils/utils.js";
 
 export class ListView extends Component {
   setUp() {
@@ -83,7 +84,7 @@ export class ListView extends Component {
     const LAST_PAGE = this.getLastPage(allPressContents);
 
     let nextPageInAllCategories = currentPageInAllCategories
-      ? this.setPageNumberBy(dir, currentPageInAllCategories)
+      ? getPageNumberBy(dir, currentPageInAllCategories)
       : FIRST_PAGE;
 
     if (nextPageInAllCategories > LAST_PAGE) {
@@ -102,7 +103,7 @@ export class ListView extends Component {
         ? dir === "right" || dir === undefined
           ? FIRST_PAGE
           : nextCategoryTotalPage
-        : this.setPageNumberBy(dir, currentPageInCategory);
+        : getPageNumberBy(dir, currentPageInCategory);
 
     const nextCategoryData = allPressContents[nextPageInAllCategories - 1];
     const targetPressSubscribeStatus =
@@ -149,10 +150,6 @@ export class ListView extends Component {
 
   getAllPressContents(sortedPressData) {
     return Object.values(sortedPressData).flat();
-  }
-
-  setPageNumberBy(dir, page) {
-    return dir === "right" ? (page += 1) : (page -= 1);
   }
 
   getLastPage(allPressContents) {
