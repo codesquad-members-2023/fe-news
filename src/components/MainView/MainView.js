@@ -3,6 +3,7 @@ import { FilterBtns } from "./Buttons/FilterBtns.js";
 import { GridView } from "./GridView/GridView.js";
 import { ListView } from "./ListView/ListView.js";
 import { ViewBtns } from "./Buttons/ViewBtns.js";
+import { NoticeView } from "./NoticeView/NoticeView.js";
 
 export class MainView extends Component {
   setUp() {
@@ -52,7 +53,7 @@ export class MainView extends Component {
       subscribedPressSrcs
     );
     const viewContainer = this.target.querySelector(".view__container");
-
+    const isSubscribePressExist = targetPressData.length !== 0;
     if (viewState === "grid") {
       new GridView(viewContainer, {
         pageLimit: pageLimit,
@@ -62,7 +63,7 @@ export class MainView extends Component {
         allPressSubscribeStatus: allPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
       });
-    } else if (viewState === "list") {
+    } else if (viewState === "list" && isSubscribePressExist) {
       new ListView(viewContainer, {
         btnState: btnState,
         viewState: viewState,
@@ -70,6 +71,8 @@ export class MainView extends Component {
         allPressSubscribeStatus: allPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
       });
+    } else {
+      new NoticeView(viewContainer);
     }
   }
 
