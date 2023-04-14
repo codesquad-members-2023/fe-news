@@ -1,19 +1,5 @@
 @import url(variables.css);
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  list-style: none
-}
-
-a {
-  text-decoration: none;
-}
-
 .newsstand {
   width: 800px;
   display: grid;
