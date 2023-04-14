@@ -1,5 +1,5 @@
-import { Props, State } from '@src/types/types';
-import { Component } from '@src/types/interfaces';
+import { Props, State } from '@custom-types/types';
+import { Component } from '@custom-types/interfaces';
 import { MainModel } from '@components/main/MainModel.js';
 import { MainView } from '@components/main/MainView.js';
 import { MainRightComponent } from '@components/main/main__right/MainRightComponent.js';

@@ -1,5 +1,5 @@
-import { Article, Props, State } from '@src/types/types';
-import { Component } from '@src/types/interfaces';
+import { Article, Props, State } from '@custom-types/types';
+import { Component } from '@custom-types/interfaces';
 import { NsPressContainerModel } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerModel.js';
 import { NsPressContainerView } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerView.js';
 import { customGet } from '@utils/customFetch.js';

@@ -1,5 +1,5 @@
-import { Props, State } from '@src/types/types';
-import { Component } from '@src/types/interfaces';
+import { Props, State } from '@custom-types/types';
+import { Component } from '@custom-types/interfaces';
 import { NavbarRightModel } from '@components/main/main__left/ns__container/ns__navbar/navbar__right/NavbarRightModel.js';
 import { NavbarRightView } from '@components/main/main__left/ns__container/ns__navbar/navbar__right/NavbarRightView.js';
 

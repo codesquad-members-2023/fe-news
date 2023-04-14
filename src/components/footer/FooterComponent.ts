@@ -1,5 +1,5 @@
-import { Props, State } from '@src/types/types';
-import { Component } from '@src/types/interfaces';
+import { Props, State } from '@custom-types/types';
+import { Component } from '@custom-types/interfaces';
 import { FooterModel } from '@components/footer/FooterModel.js';
 import { FooterView } from '@components/footer/FooterView.js';
 

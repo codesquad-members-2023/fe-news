@@ -1,5 +1,5 @@
-import { ObserverSubscriber, State, Props } from '@src/types/types';
-import { Model, ObservableModel, View } from '@src/types/interfaces';
+import { ObserverSubscriber, State } from '@custom-types/types';
+import { Model, ObservableModel, View } from '@custom-types/interfaces';
 import { $ } from '@utils/dom.js';
 
 export abstract class AbstractModel implements Model {
