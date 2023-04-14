@@ -1,37 +1,51 @@
-import MainGridView from './mainGridView.js'
-import { elementIs, createNode } from '../../script/utils.js'
+import PressesGridView from './pressesGridView.js'
+import { getElement, createNode } from '../../script/utils.js'
 
 class MainView {
-  #currentView
-  #data
+  #mainViewContainer
+  #directionButton
+  currentView
+  #currentPage
 
-  // constructor(viewType) {
-  constructor() {
-    const app = elementIs('.app')
+  constructor(data) {
+    this.app = getElement('.app')
+    this.#mainViewContainer = createNode('div')
+    this.#mainViewContainer.classList.add('main-view')
 
-    // fetch('http://localhost:3001/presses')
-    //   .then(res => res.json())
-    //   .then(
-    //     data.forEach(press => {
-    //       this.createPress(press.logo_src, press.name)
-    //     })
-    //   )
-    //   .then(() => app.appendChild(this.#mainGrid))
-
-    fetch('http://localhost:3001/presses')
-      .then(res => res.json())
-      .then(data => {
-        const currentViewData = data.slice(0, 24)
-        this.#currentView && app.removeChild(this.#currentView)
-
-        const gridView = new MainGridView(currentViewData)
-        this.#currentView = gridView.getGridView()
-
-        app.appendChild(this.#currentView)
-      })
+    this.#createDirectionBtn()
+    this.#createGridView(data)
+    this.app.appendChild(this.#mainViewContainer)
   }
 
-  getGridViewData() {}
+  #createDirectionBtn() {
+    this.#directionButton = createNode('ns-direction-btn')
+    this.#mainViewContainer.appendChild(this.#directionButton)
+  }
+
+  #createGridView(data) {
+    this.currentView && this.#mainViewContainer.removeChild(this.currentView)
+
+    const gridView = new PressesGridView(data)
+    this.currentView = gridView.getGridView()
+
+    this.#mainViewContainer.appendChild(this.currentView)
+  }
+
+  #createListView(data) {}
+
+  setCurrentViewData(data) {
+    this.#currentPage = data.currentPage
+    this.setCurrentPage(this.#currentPage)
+    this.#createGridView(data.currentViewData)
+  }
+
+  setCurrentPage(page) {
+    this.#directionButton.setAttribute('page', page)
+  }
+
+  getCurrentView() {
+    return this.currentView
+  }
 }
 
 export default MainView

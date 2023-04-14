@@ -1,8 +1,14 @@
-import './pages/header/headerUI.js'
-import HeaderHandler from './pages/header/header.js'
-import './pages/mainSection/mainGridCellUI.js'
-import './pages/mainSection/mainGridView.js'
-import MainView from './pages/mainSection/mainView.js'
+import './pages/header/headerView.js'
+import HeaderHandler from './pages/header/headerHandler.js'
+import './pages/mainSection/pressGridView.js'
+import './pages/mainSection/pressesGridView.js'
+import './pages/mainSection/mainView.js'
+import './pages/mainSection/directionBtn.js'
+import MainHandler from './pages/mainSection/mainHandler.js'
 
-const header = new HeaderHandler()
-const mainView = new MainView()
+const app = () => {
+  new HeaderHandler()
+  new MainHandler('http://localhost:3001/presses')
+}
+
+app()

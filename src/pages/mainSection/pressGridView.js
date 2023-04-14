@@ -1,6 +1,6 @@
 import { createNode } from '../../script/utils.js'
 
-class MainGridCellUI extends HTMLElement {
+class PressCellView extends HTMLElement {
   #container
   mainGridCellData
 
@@ -21,4 +21,4 @@ class MainGridCellUI extends HTMLElement {
   }
 }
 
-customElements.define('ns-main-grid-cell', MainGridCellUI)
+customElements.define('ns-main-grid-cell', PressCellView)

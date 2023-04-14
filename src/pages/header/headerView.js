@@ -1,6 +1,6 @@
 import { createNode } from '../../script/utils.js'
 
-class HeaderUI extends HTMLElement {
+class HeaderView extends HTMLElement {
   #container
   headerData
 
@@ -46,4 +46,4 @@ class HeaderUI extends HTMLElement {
   }
 }
 
-customElements.define('ns-header', HeaderUI)
+customElements.define('ns-header', HeaderView)
