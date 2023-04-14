@@ -16,6 +16,7 @@ import { subscribe, unsubscribe } from '@apis/user';
 import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionType } from '@store/section/sectionType';
 import { ActionType } from '@utils/redux';
+import { PressListType } from '@store/press/pressType';
 
 interface PressListContents {
   icon?: string | null;
@@ -29,6 +30,7 @@ class PressListContents extends HTMLElement {
   wrap: HTMLElement | null = null;
   displayStore: StroeType<DisplayType>;
   sectionStore: StroeType<SectionType>;
+  pressStore: StroeType<PressListType>;
   pressList: any[] = [];
   section: any;
 
@@ -38,6 +40,7 @@ class PressListContents extends HTMLElement {
     this.section = null;
     this.displayStore = store.display;
     this.sectionStore = store.section;
+    this.pressStore = store.press;
   }
 
   render() {
@@ -62,17 +65,6 @@ class PressListContents extends HTMLElement {
   }
 
   async connectedCallback() {
-    const pressList = await getPress({ page: 0 });
-    this.pressList = pressList;
-    this.displayStore.dispatch({
-      type: 'SET_TOTAL_PAGE',
-      payload: {
-        view: 'grid',
-        tab: 'general',
-        totalPage: Math.ceil(pressList.length / 24),
-      },
-    });
-
     addShadow({ target: this });
     this.wrap = createWrap();
     this.shadowRoot?.append(this.wrap);
@@ -89,13 +81,31 @@ class PressListContents extends HTMLElement {
 
   handleGridView() {
     return {
-      appendGridViewContainer: () => {
-        const maxPage =
-          this.displayStore.getState().page.grid.general.totalPage;
-        Array.from({ length: maxPage }).forEach((_, i) => {
-          this.handleGridView().createGridViewContainer(i);
+      getCurrentPressList: async (page: number) => {
+        const pressList = await getPress({ page: 0 });
+        this.displayStore.dispatch({
+          type: 'SET_TOTAL_PAGE',
+          payload: {
+            view: 'grid',
+            tab: 'general',
+            totalPage: Math.ceil(pressList.length / 24),
+          },
         });
+        const start = page * 24;
+        const end = start + 24;
+        const paginationedPressList = pressList.slice(start, end);
+
+        this.displayStore.dispatch({
+          type: 'SET_TOTAL_PAGE',
+          payload: {
+            view: 'grid',
+            tab: 'general',
+            totalPage: Math.ceil(paginationedPressList.length / 24),
+          },
+        });
+        this.pressStore = paginationedPressList;
       },
+
       createGridViewContainer: (page: number) => {
         const gridViewContainer = create({ tagName: 'div' });
         gridViewContainer.classList.add('grid-view-container');
@@ -103,8 +113,8 @@ class PressListContents extends HTMLElement {
         if (page === 0) {
           gridViewContainer.classList.add('show');
         }
-        const currentPressList =
-          this.handleGridView().getCurrentPressList(page);
+        const currentPressList = this.pressStore;
+
         const template = `
         <grid-view-element press-list='${JSON.stringify(
           currentPressList
@@ -117,12 +127,15 @@ class PressListContents extends HTMLElement {
         this.wrap
           ?.querySelector('section.general .view.grid')
           ?.append(gridViewContainer);
-        this.handleSubscribeBtn().handleGridView();
+        this.handleSubscribe().handleGridView();
       },
-      getCurrentPressList: (page: number) => {
-        const start = page * 24;
-        const end = start + 24;
-        return this.pressList.slice(start, end);
+      appendGridViewContainer: async () => {
+        await this.handleGridView().getCurrentPressList(0);
+        const maxPage =
+          this.displayStore.getState().page.grid.general.totalPage;
+        Array.from({ length: maxPage }).forEach((_, i) => {
+          this.handleGridView().createGridViewContainer(i);
+        });
       },
     };
   }
@@ -158,7 +171,7 @@ class PressListContents extends HTMLElement {
           target: gridViewContainer ?? null,
           template,
         });
-        this.handleSubscribeBtn().handleListView();
+        this.handleSubscribe().handleListView();
       },
       getCurrentSection: async ({ page }: getCurrentSectionProps) => {
         const section = await getSection({ page });
@@ -272,19 +285,31 @@ class PressListContents extends HTMLElement {
     });
   }
 
-  handleSubscribeBtn() {
+  handleSubscribe() {
     const storeUser = store.user;
     interface runSubscribeProps {
-      isSubscribed: boolean;
       id: string;
     }
     return {
-      runSubscribeAndUnsunscribe: ({ isSubscribed, id }: runSubscribeProps) => {
-        isSubscribed
-          ? unsubscribe({ id, pressId: id })
-          : subscribe({ id, pressId: id });
+      runUnsunscribe: ({ id }: runSubscribeProps) => {
+        unsubscribe({ id: 'realsnoopso', pressId: id });
         storeUser.dispatch({
-          type: isSubscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE',
+          type: 'UNSUBSCRIBE',
+          payload: id,
+        });
+        this.pressStore.dispatch({
+          type: 'UNSUBSCRIBE',
+          payload: id,
+        });
+      },
+      runSubscribe: ({ id }: runSubscribeProps) => {
+        subscribe({ id, pressId: id });
+        storeUser.dispatch({
+          type: 'SUBSCRIBE',
+          payload: id,
+        });
+        this.pressStore.dispatch({
+          type: 'SUBSCRIBE',
           payload: id,
         });
       },
@@ -295,13 +320,15 @@ class PressListContents extends HTMLElement {
             const target = e.target as HTMLElement;
             const gridViewItem = target.closest('grid-view-item-element');
             const id = gridViewItem?.getAttribute('id');
-
             if (!id) return;
             const isSubscribed = target.getAttribute('icon') === 'close';
-            this.handleSubscribeBtn().runSubscribeAndUnsunscribe({
-              isSubscribed,
-              id,
-            });
+            isSubscribed
+              ? this.handleSubscribe().runUnsunscribe({
+                  id,
+                })
+              : this.handleSubscribe().runSubscribe({
+                  id,
+                });
           });
         });
       },

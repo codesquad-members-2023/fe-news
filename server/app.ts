@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { SectionModel, PressInfoInterface, UserModel } from './schemas/index';
 const uuid = require('uuid');
 import fs from 'fs/promises';
+import { TEMP_ID } from '../src/constant';
 
 dotenv.config();
 mongoose.set('strictQuery', false);
@@ -113,12 +114,11 @@ interface getPressProps {
   sliceNumber?: number;
 }
 
-const TEST_USER_ID = 'realsnoopso';
 const getPress = async ({ sliceNumber }: getPressProps) => {
   try {
     const data = await fs.readFile('./mock/press.json', 'utf8');
     let press = JSON.parse(data) as PressInfoInterface[];
-    const result = await UserModel.find({ id: TEST_USER_ID });
+    const result = await UserModel.find({ id: TEMP_ID });
     const subscribingPressIds = result[0].subscribingPressIds;
     press = press.map((item: any) => {
       if (subscribingPressIds.includes(item['pid'])) {

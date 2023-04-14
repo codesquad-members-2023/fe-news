@@ -1,7 +1,6 @@
 import { createStore, ReducerType, ActionType } from '@utils/redux';
 import { UserType } from './userType';
-
-const TEMP_ID = 'realsnoopso';
+import { TEMP_ID } from '@constant/index';
 
 const initialState: UserType = {
   id: TEMP_ID,
@@ -16,7 +15,6 @@ const reducer: ReducerType<UserType> = (
     case 'SUBSCRIBE':
       if (state.subscribingPress.length === 0)
         return { ...state, subscribingPress: [action.payload] };
-
       return {
         ...state,
         subscribingPress: [...state.subscribingPress, action.payload],
