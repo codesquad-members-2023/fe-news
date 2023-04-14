@@ -1,6 +1,5 @@
 import { createStore, ReducerType, ActionType } from '@utils/redux';
 import { SectionType } from './sectionType';
-import { getSection } from '@apis/news';
 
 const initialState: SectionType = {
   id: '',
@@ -16,7 +15,22 @@ const initialState: SectionType = {
     newMainDarkLogo: '',
     thumbnailValid: false,
     valid: false,
+    isSubscribed: false,
   },
+};
+
+interface props {
+  state: SectionType;
+}
+
+interface chnageSectionProps extends props {
+  payload: SectionType;
+}
+
+const changeSection = ({ state, payload }: chnageSectionProps) => {
+  return {
+    ...payload,
+  };
 };
 
 const reducer: ReducerType<SectionType> = (
@@ -25,10 +39,7 @@ const reducer: ReducerType<SectionType> = (
 ): SectionType => {
   switch (action.type) {
     case 'CHANGE_SECTION':
-      return {
-        ...action.payload,
-      };
-
+      return changeSection({ state, payload: action.payload });
     default:
       return state;
   }

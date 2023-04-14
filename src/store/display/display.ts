@@ -1,4 +1,4 @@
-import { createStore, ReducerType, ActionType } from '@utils/redux';
+import { createStore, ReducerType, ActionType, StroeType } from '@utils/redux';
 import { DisplayType } from './displayType';
 
 const initialState: DisplayType = {
@@ -22,46 +22,79 @@ const initialState: DisplayType = {
   },
 };
 
+interface props {
+  state: DisplayType;
+}
+
+interface changeTabProps extends props {
+  payload: 'general' | 'custom';
+}
+
+interface changeViewProps extends props {
+  payload: 'grid' | 'list';
+}
+
+interface changePageNumberProps extends props {
+  type: 'NEXT_PAGE' | 'PREV_PAGE' | 'RESET_PAGE';
+}
+
+interface setTotalPageProps extends props {
+  totalPage: number;
+}
+
+const changeTab = ({ state, payload }: changeTabProps) => {
+  state.tab[payload].isActive = true;
+  state.tab[payload === 'general' ? 'custom' : 'general'].isActive = false;
+  return {
+    ...state,
+  };
+};
+
+const changeView = ({ state, payload }: changeViewProps) => {
+  state.view[payload].isActive = true;
+  state.view[payload === 'grid' ? 'list' : 'grid'].isActive = false;
+  return {
+    ...state,
+  };
+};
+
+const changePageNumber = ({ state, type }: changePageNumberProps) => {
+  const currentView = state.view.gird.isActive ? 'grid' : 'list';
+  const currentTab = state.tab.general.isActive ? 'general' : 'custom';
+  if (type === 'NEXT_PAGE') {
+    state.page[currentView][currentTab].currentPage++;
+  } else if (type === 'PREV_PAGE') {
+    state.page[currentView][currentTab].currentPage--;
+  } else {
+    state.page[currentView][currentTab].currentPage = 0;
+  }
+  return state;
+};
+
+const setTotalPage = ({ state, totalPage }: setTotalPageProps) => {
+  const currentView = state.view.gird.isActive ? 'grid' : 'list';
+  const currentTab = state.tab.general.isActive ? 'general' : 'custom';
+  state.page[currentView][currentTab].totalPage = totalPage;
+  return state;
+};
+
 const reducer: ReducerType<DisplayType> = (
   state = initialState,
   action: ActionType
 ): DisplayType => {
   switch (action.type) {
     case 'CHANGE_TAB':
-      state.tab[action.payload].isActive = true;
-      state.tab[action.payload === 'general' ? 'custom' : 'general'].isActive =
-        false;
-      return {
-        ...state,
-      };
+      return changeTab({ state, payload: action.payload });
     case 'CHANGE_VIEW':
-      state.view[action.payload].isActive = true;
-      state.view[action.payload === 'grid' ? 'list' : 'grid'].isActive = false;
-      return {
-        ...state,
-      };
+      return changeView({ state, payload: action.payload });
     case 'NEXT_PAGE':
-      state.page[action.payload.view][action.payload.tab].currentPage++;
-
-      return {
-        ...state,
-      };
+      return changePageNumber({ state, type: action.type });
     case 'PREV_PAGE':
-      state.page[action.payload.view][action.payload.tab].currentPage--;
-      return {
-        ...state,
-      };
+      return changePageNumber({ state, type: action.type });
     case 'RESET_PAGE':
-      state.page[action.payload.view][action.payload.tab].currentPage = 0;
-      return {
-        ...state,
-      };
+      return changePageNumber({ state, type: action.type });
     case 'SET_TOTAL_PAGE':
-      state.page[action.payload.view][action.payload.tab].totalPage =
-        action.payload.totalPage;
-      return {
-        ...state,
-      };
+      return setTotalPage({ state, totalPage: action.payload.totalPage });
     default:
       return state;
   }

@@ -5,13 +5,26 @@ const initialState: PressListType = {
   pressList: [],
 };
 
-const setPressList = (payload: PressListType) => {
+interface props {
+  state: PressListType;
+}
+interface setPressListProps {
+  payload: PressListType;
+}
+interface subscribeProps extends props {
+  payload: string;
+}
+interface unsubscribeProps extends props {
+  payload: string;
+}
+
+const setPressList = ({ payload }: setPressListProps) => {
   return {
     pressList: payload.pressList,
   };
 };
 
-const subscribe = (state: PressListType, payload: string) => {
+const subscribe = ({ state, payload }: subscribeProps) => {
   const targetIndex = state.pressList.findIndex(
     (press) => press.pid === payload
   );
@@ -19,7 +32,7 @@ const subscribe = (state: PressListType, payload: string) => {
   return state;
 };
 
-const unsubscribe = (state: PressListType, payload: string) => {
+const unsubscribe = ({ state, payload }: unsubscribeProps) => {
   const targetIndex = state.pressList.findIndex(
     (press) => press.pid === payload
   );
@@ -33,11 +46,11 @@ const reducer: ReducerType<PressListType> = (
 ): PressListType => {
   switch (action.type) {
     case 'SET_PRESS_LIST':
-      return setPressList(action.payload);
+      return setPressList({ payload: action.payload });
     case 'SUBSCRIBE':
-      return subscribe(state, action.payload);
+      return subscribe({ state, payload: action.payload });
     case 'UNSUBSCRIBE':
-      return unsubscribe(state, action.payload);
+      return unsubscribe({ state, payload: action.payload });
     default:
       return state;
   }
