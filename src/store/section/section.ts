@@ -24,12 +24,10 @@ const reducer: ReducerType<SectionType> = (
   action: ActionType
 ): SectionType => {
   switch (action.type) {
-    case 'SET_SECTION':
+    case 'CHANGE_SECTION':
       return {
         ...action.payload,
       };
-
-    case 'UNSUBSCRIBE':
 
     default:
       return state;
