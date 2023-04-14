@@ -3,6 +3,7 @@ import { FilterBtns } from "./Buttons/FilterBtns.js";
 import { GridView } from "./GridView/GridView.js";
 import { ListView } from "./ListView/ListView.js";
 import { ViewBtns } from "./Buttons/ViewBtns.js";
+import { NoticeView } from "./NoticeView/NoticeView.js";
 
 export class MainView extends Component {
   setUp() {
@@ -47,27 +48,34 @@ export class MainView extends Component {
 
     const targetPressData =
       btnState === "all-press" ? pressData : subscribedPressSrcs;
-    const subscribeStatus = this.getSubscribeStatus(
+    const allPressSubscribeStatus = this.getSubscribeStatus(
       targetPressData,
       subscribedPressSrcs
     );
     const viewContainer = this.target.querySelector(".view__container");
-
+    const isSubscribePressExist = targetPressData.length !== 0;
     if (viewState === "grid") {
       new GridView(viewContainer, {
         pageLimit: pageLimit,
         itemLimitPerPage: itemLimitPerPage,
         allPressData: targetPressData,
         btnDir: this.btnDir,
-        subscribeStatus: subscribeStatus,
+        allPressSubscribeStatus: allPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
       });
-    } else if (viewState === "list") {
+    } else if (viewState === "list" && isSubscribePressExist) {
+      const { pressCategories } = this.props;
+
       new ListView(viewContainer, {
         btnState: btnState,
         viewState: viewState,
         pressData: targetPressData,
+        allPressSubscribeStatus: allPressSubscribeStatus,
+        subscribePress: subscribePress.bind(this),
+        pressCategories,
       });
+    } else {
+      new NoticeView(viewContainer);
     }
   }
 
@@ -96,16 +104,16 @@ export class MainView extends Component {
   }
 
   getSubscribeStatus(pressData, subscribedPressSrcs) {
-    const subscribeStatus = [];
+    const allPressSubscribeStatus = [];
     pressData.forEach(({ logo_src }) => {
       const pressSrc = logo_src;
       const isPressSubscribed = subscribedPressSrcs.some(({ logo_src }) => {
         const subscribedSrc = logo_src;
         return subscribedSrc === pressSrc;
       });
-      if (isPressSubscribed) subscribeStatus.push("구독되어 있습니다.");
-      else subscribeStatus.push("구독되어 있지 않습니다.");
+      if (isPressSubscribed) allPressSubscribeStatus.push("구독되어 있습니다.");
+      else allPressSubscribeStatus.push("구독되어 있지 않습니다.");
     });
-    return subscribeStatus;
+    return allPressSubscribeStatus;
   }
 }

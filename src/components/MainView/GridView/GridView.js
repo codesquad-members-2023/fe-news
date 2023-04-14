@@ -1,5 +1,6 @@
 import { Component } from "../../../core/Component.js";
 import { GridItem } from "./GridItem.js";
+import { getPageNumberBy } from "../../../utils/utils.js";
 
 export class GridView extends Component {
   setUp() {
@@ -66,19 +67,22 @@ export class GridView extends Component {
       press,
       allPressData,
       btnDir,
-      subscribeStatus,
+      allPressSubscribeStatus,
     } = pressData;
     const currentPage = currentPageNumber ? currentPageNumber : 1;
     const originalData = allPressData ? allPressData : press;
     const nextPageNumber = dir
-      ? this.setPageNumberBy(dir, currentPage)
+      ? getPageNumberBy(dir, currentPage)
       : currentPage;
     const endIndex = nextPageNumber * itemLimitPerPage;
     const firstIndex = endIndex - itemLimitPerPage;
     const sortedItems = originalData.slice(firstIndex, endIndex);
     const btnState = this.getBtnState(pageLimit, nextPageNumber, btnDir);
 
-    const targetSubscribeStatus = subscribeStatus.slice(firstIndex, endIndex);
+    const targetSubscribeStatus = allPressSubscribeStatus.slice(
+      firstIndex,
+      endIndex
+    );
 
     return {
       pageLimit: pageLimit,
@@ -87,13 +91,9 @@ export class GridView extends Component {
       allPressData: allPressData,
       btnDir: btnState,
       itemLimitPerPage: itemLimitPerPage,
-      subscribeStatus: subscribeStatus,
+      allPressSubscribeStatus: allPressSubscribeStatus,
       targetSubscribeStatus: targetSubscribeStatus,
     };
-  }
-
-  setPageNumberBy(dir, page) {
-    return dir === "right" ? (page += 1) : (page -= 1);
   }
 
   getBtnState(pageLimit, nextPageNumber, btnDir) {

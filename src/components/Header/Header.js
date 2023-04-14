@@ -16,10 +16,10 @@ export class Header extends Component {
   templete() {
     const { date } = this._state;
     return `
-      <div class="header-logo">
+      <a class="header-logo" href="">
         <img src="src/images/newsstand_logo.svg" alt="" />
         <div class="header-title">뉴스 스탠드</div>
-      </div>
+      </a>
       <div class="header-date">${date}</div>
     `;
   }
