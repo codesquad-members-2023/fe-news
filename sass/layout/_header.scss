@@ -6,15 +6,19 @@
     display: flex;
     width: 160px;
 
-    .header_title_logo {
-      width: 24px;
-      height: 20px;
-      margin-top: 5px;
-    }
+    a {
+      cursor: pointer;
 
-    .header_title_text {
-      margin-left: 6px;
-      @include font($Display, $Bold);
+      .header_title_logo {
+        width: 24px;
+        height: 20px;
+        margin-top: 5px;
+      }
+
+      .header_title_text {
+        margin-left: 6px;
+        @include font($Display, $Bold);
+      }
     }
   }
 

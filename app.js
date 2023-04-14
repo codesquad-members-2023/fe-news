@@ -1,18 +1,9 @@
-import HeaderMaker from './src/js/domMaker/headerMaker.js';
-import NewsStandView from './src/js/newsStandView.js';
-import HeadlineMaker from './src/js/domMaker/headlineMaker.js';
-import DataFetcher from './src/js/dataFetcher/dataFetcher.js';
-import { headerElement, headlineElement, dataUrl } from './src/js/const/const.js';
+import DataFetcher from './src/js/utils/dataFetcher.js';
+import { NS_HEADER_INFO, NS_HEADLINE_INFO, REFERENCE } from './src/js/constant/dom.js';
+import { API_BASE_URL, API_PATH } from './src/js/constant/api.js';
+import NSHeaderView from './src/js/view/NSHeaderView.js';
+import NSHeadlineView from './src/js/view/NSHeadlineView.js';
 
-const ref = {
-  newsStandContainer: document.querySelector('.newsstand_container'),
-};
-
-const main = () => {
-  const dataFetcher = new DataFetcher(dataUrl);
-  const header = new HeaderMaker({ headerElement });
-  const headline = new HeadlineMaker({ headlineElement }, dataFetcher);
-  const view = new NewsStandView(ref, header, headline);
-};
-
-main();
+const dataFetcher = new DataFetcher(API_BASE_URL);
+new NSHeaderView({ NS_HEADER_INFO }, REFERENCE);
+new NSHeadlineView({ NS_HEADLINE_INFO }, dataFetcher, REFERENCE, API_PATH);
