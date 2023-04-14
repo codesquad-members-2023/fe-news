@@ -10,14 +10,17 @@ export default class MainContentContainer {
     this.$ele.className = 'main-content__container';
 
     this.props = props;
+    this.state = {};
+    this.initState();
 
     this.allGrid;
     this.subscribedGrid;
   }
 
   mount() {
-    const { pressData: allPressData } = this.props;
-    const subscribedPressData = allPressData.filter(({ isSubscribed }) => isSubscribed);
+    const { allPressData } = this.props;
+    const { subscriptionList } = this.state;
+    const subscribedPressData = allPressData.filter(({ pressName }) => subscriptionList.includes(pressName));
 
     const allPressChucks = getChucks({ arr: allPressData, count: this.#gridItemCount });
     const subscribedPressChucks = getChucks({ arr: subscribedPressData, count: this.#gridItemCount });
@@ -29,5 +32,15 @@ export default class MainContentContainer {
     this.subscribedGrid.mount();
 
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
+  }
+
+  initState() {
+    this.state = {
+      subscriptionList: []
+    };
+  }
+
+  setState(newState) {
+    this.state = { ...this.state, ...newState };
   }
 }

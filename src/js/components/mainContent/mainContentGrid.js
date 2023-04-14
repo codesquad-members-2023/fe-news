@@ -1,8 +1,6 @@
 import PressGrid from './pressGrid.js';
 
 export default class MainContentGrid {
-  #gridItemCount = 24;
-
   constructor($parent, props) {
     this.$parent = $parent;
     this.$ele = document.createElement('section');

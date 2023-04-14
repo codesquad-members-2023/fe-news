@@ -1,24 +1,23 @@
-import { getData } from '../../utils/getData.js';
 import MainContentHeader from './mainContentHeader.js';
 import MainContentContainer from './mainContentContainer.js';
 
 export default class MainContent {
-  #url = 'http://localhost:3001/mainContentData';
-
-  constructor($parent) {
+  constructor($parent, props) {
     this.$parent = $parent;
     this.$ele = document.createElement('main');
     this.$ele.id = 'main-content';
 
     this.state = {};
     this.initState();
+    this.props = props;
 
     this.header;
     this.grid;
   }
 
   mount() {
-    const { activePressTab, activeShowTab, pressData } = this.state;
+    const { activePressTab, activeShowTab } = this.state;
+    const { pressData } = this.props;
     const { pressTabHandler, showTabHandler } = this;
 
     this.header = new MainContentHeader(this.$ele, {
@@ -27,7 +26,7 @@ export default class MainContent {
       pressTabHandler: pressTabHandler.bind(this),
       showTabHandler: showTabHandler.bind(this)
     });
-    this.grid = new MainContentContainer(this.$ele, { pressData });
+    this.grid = new MainContentContainer(this.$ele, { allPressData: pressData });
     this.header.mount();
     this.grid.mount();
 
@@ -39,9 +38,8 @@ export default class MainContent {
     this.header.update({ newProps: this.state });
   }
 
-  async initState() {
-    const pressData = await getData(this.#url);
-    this.state = { activePressTab: 'all', activeShowTab: 'grid', pressData };
+  initState() {
+    this.state = { activePressTab: 'all', activeShowTab: 'grid' };
   }
 
   setState(newState) {

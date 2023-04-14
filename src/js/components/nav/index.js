@@ -1,23 +1,22 @@
 import NavBar from './navBar.js';
-import { getData } from '../../utils/getData.js';
 
 export default class Nav {
-  #url = 'http://localhost:3001/navBarData';
-
-  constructor($parent) {
+  constructor($parent, props) {
     this.$parent = $parent;
     this.$ele = document.createElement('nav');
     this.$ele.id = 'nav';
+
+    this.props = props;
 
     this.leftBar;
     this.rightBar;
   }
 
-  async mount() {
-    const { left, right } = await getData(this.#url);
+  mount() {
+    const { leftNavBarHeadLines, rightNavBarHeadLines } = this.props;
 
-    this.leftBar = new NavBar(this.$ele, { navBarData: left });
-    this.rightBar = new NavBar(this.$ele, { navBarData: right });
+    this.leftBar = new NavBar(this.$ele, { navBarData: leftNavBarHeadLines });
+    this.rightBar = new NavBar(this.$ele, { navBarData: rightNavBarHeadLines });
     this.leftBar.mount();
     this.rightBar.mount();
 
