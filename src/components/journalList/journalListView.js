@@ -1,6 +1,6 @@
 import { getJournal } from "../../api/getData.js";
-import { Carousel } from "./journalCarousel.js";
-import { Journal } from "./journalClass.js";
+import { Carousel } from "./journalTrack.js";
+import { Journal } from "./journal.js";
 
 const createNewsStandJournal = () => {
   const journalListEl = document.createElement("article");
