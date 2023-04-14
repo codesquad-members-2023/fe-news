@@ -10,4 +10,5 @@ export interface PressType {
   newMainDarkLogo: string;
   thumbnailValid: boolean;
   valid: boolean;
+  isSubscribed: boolean;
 }

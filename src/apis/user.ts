@@ -1,4 +1,5 @@
 import customFetch from './index';
+import store from '@store/index';
 
 interface getUserProps {
   id: string;
@@ -16,10 +17,16 @@ interface subscribeProps {
   pressId: string;
 }
 
-export const subscribe = async ({ id, pressId }: subscribeProps) => {
-  const path = `/press?id=${id}&pressId=${pressId}`;
-  const method = 'GET';
+const TEST_USER_ID = 'realsnoopso';
+
+export const subscribe = async ({ pressId }: subscribeProps) => {
+  console.log('subscribe!!!!');
+  const path = `/subscribe?id=${TEST_USER_ID}&pressId=${pressId}`;
+  const method = 'PATCH';
   const data = await customFetch({ path, method });
+  const user = await getUser({ id: TEST_USER_ID });
+  store.user.dispatch({ type: 'SET_USER', payload: user });
+
   return data;
 };
 
@@ -28,9 +35,12 @@ interface unsubscribeProps {
   pressId: string;
 }
 
-export const unsubscribe = async ({ id, pressId }: unsubscribeProps) => {
-  const path = `/press?id=${id}&pressId=${pressId}`;
-  const method = 'GET';
+export const unsubscribe = async ({ pressId }: unsubscribeProps) => {
+  console.log('unsubscribe!!!!');
+  const path = `/unsubscribe?id=${TEST_USER_ID}&pressId=${pressId}`;
+  const method = 'PATCH';
   const data = await customFetch({ path, method });
+  const user = await getUser({ id: TEST_USER_ID });
+  store.user.dispatch({ type: 'SET_USER', payload: user });
   return data;
 };

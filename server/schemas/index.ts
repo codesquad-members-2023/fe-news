@@ -8,6 +8,7 @@ export interface PressInfoInterface {
   newMainDarkLogo: string;
   thumbnailValid: boolean;
   valid: boolean;
+  isSubscribed: boolean;
 }
 export interface PressInterface {
   [key: string]: PressInfoInterface;

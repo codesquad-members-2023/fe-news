@@ -112,10 +112,27 @@ const TOTAL_ITEM_AMOUNT = 24 * 4;
 interface getPressProps {
   sliceNumber?: number;
 }
+
+const TEST_USER_ID = 'realsnoopso';
 const getPress = async ({ sliceNumber }: getPressProps) => {
   try {
     const data = await fs.readFile('./mock/press.json', 'utf8');
     let press = JSON.parse(data) as PressInfoInterface[];
+    const result = await UserModel.find({ id: TEST_USER_ID });
+    const subscribingPressIds = result[0].subscribingPressIds;
+    press = press.map((item: any) => {
+      if (subscribingPressIds.includes(item['pid'])) {
+        return {
+          ...item,
+          isSubscribed: true,
+        };
+      }
+      return {
+        ...item,
+        isSubscribed: false,
+      };
+    });
+
     if (!sliceNumber) {
       return press;
     }

@@ -7,7 +7,6 @@ import {
   select,
 } from '@utils/dom';
 import style from './GridViewItemStyle';
-import store from '@store/index';
 import { PressType } from '@store/section/sectionType';
 
 interface GridViewItem {
@@ -40,6 +39,11 @@ class GridViewItem extends HTMLElement {
       name: 'index',
     });
 
+    const isSubscribed = getProperty({
+      target: this,
+      name: 'is-subscribed',
+    });
+
     const isRightItem = (Number(index) + 1) % 6 === 0;
     const isBottomItem = Number(index) + 1 > 18;
     if (this.wrap) {
@@ -53,7 +57,12 @@ class GridViewItem extends HTMLElement {
         image ? `style="background-image: url(${image})"` : ''
       }></div>
       <div class="press-subscribe-btn-container hide">
-        <button-element icon="plus">구독하기</button-element>
+        ${
+          isSubscribed === 'true'
+            ? `<button-element icon="close">해지하기</button-element>`
+            : `<button-element icon="plus">구독하기</button-element>`
+        }
+
       </div>
     </button>
     `;
@@ -62,7 +71,6 @@ class GridViewItem extends HTMLElement {
       template,
     });
     this.handleHover();
-    this.handleClick();
   }
 
   handleHover = () => {
@@ -74,24 +82,6 @@ class GridViewItem extends HTMLElement {
         this.wrap
           ?.querySelector('.press-subscribe-btn-container')
           ?.classList.add('hide');
-      });
-    });
-  };
-
-  handleClick = () => {
-    const storeUser = store.user;
-
-    this.addEventListener('click', () => {
-      const id = this.getAttribute('id');
-      if (!id) return;
-
-      storeUser.subscribe(() => {
-        console.log(storeUser.getState());
-      });
-
-      storeUser.dispatch({
-        type: 'SUBSCRIBE',
-        payload: id,
       });
     });
   };
