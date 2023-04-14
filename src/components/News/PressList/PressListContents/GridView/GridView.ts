@@ -1,6 +1,6 @@
 import { add, addStyle, addShadow, getProperty, createWrap } from '@utils/dom';
 import style from './GridViewStyle';
-import { PressType } from '@store/section/sectionType';
+import { PressType } from '@store/press/pressType';
 
 interface GridView {
   icon?: string | null;
@@ -28,7 +28,6 @@ class GridView extends HTMLElement {
       name: 'press-list',
     });
     const pressList = pressListStr ? JSON.parse(pressListStr) : [];
-
     const template =
       pressList.length > 0
         ? `

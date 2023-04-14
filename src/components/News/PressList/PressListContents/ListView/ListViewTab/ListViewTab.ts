@@ -8,20 +8,18 @@ interface ListViewTab {
 class ListViewTab extends HTMLElement {
   constructor() {
     super();
+  }
+
+  connectedCallback() {
+    addShadow({ target: this });
     this.render();
+    addStyle({
+      target: this.shadowRoot,
+      style: style(),
+    });
   }
 
   render() {
-    const press = getProperty({
-      target: this,
-      name: 'press',
-    });
-
-    const image = getProperty({
-      target: this,
-      name: 'image',
-    });
-
     const template = `
     <div class="tab-wrap">
       <list-view-tab-item-element is-active="true" progress="50">종합/경제</list-view-tab-item-element>
@@ -30,14 +28,9 @@ class ListViewTab extends HTMLElement {
       <list-view-tab-item-element>방송통신</list-view-tab-item-element>
     </div>
     `;
-    addShadow({ target: this });
     add({
       target: this.shadowRoot,
       template,
-    });
-    addStyle({
-      target: this.shadowRoot,
-      style: style(),
     });
   }
 }

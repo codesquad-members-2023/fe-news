@@ -24,12 +24,10 @@ export default function style(target: HTMLElement) {
       border-bottom-width: 0;
     }
 
-
     button {
       width: 100%;
       height: 100%;
       background-color: var(--white);
-      
       position: relative;
     }
 

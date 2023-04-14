@@ -8,18 +8,23 @@ interface ListViewTabItem {
 class ListViewTabItem extends HTMLElement {
   constructor() {
     super();
+  }
+
+  connectedCallback() {
+    addShadow({ target: this });
     this.render();
+    addStyle({
+      target: this.shadowRoot,
+      style: style.call(this, this),
+    });
   }
 
   render() {
     const name = this.innerText;
-
-    const isActive =
-      getProperty({
-        target: this,
-        name: 'is-active',
-      }) ?? '';
-
+    const isActive = getProperty({
+      target: this,
+      name: 'is-active',
+    });
     const template = `
     <button class="tab-container typo-body-sm${isActive ? ' is-active' : ''}">
       <span>${name}</span>
@@ -31,17 +36,12 @@ class ListViewTabItem extends HTMLElement {
           </span>`
           : ''
       }
-      
     </button>
     `;
-    addShadow({ target: this });
+
     add({
       target: this.shadowRoot,
       template,
-    });
-    addStyle({
-      target: this.shadowRoot,
-      style: style.call(this, this),
     });
   }
 }

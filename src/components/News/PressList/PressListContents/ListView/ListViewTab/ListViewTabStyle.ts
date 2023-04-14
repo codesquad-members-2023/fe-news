@@ -2,7 +2,6 @@ export default function style() {
   const style = document.createElement('style');
 
   const content = `
-
     .tab-wrap {
       height: 40px;
       display: flex;

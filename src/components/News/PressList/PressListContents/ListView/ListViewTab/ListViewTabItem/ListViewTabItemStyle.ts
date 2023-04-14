@@ -5,7 +5,6 @@ export default function style(target: HTMLElement) {
   const progress = getProperty({ target, name: 'progress' }) ?? '0';
 
   const content = `
-    
     .tab-container {
       display: flex;
       justify-content: space-between;

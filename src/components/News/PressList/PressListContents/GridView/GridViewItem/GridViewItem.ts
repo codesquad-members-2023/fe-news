@@ -7,7 +7,8 @@ import {
   select,
 } from '@utils/dom';
 import style from './GridViewItemStyle';
-import { PressType } from '@store/section/sectionType';
+
+import { PressType } from '@store/press/pressType';
 
 interface GridViewItem {
   icon?: string | null;
@@ -62,7 +63,6 @@ class GridViewItem extends HTMLElement {
             ? `<button-element icon="close">해지하기</button-element>`
             : `<button-element icon="plus">구독하기</button-element>`
         }
-
       </div>
     </button>
     `;

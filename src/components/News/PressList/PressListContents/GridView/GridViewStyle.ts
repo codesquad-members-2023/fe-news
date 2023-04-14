@@ -2,8 +2,6 @@ export default function style() {
   const style = document.createElement('style');
 
   const content = `
-
-
     .wrap.grid-view {
       border: 1px solid var(--gray100);
     }

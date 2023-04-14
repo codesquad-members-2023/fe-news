@@ -19,12 +19,19 @@ export default function style() {
       flex-grow: 0;
       color: var(--black);
       white-space: nowrap;
+
+      font-weight: var(--typo-title-sm-fontweight);
+      font-size: var(--typo-title-sm-fontsize);
+      line-height: var(--typo-title-sm-lineheight);
     }
     
     .title {
       flex-grow: 1;
       color: var(--gray500);
       
+      font-weight: var(--typo-body-sm-fontweight);
+      font-size: var(--typo-body-sm-fontsize);
+      line-height: var(--typo-body-sm-lineheight);
     }
     `;
 
