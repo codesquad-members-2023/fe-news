@@ -15,28 +15,28 @@ class GridView {
   }
 
   render() {
-    this.viewContainer.innerHTML = ``;
+    this.viewContainer.innerHTML = '';
     const gridView = this.getGrid();
     const buttons = this.getButtons();
 
-    this.viewContainer.append(gridView);
+    this.viewContainer.insertAdjacentHTML('afterbegin', gridView);
     this.viewContainer.insertAdjacentHTML('beforeend', buttons);
     return this.viewContainer;
   }
 
   getGrid() {
     const GRID_COUNT = 24;
-    const gridArea = createEl('div', 'grid-area');
-    const pressLogoData = this.#gridData.slice(
+    const pressInfo = this.#gridData.slice(
       GRID_COUNT * this.page,
       GRID_COUNT * (this.page + 1),
     );
-    gridArea.innerHTML = pressLogoData.reduce((template, press) => {
-      template += `<div><img src=${press.mediaInfo.pressLogo}></div>`;
-      return template;
-    }, ``);
 
-    return gridArea;
+    return `<div class="grid-area">
+      ${pressInfo.reduce((template, press) => {
+        template += `<div><img src=${press.pressLogo}></div>`;
+        return template;
+      }, ``)}
+    </div>`
   }
 
   getButtons() {
@@ -50,11 +50,12 @@ class GridView {
 
   moveToPage() {
     this.viewContainer.addEventListener('click', ({ target }) => {
-      if (!target.closest('a')) return;
-      if (target.className === this.PREV_BTN && this.page > this.FIRST_PAGE)
-        this.page--;
-      if (target.className === this.NEXT_BTN && this.page < this.LAST_PAGE)
-        this.page++;
+      const isPrevBtn = target.className === this.PREV_BTN;
+      const isNextBtn = target.className === this.NEXT_BTN;
+
+      if(!(isPrevBtn || isNextBtn)) return;
+      if (isPrevBtn && this.page > this.FIRST_PAGE) this.page--;
+      if (isNextBtn && this.page < this.LAST_PAGE) this.page++;
       this.render();
     });
   }

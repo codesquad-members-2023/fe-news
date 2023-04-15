@@ -14,14 +14,12 @@ main {
       display: flex;
       gap: 15px;
       cursor: pointer;
+      @include font($bodyMD, $medium);
+      color: $gray100;
 
-      .all-press {
+      .active {
         @include font($titleMD, $bold);
-      }
-
-      .subscribed-press {
-        @include font($bodyMD, $medium);
-        color: $gray100;
+        color: $black;
       }
     }
   }
@@ -29,15 +27,15 @@ main {
   .view-buttons {
     @extend .press-buttons;
 
-    .view-list,
-    .view-grid {
+    .list,
+    .grid {
       width: 18px;
       height: 18px;
       display: inline-block;
       cursor: pointer;
     }
 
-    .view-list {
+    .list {
       background: icon(list, $icon-gray100);
 
       &:hover {
@@ -45,12 +43,22 @@ main {
       }
     }
 
-    .view-grid {
+    .list-active {
+      @extend .list;
+      background: icon(list, $icon-primary);
+    }
+
+    .grid {
       background: icon(grid, $icon-gray100);
 
       &:hover {
         background: icon(grid, $icon-gray300);
       }
+    }
+
+    .grid-active {
+      @extend .grid;
+      background: icon(grid, $icon-primary);
     }
   }
 }

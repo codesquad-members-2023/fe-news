@@ -1,8 +1,18 @@
 export const CONSTANTS = {
   'NEWS_STAND' : '뉴스스탠드',
   'ROLLING_LINK_PRESS' : '연합뉴스',
-  'ALL_PRESS' : '전체 언론사',
-  'SUBSCRIBED_PRESS' : '내가 구독한 언론사',
+  'all' : '전체 언론사',
+  'subscribed' : '내가 구독한 언론사',
+}
+
+export const category = {
+  'toteco' : '종합/경제',
+  'tvcom' : '방송/통신',
+  'it' : 'IT',
+  'eng' : '영자지',
+  'sporent' : '스포츠/연예',
+  'magtec' : '매거진/전문지',
+  'local' : '지역',
 }
 
 export const rollingPositionClassName = ['left', 'right'];
