@@ -27,12 +27,10 @@ const rollingData = (rollingBox) => {
 
   const autoRolling = (timestamp) => {
     if (!startTime) startTime = timestamp;
-
     const progress = timestamp - startTime;
     if (progress >= 5000) {
       rollingBar.style.transform = `translate3d(0, -31px, 0)`;
       rollingBar.style.transitionDuration = "500ms";
-
       startTime = timestamp;
     }
     rollingBar.ontransitionend = () => {
@@ -57,4 +55,12 @@ const rollingData = (rollingBox) => {
   eventHandler();
 };
 
-export { renderRollingBar, insertNewsData, rollingData };
+const runRollingBar = () => {
+  renderRollingBar();
+  rollingData(".data_list_left");
+  setTimeout(() => {
+    rollingData(".data_list_right");
+  }, 1000);
+};
+
+export { runRollingBar, insertNewsData, rollingData };
