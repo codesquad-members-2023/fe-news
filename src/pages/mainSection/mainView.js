@@ -15,12 +15,12 @@ class MainView {
     this.#mainViewContainer = createNode('div')
     this.#mainViewContainer.classList.add('main-view')
 
-    this.#createMainViewBtn()
+    this.#createMainViewButtons()
     this.#createGridView(data)
     this.app.appendChild(this.#mainViewContainer)
   }
 
-  #createMainViewBtn() {
+  #createMainViewButtons() {
     this.#viewSelectButton = new ViewSelectionBtn().createButtons()
     this.#mainViewContainer.appendChild(this.#viewSelectButton)
 

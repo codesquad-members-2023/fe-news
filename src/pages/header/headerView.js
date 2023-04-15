@@ -18,7 +18,9 @@ class HeaderView extends HTMLElement {
   }
 
   #createTitleSection() {
-    const container = createNode('div')
+    const container = createNode('a')
+    container.setAttribute('href', '/')
+    container.classList.add('logo')
 
     const icon = createNode('img')
     icon.src = this.headerData.icon

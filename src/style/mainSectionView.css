@@ -25,9 +25,9 @@ ns-direction-btn {
   display: flex;
   justify-content: space-between;
   width: 110%;
-  height: 83%;
   position: absolute;
   left: -5%;
+  top: calc(50% + 18px);
 }
 
 ns-direction-btn img {
