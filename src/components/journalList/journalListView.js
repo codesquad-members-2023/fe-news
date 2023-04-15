@@ -10,14 +10,13 @@ const createJournalList = () => {
   const journalHeader = new JournalHeader();
   journalListEl.appendChild(journalHeader.element);
 
+  const journalCarousel = new Carousel();
+  journalListEl.appendChild(journalCarousel.element);
+
   return journalListEl;
 };
 
 export default createJournalList;
-
-// const journalCarousel = new Carousel();
-// journalListEl.innerHTML += journalCarousel.beElement();
-// journalCarousel.addEvent();
 
 // const renderJournal = async () => {
 //   try {
