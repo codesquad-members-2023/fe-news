@@ -1,55 +1,44 @@
 class DirectionBtn extends HTMLElement {
-  pageRange
+  #state = {
+    currentPage: 1,
+    lastPage: 1
+  }
 
   constructor() {
     super()
   }
 
   connectedCallback() {
-    const INIT_PAGE = 1
+    this.render()
+  }
 
-    this.setAttribute('page', INIT_PAGE)
+  render() {
+    const { currentPage, lastPage } = this.#state
+
     this.innerHTML = `
-      <button class="left-btn hidden">
+      <button class="left-btn ${currentPage <= 1 ? 'hidden' : ''}">
         <img src="./asset/LeftButton.svg" alt="LeftButton">
       </button>
-      <button class="right-btn">
+      <button class="right-btn ${currentPage === lastPage ? 'hidden' : ''}">
         <img src="./asset/RightButton.svg" alt="RightButton">
       </button>
     `
   }
 
-  attributeChangedCallback() {
-    const FIRST_PAGE = '1'
-    const LAST_PAGE = '4'
-
-    const currentPage = this.getAttribute('page')
-    const prevButton = this.firstElementChild
-    const nextButton = this.lastElementChild
-
-    if (prevButton && nextButton) {
-      this.#showButton([prevButton, nextButton])
-
-      if (currentPage <= FIRST_PAGE) {
-        this.#hiddenButton(prevButton)
-      }
-
-      if (currentPage === LAST_PAGE) {
-        this.#hiddenButton(nextButton)
-      }
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'last-page') {
+      this.#state.lastPage = Number(newValue)
     }
+
+    if (name === 'page') {
+      this.#state.currentPage = Number(newValue)
+    }
+
+    this.render()
   }
 
   static get observedAttributes() {
-    return ['page']
-  }
-
-  #hiddenButton(button) {
-    button.classList.add('hidden')
-  }
-
-  #showButton(buttons) {
-    buttons.forEach(button => button.classList.remove('hidden'))
+    return ['last-page', 'page']
   }
 }
 

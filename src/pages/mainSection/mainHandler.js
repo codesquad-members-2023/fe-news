@@ -90,6 +90,7 @@ class MainHandler {
     this.#currentViewData = this.#getViewData(this.#currentTypeData)
 
     this.#mainView.setCurrentViewData({
+      dataLength: this.#currentTypeData.length,
       currentPage: this.#currentPage,
       currentViewData: this.#currentViewData,
       currentViewType: this.#currentViewType
@@ -180,6 +181,7 @@ class MainHandler {
       this.#currentPage = 0
     }
 
+    // this.#currentPage = 1
     this.#renderView(this.#currentViewType)
   }
 }

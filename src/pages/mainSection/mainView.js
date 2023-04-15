@@ -7,7 +7,7 @@ class MainView {
   #mainViewContainer
   #viewSelectButton
   #directionButton
-  currentView
+  #currentView
   #currentPage
 
   constructor(data) {
@@ -29,36 +29,42 @@ class MainView {
   }
 
   #createGridView(data) {
-    this.currentView && this.#mainViewContainer.removeChild(this.currentView)
+    this.#currentView && this.#mainViewContainer.removeChild(this.#currentView)
 
     const gridView = new PressesGridView(data)
-    this.currentView = gridView.getGridView()
+    this.#currentView = gridView.getGridView()
 
-    this.#mainViewContainer.appendChild(this.currentView)
+    this.#mainViewContainer.appendChild(this.#currentView)
   }
 
   #createListView(data) {
     const pressListView = new PressListView(data)
     const listView = pressListView.getListView()
 
-    this.currentView.innerHTML = listView
+    this.#currentView.innerHTML = listView
   }
 
   setCurrentViewData(data) {
     this.#currentPage = data.currentPage
-    this.setCurrentPage(this.#currentPage)
+    this.#setCurrentPage(this.#currentPage)
 
     if (data.currentViewType === 'grid') {
+      this.#directionButton.setAttribute(
+        'last-page',
+        Math.ceil(data.dataLength / 24)
+      )
       this.#createGridView(data.currentViewData)
+
       return
     }
 
     if (data.currentViewType === 'list') {
       this.#createListView(data.currentViewData)
+      this.#directionButton.setAttribute('last-page', data.dataLength - 1)
     }
   }
 
-  setCurrentPage(page) {
+  #setCurrentPage(page) {
     this.#directionButton.setAttribute('page', page)
   }
 }
