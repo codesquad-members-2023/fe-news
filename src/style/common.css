@@ -220,40 +220,36 @@ list-view 영역
 }
 
 .list-view__current-category {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  justify-items: center;
+  display: flex;
   align-items: center;
-  width: 160px;
+  justify-items: center;
+  width: 140px;
   height: 100%;
   background-color: #7993f0;
   color: white;
 }
 
 .current-category {
-  font-size: var(--font-lg);
-  grid-column-start: 1;
-  grid-column-end: 3;
+  font-size: var(--font-s);
+  padding-left: 10%;
+  flex: 1;
 }
 
 .current-page {
   font-size: var(--font-s);
-  grid-column-start: 3;
-  grid-column-end: 5;
+  padding-right: 10%;
 }
 
 .category-direction {
-  grid-column-start: 4;
-  grid-column-end: 5;
+  padding-right: 10%;
 }
 
 .list-view__category {
-  width: 10%;
   color: var(--color-gray-600);
-  font-size: var(--font-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: var(--font-s);
+  display: inline-block;
+  padding: 1% 2%;
+  align-self: center;
 }
 
 .list-view__main {
