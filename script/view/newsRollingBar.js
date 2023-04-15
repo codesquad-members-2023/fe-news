@@ -15,13 +15,13 @@ const renderRollingBar = () => {
 
 const insertNewsData = (newsData, rollingBox) => {
   const rollingBar = document.querySelector(`${rollingBox}`);
-  newsData.forEach((data) => {
-    rollingBar.innerHTML += `<li>${data}</li>`;
+  newsData.map((data) => {
+    rollingBar.innerHTML += `<li>${data.headLine}</li>`;
   });
 };
 
-const rollingData = (className) => {
-  const rollingBar = document.querySelector(className);
+const rollingData = (rollingBox) => {
+  const rollingBar = document.querySelector(rollingBox);
   let startTime = null;
   let handle = null;
 
