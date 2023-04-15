@@ -1,52 +1,40 @@
-import { getJournal } from "../../api/getData.js";
-import { Carousel } from "./journalTrack.js";
+import { JournalHeader } from "./journalHeader.js";
 import { Journal } from "./journal.js";
+import { Carousel } from "./journalTrack.js";
+import { getJournal } from "../../api/getData.js";
 
-const createNewsStandJournal = () => {
+const createJournalList = () => {
   const journalListEl = document.createElement("article");
   journalListEl.classList.add("news-stand-jounalList");
+
+  const journalHeader = new JournalHeader();
+  journalListEl.appendChild(journalHeader.element);
+
   return journalListEl;
 };
 
-const createJournalHeader = () => {
-  const journalHeader = `<header class="journal-header display-flex">
-    <div class="journal-area display-flex">
-        <div class="journal-all Title-MD">전체 언론사</div>
-        <div class="journal-subList Body-MD">내가 구독한 언론사</div>
-    </div>
-    <div class="journal-btns display-flex">
-        <div class="journal-btn__detail">
-            <img src="src/assets/icons/list-view.svg" />
-        </div>
-    <div class="journal-btn__grid">
-            <img src="src/assets/icons/grid-view-on.svg" />
-        </div>
-    </div>
-</header>`;
-  return journalHeader;
-};
+export default createJournalList;
 
-const createJournalCarousel = () => {
-  const journalContainerEl = document.querySelector(".journal-container");
-  const journalCarousel = new Carousel(journalContainerEl);
-  return journalCarousel;
-};
+// const journalCarousel = new Carousel();
+// journalListEl.innerHTML += journalCarousel.beElement();
+// journalCarousel.addEvent();
 
-const renderJournal = async () => {
-  try {
-    const journalURL = "http://localhost:3000/journal";
-    const journalData = await getJournal(journalURL);
-    const journal = new Journal(journalData);
-    const journalItems = journal.getJournalItem();
-    return journalItems;
-  } catch (error) {
-    console.error(error);
-  }
-};
+// const renderJournal = async () => {
+//   try {
+//     const journalURL = "http://localhost:3000/journal";
+//     const journalData = await getJournal(journalURL);
+//     const journal = new Journal(journalData);
+//     const journalItems = journal.getJournalItem();
+//     return journalItems;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
-export {
-  createNewsStandJournal,
-  createJournalHeader,
-  createJournalCarousel,
-  renderJournal,
-};
+// renderJournal().then((journalItems) => {
+//   const journalContainer = document.querySelector(".journal-container");
+//   const shuffledItems = journalItems.sort(() => 0.5 - Math.random());
+//   shuffledItems.forEach((item) => {
+//     journalContainer.appendChild(item);
+//   });
+// });
