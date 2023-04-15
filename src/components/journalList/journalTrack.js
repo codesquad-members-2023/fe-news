@@ -1,4 +1,4 @@
-export function Carousel(toApplyEl) {
+export function Carousel() {
   this.element = document.createElement("div");
   this.element.classList.add("journal-carousel");
   this.render();
