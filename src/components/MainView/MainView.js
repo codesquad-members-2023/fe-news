@@ -37,12 +37,12 @@ export class MainView extends Component {
     );
 
     new FilterBtns(filterBtnsContainer, {
-      btnState: btnState,
+      btnState,
       changeBtnState: changeBtnState.bind(this),
       changeViewState: changeViewState.bind(this),
     });
     new ViewBtns(viewBtnContainer, {
-      viewState: viewState,
+      viewState,
       changeViewState: changeViewState.bind(this),
     });
 
@@ -56,21 +56,21 @@ export class MainView extends Component {
     const isSubscribePressExist = targetPressData.length !== 0;
     if (viewState === "grid") {
       new GridView(viewContainer, {
-        pageLimit: pageLimit,
-        itemLimitPerPage: itemLimitPerPage,
+        pageLimit,
+        itemLimitPerPage,
         allPressData: targetPressData,
         btnDir: this.btnDir,
-        allPressSubscribeStatus: allPressSubscribeStatus,
+        allPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
       });
     } else if (viewState === "list" && isSubscribePressExist) {
       const { pressCategories } = this.props;
 
       new ListView(viewContainer, {
-        btnState: btnState,
-        viewState: viewState,
+        btnState,
+        viewState,
         pressData: targetPressData,
-        allPressSubscribeStatus: allPressSubscribeStatus,
+        allPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
         pressCategories,
       });

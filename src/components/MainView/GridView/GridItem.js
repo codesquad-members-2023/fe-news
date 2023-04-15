@@ -11,7 +11,7 @@ export class GridItem extends Component {
 
     this._state = {
       currentIcon: pressIcon,
-      btnText: btnText,
+      btnText,
       btnIcon: "src/images/subscribe_btn.svg",
     };
   }

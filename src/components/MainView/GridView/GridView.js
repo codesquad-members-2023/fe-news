@@ -53,8 +53,8 @@ export class GridView extends Component {
       new GridItem(itemContainer, {
         pressIcon: logo_src,
         subscribeBtn: "src/images/subscribe_btn.svg",
-        subscribeStatus: subscribeStatus,
-        subscribePress: subscribePress,
+        subscribeStatus,
+        subscribePress,
       });
     });
   }
@@ -85,14 +85,14 @@ export class GridView extends Component {
     );
 
     return {
-      pageLimit: pageLimit,
+      pageLimit,
       currentPageNumber: nextPageNumber,
       press: sortedItems,
-      allPressData: allPressData,
+      allPressData,
       btnDir: btnState,
-      itemLimitPerPage: itemLimitPerPage,
-      allPressSubscribeStatus: allPressSubscribeStatus,
-      targetSubscribeStatus: targetSubscribeStatus,
+      itemLimitPerPage,
+      allPressSubscribeStatus,
+      targetSubscribeStatus,
     };
   }
 

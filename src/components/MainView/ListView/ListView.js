@@ -43,20 +43,20 @@ export class ListView extends Component {
     const { subscribePress, pressCategories } = this.props;
 
     new ListViewHeader(listViewHeader, {
-      currentPageInCategory: currentPageInCategory,
-      currentCategory: currentCategory,
-      currentCategoryTotalPage: currentCategoryTotalPage,
-      categoryIds: categoryIds,
+      currentPageInCategory,
+      currentCategory,
+      currentCategoryTotalPage,
+      categoryIds,
       pressCategories,
-      btnState: btnState,
+      btnState,
     });
 
     const listViewMain = this.target.querySelector(".list-view__main");
 
     new ListViewMain(listViewMain, {
-      currentCategoryData: currentCategoryData,
-      subscribeStatus: subscribeStatus,
-      subscribePress: subscribePress,
+      currentCategoryData,
+      subscribeStatus,
+      subscribePress,
     });
   }
 
@@ -115,12 +115,12 @@ export class ListView extends Component {
       currentPageInCategory: nextPageInCategory,
       currentCategory: nextCategory,
       currentCategoryTotalPage: nextCategoryTotalPage,
-      categoryIds: categoryIds,
+      categoryIds,
       currentCategoryData: nextCategoryData,
-      pressData: pressData,
-      btnState: btnState,
+      pressData,
+      btnState,
       subscribeStatus: targetPressSubscribeStatus,
-      allPressSubscribeStatus: allPressSubscribeStatus,
+      allPressSubscribeStatus,
     };
   }
 

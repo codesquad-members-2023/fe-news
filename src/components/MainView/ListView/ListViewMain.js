@@ -45,8 +45,8 @@ export class ListViewMain extends Component {
     const subscribeBtn = this.target.querySelector(".subscribe-btn");
 
     new ListViewSubscribeBtn(subscribeBtn, {
-      subscribeStatus: subscribeStatus,
-      subscribePress: subscribePress,
+      subscribeStatus,
+      subscribePress,
       targetLogoSrc: logo_src,
     });
   }
