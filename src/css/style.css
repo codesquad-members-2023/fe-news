@@ -340,6 +340,7 @@ main .view-buttons .grid-active {
   Padding: 0px 8px;
   border: 1px solid #D2DAE0;
   border-radius: 50px;
+  cursor: pointer;
 }
 .press-button span {
   color: #879298;
@@ -411,7 +412,7 @@ main .view-buttons .grid-active {
   background-color: #D2DAE0;
   grid-gap: 1px;
 }
-.view-container .grid-area div {
+.view-container .grid-area .grid-cell:not(.cell-button) {
   display: flex;
   justify-content: center;
   align-items: center;

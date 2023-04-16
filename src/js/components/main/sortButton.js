@@ -1,6 +1,6 @@
-import createEl from "../../../utils/util.js";
-import { CONSTANTS } from '../../../core/constants.js';
-import { ViewStore } from "../../../stores/viewStore.js";
+import createEl from "../../utils/util.js";
+import { CONSTANTS } from '../../core/constants.js';
+import { ViewStore } from "../../stores/viewStore.js";
 
 class SortButton {
   #viewStore;
@@ -9,7 +9,8 @@ class SortButton {
     this.sortButtons = createEl('div', 'sort-buttons');
   }
 
-  render({ press, view } = this.#viewStore.getState()) {
+  render() {
+    const { press, view } = this.#viewStore.getState()
     const pressType = Object.keys(press);
     const viewType = Object.keys(view);
 

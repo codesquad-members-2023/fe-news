@@ -1,7 +1,7 @@
-import createEl from '../../../../utils/util.js';
-import subscribeButton from '../../buttons/subscribeButton.js';
-import { ViewStore } from '../../../../stores/viewStore.js';
-import { SubscribeStore } from '../../../../stores/subscribeStore.js';
+import createEl from '../../utils/util.js';
+import { ViewStore } from '../../stores/viewStore.js';
+import { SubscribeStore } from '../../stores/subscribeStore.js';
+import { PRESS_BUTTON } from '../../core/constants.js';
 
 class GridView {
   #gridData;
@@ -26,9 +26,10 @@ class GridView {
     const reRender = () => {
       if(press['all']) this.viewContainer.innerHTML = this.activateAllPress();
       if(press['subscribed']) this.viewContainer.innerHTML = this.activateSubscribedPress.bind(this)();
+      this.onGridCell();
     }
     this.#viewStore.subscribe(reRender);
-
+    this.onGridCell();
     return this.viewContainer;
   }
 
@@ -42,7 +43,7 @@ class GridView {
     return `<div class="grid-container${isGrid ? ``: " hidden"}">
       <div class="grid-area">
         ${pressInfo.reduce((template, press) => {
-          template += `<div><img src=${press.pressLogo}></div>`;
+          template += `<div class="grid-cell"><img src=${press.pressLogo}></div>`;
           return template;
         }, ``)}
       </div>
@@ -70,13 +71,14 @@ class GridView {
   getSubscribedPress(subscribedPress) {
     const isGrid = this.#viewStore.getState().view['grid'];
     const restGridCells = Array(this.GRID_COUNT - subscribedPress.size).fill('');
+    // Todo - 24 넘으면 slice하고 나머지 채우기
     const LAST_PAGE_SUBSCRIBE = Math.floor(subscribedPress.size / this.GRID_COUNT);
 
     return `<div class="grid-container${isGrid ? ``: " hidden"}">
       <div class="grid-area">
         ${[...subscribedPress, ...restGridCells].reduce((template, press) => {
-          const pressLogo = press === '' ? `` : `src="${press.pressLogo}"`;
-          template += `<div><img ${pressLogo}></div>`;
+          const pressLogo = press === '' ? `` : `src="${press}"`;
+          template += `<div class="grid-cell"><img ${pressLogo}></div>`;
           return template;
         }, ``)}
       </div>
@@ -87,7 +89,7 @@ class GridView {
         this.page === LAST_PAGE_SUBSCRIBE ? 'hidden' : 'visible'
       }"></a>
     </div>
-    `
+    `;
   }
 
   moveToPage() {
@@ -102,15 +104,59 @@ class GridView {
     });
   }
 
-  // Grid cell hover event -> 구독하기/해지하기
-  // onMouseenterGridCell() {
+  onGridCell() {
+    const gridCells = this.viewContainer.querySelectorAll('.grid-cell');
+    gridCells.forEach(cell => {
+      cell.addEventListener('mouseenter', this.mouseEnterGridCell.bind(this));
+      cell.addEventListener('mouseleave', ({ target }) => {
+        const pressLogo = target.querySelector('img');
+        pressLogo.classList.remove('hidden');
+        target.querySelector('.cell-button')?.classList.add('hidden');
+      });
+    })
+  }
 
-  // }
+  mouseEnterGridCell({ target }) {
+    const pressLogo = target.querySelector('img');
+    if(pressLogo.src === '') return;
+    pressLogo.classList.add('hidden');
 
-  // 구독 클릭시 구독하고, 해지버튼으로 바꾸기
-  // clickSubscribeBtn() {
+    const subscribeBtn = target.querySelector('.cell-button');
+    if(subscribeBtn) subscribeBtn.classList.remove('hidden');
+    else {
+      const isSubscribe = this.#subscribeStore.getState().subscribedList.has(pressLogo.src);
+      const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
+      target.insertAdjacentHTML('beforeend', this.getSubscribeButton(`${buttonType}`));
+    }
 
-  // }
+    target.querySelector('.cell-button').addEventListener('click', ({ target }) => {
+      const subscribeBtn = target.closest('.grid-cell');
+      const targetPress = subscribeBtn.querySelector('img').src;
+      const reRender = () => {
+        const state =  this.#subscribeStore.getState();
+        this.render({
+          ...state,
+          subscribedList: this.#subscribeStore.getState(),
+        });
+      }
+      this.#subscribeStore.subscribe(reRender);
+      const isSubscribe = target.closest('.cell-button').querySelector('span').textContent === PRESS_BUTTON['subscribe']?
+      'SUBSCRIBE' : 'UNSUBSCRIBE';
+      this.#subscribeStore.dispatch({
+        type: `${isSubscribe}`,
+        payload: targetPress,
+      });
+    });
+  }
+
+  getSubscribeButton(buttonName) {
+    return `<div class="cell-button">
+      <button type="button" class="${buttonName} press-button">
+        <img src="/src/assets/icons/${buttonName}.svg">
+        <span>${PRESS_BUTTON[buttonName]}</span>
+      </button>
+    </div>`;
+  }
 }
 
 export default GridView;

@@ -37,7 +37,7 @@
     background-color: $gray100;
     grid-gap: 1px;
 
-    div {
+    .grid-cell:not(.cell-button) {
       display: flex;
       justify-content: center;
       align-items: center;

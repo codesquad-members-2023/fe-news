@@ -1,9 +1,9 @@
-import createEl from "../../../utils/util.js";
-import randomData from '../../../utils/randomData.js';
-import { TOTAL_GRID_COUNT } from '../../../core/constants.js';
+import createEl from "../../utils/util.js";
+import randomData from '../../utils/randomData.js';
+import { TOTAL_GRID_COUNT } from '../../core/constants.js';
 import sortButton from './sortButton.js'
-import GridView from './grid/grid.js';
-import ListView from './list/list.js';
+import GridView from './grid.js';
+import ListView from './list.js';
 
 const mainView = ({ media }) => {
   const gridData = randomData(media, TOTAL_GRID_COUNT);
