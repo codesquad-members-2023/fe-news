@@ -1,32 +1,42 @@
 import { insertNewsData } from "../view/newsRollingBar.js";
 import { insertNewsCompanyGrid } from "../view/newsCompany.js";
+import { API_PATH } from "../constants/api.js";
 
-const fetchController = () => {
-  controller("http://localhost:3001/rollingData");
-  controller("http://localhost:3001/logoData");
-};
-const controller = (url) => {
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      if (url === "http://localhost:3001/rollingData") {
-        deliverRollingData(data, 0, data.length / 2, ".data_list_left");
-        deliverRollingData(data, data.length / 2, data.length, ".data_list_right");
-      }
-      if (url === "http://localhost:3001/logoData") {
-        deliverCompanyData(data);
-      }
-    })
-    .catch((error) => console.error("Error:", error));
+export const fetchController = async () => {
+  const rollingData = await fetchRollingoData();
+  const companyData = await fetchCompanyData();
+  const rollingRandomDataLeft = fixedRandomData(rollingData.leftRollingData, 5);
+  const rollingRandomDataRight = fixedRandomData(rollingData.rightRollingData, 5);
+  const companyRandomData = fixedRandomData(companyData, 96);
+  insertNewsData(rollingRandomDataLeft, ".data_list_left");
+  insertNewsData(rollingRandomDataRight, ".data_list_right");
+  deliverCompanyData(companyRandomData, 24);
 };
 
-const deliverRollingData = (data, startData, endData, rollingBox) => {
-  const result = Object.values(data).slice(startData, endData);
-  insertNewsData(result, rollingBox);
+export const fetchRollingoData = async () => {
+  return await fetch(API_PATH.auto).then((res) => res.json());
 };
 
-const deliverCompanyData = (data) => {
-  const result = Object.values(data).slice(0, 24);
-  insertNewsCompanyGrid(result);
+export const fetchCompanyData = async () => {
+  return await fetch(API_PATH.media).then((res) => res.json());
 };
-export { fetchController };
+
+const randomData = (max) => {
+  return Math.floor(Math.random() * max);
+};
+
+const fixedRandomData = (data, count) => {
+  const fixedData = new Set();
+  while (count > fixedData.size) {
+    fixedData.add(data[randomData(data.length)]);
+  }
+  return [...fixedData]; //insertNewsData(result, rollingBox);
+};
+
+const deliverCompanyData = (data, size) => {
+  const companyData = [];
+  for (let i = 0; i < data.length; i += size) {
+    companyData.push(data.slice(i, i + size));
+  }
+  insertNewsCompanyGrid(companyData);
+};

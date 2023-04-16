@@ -15,7 +15,7 @@ const renderRollingBar = (root) => {
 const insertNewsData = (newsData, rollingBox) => {
   const rollingBar = document.querySelector(`${rollingBox}`);
   newsData.map((data) => {
-    rollingBar.innerHTML += `<li>${data.headLine}</li>`;
+    rollingBar.innerHTML += `<li>${data}</li>`;
   });
 };
 
