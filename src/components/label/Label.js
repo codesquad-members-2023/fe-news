@@ -1,8 +1,8 @@
 import Component from "../../core/Component.js";
 
 export default class Label extends Component {
-  setup() {
-    this.state = {
+  initState() {
+    return {
       nowTime: new Date(),
     };
   }

@@ -12,7 +12,7 @@ const RIGHT = 1;
 
 export default class GridView extends Component {
   // 상수 빼기
-  setup() {
+  initState() {
     const { presses, subscribingPresses, subscriptionOption } = this.props;
 
     let selectedPresses =
@@ -29,7 +29,7 @@ export default class GridView extends Component {
       );
     }
 
-    this.state = {
+    return {
       presses: selectedPresses,
       pageNum: INITIAL_PAGE_NUM,
     };

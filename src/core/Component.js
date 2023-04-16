@@ -1,3 +1,5 @@
+import { observable, observe } from "./observer.js";
+
 export default class Component {
   parentElement;
   state;
@@ -8,10 +10,23 @@ export default class Component {
     this.props = props;
 
     this.setup();
-    this.render();
+    this.setEvent();
+    this.componentDidMount();
   }
 
-  setup() {}
+  setup() {
+    this.state = observable(this.initState());
+
+    observe(() => {
+      this.update();
+      this.renderChildComponents();
+      this.componentDidUpdate();
+    });
+  }
+
+  initState() {
+    return {};
+  }
 
   setEvent() {}
 
@@ -20,23 +35,11 @@ export default class Component {
   }
 
   render() {
-    const dupParentElement = this.parentElement.cloneNode();
-    dupParentElement.innerHTML = this.template();
-    this.parentElement.parentNode.replaceChild(
-      dupParentElement,
-      this.parentElement
-    );
-    this.parentElement = dupParentElement;
-
-    this.setEvent();
-    this.renderChildComponents();
-    this.componentDidMount();
+    this.parentElement.innerHTML = this.template();
   }
 
   update() {
     this.parentElement.innerHTML = this.template();
-    this.renderChildComponents();
-    this.componentDidUpdate();
   }
 
   componentDidMount() {}
@@ -45,12 +48,12 @@ export default class Component {
 
   renderChildComponents() {}
 
-  setState(newState, shouldUpdate = true) {
-    this.state = { ...this.state, ...newState };
+  setState(newState) {
+    for (const [key, value] of Object.entries(newState)) {
+      if (!this.state.hasOwnProperty(key)) continue;
 
-    if (!shouldUpdate) return;
-
-    this.update();
+      this.state[key] = value;
+    }
   }
 
   addEvent(eventType, selector, callback) {
