@@ -1,3 +1,5 @@
+import { tabStore } from '../../store/tabStore.js';
+
 export default class MainContentHeader {
   #imgSrc = {
     listBlue: 'src/images/list_blue.svg',
@@ -6,23 +8,17 @@ export default class MainContentHeader {
     gridGray: 'src/images/grid_gray.svg'
   };
 
-  constructor($parent, props) {
+  constructor($parent) {
     this.$parent = $parent;
     this.$ele = document.createElement('header');
     this.$ele.className = 'main-content__header';
-
-    this.props = props;
   }
 
   mount() {
     this.render();
     this.setEvent();
     this.$parent.insertAdjacentElement('afterbegin', this.$ele);
-  }
-
-  update({ newProps }) {
-    this.updateProps(newProps);
-    this.render();
+    tabStore.register(this.render.bind(this));
   }
 
   render() {
@@ -30,7 +26,7 @@ export default class MainContentHeader {
   }
 
   template() {
-    const { activePressTab, activeShowTab } = this.props;
+    const { activePressTab, activeShowTab } = tabStore.getState();
     const { listBlue, listGray, gridBlue, gridGray } = this.#imgSrc;
 
     return /* html */ `
@@ -49,25 +45,19 @@ export default class MainContentHeader {
     `;
   }
 
-  updateProps(newProps) {
-    this.props = { ...this.props, ...newProps };
-  }
-
   setEvent() {
     this.$ele.addEventListener('click', ({ target }) => {
-      const { activePressTab, activeShowTab, pressTabHandler, showTabHandler } = this.props;
       const targetClassList = target.classList;
+      const { activePressTab, activeShowTab } = tabStore.getState();
 
-      if (
-        (targetClassList.contains('press-tab__all') && activePressTab === 'subscribed') ||
-        (targetClassList.contains('press-tab__subscribed') && activePressTab === 'all')
-      )
-        pressTabHandler();
-      if (
-        (targetClassList.contains('show-tab__grid') && activeShowTab === 'list') ||
-        (targetClassList.contains('show-tab__list') && activeShowTab === 'grid')
-      )
-        showTabHandler();
+      if (targetClassList.contains('press-tab__all') && activePressTab === 'subscribed')
+        tabStore.dispatch({ type: 'togglePressTab', payload: 'all' });
+      if (targetClassList.contains('press-tab__subscribed') && activePressTab === 'all')
+        tabStore.dispatch({ type: 'togglePressTab', payload: 'subscribed' });
+      if (targetClassList.contains('show-tab__grid') && activeShowTab === 'list')
+        tabStore.dispatch({ type: 'toggleShowTab', payload: 'grid' });
+      if (targetClassList.contains('show-tab__list') && activeShowTab === 'grid')
+        tabStore.dispatch({ type: 'toggleShowTab', payload: 'list' });
     });
   }
 }
