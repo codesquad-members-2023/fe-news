@@ -23,8 +23,27 @@
   }
 }
 
+.main-content__container {
+  position: relative;
+}
+
 .main-content__grid {
-  @include flex-row();
+  &-before-btn {
+    position: absolute;
+    top: 50%;
+    left: -47px;
+    transform: translate3d(0, -50%, 0);
+  }
+  &-next-btn {
+    position: absolute;
+    top: 50%;
+    right: -47px;
+    transform: translate3d(0, -50%, 0);
+  }
+  &-wrapper {
+    @include flex-row();
+    overflow-x: hidden;
+  }
 }
 .press-grid {
   display: grid;

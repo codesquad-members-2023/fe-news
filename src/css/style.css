@@ -123,11 +123,28 @@ body {
   margin-right: 14px;
 }
 
-.main-content__grid {
+.main-content__container {
+  position: relative;
+}
+
+.main-content__grid-before-btn {
+  position: absolute;
+  top: 50%;
+  left: -47px;
+  transform: translate3d(0, -50%, 0);
+}
+.main-content__grid-next-btn {
+  position: absolute;
+  top: 50%;
+  right: -47px;
+  transform: translate3d(0, -50%, 0);
+}
+.main-content__grid-wrapper {
   display: flex;
   justify-content: normal;
   align-items: normal;
   flex-direction: row;
+  overflow-x: hidden;
 }
 
 .press-grid {
