@@ -8,7 +8,7 @@ class MainHandler {
   #currentViewData
   #currentPage
   #subscriptionList
-  #isMyPresses
+  #isOnSubscriptionPage
 
   constructor(url) {
     this.#fetchData(url)
@@ -102,21 +102,25 @@ class MainHandler {
     const mainView = getElement('.main-view')
 
     mainView.addEventListener('mouseover', ({ target }) => {
-      this.#subscriptionButtonHandler(target, 'none')
+      this.#toggleSubscriptionButton(target, 'none')
     })
 
     mainView.addEventListener('mouseout', ({ target }) => {
-      this.#subscriptionButtonHandler(target, 'none')
+      this.#toggleSubscriptionButton(target, 'none')
     })
 
     mainView.addEventListener('click', ({ target }) => {
-      const cell = target.closest('.grid-cell')
+      const cell = target.closest('.press__info')
       const type = target.closest('.view-type')
       const viewType = type?.dataset?.type
 
       if (cell) {
-        this.#subscriptionListHandler(cell)
-        if (this.#isMyPresses) {
+        this.#setSubscriptionList(cell)
+        if (this.#isOnSubscriptionPage) {
+          // TODO:
+          // 모달창을 띄우고
+          // 예, 해지합니다(.cancel-btn)를 누르면 아래 코드 실행
+          // 아니오(confirm-btn)를 누르면 모달만 닫힘
           this.#currentTypeData = this.#getSubscriptionData(this.#allData)
           this.#renderView()
         }
@@ -128,7 +132,9 @@ class MainHandler {
     })
   }
 
-  #subscriptionButtonHandler(target, className) {
+  showConfirmModal() {}
+
+  #toggleSubscriptionButton(target, className) {
     const cell = target.closest('.grid-cell')
     if (cell) {
       cell.firstChild.classList.toggle(className)
@@ -136,7 +142,7 @@ class MainHandler {
     }
   }
 
-  #subscriptionListHandler(cell) {
+  #setSubscriptionList(cell) {
     const pressName = cell.querySelector('.press img').alt
     const subscriptionStatus = cell.querySelector('.subscribe-btn img').alt
 
@@ -161,12 +167,12 @@ class MainHandler {
   #onViewTypeEvent(viewType) {
     // set data
     if (viewType === 'all') {
-      this.#isMyPresses = false
+      this.#isOnSubscriptionPage = false
       this.#currentTypeData = this.#allData
     }
 
     if (viewType === 'my') {
-      this.#isMyPresses = true
+      this.#isOnSubscriptionPage = true
       this.#currentTypeData = this.#getSubscriptionData(this.#allData)
     }
 

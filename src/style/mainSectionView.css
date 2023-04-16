@@ -77,6 +77,7 @@ ns-main-grid-cell img {
 }
 
 .press__title {
+  display: flex;
   height: 24px;
   margin-bottom: 24px;
 }
@@ -84,6 +85,7 @@ ns-main-grid-cell img {
 .press__title span {
   color: var(--gray400);
   margin: 0 16px;
+  align-self: center;
 }
 
 .press__title img {
@@ -132,7 +134,7 @@ ns-main-grid-cell img {
   color: var(--gray200);
 }
 
-.subscribe-btn {
+.subscribe-grid {
   background-color: var(--off-white);
 }
 
@@ -182,7 +184,7 @@ ns-unsubscribe-modal {
   color: var(--black);
 }
 
-.cancel-btn {
+.confirm-btn {
   border-right: 1px solid var(--gray100);
 }
 

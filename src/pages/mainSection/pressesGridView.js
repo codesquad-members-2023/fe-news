@@ -32,10 +32,10 @@ class PressesGridView {
 
   #createGridCell(data) {
     const container = document.createElement('div')
-    container.classList.add('grid-cell')
+    container.classList.add('grid-cell', 'press__info')
 
     const subscribeBtnCell = document.createElement('ns-main-grid-cell')
-    subscribeBtnCell.classList.add('subscribe-btn', 'none')
+    subscribeBtnCell.classList.add('subscribe-btn', 'subscribe-grid', 'none')
     subscribeBtnCell.pressesData = {
       logoId: data.isSubscription
         ? './asset/unsubscribeButton.svg'

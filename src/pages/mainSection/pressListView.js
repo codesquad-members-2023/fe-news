@@ -15,7 +15,7 @@ class PressListView {
           ${this.#pressesData ? this.#createProgressBar() : ''}
         </div>
         <div class="press__news">
-          <div class="press__title">
+          <div class="press__info press__title">
             ${
               this.#pressesData ? this.#createPressTitle(this.#pressesData) : ''
             }
@@ -38,6 +38,7 @@ class PressListView {
   }
 
   #createProgressBar() {
+    // TODO: 내가구독한언론사를 클릭하면 내가구독한언론사로 내용이 바뀐다.
     const categories = [
       '종합/경제',
       '방송/통신',
@@ -64,9 +65,13 @@ class PressListView {
       : 'cancellation'
 
     return `
-      <img src="${data.logo_src}" alt="logo_src" />
+      <div class="press">
+        <img src="${data.logo_src}" alt="${data.name}" />
+      </div>
       <span class="body-xs">${data.edit_time}</span>
-      <img class="subscribe-btn" src=${subscriptionImage} alt="${subscriptionText}" />
+      <div class="subscribe-btn">
+        <img src=${subscriptionImage} alt="${subscriptionText}" />
+      </div>
     `
   }
 

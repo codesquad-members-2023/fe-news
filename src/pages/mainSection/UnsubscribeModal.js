@@ -10,6 +10,7 @@ class UnsubscribeModal extends HTMLElement {
   }
 
   #render() {
+    this.classList.add('none')
     this.innerHTML = this.#template()
   }
 
@@ -20,8 +21,8 @@ class UnsubscribeModal extends HTMLElement {
         <div class="title body-md">구독해지하시겠습니까?</div>
       </section>
       <section class="modal-action">
-        <button class="cancel-btn body-md">예, 해지합니다</button>
-        <button class="confirm-btn body-md">아니오</button>
+        <button class="confirm-btn body-md">예, 해지합니다</button>
+        <button class="cancel-btn body-md">아니오</button>
       </section>
     `
   }
