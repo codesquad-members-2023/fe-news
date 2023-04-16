@@ -7,12 +7,21 @@ class PressesGridView {
     this.#createGrid(data)
   }
 
-  #createGrid(data) {
+  #createGrid(pressesData) {
     this.#mainGridView = createNode('div')
     this.#mainGridView.classList.add('main-grid', 'current-view')
 
-    // TODO: 무조건 24번 만들게해야 될 것 같다.
+    const data = new Array(24).fill(null)
+    pressesData.forEach((pressData, i) => {
+      data[i] = pressData
+    })
+
     data.forEach(press => {
+      if (!press) {
+        this.createEmptyGridCell()
+        return
+      }
+
       this.#createGridCell({
         logoId: press.logo_src,
         name: press.name,
@@ -22,28 +31,35 @@ class PressesGridView {
   }
 
   #createGridCell(data) {
-    const container = createNode('div')
+    const container = document.createElement('div')
     container.classList.add('grid-cell')
 
-    const subCell = createNode('ns-main-grid-cell')
-    subCell.classList.add('subscribe-btn', 'none')
-    subCell.pressesData = {
+    const subscribeBtnCell = document.createElement('ns-main-grid-cell')
+    subscribeBtnCell.classList.add('subscribe-btn', 'none')
+    subscribeBtnCell.pressesData = {
       logoId: data.isSubscription
         ? './asset/unsubscribeButton.svg'
         : './asset/SubscribeButton.svg',
       name: data.isSubscription ? 'subscription' : 'cancellation'
     }
+    container.appendChild(subscribeBtnCell)
 
-    container.appendChild(subCell)
-
-    const mainCell = createNode('ns-main-grid-cell')
-    mainCell.classList.add('press')
-    mainCell.pressesData = {
+    const pressCell = document.createElement('ns-main-grid-cell')
+    pressCell.classList.add('press')
+    pressCell.pressesData = {
       logoId: data.logoId,
       name: data.name
     }
-    container.appendChild(mainCell)
+    container.appendChild(pressCell)
 
+    this.#mainGridView.appendChild(container)
+  }
+
+  createEmptyGridCell() {
+    const container = createNode('div')
+    const emptyCell = createNode('ns-main-grid-cell')
+
+    container.appendChild(emptyCell)
     this.#mainGridView.appendChild(container)
   }
 

@@ -8,7 +8,6 @@ class MainView {
   #viewSelectButton
   #directionButton
   #currentView
-  #currentPage
 
   constructor(data) {
     this.app = getElement('.app')
@@ -45,22 +44,22 @@ class MainView {
   }
 
   setCurrentViewData(data) {
-    this.#currentPage = data.currentPage
-    this.#setCurrentPage(this.#currentPage)
+    const { currentPage, currentViewType, currentViewData, dataLength } = data
 
-    if (data.currentViewType === 'grid') {
-      this.#directionButton.setAttribute(
-        'last-page',
-        Math.ceil(data.dataLength / 24)
-      )
-      this.#createGridView(data.currentViewData)
+    this.#setCurrentPage(currentPage)
 
-      return
+    const lastPage =
+      currentViewType === 'grid'
+        ? Math.ceil(dataLength / 24) || 1
+        : dataLength - 1 || 0
+    this.#directionButton.setAttribute('last-page', lastPage)
+
+    if (currentViewType === 'grid') {
+      this.#createGridView(currentViewData)
     }
 
-    if (data.currentViewType === 'list') {
-      this.#createListView(data.currentViewData)
-      this.#directionButton.setAttribute('last-page', data.dataLength - 1)
+    if (currentViewType === 'list') {
+      this.#createListView(currentViewData)
     }
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 class PressListView {
   #mainListView
   #pressesData
@@ -11,18 +12,22 @@ class PressListView {
     const pressListView = `
       <div class="main__list-view">
         <div class="progress-bar">
-          ${this.#createProgressBar()}
+          ${this.#pressesData ? this.#createProgressBar() : ''}
         </div>
         <div class="press__news">
           <div class="press__title">
-            ${this.#createPressTitle(this.#pressesData)}
+            ${
+              this.#pressesData ? this.#createPressTitle(this.#pressesData) : ''
+            }
           </div>
           <div class="news">
             <div class="news__main">
-              ${this.#createMainNews(this.#pressesData)}
+              ${
+                this.#pressesData ? this.#createMainNews(this.#pressesData) : ''
+              }
             </div>
             <div class="news__sub">
-              ${this.#createSubNews(this.#pressesData)}
+              ${this.#pressesData ? this.#createSubNews(this.#pressesData) : ''}
             </div>
           </div>
         </div>
