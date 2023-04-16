@@ -3,6 +3,7 @@ import { autoDataReducer, mediaDataReducer } from './dataReducer.js';
 import {
   subscribeReducer,
   mainHeaderBtnClickReducer,
+  listPageReducer,
 } from './displayReducer.js';
 
 const defaultAutoRollingData = {
@@ -23,6 +24,13 @@ const defaultViewOptionData = {
     allOrMine: 'all',
     gridOrList: 'grid',
   },
+  page: 0,
+};
+
+const defaultListPageData = {
+  page: 0,
+  typePage: 1,
+  currentMediaType: '종합/경제',
 };
 
 // Store의 State 초기화.
@@ -31,6 +39,7 @@ const initialState = {
   ['mediaData']: defaultMediaData,
   ['subscribeData']: defaultSubscribeData,
   ['viewOptionData']: defaultViewOptionData,
+  ['listPageData']: defaultListPageData,
 };
 
 const store = createStore();
@@ -47,4 +56,5 @@ store.addDomain(
   mainHeaderBtnClickReducer,
   initialState['viewOptionData'],
 );
+store.addDomain('listPageData', listPageReducer, initialState['listPageData']);
 export const { dispatch, subscribe, getStoreState } = store;

@@ -1,4 +1,4 @@
-import { subscribe } from '../../../store/store.js';
+import { subscribe, getStoreState } from '../../../store/store.js';
 import { createElement } from '../../../utils/dom.js';
 import { fetchActionCreator } from '../../../actions/actions.js';
 import {
@@ -67,9 +67,28 @@ const updateMediaContent = ($element, content) => {
   }
 };
 
-const MainGrid = () => {
+const renderAllGridElement = ($main, content) => {
+  const breakCondition =
+    content.viewOption.gridOrList === 'grid' &&
+    content.viewOption.allOrMine === 'all';
+  if (!breakCondition) return;
+
+  const mediaData = getStoreState('mediaData');
+
+  const $grid = createMainGridElement();
+  updateMediaContent($grid, mediaData);
+
+  $grid.addEventListener('mouseover', mouseEventHandler);
+  $grid.addEventListener('mouseout', mouseEventHandler);
+  $grid.addEventListener('click', cilckEventHandler);
+
+  $main.replaceChild($grid, $main.lastChild);
+};
+
+const MainGrid = ($main) => {
   const $grid = createMainGridElement();
   subscribe('mediaData', updateMediaContent.bind(null, $grid));
+  subscribe('viewOptionData', renderAllGridElement.bind(null, $main));
   fetchActionCreator.fetchMediaData();
 
   $grid.addEventListener('mouseover', mouseEventHandler);

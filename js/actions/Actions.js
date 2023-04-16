@@ -64,9 +64,48 @@ export const displayActionCreator = {
       payload,
     };
   },
-  headerAllListBtnClick() {
+
+  headerListBtnClick() {
     return {
       type: actionTypes.displayActions.HEADER_LIST_BUTTON_CLICK,
+    };
+  },
+
+  headerGridBtnClick() {
+    return {
+      type: actionTypes.displayActions.HEADER_GRID_BUTTON_CLICK,
+    };
+  },
+
+  headerAllBtnClick() {
+    return {
+      type: actionTypes.displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK,
+    };
+  },
+
+  headerMineBtnClick() {
+    return {
+      type: actionTypes.displayActions.HEADER_MY_MEDIA_BUTTON_CLICK,
+    };
+  },
+
+  listLeftBtnClick() {
+    return {
+      type: actionTypes.displayActions.LIST_LEFT_BUTTON_CLICK,
+    };
+  },
+
+  listRightBtnClick() {
+    return {
+      type: actionTypes.displayActions.LIST_RIGHT_BUTTON_CLICK,
+    };
+  },
+
+  listTabBtnClick(payload) {
+    // 여기서 payload는 탭 한 놈의 미디어 타입 정보.
+    return {
+      type: actionTypes.displayActions.LIST_TAB_BUTTON_CLICK,
+      payload,
     };
   },
 };

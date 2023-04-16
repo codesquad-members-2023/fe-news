@@ -1,5 +1,8 @@
 import { createElement } from '../../../utils/dom.js';
-import { buttonClickEventHandler } from './mainButtonEventHandlers.js';
+import {
+  pageControlBtnClickEventHandler,
+  headerViewChangeBtnClickEventHandler,
+} from './mainButtonEventHandlers.js';
 // TODO : 이벤트 등록 해야함.
 import { displayActionCreator } from '../../../actions/actions.js';
 import { dispatch, subscribe } from '../../../store/store.js';
@@ -20,10 +23,10 @@ const createMainHeaderElement = () => {
 
   <div class="main-header__buttons">
     <a class="main-header__list-button">
-        <img src="./asset/listIcon.svg" />
+        <i class="list-icon"></i>
     </a>
     <a class="main-header__grid-button">
-        <img  src="./asset/gridIcon.svg" />
+        <i class="grid-icon grid-icon__enable"></i>
     </a>
 </div>
   `;
@@ -46,12 +49,14 @@ const createMainButtonElement = () => {
   return [$leftButton, $rightButton];
 };
 
-const listViewButtonRender = ($leftButton, content) => {
-  const breakCondition =
-    content.viewOption.gridOrList === 'grid' &&
-    $leftButton.classList.contains('none');
-  if (breakCondition) return;
-  $leftButton.classList.remove('none');
+const listViewButtonRender = ($mainButtons, content) => {
+  // grid 4page에서 list 누르면 오른쪽 버튼 안나오는 버그 존재~!
+  // 1. gird -> list 무조건 두개다 none 없어야함.
+  // 2. list -> grid 첫번째 거 무조건 none 해야함. 얘는 그냥 됨. grid에서 구현해놓음
+  // 왼쪽 버튼에 넣기!
+  if (content.viewOption.gridOrList === 'grid')
+    $mainButtons[0].classList.add('none');
+  else $mainButtons.forEach(($button) => $button.classList.remove('none'));
 };
 
 const MainCommon = () => {
@@ -59,15 +64,12 @@ const MainCommon = () => {
   const $mainButtons = createMainButtonElement();
 
   $mainButtons.forEach((button) => {
-    button.addEventListener('click', buttonClickEventHandler);
+    button.addEventListener('click', pageControlBtnClickEventHandler);
   });
 
-  $mainHeader.addEventListener('click', ({ target }) => {
-    if (target.closest('a')) {
-      dispatch(displayActionCreator.headerAllListBtnClick());
-    }
-  });
-  subscribe('viewOptionData', listViewButtonRender.bind(null, $mainButtons[0]));
+  $mainHeader.addEventListener('click', headerViewChangeBtnClickEventHandler);
+  subscribe('viewOptionData', listViewButtonRender.bind(null, $mainButtons));
+
   return [$mainHeader, $mainButtons];
 };
 

@@ -28,26 +28,56 @@ export const mainHeaderBtnClickReducer = (state, action) => {
 
   switch (action.type) {
     case displayActions.HEADER_LIST_BUTTON_CLICK:
-      if (viewOptionData.gridOrList === 'list') return;
+      if (viewOptionData.gridOrList === 'list')
+        return { ...state, viewOption: viewOptionData };
       viewOptionData.gridOrList = 'list';
-      return { viewOption: viewOptionData };
+      return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_GRID_BUTTON_CLICK:
-      if (viewOptionData.gridOrList === 'grid') return;
+      if (viewOptionData.gridOrList === 'grid')
+        return { ...state, viewOption: viewOptionData };
       viewOptionData.gridOrList = 'grid';
-      return { viewOption: viewOptionData };
+      return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_MY_MEDIA_BUTTON_CLICK:
-      if (viewOptionData.allOrMine === 'all') return;
+      if (viewOptionData.allOrMine === 'all')
+        return { ...state, viewOption: viewOptionData };
       viewOptionData.allOrMine = 'all';
-      return { viewOption: viewOptionData };
+      return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK:
-      if (viewOptionData.allOrMine === 'mine') return;
+      if (viewOptionData.allOrMine === 'mine')
+        return { ...state, viewOption: viewOptionData };
       viewOptionData.allOrMine = 'mine';
-      return { viewOption: viewOptionData };
+      return { ...state, viewOption: viewOptionData };
 
     default:
       return state;
   }
+};
+
+export const listPageReducer = (state, action) => {
+  let listPage = state.page;
+  const mediaData = getStoreState('mediaData').data;
+  const mediaDataLength = mediaData.length;
+  switch (action.type) {
+    case displayActions.LIST_LEFT_BUTTON_CLICK:
+      if (listPage === 0) listPage = mediaDataLength - 1;
+      else listPage -= 1;
+      return { ...state, page: listPage };
+    case displayActions.LIST_RIGHT_BUTTON_CLICK:
+      if (listPage === mediaDataLength - 1) listPage = 0;
+      else listPage += 1;
+      return { ...state, page: listPage };
+    case displayActions.LIST_TAB_BUTTON_CLICK:
+      // TODO: 탭한 언론사 type의 1페이지를 state로 바꿔야함.
+      action.payload;
+    default:
+      return state;
+  }
+};
+
+const checkMediaType = () => {
+  // 이동한 페이지의 언론사가 무슨 type인지 계속 검사!!
+  // 왼쪽 오른쪽 버튼 눌러도 검사해야함!
 };

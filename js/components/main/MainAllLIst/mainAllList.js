@@ -64,7 +64,7 @@ const createNewsHeaderElement = (mediaInfo) => {
   });
   const headerInnerHTML = `
     <img class="main-list__logo" src="${mediaInfo.imgSrc}" />
-      <span class="main-list__edit-time">${mediaInfo.modifiedTime}</span>
+      <div class="main-list__edit-time">${mediaInfo.modifiedTime}</div>
       <a class="list__subscribe-button">
         <img src="./asset/subscribeButton.svg" alt="subscribe" />
       </a>
@@ -80,15 +80,19 @@ const createNewsContentElement = (mainContent, subContent) => {
 
   const mainNewsHTML = `
   <section class="main-news">
-    <img class="main-news__img" src="${mainContent.mainImgSrc}" />
-    <span class="main-news__title">${mainContent.mainTitle}</span>
+    <div class="main-news__img">
+      <a href="#">
+        <img src="${mainContent.mainImgSrc}" />
+      </a>
+    </div>
+    <span class="main-news__title"><a>${mainContent.mainTitle}</a></span>
   </section>`;
 
   const subNewsHTML = `
     <section class="sub-news">
         <ul class="sub-news__items">
             ${subContent.subNewsList.reduce((html, text) => {
-              html += `<li class="sub-news__item">${text}</li>`;
+              html += `<li class="sub-news__item"><a href="#">${text}</a></li>`;
               return html;
             }, ``)}
         </ul>
@@ -107,12 +111,21 @@ const renderMainAllList = ($main, content) => {
     content.viewOption.allOrMine === 'all';
   if (!breakCondition) return;
 
-  const $mainList = createMainListElement(mediaData[1]);
+  const $mainList = createMainListElement(mediaData[content.page]);
+  $mainList.addEventListener('click', () => {});
+  $main.replaceChild($mainList, $main.lastChild);
+};
+
+const renderNextPage = ($main, content) => {
+  const mediaData = getStoreState('mediaData').data;
+  const $mainList = createMainListElement(mediaData[content.page]);
+  $mainList.addEventListener('click', () => {});
   $main.replaceChild($mainList, $main.lastChild);
 };
 
 const MainAllList = ($main) => {
   subscribe('viewOptionData', renderMainAllList.bind(null, $main));
+  subscribe('listPageData', renderNextPage.bind(null, $main));
 };
 
 export default MainAllList;
