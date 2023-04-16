@@ -1,4 +1,4 @@
-import { Props, State } from '@custom-types/types';
+import { Props, State, ViewState } from '@custom-types/types';
 import { Component } from '@custom-types/interfaces';
 import { NsContainerModel } from '@components/main/main__left/ns__container/NsContainerModel.js';
 import { NsContainerView } from '@components/main/main__left/ns__container/NsContainerView.js';
@@ -12,14 +12,11 @@ export class NsContainerComponent implements Component {
   constructor(props?: Props) {
     this._model = new NsContainerModel();
     this._view = new NsContainerView();
+    this.attachChildComponents();
 
-    const nsNavbar = new NsNavbarComponent();
-    const nsPressContainer = new NsPressContainerComponent();
-    nsNavbar.attachTo(this);
-    nsPressContainer.attachTo(this);
-
-    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent();
-    nsCategoryContainer.attachTo(this);
+    const view: ViewState = 'GRID';
+    const handleToView = this.handleToView.bind(this);
+    this.setState({ view, handleToView });
   }
 
   get element() {
@@ -37,5 +34,20 @@ export class NsContainerComponent implements Component {
 
   attachTo(component: Component, position: InsertPosition = 'beforeend') {
     component.element.insertAdjacentElement(position, this.element);
+  }
+
+  attachChildComponents(props?: Props) {
+    const nsNavbar = new NsNavbarComponent();
+    const nsPressContainer = new NsPressContainerComponent();
+    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent();
+
+    nsNavbar.attachTo(this);
+    nsPressContainer.attachTo(this);
+    nsCategoryContainer.attachTo(this);
+  }
+
+  handleToView(state: State) {
+    const { view } = state;
+    this.setState({ view });
   }
 }

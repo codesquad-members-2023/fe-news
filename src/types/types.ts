@@ -33,3 +33,6 @@ export type Article = {
     noticeMessage: string;
   };
 };
+
+// ns__conatiner
+export type ViewState = 'GRID' | 'LIST';
