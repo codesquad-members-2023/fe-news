@@ -10,9 +10,10 @@ const newsCompanyTemplate = () => `
     <img class=" company__view_logo" src="assets/viewLogo.svg"/>
   </div>
   </div>
-  <div class="news-company__gride">
-    <div class="gride_set"></div>
-    <div class="gride_btn"><img class="girde_btn-left" src="assets/leftButton.svg"/><img class="girde_btn-right" src="assets/rightButton.svg"/></div>
+  <div class="news-company__grid">
+    <div class="grid_btn-left"><img src="assets/leftButton.svg"/></div>
+    <div class="grid_set"></div>
+    <div class="grid_btn-right"><img src="assets/rightButton.svg"/></div>
   </div>
 </div>
 `;
@@ -23,4 +24,10 @@ const renderNewsCompanyBar = () => {
   newsCompanyBar.innerHTML = newsCompanyTemplate();
 };
 
-export { renderNewsCompanyBar };
+const insertNewsCompanyGrid = (newsData) => {
+  const gridBox = document.querySelector(".grid_set");
+  newsData.map((data) => {
+    gridBox.innerHTML += `<div><img src=${data.imgSrc} alt=${data.alt}/></div>`;
+  });
+};
+export { renderNewsCompanyBar, insertNewsCompanyGrid };

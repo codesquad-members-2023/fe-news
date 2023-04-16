@@ -6,8 +6,7 @@ const rollingBarTemplate = () =>
   <img src="assets/rollingLogo.svg" /><ul class="data_list_right"></ul></div>
   </div>`;
 
-const renderRollingBar = () => {
-  const root = document.querySelector(".root");
+const renderRollingBar = (root) => {
   const newsRollingBar = document.createElement("article");
   root.appendChild(newsRollingBar);
   newsRollingBar.innerHTML = rollingBarTemplate();
@@ -56,7 +55,8 @@ const rollingData = (rollingBox) => {
 };
 
 const runRollingBar = () => {
-  renderRollingBar();
+  const root = document.querySelector(".root");
+  renderRollingBar(root);
   rollingData(".data_list_left");
   setTimeout(() => {
     rollingData(".data_list_right");

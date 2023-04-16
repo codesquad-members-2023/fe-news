@@ -7,6 +7,13 @@
     width: 930px;
     padding-top: 50px;
   }
+  &__grid {
+    display: flex;
+    width: 1100px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 .company__choice {
   &_all {
@@ -18,5 +25,20 @@
     @include font(16px, 500);
     line-height: 22px;
     color: var(--color-gray-200);
+  }
+}
+
+.grid_set {
+  display: grid;
+  margin: 0 auto;
+  width: 930px;
+  height: 388px;
+  margin-top: 10px;
+  grid-template-columns: repeat(6, 155px);
+  grid-template-rows: repeat(4, 97px);
+
+  div {
+    border: 0.5px solid var(--color-gray-100);
+    text-align: center;
   }
 }
