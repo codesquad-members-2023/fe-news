@@ -60,6 +60,9 @@ body {
     height: 97px;
     border-right: 1px solid #d2dae0;
     border-bottom: 1px solid #d2dae0; }
+    .newssection_view .newssection_view_grid .grid_items .press_logo {
+      width: 50px;
+      height: 28px; }
 
 .newsstand_header {
   display: flex;
@@ -122,6 +125,8 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px; }
+    .newsstand_newssection .newsstand_newssection_header a {
+      cursor: pointer; }
     .newsstand_newssection .newsstand_newssection_header .header_sort_buttons {
       display: flex;
       gap: 10px;

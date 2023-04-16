@@ -15,8 +15,15 @@ const NS_HEADLINE_INFO = Object.freeze({
   },
 });
 
+const NS_SECTION_INFO = Object.freeze({
+  GRID_ALL: {
+    ALL_SIZE: 96,
+    PAGE_SIZE: 24,
+  },
+});
+
 const REFERENCE = Object.freeze({
   NS_CONTAINER: document.querySelector('.newsstand_container'),
 });
 
-export { NS_HEADER_INFO, NS_HEADLINE_INFO, REFERENCE };
+export { NS_HEADER_INFO, NS_HEADLINE_INFO, NS_SECTION_INFO, REFERENCE };
