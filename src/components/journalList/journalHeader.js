@@ -1,8 +1,8 @@
 import { JournalHeaderStore } from "../../store/journalHeaderStore.js";
 
 export class JournalHeader {
-  constructor() {
-    this.store = new JournalHeaderStore();
+  constructor(updateJournalData) {
+    this.store = new JournalHeaderStore(updateJournalData);
     this.element = document.createElement("header");
     this.element.classList.add("journal-header", "display-flex");
     this.render();
