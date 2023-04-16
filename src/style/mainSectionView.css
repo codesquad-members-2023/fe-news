@@ -5,10 +5,6 @@
   justify-content: space-between;
 }
 
-.btn__view-type button {
-  cursor: pointer;
-}
-
 .btn__view-type .all-presses {
   margin-right: 24px;
 }
@@ -28,10 +24,6 @@ ns-direction-btn {
   position: absolute;
   left: -5%;
   top: calc(50% + 18px);
-}
-
-ns-direction-btn img {
-  cursor: pointer;
 }
 
 .hidden {
@@ -142,7 +134,6 @@ ns-main-grid-cell img {
 
 .subscribe-btn {
   background-color: var(--off-white);
-  cursor: pointer;
 }
 
 ns-unsubscribe-modal {
