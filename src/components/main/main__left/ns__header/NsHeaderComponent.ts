@@ -1,5 +1,5 @@
-import { Props, State } from '@src/types/types';
-import { Component } from '@src/types/interfaces';
+import { Props, State } from '@custom-types/types';
+import { Component } from '@custom-types/interfaces';
 import { NsHeaderModel } from '@components/main/main__left/ns__header/NsHeaderModel.js';
 import { NsHeaderView } from '@components/main/main__left/ns__header/NsHeaderView.js';
 import { NsTitleComponent } from '@components/main/main__left/ns__header/ns__title/NsTitleComponent.js';

@@ -1,5 +1,5 @@
-import { Props, State } from '@src/types/types';
-import { Component } from '@src/types/interfaces';
+import { Props, State } from '@custom-types/types';
+import { Component } from '@custom-types/interfaces';
 import { NsTitleModel } from '@components/main/main__left/ns__header/ns__title/NsTitleModel.js';
 import { NsTitleView } from '@components/main/main__left/ns__header/ns__title/NsTitleView.js';
 
@@ -9,9 +9,6 @@ export class NsTitleComponent implements Component {
   constructor(props?: Props) {
     this._model = new NsTitleModel();
     this._view = new NsTitleView();
-
-    const title = '뉴스스탠드';
-    this.setState({ title });
   }
 
   get element() {

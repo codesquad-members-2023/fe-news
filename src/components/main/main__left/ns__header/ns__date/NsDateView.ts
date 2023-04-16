@@ -1,5 +1,5 @@
-import { State } from '@src/types/types';
-import { AbstractView } from '@src/types/abstracts.js';
+import { State } from '@custom-types/types';
+import { AbstractView } from '@custom-types/abstracts.js';
 import { $ } from '@utils/dom.js';
 
 export class NsDateView extends AbstractView {

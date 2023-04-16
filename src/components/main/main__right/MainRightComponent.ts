@@ -1,5 +1,5 @@
-import { Props, State } from '@src/types/types';
-import { Component } from '@src/types/interfaces';
+import { Props, State } from '@custom-types/types';
+import { Component } from '@custom-types/interfaces';
 import { MainRightModel } from '@components/main/main__right/MainRightModel.js';
 import { MainRightView } from '@components/main/main__right/MainRightView.js';
 
@@ -9,9 +9,6 @@ export class MainRightComponent implements Component {
   constructor(props?: Props) {
     this._model = new MainRightModel();
     this._view = new MainRightView();
-
-    const title = 'MainRight';
-    this.setState({ title });
   }
 
   get element() {

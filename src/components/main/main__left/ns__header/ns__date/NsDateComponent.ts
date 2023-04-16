@@ -1,5 +1,5 @@
-import { Props, State } from '@src/types/types';
-import { Component } from '@src/types/interfaces';
+import { Props, State } from '@custom-types/types';
+import { Component } from '@custom-types/interfaces';
 import { NsDateModel } from '@components/main/main__left/ns__header/ns__date/NsDateModel.js';
 import { NsDateView } from '@components/main/main__left/ns__header/ns__date/NsDateView.js';
 import { getKrDate } from '@utils/date.js';
