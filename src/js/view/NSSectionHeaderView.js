@@ -2,8 +2,9 @@
 import { REFERENCE } from '../constant/dom.js';
 
 export default class NSSectionHeaderView {
-  constructor(model) {
+  constructor(model, buttonModel) {
     this._model = model;
+    this._buttonModel = buttonModel;
     this._model.subscribe(this.render.bind(this));
   }
 
@@ -11,6 +12,7 @@ export default class NSSectionHeaderView {
     const markup = this.getMarkup();
     const sibling = REFERENCE.NS_CONTAINER.querySelector('.newsstand_headline_container');
     sibling.insertAdjacentHTML('afterend', markup);
+    this._buttonModel.getReady();
   }
 
   getMarkup() {
