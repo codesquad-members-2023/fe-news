@@ -8,6 +8,7 @@ class MainHandler {
   #currentViewData
   #currentPage
   #subscriptionList
+  #isMyPresses
 
   constructor(url) {
     this.#fetchData(url)
@@ -39,7 +40,7 @@ class MainHandler {
 
     this.#onClickDirectionBtn()
     this.#onMainViewEvent()
-    this.onViewTypeEvent()
+    this.#onViewTypeEvent()
   }
 
   #onClickDirectionBtn() {
@@ -70,7 +71,7 @@ class MainHandler {
       const slicedData = data.slice(startPress, endPress)
 
       const gridViewData = slicedData.map(press => {
-        const isSubscription = [...this.#subscriptionList].includes(press.name)
+        const isSubscription = this.#subscriptionList.has(press.name)
         press.isSubscription = isSubscription
 
         return press
@@ -101,11 +102,11 @@ class MainHandler {
     const mainView = getElement('.main-view')
 
     mainView.addEventListener('mouseover', ({ target }) => {
-      this.subscriptionButtonHandler(target, 'none')
+      this.#subscriptionButtonHandler(target, 'none')
     })
 
     mainView.addEventListener('mouseout', ({ target }) => {
-      this.subscriptionButtonHandler(target, 'none')
+      this.#subscriptionButtonHandler(target, 'none')
     })
 
     mainView.addEventListener('click', ({ target }) => {
@@ -114,16 +115,20 @@ class MainHandler {
       const viewType = type?.dataset?.type
 
       if (cell) {
-        this.subscriptionListHandler(cell)
+        this.#subscriptionListHandler(cell)
+        if (this.#isMyPresses) {
+          this.#currentTypeData = this.#getSubscriptionData(this.#allData)
+          this.#renderView()
+        }
       }
 
       if (viewType) {
-        this.onViewTypeEvent(viewType)
+        this.#onViewTypeEvent(viewType)
       }
     })
   }
 
-  subscriptionButtonHandler(target, className) {
+  #subscriptionButtonHandler(target, className) {
     const cell = target.closest('.grid-cell')
     if (cell) {
       cell.firstChild.classList.toggle(className)
@@ -131,7 +136,7 @@ class MainHandler {
     }
   }
 
-  subscriptionListHandler(cell) {
+  #subscriptionListHandler(cell) {
     const pressName = cell.querySelector('.press img').alt
     const subscriptionStatus = cell.querySelector('.subscribe-btn img').alt
 
@@ -142,9 +147,9 @@ class MainHandler {
     this.#renderView(this.#currentViewType)
   }
 
-  getSubscriptionData(data) {
+  #getSubscriptionData(data) {
     const subscriptionData = data
-      .filter(press => [...this.#subscriptionList].includes(press.name))
+      .filter(press => this.#subscriptionList.has(press.name))
       .map(press => {
         press.isSubscription = true
         return press
@@ -153,14 +158,16 @@ class MainHandler {
     return subscriptionData
   }
 
-  onViewTypeEvent(viewType) {
+  #onViewTypeEvent(viewType) {
     // set data
     if (viewType === 'all') {
+      this.#isMyPresses = false
       this.#currentTypeData = this.#allData
     }
 
     if (viewType === 'my') {
-      this.#currentTypeData = this.getSubscriptionData(this.#allData)
+      this.#isMyPresses = true
+      this.#currentTypeData = this.#getSubscriptionData(this.#allData)
     }
 
     // set view type
