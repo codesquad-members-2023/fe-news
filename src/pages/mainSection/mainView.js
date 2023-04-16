@@ -15,6 +15,7 @@ class MainView {
     this.#mainViewContainer.classList.add('main-view')
 
     this.#createMainViewButtons()
+    this.#createUnsubscribingModal()
     this.#createGridView(data)
     this.app.appendChild(this.#mainViewContainer)
   }
@@ -41,6 +42,11 @@ class MainView {
     const listView = pressListView.getListView()
 
     this.#currentView.innerHTML = listView
+  }
+
+  #createUnsubscribingModal() {
+    const unsubscribingModal = createNode('ns-unsubscribe-modal')
+    this.#mainViewContainer.appendChild(unsubscribingModal)
   }
 
   setCurrentViewData(data) {
