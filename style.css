@@ -146,3 +146,5 @@ body {
     top: 390px;
     left: -30px;
     width: 1030px; }
+    .newsstand_newssection .newssection_slide_buttons .hidden {
+      visibility: hidden; }

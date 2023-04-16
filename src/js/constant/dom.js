@@ -19,6 +19,8 @@ const NS_SECTION_INFO = Object.freeze({
   GRID_ALL: {
     ALL_SIZE: 96,
     PAGE_SIZE: 24,
+    MIN_PAGE_INDEX: 1,
+    MAX_PAGE_INDEX: 4,
   },
 });
 

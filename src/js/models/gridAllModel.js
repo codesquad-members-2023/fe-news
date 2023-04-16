@@ -40,4 +40,14 @@ export default class GridAllModel extends Observer {
       count++;
     });
   }
+
+  increaseIndex() {
+    this._state.index += 1;
+    this.notify();
+  }
+
+  decreaseIndex() {
+    this._state.index -= 1;
+    this.notify();
+  }
 }
