@@ -9,7 +9,21 @@ interface ListViewItem {
 class ListViewItem extends HTMLElement {
   constructor() {
     super();
+  }
+
+  connectedCallback() {
+    addShadow({ target: this });
     this.render();
+  }
+
+  static get observedAttributes() {
+    return ['section-data'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'section-data') {
+      this.render();
+    }
   }
 
   render() {
@@ -28,17 +42,22 @@ class ListViewItem extends HTMLElement {
     const mainArticle = articles?.[0];
     const otherArticles = articles?.slice(1);
 
-    console.log(articles.slice(1));
-
     const template = `
     <div class="header">
       <img ${
         press ? `src="${press.newMainLogo}"` : ''
       } height="20px" width="auto">
       <p class="typo-body-xs">${lastEdited ?? ''} 편집</p>
-      <button-element icon="plus" id='${
-        press ? press.pid : ''
-      }'>구독하기</button-element>
+      ${
+        press.isSubscribed
+          ? `<button-element icon="close" id='${
+              press ? press.pid : ''
+            }'>해지하기</button-element>`
+          : `<button-element icon="plus" id='${
+              press ? press.pid : ''
+            }'>구독하기</button-element>`
+      }
+      
     </div>
     <div class="contents">
       ${[mainArticle].map(
@@ -66,7 +85,6 @@ class ListViewItem extends HTMLElement {
       </div>
     </div>
     `;
-    addShadow({ target: this });
     add({
       target: this.shadowRoot,
       template,

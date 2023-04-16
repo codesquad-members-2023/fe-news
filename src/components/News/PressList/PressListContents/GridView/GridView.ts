@@ -36,7 +36,7 @@ class GridView extends HTMLElement {
     ${pressList
       .map(
         (press: PressType, i: number) =>
-          `<grid-view-item-element id='${press.pid}' image='${press.newMainLogo}' index='${i}'></grid-view-item-element>`
+          `<grid-view-item-element id='${press.pid}' image='${press.newMainLogo}' index='${i}' is-subscribed='${press.isSubscribed}'></grid-view-item-element>`
       )
       .join('')}
     </div>

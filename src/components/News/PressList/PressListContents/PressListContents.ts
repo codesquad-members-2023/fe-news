@@ -12,6 +12,7 @@ import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
 import { getPress, getSection } from '@apis/news';
+import { subscribe, unsubscribe } from '@apis/user';
 import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionType } from '@store/section/sectionType';
 import { ActionType } from '@utils/redux';
@@ -86,15 +87,6 @@ class PressListContents extends HTMLElement {
     this.handleListView().appendListViewContainer();
   }
 
-  handlePageOnGridView() {}
-
-  async changeSection(page: number, dispatch: (action: ActionType) => void) {
-    const data = await getSection({ page });
-
-    dispatch({ type: 'CHANGE_SECTION', payload: data });
-    this.sectionStore.subscribe(() => {});
-  }
-
   handleGridView() {
     return {
       appendGridViewContainer: () => {
@@ -125,6 +117,7 @@ class PressListContents extends HTMLElement {
         this.wrap
           ?.querySelector('section.general .view.grid')
           ?.append(gridViewContainer);
+        this.handleSubscribeBtn().handleGridView();
       },
       getCurrentPressList: (page: number) => {
         const start = page * 24;
@@ -165,10 +158,22 @@ class PressListContents extends HTMLElement {
           target: gridViewContainer ?? null,
           template,
         });
+        this.handleSubscribeBtn().handleListView();
       },
       getCurrentSection: async ({ page }: getCurrentSectionProps) => {
         const section = await getSection({ page });
         return section;
+      },
+      changeCurrentSection: async (page: number) => {
+        const data = await getSection({ page });
+        this.sectionStore.dispatch({ type: 'CHANGE_SECTION', payload: data });
+
+        this.shadowRoot
+          ?.querySelector('list-view-element')
+          ?.setAttribute(
+            'section-data',
+            JSON.stringify(this.sectionStore.getState())
+          );
       },
     };
   }
@@ -262,9 +267,64 @@ class PressListContents extends HTMLElement {
       if (view === 'list') {
         this.sectionStore = store.section;
         store.section.dispatch;
-        this.changeSection(currentPage, this.sectionStore.dispatch);
+        this.handleListView().changeCurrentSection(currentPage);
       }
     });
+  }
+
+  handleSubscribeBtn() {
+    const storeUser = store.user;
+    interface runSubscribeProps {
+      isSubscribed: boolean;
+      id: string;
+    }
+    return {
+      runSubscribeAndUnsunscribe: ({ isSubscribed, id }: runSubscribeProps) => {
+        isSubscribed
+          ? unsubscribe({ id, pressId: id })
+          : subscribe({ id, pressId: id });
+        storeUser.dispatch({
+          type: isSubscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE',
+          payload: id,
+        });
+      },
+      handleGridView: () => {
+        const gridView = this.shadowRoot?.querySelectorAll('grid-view-element');
+        gridView?.forEach((gridViewElement) => {
+          gridViewElement.shadowRoot?.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+            const gridViewItem = target.closest('grid-view-item-element');
+            const id = gridViewItem?.getAttribute('id');
+
+            if (!id) return;
+            const isSubscribed = target.getAttribute('icon') === 'close';
+            this.handleSubscribeBtn().runSubscribeAndUnsunscribe({
+              isSubscribed,
+              id,
+            });
+          });
+        });
+      },
+      handleListView: () => {
+        const listView = this.shadowRoot?.querySelector('list-view-element');
+        console.log({ listView });
+
+        listView?.shadowRoot?.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+
+          // const id = listViewItem?.getAttribute('id');
+          // const subscribingPress = storeUser.getState().subscribingPress;
+          // console.log(target.closest('grid-view-item-element'));
+          // if (!id) return;
+          // const isSubscribed = subscribingPress.includes(id);
+
+          // this.handleSubscribeBtn().runSubscribeAndUnsunscribe({
+          //   isSubscribed,
+          //   id,
+          // });
+        });
+      },
+    };
   }
 }
 
