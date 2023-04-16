@@ -1,10 +1,10 @@
 export default class NSHeadlineView {
-  constructor({ NS_HEADLINE_INFO }, REFERENCE, dataFetcher, API_PATH) {
+  constructor({ NS_HEADLINE_INFO }, REFERENCE, dataFetcher, API_PATH, model) {
     this._parentElem = REFERENCE.NS_CONTAINER;
     this._info = NS_HEADLINE_INFO;
     this._dataFetcher = dataFetcher;
     this._API_PATH = API_PATH;
-
+    this._model = model;
     this._animationStartTime = {
       left: null,
       right: null,
@@ -43,6 +43,7 @@ export default class NSHeadlineView {
     this._parentElem.insertAdjacentHTML('beforeend', markUp);
     this.setHeadlineSection();
     this.setHeadlineAnimation();
+    this._model.getReady();
   }
 
   generateMarkup(headlineList) {

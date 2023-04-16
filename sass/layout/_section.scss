@@ -6,6 +6,10 @@
     justify-content: space-between;
     margin-bottom: 20px;
 
+    a {
+      cursor: pointer;
+    }
+
     .header_sort_buttons {
       display: flex;
       gap: 10px;
