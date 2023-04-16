@@ -1,0 +1,15 @@
+.grid__container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  width: 930px;
+  height: 388px;
+  border: 1px solid $gray100;
+  position: relative;
+}
+
+.press-logo {
+  img {
+    position: absolute;
+  }
+}
