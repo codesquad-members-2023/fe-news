@@ -1,17 +1,18 @@
 const viewHeader = () => {
-  const newElement = document.createElement('div');
+  const header = document.createElement('div');
+  header.classList.add('newsstand_header');
+
   const template = `
-  <div class="header">
     <div class="title">
       <img src="../src/assets/images/newsstand_logo.svg"/>
       <span>뉴스스탠드</span>
     </div>
     <div class="date">${getCurrentDate()}</div>
-  </div>
   `;
-  newElement.innerHTML = template;
 
-  return newElement;
+  header.innerHTML = template;
+
+  return header;
 };
 
 const getCurrentDate = () => {
@@ -19,8 +20,8 @@ const getCurrentDate = () => {
   const date = new Date();
   const dateInfo = {
     year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate(),
+    month: date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1,
+    day: date.getDate() < 10 ? `0${date.getDate()}` : date.getDate(),
     weekDay: WEEK[date.getDay()],
   };
   const today = `${dateInfo.year}.${dateInfo.month}.${dateInfo.day}.${dateInfo.weekDay}`;
