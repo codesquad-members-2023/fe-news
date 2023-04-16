@@ -3,13 +3,13 @@ import { CONSTANTS } from '../../../core/constants.js';
 import { ViewStore } from "../../../stores/viewStore.js";
 
 class SortButton {
-  #store;
+  #viewStore;
   constructor() {
-    this.#store = ViewStore;
-    this.sortButton = createEl('div', 'sort-buttons');
+    this.#viewStore = ViewStore;
+    this.sortButtons = createEl('div', 'sort-buttons');
   }
 
-  render({ press, view } = this.#store.getState()) {
+  render({ press, view } = this.#viewStore.getState()) {
     const pressType = Object.keys(press);
     const viewType = Object.keys(view);
 
@@ -30,28 +30,28 @@ class SortButton {
       </div>
       `;
 
-    this.sortButton.innerHTML = template;
+    this.sortButtons.innerHTML = template;
     this.clickPress();
     this.clickView();
-    return this.sortButton;
+    return this.sortButtons;
   }
 
   clickPress() {
-    const pressType = this.sortButton.querySelectorAll('.press-buttons > a');
+    const pressType = this.sortButtons.querySelectorAll('.press-buttons > a');
     pressType.forEach(pressButton => {
       pressButton.addEventListener('click', ({ currentTarget }) => {
         const reRender = () => {
-          const state = this.#store.getState();
+          const state = this.#viewStore.getState();
           this.render({
             ...state,
-            press: this.#store.getState().press,
+            press: this.#viewStore.getState().press,
           });
         }
 
-        this.#store.subscribe(reRender);
+        this.#viewStore.subscribe(reRender);
         const isAll = currentTarget.textContent === CONSTANTS['all'];
         const clickTargetName = isAll? 'all' : 'subscribed';
-        this.#store.dispatch({
+        this.#viewStore.dispatch({
           type: 'CHANGE_PRESS',
           payload: clickTargetName,
         });
@@ -60,21 +60,21 @@ class SortButton {
   }
 
   clickView() {
-    const viewType = this.sortButton.querySelectorAll('.view-buttons > a');
+    const viewType = this.sortButtons.querySelectorAll('.view-buttons > a');
     viewType.forEach(pressButton => {
       pressButton.addEventListener('click', ({ currentTarget }) => {
         const reRender = () => {
-          const state = this.#store.getState();
+          const state = this.#viewStore.getState();
           this.render({
             ...state,
-            press: this.#store.getState().press,
+            press: this.#viewStore.getState().press,
           });
         }
 
-        this.#store.subscribe(reRender);
+        this.#viewStore.subscribe(reRender);
         const isGrid = currentTarget.className.includes('grid');
         const clickTargetName = isGrid? 'grid' : 'list';
-        this.#store.dispatch({
+        this.#viewStore.dispatch({
           type: 'CHANGE_VIEW',
           payload: clickTargetName,
         });

@@ -11,6 +11,7 @@ const mainView = ({ media }) => {
   const main = createEl("main");
   const sortButtons = new sortButton().render();
   const viewContainer = new GridView(gridData).render();
+  // const ListView = new ListView(media).render();
   main.append(sortButtons, viewContainer);
   return main;
 }

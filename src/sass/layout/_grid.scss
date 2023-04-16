@@ -49,3 +49,23 @@
     }
   }
 }
+
+.no-subscription {
+  @extend .list-container;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  h3 {
+    @include font($titleMD, $bold);
+    color: $black;
+  }
+
+  p {
+    @include font($bodySM, $medium);
+    color: $gray200;
+    text-align: center;
+  }
+}
