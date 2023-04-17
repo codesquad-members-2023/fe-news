@@ -1,6 +1,6 @@
 export class JournalHeaderStore {
   constructor(updateJournalData) {
-    this.journalState = "ALL"; // "SUB"
+    this.journalState = "STATE_ALL"; // "STATE_SUB"
     this.journalFrame = "GRID"; // "DETAIL"
     this.journalListAll = [];
     this.journalSubscribe = [];

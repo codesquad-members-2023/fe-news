@@ -1,8 +1,6 @@
-import { JournalHeaderStore } from "../../store/journalHeaderStore.js";
-
 export class JournalHeader {
-  constructor(updateJournalData) {
-    this.store = new JournalHeaderStore(updateJournalData);
+  constructor(store) {
+    this.journalHeaderStore = store;
     this.element = document.createElement("header");
     this.element.classList.add("journal-header", "display-flex");
     this.render();
@@ -16,8 +14,8 @@ export class JournalHeader {
     const SVG_DETAIL = "src/assets/icons/list-view.svg";
     const SVG_GRID = "src/assets/icons/grid-view-on.svg";
 
-    const fontAll = headerState === "ALL" ? FONT_TITLE : FONT_BODY;
-    const fontSub = headerState === "SUB" ? FONT_TITLE : FONT_BODY;
+    const fontAll = headerState === "STATE_ALL" ? FONT_TITLE : FONT_BODY;
+    const fontSub = headerState === "STATE_SUB" ? FONT_TITLE : FONT_BODY;
 
     const journalHeader = `
       <div class="journal-area display-flex">
@@ -39,20 +37,18 @@ export class JournalHeader {
 
   addEvent() {
     this.journalAllBtn.addEventListener("click", () => {
-      this.store.setState("ALL");
-      console.log(this.store);
+      this.journalHeaderStore.setState("STATE_ALL");
       this.render();
     });
 
     this.journalSubBtn.addEventListener("click", () => {
-      this.store.setState("SUB");
-      console.log(this.store);
+      this.journalHeaderStore.setState("STATE_SUB");
       this.render();
     });
   }
 
   render() {
-    this.headerMarkup(this.store.getState());
+    this.headerMarkup(this.journalHeaderStore.getState());
     this.journalAllBtn = this.element.querySelector(".journal-all");
     this.journalSubBtn = this.element.querySelector(".journal-subList");
     this.addEvent();

@@ -1,16 +1,35 @@
 import { JournalHeader } from "./journalHeader.js";
 import { Journal } from "./journal.js";
 import { Carousel } from "./journalTrack.js";
-import { getJournal } from "../../api/getData.js";
+import { dataRequestToAPI } from "../../api/fetchData.js";
+import { JournalHeaderStore } from "../../store/journalHeaderStore.js";
 
 const createJournalList = () => {
   const journalListEl = document.createElement("article");
   journalListEl.classList.add("news-stand-jounalList");
 
-  const fetchJournalData = async () => {
+  const updateJournalData = (state) => {
+    const journalContainer = document.querySelector(".journal-container");
+    journalContainer.innerHTML = "";
+    const journalList =
+      state === "STATE_ALL"
+        ? journalHeader.journalHeaderStore.getJournalListAll()
+        : journalHeader.journalHeaderStore.getJournalSubscribe();
+    journalList.forEach((item) => {
+      journalContainer.appendChild(item);
+    });
+  };
+
+  const journalHeaderStore = new JournalHeaderStore(updateJournalData);
+  const journalHeader = new JournalHeader(journalHeaderStore);
+  journalListEl.appendChild(journalHeader.element);
+
+  const journalCarousel = new Carousel();
+  journalListEl.appendChild(journalCarousel.element);
+
+  const fetchJournalData = async (journalURL) => {
     try {
-      const journalURL = "http://localhost:3000/journal";
-      const journalData = await getJournal(journalURL);
+      const journalData = await dataRequestToAPI(journalURL);
       const journal = new Journal(journalData);
       const journalItems = journal.getJournalItems();
       return journalItems;
@@ -19,33 +38,18 @@ const createJournalList = () => {
     }
   };
 
-  const updateJournalData = (state) => {
+  const loadJournalItems = async () => {
+    const journalURL = "http://localhost:3000/journal";
+    const journalItems = await fetchJournalData(journalURL);
     const journalContainer = document.querySelector(".journal-container");
-    journalContainer.innerHTML = "";
-    const journalList =
-      state === "ALL"
-        ? journalHeader.store.getJournalListAll()
-        : journalHeader.store.getJournalSubscribe();
-    journalList.forEach((item) => {
+    journalHeaderStore.setJournalListAll(journalItems);
+    const jounalList = journalHeader.journalHeaderStore.journalListAll;
+    jounalList.forEach((item) => {
       journalContainer.appendChild(item);
     });
   };
 
-  const journalHeader = new JournalHeader(updateJournalData);
-  journalListEl.appendChild(journalHeader.element);
-
-  const journalCarousel = new Carousel();
-  journalListEl.appendChild(journalCarousel.element);
-
-  fetchJournalData().then((journalItems) => {
-    const journalContainer = document.querySelector(".journal-container");
-    journalHeader.store.journalState = "ALL";
-    journalHeader.store.setJournalListAll(journalItems);
-    const jounalList = journalHeader.store.journalListAll;
-    jounalList.forEach((item) => {
-      journalContainer.appendChild(item);
-    });
-  });
+  loadJournalItems().catch((error) => console.error(error));
 
   return journalListEl;
 };
