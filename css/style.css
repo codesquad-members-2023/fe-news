@@ -324,16 +324,23 @@ main {
   font-weight: 500;
   font-size: 14px;
   color: #6e8091; }
+  .main-list__nav-item a {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    height: 100%; }
+  .main-list__nav-item span {
+    display: block; }
 
 .main-list__nav-item:hover {
   text-decoration: underline; }
 
 .current-category {
-  display: flex;
   width: 166px;
   height: 100%;
-  flex-direction: row;
   font-weight: 700;
   align-items: center;
   color: white;
-  background: #4362d0; }
+  background: #4362d0;
+  pointer-events: none; }
