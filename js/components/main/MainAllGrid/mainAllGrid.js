@@ -10,7 +10,6 @@ const createMainGridElement = () => {
   const $mainGrid = createElement('section', {
     class: 'main-grid',
   });
-
   for (let page = 1; page <= 4; page++) {
     $mainGrid.append(createMainGridPage(page));
   }
@@ -43,6 +42,7 @@ const createPopUpBox = () => {
   const $popupWrap = createElement('div', {
     class: 'popup-wrap none',
   });
+
   $popupWrap.innerHTML = `
   <a class = "subscribe-button">
     <img src="./asset/subscribeButton.svg" alt="subscribe" />
@@ -89,6 +89,7 @@ const MainGrid = ($main) => {
   const $grid = createMainGridElement();
   subscribe('mediaData', updateMediaContent.bind(null, $grid));
   subscribe('viewOptionData', renderAllGridElement.bind(null, $main));
+
   fetchActionCreator.fetchMediaData();
 
   $grid.addEventListener('mouseover', mouseEventHandler);

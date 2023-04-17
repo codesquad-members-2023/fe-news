@@ -3,12 +3,12 @@ import { getStoreState } from './store.js';
 
 export const subscribeReducer = (state, action) => {
   const subscribeList = getStoreState('subscribeData').subscribe;
+
   const mediaWholeData = getStoreState('mediaData').data;
   switch (action.type) {
     case displayActions.GRID_SUBSCRIBE_BUTTON_CLICK:
       subscribeList.push(mediaWholeData[action.payload - 1]);
       return { subscribe: subscribeList };
-
     case displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK:
       subscribeList.some((subscribeMedia, index) => {
         if (String(subscribeMedia.mediaId) === action.payload) {
@@ -40,15 +40,15 @@ export const mainHeaderBtnClickReducer = (state, action) => {
       return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_MY_MEDIA_BUTTON_CLICK:
-      if (viewOptionData.allOrMine === 'all')
-        return { ...state, viewOption: viewOptionData };
-      viewOptionData.allOrMine = 'all';
-      return { ...state, viewOption: viewOptionData };
-
-    case displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK:
       if (viewOptionData.allOrMine === 'mine')
         return { ...state, viewOption: viewOptionData };
       viewOptionData.allOrMine = 'mine';
+      return { ...state, viewOption: viewOptionData };
+
+    case displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK:
+      if (viewOptionData.allOrMine === 'all')
+        return { ...state, viewOption: viewOptionData };
+      viewOptionData.allOrMine = 'all';
       return { ...state, viewOption: viewOptionData };
 
     default:
