@@ -9,7 +9,7 @@ const LEFT = -1;
 const RIGHT = 1;
 
 export default class ListView extends Component {
-  setup() {
+  initState() {
     const { presses, subscribingPresses, subscriptionOption } = this.props;
 
     let sortedPresses =
@@ -34,7 +34,7 @@ export default class ListView extends Component {
 
     const idx = 0;
 
-    this.state = {
+    return {
       idx,
       categories,
       sortedPresses,
@@ -47,6 +47,7 @@ export default class ListView extends Component {
 
       const { idx, sortedPresses } = this.state;
       const direction = target.closest(".button--left") ? LEFT : RIGHT;
+
       this.setState({
         idx: (idx + direction + sortedPresses.length) % sortedPresses.length,
       });
@@ -62,7 +63,6 @@ export default class ListView extends Component {
   }
 
   template() {
-    console.log(this.state.idx, "render!!");
     return `
         <div class="news-list__list">
             <div class="button button--left"></div>
@@ -81,6 +81,7 @@ export default class ListView extends Component {
     new RightButton(rightButton);
 
     const { idx, categories, sortedPresses } = this.state;
+
     const {
       subscribingPresses,
       addSubscribing,
@@ -103,6 +104,7 @@ export default class ListView extends Component {
         });
 
     const newsContent = this.parentElement.querySelector(".news-content");
+
     new NewsContent(newsContent, {
       idx,
       setIdx: this.setIdx.bind(this),

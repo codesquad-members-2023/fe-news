@@ -3,9 +3,7 @@ import Component from "../../../core/Component.js";
 export default class SubscriptionTab extends Component {
   template() {
     const { press, subscribingPresses } = this.props;
-
     const name = press?.name;
-
     const subscribingPressesHtml = subscribingPresses.reduce(
       (subscribingPressesString, subscribingPress) => {
         const isSelected = name === subscribingPress;
@@ -22,7 +20,6 @@ export default class SubscriptionTab extends Component {
       },
       ""
     );
-
     return `${subscribingPressesHtml}`;
   }
 }

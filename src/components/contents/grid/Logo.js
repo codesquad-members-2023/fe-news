@@ -1,13 +1,13 @@
 import Component from "../../../core/Component.js";
 
 export default class Logo extends Component {
-  setup() {
+  initState() {
     const { name, subscribingPresses } = this.props;
 
     const isSubscribing = subscribingPresses?.some(
       (subscribingPress) => subscribingPress === name
     );
-    this.state = {
+    return {
       isSubscribing,
     };
   }

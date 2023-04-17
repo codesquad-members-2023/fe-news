@@ -1,9 +1,9 @@
 import Component from "../../core/Component.js";
+import { observe } from "../../core/observer.js";
 
 export default class LatestNewsBar extends Component {
-  // 매직넘버 다 빼기
-  setup() {
-    this.state = {
+  initState() {
+    return {
       idx: 0,
     };
   }

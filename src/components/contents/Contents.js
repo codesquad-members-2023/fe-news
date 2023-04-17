@@ -15,8 +15,8 @@ const GRID = "grid";
 const LIST = "list";
 
 export default class Contents extends Component {
-  setup() {
-    this.state = {
+  initState() {
+    return {
       subscribingPresses: [],
       presses: [],
       viewOption: LIST,
@@ -72,6 +72,7 @@ export default class Contents extends Component {
   }
 
   template() {
+    this.state.presses;
     return `
        <div class="options">
          <div class="options__subscription-menu"></div>
@@ -105,7 +106,7 @@ export default class Contents extends Component {
     const addSubscribing = this.addSubscribing.bind(this);
     const removeSubscribing = this.removeSubscribing.bind(this);
 
-    viewOption === GRID
+    this.state.viewOption === GRID
       ? new GridView(viewContainer, {
           presses,
           subscribingPresses,

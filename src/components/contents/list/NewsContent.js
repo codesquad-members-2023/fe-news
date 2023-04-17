@@ -1,14 +1,14 @@
 import Component from "../../../core/Component.js";
 
 export default class NewsContent extends Component {
-  setup() {
+  initState() {
     const { subscribingPresses, press } = this.props;
 
     const isSubscribing = subscribingPresses.some(
       (subscribingPress) => subscribingPress === press.name
     );
 
-    this.state = {
+    return {
       isSubscribing,
     };
   }

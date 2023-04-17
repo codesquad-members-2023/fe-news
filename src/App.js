@@ -3,14 +3,16 @@ import LatestNews from "./components/latestNews/LatestNews.js";
 import Label from "./components/label/Label.js";
 import Contents from "./components/contents/Contents.js";
 
+const test = () => `
+<div class="wrapper">
+  <div class="news-stand"></div>
+  <div class="latest-news"></div>
+  <div class="contents"></div>
+</div>`;
+
 export default class App extends Component {
   template() {
-    return `
-    <div class="wrapper">
-      <div class="news-stand"></div>
-      <div class="latest-news"></div>
-      <div class="contents"></div>
-    </div>`;
+    return test();
   }
 
   renderChildComponents() {
