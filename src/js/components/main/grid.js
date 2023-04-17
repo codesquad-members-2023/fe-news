@@ -20,9 +20,13 @@ class GridView {
   }
 
   #reRender() {
-    const { press } = this.#viewStore.getState();
-    if(press['all']) this.viewContainer.innerHTML = this.renderAllGridView();
-    if(press['subscribed']) this.viewContainer.innerHTML = this.renderSubscribedGridView.bind(this)();
+    const { press, view } = this.#viewStore.getState();
+    if(press['all'] && view['list']) this.viewContainer.querySelector('.grid-container').classList.add('hidden');
+    if(press['all'] && view['grid']) this.viewContainer.querySelector('.grid-container').outerHTML = this.renderAllGridView();
+    if(press['subscribed'] && view['grid']) {
+      this.viewContainer.querySelector('.grid-container').outerHTML = this.renderSubscribedGridView.bind(this)();
+    }
+    // if(press['subscribed'] && view['list'])
     this.onGridCell();
   }
 
@@ -61,10 +65,15 @@ class GridView {
   }
 
   isNoSubscription() {
-    return `<div class="no-subscription">
-    <h3>구독한 언론사가 없습니다.</h3>
-      <p>언론사 구독 설정에서 관심있는 언론사를 구독하시면<br>
-      언론사가 직접 편집한 뉴스들을 네이버 홈에서 바로 보실 수 있습니다.</p>
+    const isGrid = this.#viewStore.getState().view['grid'];
+    return `<div class="grid-container${isGrid ? ``: " hidden"}">
+    <div class="grid-area">
+      <div class="no-subscription">
+      <h3>구독한 언론사가 없습니다.</h3>
+        <p>언론사 구독 설정에서 관심있는 언론사를 구독하시면<br>
+        언론사가 직접 편집한 뉴스들을 네이버 홈에서 바로 보실 수 있습니다.</p>
+      </div>
+    </div>
     </div>`;
   }
 
@@ -99,7 +108,9 @@ class GridView {
       if(!(isPrevBtn || isNextBtn)) return;
       if (isPrevBtn && this.page > this.FIRST_PAGE) this.page--;
       if (isNextBtn && this.page < this.LAST_PAGE) this.page++;
-      this.render();
+      // this.render();
+      this.viewContainer.querySelector('.grid-container').outerHTML = this.renderAllGridView();
+      this.onGridCell();
     });
   }
 
@@ -126,18 +137,14 @@ class GridView {
 
     target.querySelector('.cell-button').addEventListener('click', ({ target }) => {
       const subscribeBtn = target.closest('.grid-cell');
+      const targetBtn = target.closest('.cell-button');
       const targetPress = subscribeBtn.querySelector('img').src;
-      const reRender = () => {
+      const addPress = () => {
         const state =  this.#subscribeStore.getState();
-        this.render({
-          ...state,
-          subscribedList: this.#subscribeStore.getState(),
-        });
       }
 
-       // 구독한 언론사에서 해지했을때 전체화면으로 돌아가는 이슈 수정 필요함
-      this.#subscribeStore.subscribe(reRender);
-      const targetBtnText = target.closest('.cell-button').querySelector('span');
+      this.#subscribeStore.subscribe(addPress);
+      const targetBtnText = targetBtn.querySelector('span');
       const isSubscribe = targetBtnText.textContent === PRESS_BUTTON['subscribe']?
       'SUBSCRIBE' : 'UNSUBSCRIBE';
       this.#subscribeStore.dispatch({

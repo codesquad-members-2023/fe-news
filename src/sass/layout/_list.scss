@@ -15,7 +15,7 @@
       color: $gray300;
 
       &:hover{
-        text-decoration: underline $black;
+        text-decoration: underline $gray300;
         cursor: pointer;
       }
     }
@@ -44,7 +44,7 @@
     display: flex;
     padding: 16px 0;
     justify-content: flex-start;
-    gap: 32px;
+    gap: 45px;
 
     .main-news {
       width: 320px;
@@ -59,7 +59,7 @@
           transition: all 0.2s linear;
 
           &:hover {
-            transform: scale(1.2);
+            transform: scale(1.1);
           }
         }
       }
@@ -90,7 +90,7 @@
 
       .list-news {
         li {
-          line-height: 42px;
+          line-height: 36px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
