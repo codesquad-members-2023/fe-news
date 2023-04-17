@@ -15,7 +15,7 @@ export class NsCategoryContainerObserverViewComponent
 
   // setTemplate은 subscriber 처리하면 안된다. 그러면 element가 초기화되어버림.
   setTemplate() {
-    this._templateElement.innerHTML = `<section id="category-container" class="px-3 py-3 flex-auto flex flex-row justify-between items-center relative hidden"></section>`;
+    this._templateElement.innerHTML = `<section id="category-container" class="px-3 py-3 flex-auto flex flex-row justify-between items-center relative hidden">카테고리 컨테이너</section>`;
   }
 
   get state() {

@@ -19,9 +19,9 @@ export class NsPressContainerComponent implements Component {
   constructor(props?: Props) {
     this._model = new NsPressContainerModel();
     this._view = new NsPressContainerView();
-
+    const articlesPromise = props!.articlesPromise as Promise<Article[]>;
     this.setInitState({
-      articlesPromise: this.getRandomArticles(),
+      articlesPromise,
       page: PRESS_CONTAINER_PAGE_START,
       handleToPrev: this.handleToPrev.bind(this),
       handleToNext: this.handleToNext.bind(this),
@@ -43,20 +43,6 @@ export class NsPressContainerComponent implements Component {
 
   attachTo(component: Component, position: InsertPosition = 'beforeend') {
     component.element.insertAdjacentElement(position, this.element);
-  }
-
-  async getArticles(): Promise<Article[]> {
-    const articleData = await customGet(`${BASIC_URL}/articles`).then((res) =>
-      res.json(),
-    );
-    return articleData;
-  }
-
-  async getRandomArticles() {
-    const articleData = await this.getArticles();
-    const totalItemCount =
-      PRESS_CONTAINER_PAGE_END * PRESS_CONTAINER_ITEM_COUNT;
-    return pickRandomData(articleData, totalItemCount);
   }
 
   async setInitState({
