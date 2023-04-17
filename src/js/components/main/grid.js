@@ -19,22 +19,23 @@ class GridView {
     this.moveToPage();
   }
 
-  #reRender() {
-    const { press, view } = this.#viewStore.getState();
-    if(press['all'] && view['list']) this.viewContainer.querySelector('.grid-container').classList.add('hidden');
-    if(press['all'] && view['grid']) this.viewContainer.querySelector('.grid-container').outerHTML = this.renderAllGridView();
-    if(press['subscribed'] && view['grid']) {
-      this.viewContainer.querySelector('.grid-container').outerHTML = this.renderSubscribedGridView.bind(this)();
-    }
-    // if(press['subscribed'] && view['list'])
-    this.onGridCell();
-  }
-
   render() {
     this.viewContainer.innerHTML = this.renderAllGridView();
     this.onGridCell();
     this.#viewStore.subscribe(this.#reRender.bind(this));
     return this.viewContainer;
+  }
+
+  #reRender() {
+    const { press, view } = this.#viewStore.getState();
+    const gridContainer = this.viewContainer.querySelector('.grid-container');
+    if(press['all'] && view['list']) gridContainer.classList.add('hidden');
+    if(press['all'] && view['grid']) gridContainer.outerHTML = this.renderAllGridView();
+    if(press['subscribed'] && view['grid']) {
+      gridContainer.outerHTML = this.renderSubscribedGridView.bind(this)();
+    }
+    // if(press['subscribed'] && view['list'])
+    this.onGridCell();
   }
 
   renderAllGridView() {
@@ -108,7 +109,6 @@ class GridView {
       if(!(isPrevBtn || isNextBtn)) return;
       if (isPrevBtn && this.page > this.FIRST_PAGE) this.page--;
       if (isNextBtn && this.page < this.LAST_PAGE) this.page++;
-      // this.render();
       this.viewContainer.querySelector('.grid-container').outerHTML = this.renderAllGridView();
       this.onGridCell();
     });
@@ -125,32 +125,32 @@ class GridView {
   mouseEnterGridCell({ target }) {
     const pressLogo = target.querySelector('img');
     if(pressLogo.src === '') return;
-    pressLogo.classList.add('hidden');
 
+    pressLogo.classList.add('hidden');
     const subscribeBtn = target.querySelector('.cell-button');
     if(subscribeBtn) subscribeBtn.classList.remove('hidden');
     else {
+      const pressLogo = target.querySelector('img');
       const isSubscribe = this.#subscribeStore.getState().subscribedList.has(pressLogo.src);
       const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
       target.insertAdjacentHTML('beforeend', this.getSubscribeButton(`${buttonType}`));
     }
+    target.querySelector('.cell-button').addEventListener('click', this.clickSubscribeBtn.bind(this));
+  }
 
-    target.querySelector('.cell-button').addEventListener('click', ({ target }) => {
-      const subscribeBtn = target.closest('.grid-cell');
-      const targetBtn = target.closest('.cell-button');
-      const targetPress = subscribeBtn.querySelector('img').src;
-      const addPress = () => {
-        const state =  this.#subscribeStore.getState();
-      }
+  clickSubscribeBtn({ target }) {
+    const targetBtn = target.closest('.cell-button');
+    const targetPressCell = targetBtn.closest('.grid-cell');
+    const subscribedPressInfo = targetPressCell.querySelector('img').src;
+    const addSubscribedPress = () => { const state = this.#subscribeStore.getState() };
 
-      this.#subscribeStore.subscribe(addPress);
-      const targetBtnText = targetBtn.querySelector('span');
-      const isSubscribe = targetBtnText.textContent === PRESS_BUTTON['subscribe']?
+    this.#subscribeStore.subscribe(addSubscribedPress);
+    const targetBtnText = targetBtn.querySelector('span').textContent;
+    const isSubscribe = targetBtnText === PRESS_BUTTON['subscribe']?
       'SUBSCRIBE' : 'UNSUBSCRIBE';
-      this.#subscribeStore.dispatch({
-        type: `${isSubscribe}`,
-        payload: targetPress,
-      });
+    this.#subscribeStore.dispatch({
+      type: `${isSubscribe}`,
+      payload: subscribedPressInfo,
     });
   }
 
