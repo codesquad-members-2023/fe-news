@@ -1,10 +1,10 @@
 export default class NSHeadlineView {
-  constructor({ NS_HEADLINE_INFO }, dataFetcher, REFERENCE, API_PATH) {
+  constructor({ NS_HEADLINE_INFO }, REFERENCE, dataFetcher, API_PATH, model) {
     this._parentElem = REFERENCE.NS_CONTAINER;
     this._info = NS_HEADLINE_INFO;
     this._dataFetcher = dataFetcher;
     this._API_PATH = API_PATH;
-
+    this._model = model;
     this._animationStartTime = {
       left: null,
       right: null,
@@ -14,14 +14,21 @@ export default class NSHeadlineView {
     this.render();
   }
 
-  async fetchData() {
+  async getData() {
+    const headlineList = await this._dataFetcher(
+      this._API_PATH.HEADLINE,
+      this.getHeadlineList.bind(this)
+    );
+    return headlineList;
+  }
+
+  getHeadlineList(data) {
     const headlineList = {
       left: '',
       right: '',
     };
 
-    await this._dataFetcher.fetchData(this._API_PATH.HEADLINE);
-    this._dataFetcher.getResult().forEach((headline) => {
+    data.forEach((headline) => {
       headline.id <= this._info.HEADLINE_LENGTH
         ? (headlineList.left += `<li>${headline.title}</li>`)
         : (headlineList.right += `<li>${headline.title}</li>`);
@@ -31,11 +38,12 @@ export default class NSHeadlineView {
   }
 
   async render() {
-    const headlineList = await this.fetchData();
+    const headlineList = await this.getData();
     const markUp = this.generateMarkup(headlineList);
     this._parentElem.insertAdjacentHTML('beforeend', markUp);
     this.setHeadlineSection();
     this.setHeadlineAnimation();
+    this._model.getReady();
   }
 
   generateMarkup(headlineList) {

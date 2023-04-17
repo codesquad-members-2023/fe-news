@@ -6,6 +6,10 @@
     justify-content: space-between;
     margin-bottom: 20px;
 
+    a {
+      cursor: pointer;
+    }
+
     .header_sort_buttons {
       display: flex;
       gap: 10px;
@@ -32,5 +36,9 @@
     left: -30px;
 
     width: 1030px;
+
+    .hidden {
+      visibility: hidden;
+    }
   }
 }

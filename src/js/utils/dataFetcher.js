@@ -1,19 +1,13 @@
-export default class DataFetcher {
-  constructor(url) {
-    this._url = url;
-    this._data;
-  }
-
-  async fetchData(type) {
+const fetcher = (url) => {
+  return async (type, cb) => {
     try {
-      const response = await fetch(`${this._url}${type}`);
-      this._data = await response.json();
+      const response = await fetch(`${url}${type}`);
+      const data = await response.json();
+      return cb(data);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
+};
 
-  getResult() {
-    return this._data;
-  }
-}
+export default fetcher;
