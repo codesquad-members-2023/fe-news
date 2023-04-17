@@ -7,6 +7,7 @@ export class ListViewHeader extends Component {
       currentCategory,
       currentCategoryTotalPage,
       categoryIds,
+      pressCategories,
       btnState,
     } = this.props;
 
@@ -18,12 +19,15 @@ export class ListViewHeader extends Component {
                 acc +
                 `
             <div class="list-view__current-category">
-              <div class="current-category">${category}</div>
+              <div class="current-category">${pressCategories[0][category]}</div>
               <div class="current-page">${currentPageInCategory}/${currentCategoryTotalPage}</div>
             </div>`
               );
             } else {
-              return acc + `<div class="list-view__category">${category}</div>`;
+              return (
+                acc +
+                `<div class="list-view__category">${pressCategories[0][category]}</div>`
+              );
             }
           }, "")
         : categoryIds.reduce((acc, name) => {

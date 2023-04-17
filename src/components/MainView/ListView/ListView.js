@@ -2,10 +2,11 @@ import { Component } from "../../../core/Component.js";
 import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
 import { ListViewHeader } from "./ListViewHeader.js";
 import { ListViewMain } from "./ListViewMain.js";
+import { getPageNumberBy } from "../../../utils/utils.js";
 
 export class ListView extends Component {
   setUp() {
-    this._state = this.getCurrentListViewData(this.props);
+    this._state = this.getCurrentListViewState(this.props);
   }
 
   templete() {
@@ -19,6 +20,15 @@ export class ListView extends Component {
     `;
   }
 
+  setEvent() {
+    this.target.addEventListener("click", ({ target }) => {
+      if (target.closest(".view-page-btn")) {
+        const [_, dir] = target.closest(".view-page-btn").className.split(" ");
+        this.setState(this.getCurrentListViewState(this._state, dir));
+      }
+    });
+  }
+
   mounted() {
     const listViewHeader = this.target.querySelector(".list-view__header");
     const {
@@ -28,30 +38,37 @@ export class ListView extends Component {
       categoryIds,
       btnState,
       currentCategoryData,
+      subscribeStatus,
     } = this._state;
+    const { subscribePress, pressCategories } = this.props;
 
     new ListViewHeader(listViewHeader, {
-      currentPageInCategory: currentPageInCategory,
-      currentCategory: currentCategory,
-      currentCategoryTotalPage: currentCategoryTotalPage,
-      categoryIds: categoryIds,
-      btnState: btnState,
+      currentPageInCategory,
+      currentCategory,
+      currentCategoryTotalPage,
+      categoryIds,
+      pressCategories,
+      btnState,
     });
 
     const listViewMain = this.target.querySelector(".list-view__main");
 
     new ListViewMain(listViewMain, {
-      currentCategoryData: currentCategoryData,
+      currentCategoryData,
+      subscribeStatus,
+      subscribePress,
     });
   }
 
-  getCurrentListViewData(listViewData) {
+  getCurrentListViewState(listViewData, dir) {
+    const FIRST_PAGE = 1;
     let {
       currentPageInAllCategories,
       currentPageInCategory,
       currentCategory,
       pressData,
       btnState,
+      allPressSubscribeStatus,
     } = listViewData;
 
     const categoryIds =
@@ -65,29 +82,45 @@ export class ListView extends Component {
     );
     const allPressContents = this.getAllPressContents(sortedPressData);
     const categoryLengths = this.getCategoryLengths(sortedPressData);
+    const LAST_PAGE = this.getLastPage(allPressContents);
 
-    const nextPageInAllCategories = currentPageInAllCategories
-      ? currentPageInAllCategories
-      : 1;
+    let nextPageInAllCategories = currentPageInAllCategories
+      ? getPageNumberBy(dir, currentPageInAllCategories)
+      : FIRST_PAGE;
+
+    if (nextPageInAllCategories > LAST_PAGE) {
+      nextPageInAllCategories = FIRST_PAGE;
+    } else if (nextPageInAllCategories < FIRST_PAGE) {
+      nextPageInAllCategories = LAST_PAGE;
+    }
+
     const nextCategory =
       btnState === "all-press"
         ? allPressContents[nextPageInAllCategories - 1].category_id
         : allPressContents[nextPageInAllCategories - 1].name;
-    const nextPageInCategory =
-      currentCategory != nextCategory && !currentPageInCategory
-        ? 1
-        : currentPageInCategory;
-    const nextCategoryData = allPressContents[nextPageInAllCategories - 1];
     const nextCategoryTotalPage = categoryLengths[nextCategory];
+    let nextPageInCategory =
+      currentCategory !== nextCategory || !currentPageInCategory
+        ? dir === "right" || dir === undefined
+          ? FIRST_PAGE
+          : nextCategoryTotalPage
+        : getPageNumberBy(dir, currentPageInCategory);
+
+    const nextCategoryData = allPressContents[nextPageInAllCategories - 1];
+    const targetPressSubscribeStatus =
+      allPressSubscribeStatus[nextPageInAllCategories - 1];
 
     return {
+      currentPageInAllCategories: nextPageInAllCategories,
       currentPageInCategory: nextPageInCategory,
       currentCategory: nextCategory,
       currentCategoryTotalPage: nextCategoryTotalPage,
-      categoryIds: categoryIds,
+      categoryIds,
       currentCategoryData: nextCategoryData,
-      pressData: pressData,
-      btnState: btnState,
+      pressData,
+      btnState,
+      subscribeStatus: targetPressSubscribeStatus,
+      allPressSubscribeStatus,
     };
   }
 
@@ -118,5 +151,9 @@ export class ListView extends Component {
 
   getAllPressContents(sortedPressData) {
     return Object.values(sortedPressData).flat();
+  }
+
+  getLastPage(allPressContents) {
+    return allPressContents.length;
   }
 }

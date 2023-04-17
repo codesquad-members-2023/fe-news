@@ -1,4 +1,5 @@
 import { Component } from "../../../core/Component.js";
+import { ListViewSubscribeBtn } from "./ListViewSubscribeBtn.js";
 
 export class ListViewMain extends Component {
   templete() {
@@ -11,14 +12,13 @@ export class ListViewMain extends Component {
       main_news_title,
       sub_news_titles,
     } = currentCategoryData;
+
     return `
       <div class="list-view-main__section-main">
       <div class="list-view-main__header">
         <img class="list-view-main__press" src="${logo_src}" alt="" />
         <div class="list-view-main__edit-time">${edit_time}</div>
-        <div class="subscribe-btn">
-          <div class="subscribe-text">+ 구독하기</div>
-        </div>
+        <div class="subscribe-btn"></div>
       </div>
       <div class="list-view-main__contents">
         <img class="list-view-main__main-news-image" src="${main_news_image}" alt="" />
@@ -34,5 +34,20 @@ export class ListViewMain extends Component {
       <li class="list-view-main__sub-news-notice">${name} 언론사에서 직접 편집한 뉴스입니다</li>
     </div>
     `;
+  }
+
+  mounted() {
+    const {
+      currentCategoryData: { logo_src },
+      subscribeStatus,
+      subscribePress,
+    } = this.props;
+    const subscribeBtn = this.target.querySelector(".subscribe-btn");
+
+    new ListViewSubscribeBtn(subscribeBtn, {
+      subscribeStatus,
+      subscribePress,
+      targetLogoSrc: logo_src,
+    });
   }
 }
