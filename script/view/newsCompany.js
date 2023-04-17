@@ -57,13 +57,20 @@ const insertNewsCompanyGrid = (newsData) => {
     }
   };
   controlButton();
+
   const insertNewsData = () => {
     gridBox.innerHTML = "";
     newsData[page].map((data) => {
-      gridBox.innerHTML += `<div><img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/></div>`;
+      gridBox.innerHTML += `<div id="${data.mediaId}"><img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/></div>`;
     });
   };
   insertNewsData();
 };
-
+const showsubscribeButton = () => {
+  const newsCompanyGrid = document.querySelector(".grid_set");
+  const subscribeButton = document.createElement("button", { class: "subscribe-btn" });
+  newsCompanyGrid.addEventListener("mouseover", (e) => {
+    e.target.append(subscribeButton);
+  });
+};
 export { renderNewsCompanyBar, insertNewsCompanyGrid };

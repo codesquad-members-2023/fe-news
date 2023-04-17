@@ -39,10 +39,11 @@
 
   div {
     border: 0.5px solid var(--color-gray-100);
-    text-align: center;
-    padding: 27px 0 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     img {
-      width: 90px;
+      width: 70px;
     }
   }
 }
