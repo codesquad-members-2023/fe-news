@@ -1,5 +1,6 @@
 import { createElement } from '../../../utils/dom.js';
-import { subscribe, getStoreState } from '../../../store/store.js';
+import { subscribe, getStoreState, dispatch } from '../../../store/store.js';
+import { displayActionCreator } from '../../../actions/actions.js';
 
 const MEDIA_CATEGORIES = [
   '종합/경제',
@@ -11,23 +12,25 @@ const MEDIA_CATEGORIES = [
   '지역',
 ];
 
-const createMainListElement = (mediaData) => {
+const createMainListElement = (mediaData, typeIdx) => {
   const $mainList = createElement('section', {
     class: 'main-list',
   });
-  const $mainNav = createMainListNavElement();
+  const $mainNav = createMainListNavElement(typeIdx);
   const $mainNews = createMainListNewsElement(mediaData);
   $mainList.append($mainNav, $mainNews);
 
   return $mainList;
 };
 
-const navItemHTML = (category) => `
-    <li class="main-list__nav-item">
+const navItemHTML = (category, typeIdx) => `
+    <li class="main-list__nav-item ${
+      typeIdx === MEDIA_CATEGORIES.indexOf(category) ? 'current-category' : ''
+    }" >
         <a href="#">${category}</a>
     </li>`;
 
-const createMainListNavElement = () => {
+const createMainListNavElement = (typeIdx) => {
   const $mainListNav = createElement('nav', {
     class: 'main-list__nav',
   });
@@ -36,7 +39,7 @@ const createMainListNavElement = () => {
   });
 
   $navItems.innerHTML = MEDIA_CATEGORIES.reduce((html, category) => {
-    html += navItemHTML(category);
+    html += navItemHTML(category, typeIdx);
     return html;
   }, ``);
   $mainListNav.append($navItems);
@@ -111,15 +114,29 @@ const renderMainAllList = ($main, content) => {
     content.viewOption.allOrMine === 'all';
   if (!breakCondition) return;
 
-  const $mainList = createMainListElement(mediaData[content.page]);
-  $mainList.addEventListener('click', () => {});
+  const $mainList = createMainListElement(mediaData[content.page], 0);
+  $mainList.addEventListener('click', ({ target }) => {
+    const $tab = target.closest('.main-list__nav-item');
+    if (!$tab || $tab.classList.contains('current-category')) return;
+    $tab.classList.add('current-category');
+    const mediaType = $tab.textContent.trim();
+    const categoryIdx = MEDIA_CATEGORIES.indexOf(mediaType);
+    dispatch(displayActionCreator.listTabBtnClick(categoryIdx));
+  });
   $main.replaceChild($mainList, $main.lastChild);
 };
 
 const renderNextPage = ($main, content) => {
+  const typeIdx = content.currentMediaTypeIdx;
   const mediaData = getStoreState('mediaData').data;
-  const $mainList = createMainListElement(mediaData[content.page]);
-  $mainList.addEventListener('click', () => {});
+  const $mainList = createMainListElement(mediaData[content.page], typeIdx);
+  $mainList.addEventListener('click', ({ target }) => {
+    const $tab = target.closest('.main-list__nav-item');
+    if (!$tab || $tab.classList.contains('current-category')) return;
+    const mediaType = $tab.textContent.trim();
+    const categoryIdx = MEDIA_CATEGORIES.indexOf(mediaType);
+    dispatch(displayActionCreator.listTabBtnClick(categoryIdx));
+  });
   $main.replaceChild($mainList, $main.lastChild);
 };
 

@@ -60,6 +60,7 @@ export const listPageReducer = (state, action) => {
   let listPage = state.page;
   const mediaData = getStoreState('mediaData').data;
   const mediaDataLength = mediaData.length;
+  const mediaTypeIdxArr = mediaTypeIdxChecking(mediaData);
   switch (action.type) {
     case displayActions.LIST_LEFT_BUTTON_CLICK:
       if (listPage === 0) listPage = mediaDataLength - 1;
@@ -71,7 +72,12 @@ export const listPageReducer = (state, action) => {
       return { ...state, page: listPage };
     case displayActions.LIST_TAB_BUTTON_CLICK:
       // TODO: 탭한 언론사 type의 1페이지를 state로 바꿔야함.
-      action.payload;
+      // TODO : 탭한 언론사 idx 도 바꿔주기!
+      return {
+        page: mediaTypeIdxArr[action.payload],
+        typePage: 1,
+        currentMediaTypeIdx: action.payload,
+      };
     default:
       return state;
   }
@@ -80,4 +86,18 @@ export const listPageReducer = (state, action) => {
 const checkMediaType = () => {
   // 이동한 페이지의 언론사가 무슨 type인지 계속 검사!!
   // 왼쪽 오른쪽 버튼 눌러도 검사해야함!
+};
+
+const mediaTypeIdxChecking = (mediaData) => {
+  let currentType;
+  const mediaTypeIdxArr = [];
+  mediaData.forEach((media, idx) => {
+    const mediaType = media.mediaInfo.type;
+    if (currentType !== mediaType) {
+      mediaTypeIdxArr.push(idx);
+      currentType = mediaType;
+    }
+  });
+  console.log(mediaTypeIdxArr);
+  return mediaTypeIdxArr;
 };
