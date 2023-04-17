@@ -1,6 +1,9 @@
 import { createElement } from '../../../utils/dom.js';
 import { subscribe, getStoreState } from '../../../store/store.js';
-import { tabClickEventHandler } from './mainAllListEventHandlers.js';
+import {
+  tabClickEventHandler,
+  subscribeBtnClickEventHandler,
+} from './mainAllListEventHandlers.js';
 
 export const MEDIA_CATEGORIES = [
   '종합/경제',
@@ -123,6 +126,12 @@ const renderMainAllList = ($main, content) => {
 
   const $mainList = createMainListElement(mediaData[content.page], 0, pageData);
   $mainList.addEventListener('click', tabClickEventHandler);
+  $mainList
+    .querySelector('.list__subscribe-button')
+    .addEventListener(
+      'click',
+      subscribeBtnClickEventHandler.bind(null, mediaData[content.page].mediaId),
+    );
   $main.replaceChild($mainList, $main.lastChild);
 };
 
@@ -135,6 +144,12 @@ const renderNextPage = ($main, content) => {
     content,
   );
   $mainList.addEventListener('click', tabClickEventHandler);
+  $mainList
+    .querySelector('.list__subscribe-button')
+    .addEventListener(
+      'click',
+      subscribeBtnClickEventHandler.bind(null, mediaData[content.page].mediaId),
+    );
   $main.replaceChild($mainList, $main.lastChild);
 };
 

@@ -9,3 +9,17 @@ export const tabClickEventHandler = ({ target }) => {
   const categoryIdx = MEDIA_CATEGORIES.indexOf(mediaType);
   dispatch(displayActionCreator.listTabBtnClick(categoryIdx));
 };
+
+export const subscribeBtnClickEventHandler = (mediaIdx, event) => {
+  const $img = event.currentTarget.querySelector('img');
+
+  if ($img.alt === 'subscribe') {
+    $img.alt = 'unsubscribe';
+    $img.src = './asset/listUnsubscribeBtn.svg';
+    dispatch(displayActionCreator.gridSubscribeBtnClick(mediaIdx));
+  } else {
+    $img.alt = 'subscribe';
+    $img.src = './asset/subscribeButton.svg';
+    dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaIdx));
+  }
+};
