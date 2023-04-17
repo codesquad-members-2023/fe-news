@@ -29,7 +29,11 @@
 
 4. 화면 구현
 
-- [ ] 기본 요소 셋팅
-- [ ] header 구성
-- [ ] article 구성
-- [ ] section 구성
+- [x] 기본 요소 셋팅
+- [x] header 구성
+- [x] article 구성
+- [x] section 구성
+
+5. 완성 화면
+
+![완성 화면](https://user-images.githubusercontent.com/104904719/232360059-9413f696-c6c9-4ae2-a72a-9f5e1d74c9cd.gif)

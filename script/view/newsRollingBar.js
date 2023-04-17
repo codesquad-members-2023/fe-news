@@ -6,8 +6,7 @@ const rollingBarTemplate = () =>
   <img src="assets/rollingLogo.svg" /><ul class="data_list_right"></ul></div>
   </div>`;
 
-const renderRollingBar = () => {
-  const root = document.querySelector(".root");
+const renderRollingBar = (root) => {
   const newsRollingBar = document.createElement("article");
   root.appendChild(newsRollingBar);
   newsRollingBar.innerHTML = rollingBarTemplate();
@@ -15,24 +14,22 @@ const renderRollingBar = () => {
 
 const insertNewsData = (newsData, rollingBox) => {
   const rollingBar = document.querySelector(`${rollingBox}`);
-  newsData.forEach((data) => {
+  newsData.map((data) => {
     rollingBar.innerHTML += `<li>${data}</li>`;
   });
 };
 
-const rollingData = (className) => {
-  const rollingBar = document.querySelector(className);
+const rollingData = (rollingBox) => {
+  const rollingBar = document.querySelector(rollingBox);
   let startTime = null;
   let handle = null;
 
   const autoRolling = (timestamp) => {
     if (!startTime) startTime = timestamp;
-
     const progress = timestamp - startTime;
     if (progress >= 5000) {
       rollingBar.style.transform = `translate3d(0, -31px, 0)`;
       rollingBar.style.transitionDuration = "500ms";
-
       startTime = timestamp;
     }
     rollingBar.ontransitionend = () => {
@@ -57,4 +54,13 @@ const rollingData = (className) => {
   eventHandler();
 };
 
-export { renderRollingBar, insertNewsData, rollingData };
+const runRollingBar = () => {
+  const root = document.querySelector(".root");
+  renderRollingBar(root);
+  rollingData(".data_list_left");
+  setTimeout(() => {
+    rollingData(".data_list_right");
+  }, 1000);
+};
+
+export { runRollingBar, insertNewsData, rollingData };

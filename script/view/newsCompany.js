@@ -10,9 +10,10 @@ const newsCompanyTemplate = () => `
     <img class=" company__view_logo" src="assets/viewLogo.svg"/>
   </div>
   </div>
-  <div class="news-company__gride">
-    <div class="gride_set"></div>
-    <div class="gride_btn"><img class="girde_btn-left" src="assets/leftButton.svg"/><img class="girde_btn-right" src="assets/rightButton.svg"/></div>
+  <div class="news-company__grid">
+    <div class="grid_btn-left"><img src="assets/leftButton.svg"/></div>
+    <div class="grid_set"></div>
+    <div class="grid_btn-right"><img src="assets/rightButton.svg"/></div>
   </div>
 </div>
 `;
@@ -23,4 +24,53 @@ const renderNewsCompanyBar = () => {
   newsCompanyBar.innerHTML = newsCompanyTemplate();
 };
 
-export { renderNewsCompanyBar };
+const insertNewsCompanyGrid = (newsData) => {
+  const gridBox = document.querySelector(".grid_set");
+  const rightButton = document.querySelector(".grid_btn-right");
+  const leftButton = document.querySelector(".grid_btn-left");
+  let page = 0;
+
+  const eventHandler = () => {
+    rightButton.addEventListener("click", () => {
+      controlButton();
+      page += 1;
+      insertNewsData();
+    });
+    leftButton.addEventListener("click", () => {
+      controlButton();
+      page -= 1;
+      insertNewsData();
+    });
+  };
+  eventHandler();
+
+  const controlButton = () => {
+    if (page > 1) {
+      leftButton.classList.remove("hidden");
+    } else {
+      leftButton.classList.add("hidden");
+    }
+    if (page < 2) {
+      rightButton.classList.remove("hidden");
+    } else {
+      rightButton.classList.add("hidden");
+    }
+  };
+  controlButton();
+
+  const insertNewsData = () => {
+    gridBox.innerHTML = "";
+    newsData[page].map((data) => {
+      gridBox.innerHTML += `<div id="${data.mediaId}"><img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/></div>`;
+    });
+  };
+  insertNewsData();
+};
+const showsubscribeButton = () => {
+  const newsCompanyGrid = document.querySelector(".grid_set");
+  const subscribeButton = document.createElement("button", { class: "subscribe-btn" });
+  newsCompanyGrid.addEventListener("mouseover", (e) => {
+    e.target.append(subscribeButton);
+  });
+};
+export { renderNewsCompanyBar, insertNewsCompanyGrid };
