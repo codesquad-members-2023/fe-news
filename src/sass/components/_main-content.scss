@@ -1,0 +1,23 @@
+.press-grid {
+  height: 388px;
+}
+.press-grid__item {
+  border: 1px solid $gray200;
+
+  .press-logo {
+    height: 25px;
+  }
+  .subscribe-toggle-btn-container {
+    width: 100%;
+    height: 100%;
+    background-color: $off-white;
+
+    .subscribe-toggle-btn {
+      width: 74px;
+      height: 24px;
+      border: 1px solid #d2dae0;
+      border-radius: 50px;
+      background-color: $white;
+    }
+  }
+}

@@ -6,6 +6,7 @@
 }
 
 .main-content__header {
+  padding: 10px 0;
   .press-tab,
   .show-tab {
     @include flex-row($justify-content: space-between, $align-items: center);
@@ -19,5 +20,25 @@
   }
   .show-tab__list {
     margin-right: 14px;
+  }
+}
+
+.main-content__grid {
+  @include flex-row();
+}
+.press-grid {
+  display: grid;
+  grid-template-columns: repeat($grid-columns-count, calc($app-width/$grid-columns-count));
+}
+.press-grid__item {
+  @include flex-row($justify-content: center, $align-items: center);
+  position: relative;
+
+  .subscribe-toggle-btn-container {
+    display: none;
+    position: absolute;
+  }
+  &:hover .subscribe-toggle-btn-container {
+    @include flex-row($justify-content: center, $align-items: center);
   }
 }
