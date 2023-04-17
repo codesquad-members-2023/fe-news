@@ -307,17 +307,21 @@ list-view 영역
 
 .list-view-main__section-sub {
   padding: 47px 0 0 20px;
+  width: 430px;
 }
 
 .list-view-main__sub-news-title {
   padding-bottom: 15px;
   font-size: var(--font-lg);
-  color: var(--color-gray-800)
+  color: var(--color-gray-800);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .list-view-main__sub-news-notice {
   font-size: var(--font-md);
-  color: var(--color-gray-600)
+  color: var(--color-gray-600);
 }
 
 /*
