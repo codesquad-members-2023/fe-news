@@ -6,6 +6,10 @@ ns-header img {
   margin-right: 0.5rem;
 }
 
+ns-header .logo {
+  text-decoration: none;
+}
+
 ns-header .header-container {
   width: 930px;
 }
