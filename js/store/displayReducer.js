@@ -69,6 +69,7 @@ export const listPageReducer = (state, action) => {
         page: mediaTypeIdxArr[action.payload].startIdx,
         typePage: 1,
         currentMediaTypeIdx: action.payload,
+        typeLength: mediaTypeIdxArr[action.payload].length,
       };
     default:
       return state;
@@ -113,12 +114,14 @@ const checkCurTypePage = (direction, state, mediaData, mediaTypeIdxArr) => {
         page: prevPage,
         typePage: mediaTypeIdxArr[prevTypeIdx].length,
         currentMediaTypeIdx: prevTypeIdx,
+        typeLength: mediaTypeIdxArr[prevTypeIdx].length,
       };
     } else {
       return {
         page: prevPage,
         typePage: state.typePage - 1,
         currentMediaTypeIdx: currentMediaTypeIdx,
+        typeLength: mediaTypeIdxArr[currentMediaTypeIdx].length,
       };
     }
   } else if (direction === 'right') {
@@ -132,12 +135,14 @@ const checkCurTypePage = (direction, state, mediaData, mediaTypeIdxArr) => {
         page: nextPage,
         typePage: 1,
         currentMediaTypeIdx: nextTypeIdx,
+        typeLength: mediaTypeIdxArr[nextTypeIdx].length,
       };
     } else {
       return {
         page: nextPage,
         typePage: state.typePage + 1,
         currentMediaTypeIdx: currentMediaTypeIdx,
+        typeLength: mediaTypeIdxArr[currentMediaTypeIdx].length,
       };
     }
   }

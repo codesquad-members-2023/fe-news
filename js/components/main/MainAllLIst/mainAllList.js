@@ -13,7 +13,6 @@ export const MEDIA_CATEGORIES = [
 ];
 
 const createMainListElement = (mediaData, typeIdx, content) => {
-  console.log(content);
   const $mainList = createElement('section', {
     class: 'main-list',
   });
@@ -31,7 +30,9 @@ const navItemHTML = (category, typeIdx, content) => `
         <a href="#">
         <span>${category}</span>
         <span>${
-          typeIdx === MEDIA_CATEGORIES.indexOf(category) ? content.typePage : ''
+          typeIdx === MEDIA_CATEGORIES.indexOf(category)
+            ? content.typePage + '/' + content.typeLength
+            : ''
         }</span>
         </a>
     </li>`;

@@ -31,6 +31,7 @@ const defaultListPageData = {
   page: 0,
   typePage: 1, // 언론사가 속한 타입에서의 page
   currentMediaTypeIdx: 0, // 탭 종류 idx
+  typeLength: 82,
 };
 
 // Store의 State 초기화.
