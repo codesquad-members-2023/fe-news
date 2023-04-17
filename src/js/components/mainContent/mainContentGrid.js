@@ -1,8 +1,11 @@
 import { $ } from '../../utils/dom.js';
+import { getChucks } from '../../utils/getData.js';
 import { tabStore, gridPageStore } from '../../store/index.js';
 import PressGrid from './pressGrid.js';
 
 export default class MainContentGrid {
+  #gridItemCount = 24;
+
   #imgSrc = {
     beforeBtn: 'src/images/before_btn.svg',
     nextBtn: 'src/images/next_btn.svg'
@@ -19,7 +22,8 @@ export default class MainContentGrid {
   }
 
   mount() {
-    const { pressTabType, pressChucks } = this.props;
+    const { pressTabType, pressData } = this.props;
+    const pressChucks = getChucks({ arr: pressData, count: this.#gridItemCount });
 
     this.render();
 
