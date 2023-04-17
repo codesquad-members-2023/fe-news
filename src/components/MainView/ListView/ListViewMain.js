@@ -21,7 +21,9 @@ export class ListViewMain extends Component {
         <div class="subscribe-btn"></div>
       </div>
       <div class="list-view-main__contents">
-        <img class="list-view-main__main-news-image" src="${main_news_image}" alt="" />
+        <div class="list-view-main__main-news-image">
+          <img src="${main_news_image}" alt="" />
+        </div>
         <div class="list-view-main__main-news-title">${main_news_title}</div>
       </div>
     </div>

@@ -297,10 +297,23 @@ list-view 영역
 .list-view-main__main-news-image {
   width: 320px;
   height: 200px;
+  overflow: hidden;
+}
+
+.list-view-main__main-news-image img {
+  transition: all 0.2s linear;
+  max-width: 320px;
+  max-height: 100%;
+}
+
+.list-view-main__main-news-image:hover img {
+  transform: scale(1.05);
 }
 
 .list-view-main__main-news-title {
-  font-size: var(--font-s);
+  font-size: var(--font-md);
+  font-weight: var(--weight-extra-bold);
+  line-height: 20px;
   grid-row-start: 2;
   grid-row-end: 5;
 }

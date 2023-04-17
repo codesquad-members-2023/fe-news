@@ -99,8 +99,9 @@
   - [ ] : 삼항연산자 로직 함수로 분리 시도해보기
   - [ ] : 비동기 처리 로직 수정
 - [ ] : 기능 구현
-  - [ ] : list view sub title text overflow 처리
+  - [x] : list view sub title text overflow 처리
   - [ ] : list view 카테고리 탭 클릭 이벤트 - 클릭시 해당 카테고리 혹은 언론사로 이동
+  - [x] : list view main image hover시 5% 확대 효과 구현
 
 **:two: 화요일 학습계획**
 
