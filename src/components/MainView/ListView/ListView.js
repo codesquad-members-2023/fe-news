@@ -2,7 +2,7 @@ import { Component } from "../../../core/Component.js";
 import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
 import { ListViewHeader } from "./ListViewHeader.js";
 import { ListViewMain } from "./ListViewMain.js";
-import { getPageNumberBy } from "../../../utils/utils.js";
+import { getPageNumberByDir } from "../../../utils/utils.js";
 
 export class ListView extends Component {
   setUp() {
@@ -41,6 +41,7 @@ export class ListView extends Component {
       subscribeStatus,
     } = this._state;
     const { subscribePress, pressCategories } = this.props;
+    const { moveToTargetCategoryBy } = this;
 
     new ListViewHeader(listViewHeader, {
       currentPageInCategory,
@@ -49,6 +50,7 @@ export class ListView extends Component {
       categoryIds,
       pressCategories,
       btnState,
+      moveToTargetCategoryBy: moveToTargetCategoryBy.bind(this),
     });
 
     const listViewMain = this.target.querySelector(".list-view__main");
@@ -62,10 +64,12 @@ export class ListView extends Component {
 
   getCurrentListViewState(listViewData, dir) {
     const FIRST_PAGE = 1;
+
     let {
       currentPageInAllCategories,
       currentPageInCategory,
       currentCategory,
+      targetCategory,
       pressData,
       btnState,
       allPressSubscribeStatus,
@@ -84,9 +88,14 @@ export class ListView extends Component {
     const categoryLengths = this.getCategoryLengths(sortedPressData);
     const LAST_PAGE = this.getLastPage(allPressContents);
 
-    let nextPageInAllCategories = currentPageInAllCategories
-      ? getPageNumberBy(dir, currentPageInAllCategories)
-      : FIRST_PAGE;
+    let nextPageInAllCategories =
+      currentPageInAllCategories && !targetCategory
+        ? getPageNumberByDir(dir, currentPageInAllCategories)
+        : this.getPageNumberByTargetCategory(
+            targetCategory,
+            categoryLengths,
+            FIRST_PAGE
+          );
 
     if (nextPageInAllCategories > LAST_PAGE) {
       nextPageInAllCategories = FIRST_PAGE;
@@ -94,17 +103,24 @@ export class ListView extends Component {
       nextPageInAllCategories = LAST_PAGE;
     }
 
-    const nextCategory =
-      btnState === "all-press"
-        ? allPressContents[nextPageInAllCategories - 1].category_id
-        : allPressContents[nextPageInAllCategories - 1].name;
+    let nextCategory;
+    if (targetCategory) {
+      nextCategory = targetCategory;
+    } else {
+      nextCategory =
+        btnState === "all-press"
+          ? allPressContents[nextPageInAllCategories - 1].category_id
+          : allPressContents[nextPageInAllCategories - 1].name;
+    }
+
     const nextCategoryTotalPage = categoryLengths[nextCategory];
+
     let nextPageInCategory =
       currentCategory !== nextCategory || !currentPageInCategory
         ? dir === "right" || dir === undefined
           ? FIRST_PAGE
           : nextCategoryTotalPage
-        : getPageNumberBy(dir, currentPageInCategory);
+        : getPageNumberByDir(dir, currentPageInCategory);
 
     const nextCategoryData = allPressContents[nextPageInAllCategories - 1];
     const targetPressSubscribeStatus =
@@ -155,5 +171,34 @@ export class ListView extends Component {
 
   getLastPage(allPressContents) {
     return allPressContents.length;
+  }
+
+  getPageNumberByTargetCategory(targetCategory, categoryLengths, FIRST_PAGE) {
+    let currentPage = 0;
+    if (targetCategory) {
+      for (const [key, value] of Object.entries(categoryLengths)) {
+        if (key === targetCategory) {
+          currentPage += FIRST_PAGE;
+          return currentPage;
+        }
+        currentPage += value;
+      }
+    } else {
+      currentPage += FIRST_PAGE;
+      return currentPage;
+    }
+  }
+
+  moveToTargetCategoryBy(targetCategory, btnState) {
+    const { pressData, allPressSubscribeStatus } = this._state;
+
+    this.setState(
+      this.getCurrentListViewState({
+        pressData,
+        allPressSubscribeStatus,
+        btnState,
+        targetCategory,
+      })
+    );
   }
 }

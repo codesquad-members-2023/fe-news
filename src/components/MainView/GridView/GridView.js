@@ -1,6 +1,6 @@
 import { Component } from "../../../core/Component.js";
 import { GridItem } from "./GridItem.js";
-import { getPageNumberBy } from "../../../utils/utils.js";
+import { getPageNumberByDir } from "../../../utils/utils.js";
 
 export class GridView extends Component {
   setUp() {
@@ -72,7 +72,7 @@ export class GridView extends Component {
     const currentPage = currentPageNumber ? currentPageNumber : 1;
     const originalData = allPressData ? allPressData : press;
     const nextPageNumber = dir
-      ? getPageNumberBy(dir, currentPage)
+      ? getPageNumberByDir(dir, currentPage)
       : currentPage;
     const endIndex = nextPageNumber * itemLimitPerPage;
     const firstIndex = endIndex - itemLimitPerPage;

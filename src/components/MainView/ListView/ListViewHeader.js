@@ -25,6 +25,18 @@ export class ListViewHeader extends Component {
     return `${headCategoryNodes}`;
   }
 
+  setEvent() {
+    this.target.addEventListener(
+      "click",
+      ({ target: { tagName, dataset } }) => {
+        if (tagName !== "A") return;
+        const { moveToTargetCategoryBy, btnState } = this.props;
+        const categoryId = dataset.categoryId;
+        moveToTargetCategoryBy(categoryId, btnState);
+      }
+    );
+  }
+
   getAllPressCategoryHeader(
     categoryIds,
     currentCategory,
@@ -38,14 +50,14 @@ export class ListViewHeader extends Component {
           acc +
           `
       <div class="list-view__current-category">
-        <div class="current-category">${pressCategories[0][category]}</div>
+        <a class="current-category" data-category-id="${category}">${pressCategories[0][category]}</a>
         <div class="current-page">${currentPageInCategory}/${currentCategoryTotalPage}</div>
       </div>`
         );
       } else {
         return (
           acc +
-          `<div class="list-view__category">${pressCategories[0][category]}</div>`
+          `<a class="list-view__category" data-category-id="${category}">${pressCategories[0][category]}</a>`
         );
       }
     }, "");
@@ -58,12 +70,15 @@ export class ListViewHeader extends Component {
           acc +
           `
       <div class="list-view__current-category">
-        <div class="current-category">${name}</div>
+        <a class="current-category" data-category-id="${name}">${name}</a>
         <div class="category-direction">></div>
       </div>`
         );
       } else {
-        return acc + `<div class="list-view__category">${name}</div>`;
+        return (
+          acc +
+          `<a class="list-view__category" data-category-id="${name}">${name}</a>`
+        );
       }
     }, "");
   }

@@ -235,6 +235,11 @@ list-view 영역
   flex: 1;
 }
 
+.current-category:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .current-page {
   font-size: var(--font-s);
   padding-right: 10%;
@@ -250,6 +255,7 @@ list-view 영역
   display: inline-block;
   padding: 1% 2%;
   align-self: center;
+  cursor: pointer;
 }
 
 .list-view__main {
