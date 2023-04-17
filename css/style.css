@@ -182,7 +182,7 @@ main {
 
 .main-grid__page {
   width: 100%;
-  height: 100%;
+  height: 388px;
   grid-template-columns: repeat(6, 1fr);
   border-top: 1px solid #d2dae0;
   border-left: 1px solid #d2dae0; }
@@ -198,7 +198,7 @@ main {
   border-right: 1px solid #d2dae0;
   border-bottom: 1px solid #d2dae0;
   width: 100%;
-  height: 100%;
+  height: 96.84px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -221,6 +221,22 @@ main {
   position: absolute;
   top: 36px;
   left: 40px; }
+
+.empty {
+  margin-top: 26.5px;
+  width: 930px;
+  height: 388px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d2dae0; }
+  .empty .error_msg {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 15px; }
+  .empty .dsc_msg {
+    display: block;
+    font-size: 18px; }
 
 .main-list {
   margin-top: 26.5px;
