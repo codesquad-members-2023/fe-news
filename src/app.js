@@ -22,9 +22,11 @@ export class App extends Component {
     new Header(header);
     new TrendNews(trendNews);
 
-    const pressData = await getPressData();
+    const [pressData, pressCategories] = await Promise.all([
+      getPressData(),
+      getPressCategories(),
+    ]);
     const suffledPressData = suffleData(pressData);
-    const pressCategories = await getPressCategories();
 
     new MainView(mainView, {
       pressData: suffledPressData,
