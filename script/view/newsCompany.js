@@ -1,5 +1,8 @@
 import { $ } from "../utils/dom.js";
-const newsCompanyTemplate = () => `
+import { COMPANY } from "../constants/dom.js";
+
+export const renderNewsCompanyBar = () => {
+  const newsCompanyTemplate = `
 <div class="news-company">
 <div class="news-company__bar">
   <div class="company__choice">
@@ -18,60 +21,63 @@ const newsCompanyTemplate = () => `
   </div>
 </div>
 `;
-const renderNewsCompanyBar = () => {
   const root = $(".root");
   const newsCompanyBar = document.createElement("section");
   root.appendChild(newsCompanyBar);
-  newsCompanyBar.innerHTML = newsCompanyTemplate();
+  newsCompanyBar.innerHTML = newsCompanyTemplate;
 };
 
-const insertNewsCompanyGrid = (newsData) => {
-  const gridBox = $(".grid_set");
-  const rightButton = $(".grid_btn-right");
-  const leftButton = $(".grid_btn-left");
-  let page = 0;
+export class insertNewsCompanyGrid {
+  constructor(newsData) {
+    this.gridBox = $(".grid_set");
+    this.rightButton = $(".grid_btn-right");
+    this.leftButton = $(".grid_btn-left");
+    this.page = COMPANY.FIRST_PAGE;
+    this.newsData = newsData;
+  }
 
-  const eventHandler = () => {
-    rightButton.addEventListener("click", () => {
-      page += 1;
+  init() {
+    this.insertNewsData();
+    this.controlButton();
+    this.onEvents();
+  }
+
+  insertNewsData() {
+    this.gridBox.innerHTML = "";
+    this.newsData[this.page].map((data) => {
+      this.gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}">
+      <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>
+      <div class ="grid_btn">
+      <button type="button">+구독 하기</button>
+      </div>
+      </div>
+      `;
+    });
+  }
+
+  controlButton() {
+    if (this.page > COMPANY.FIRST_PAGE) {
+      this.leftButton.classList.remove("hidden");
+    } else {
+      this.leftButton.classList.add("hidden");
+    }
+    if (this.page < COMPANY.LAST_PAGE) {
+      this.rightButton.classList.remove("hidden");
+    } else {
+      this.rightButton.classList.add("hidden");
+    }
+  }
+
+  onEvents() {
+    this.rightButton.addEventListener("click", () => {
+      this.page += COMPANY.PAGES;
       controlButton();
       insertNewsData();
     });
-    leftButton.addEventListener("click", () => {
-      page -= 1;
+    this.leftButton.addEventListener("click", () => {
+      this.page -= COMPANY.PAGES;
       controlButton();
       insertNewsData();
     });
-  };
-  eventHandler();
-
-  const controlButton = () => {
-    if (page > 0) {
-      leftButton.classList.remove("hidden");
-    } else {
-      leftButton.classList.add("hidden");
-    }
-    if (page < 3) {
-      rightButton.classList.remove("hidden");
-    } else {
-      rightButton.classList.add("hidden");
-    }
-  };
-  controlButton();
-
-  const insertNewsData = () => {
-    gridBox.innerHTML = "";
-    newsData[page].map((data) => {
-      gridBox.innerHTML += `<div id="${data.mediaId}"><img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/></div>`;
-    });
-  };
-  insertNewsData();
-};
-const showsubscribeButton = () => {
-  const newsCompanyGrid = $(".grid_set");
-  const subscribeButton = document.createElement("button", { class: "subscribe-btn" });
-  newsCompanyGrid.addEventListener("mouseover", (e) => {
-    e.target.append(subscribeButton);
-  });
-};
-export { renderNewsCompanyBar, insertNewsCompanyGrid };
+  }
+}

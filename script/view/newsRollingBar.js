@@ -1,16 +1,14 @@
 import { $ } from "../utils/dom.js";
-const rollingBarTemplate = () =>
-  `<div class= "news__rolling-bar">
+const renderRollingBar = (root) => {
+  const rollingBarTemplate = `<div class= "news__rolling-bar">
   <div class= "rolling-bar_left">
   <img src="assets/rollingLogo.svg" /><ul class="data_list_left"></ul></div>
   <div class= "rolling-bar_right">
   <img src="assets/rollingLogo.svg" /><ul class="data_list_right"></ul></div>
   </div>`;
-
-const renderRollingBar = (root) => {
   const newsRollingBar = document.createElement("article");
   root.appendChild(newsRollingBar);
-  newsRollingBar.innerHTML = rollingBarTemplate();
+  newsRollingBar.innerHTML = rollingBarTemplate;
 };
 
 const insertNewsData = (newsData, rollingBox) => {
