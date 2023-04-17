@@ -4,12 +4,16 @@ export default function style(target: HTMLElement) {
   const style = document.createElement('style');
 
   const content = `
-    .wrap.grid-view-item {
+    .grid-view-item {
       width: 100%;
       min-width: 154px;
       height: 100%;
       display: inline-block;
       background-color: var(--white);
+      
+    }
+
+    .grid-view-item button {
       border-color: var(--gray100);
       border-style: solid;
       border-right-width: 1px;

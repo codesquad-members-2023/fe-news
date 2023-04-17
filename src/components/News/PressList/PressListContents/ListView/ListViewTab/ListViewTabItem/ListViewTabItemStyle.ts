@@ -12,6 +12,8 @@ export default function style(target: HTMLElement) {
       height: 100%;
       align-items: center;
       color: var(--gray300);
+      border: 0;
+      background-color: transparent;
     }
 
     .is-active {
@@ -19,6 +21,7 @@ export default function style(target: HTMLElement) {
       width: 166px;
       color: var(--white);
       font-weight: 700;
+      
     }
 
     .index-indicator {

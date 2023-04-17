@@ -47,7 +47,7 @@ class ListViewItem extends HTMLElement {
       <img ${
         press ? `src="${press.newMainLogo}"` : ''
       } height="20px" width="auto">
-      <p class="typo-body-xs">${lastEdited ?? ''} 편집</p>
+      <p class="edit-time">${lastEdited ?? ''} 편집</p>
       ${
         press.isSubscribed
           ? `<button-element icon="close" id='${
@@ -64,7 +64,7 @@ class ListViewItem extends HTMLElement {
         (article: ArticleInterface) =>
           `<div class="headliner">
             <button class="image" ${`style="background-image: url('${article.img}')"`}></button>
-            <div class="title typo-body-md">
+            <div class="title">
             <a href='${article.link}'>${article.title}</a>
           </div>`
       )}

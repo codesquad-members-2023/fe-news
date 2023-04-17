@@ -2,8 +2,14 @@ export default function style() {
   const style = document.createElement('style');
 
   const content = `
+    button {
+      border: 0;
+    }
+
     .wrap.grid-view {
-      border: 1px solid var(--gray100);
+      border: 1px solid var(--gray100); 
+      border-bottom-width: 0;
+      border-right-width: 0;
     }
 
     .press-container {
