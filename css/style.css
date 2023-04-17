@@ -310,7 +310,7 @@ main {
 .list__subscribe-button {
   height: 24px; }
 
-.sub-news__item:hover {
+.sub-news__item a:hover {
   text-decoration: underline; }
 
 .main-news:hover img {
