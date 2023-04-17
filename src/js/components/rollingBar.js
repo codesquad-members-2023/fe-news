@@ -1,5 +1,4 @@
 import createEl from '../utils/util.js';
-import { RollingStore } from '../stores/rollingStore.js';
 
 class RollingBar {
   LEFT = 'left';

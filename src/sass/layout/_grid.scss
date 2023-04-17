@@ -7,6 +7,7 @@
   .grid-area {
     width: $containerWidth;
     height: 390px;
+    border: 1px solid $gray100;
   }
 
   .prev-button,
@@ -34,10 +35,9 @@
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(4, 1fr);
     background-color: $gray100;
-    border: 1px solid $gray100;
     grid-gap: 1px;
 
-    div {
+    .grid-cell:not(.cell-button) {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -47,5 +47,25 @@
     img {
       height: 20px;
     }
+  }
+}
+
+.no-subscription {
+  @extend .list-container;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  h3 {
+    @include font($titleMD, $bold);
+    color: $black;
+  }
+
+  p {
+    @include font($bodySM, $medium);
+    color: $gray200;
+    text-align: center;
   }
 }
