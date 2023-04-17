@@ -21,8 +21,8 @@ class HeadlineItem extends HTMLElement {
 
   render() {
     const template = `
-    <headline-item-element></headline-item-element>
-    <headline-item-element></headline-item-element>
+    <headline-item-element position="left"></headline-item-element>
+    <headline-item-element position="right"></headline-item-element>
     `;
 
     add({

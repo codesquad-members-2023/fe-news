@@ -8,8 +8,8 @@ export default function style() {
       padding: 0 16px;
       gap: 16px;
       width: 100%;
-      min-height: 49px;
-      height: auto;
+      height: 49px;
+      overflow-y: hidden;
       background: var(--offwhite);
       border: 1px solid var(--gray100);
       align-items: center;
@@ -17,11 +17,17 @@ export default function style() {
 
     li {
       list-style-type: none;
+      height: 49px;
+      display: flex;
+      align-items: center;
     }
 
     ul {
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px; 
     }
 
     .press {

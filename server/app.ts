@@ -6,7 +6,8 @@ import dotenv from 'dotenv';
 import { SectionModel, PressInfoInterface, UserModel } from './schemas/index';
 const uuid = require('uuid');
 import fs from 'fs/promises';
-import { TEMP_ID } from '../src/constant';
+
+const TEMP_ID = 'realsnoopso';
 
 dotenv.config();
 mongoose.set('strictQuery', false);

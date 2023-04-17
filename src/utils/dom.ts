@@ -19,7 +19,7 @@ interface setPropertyProps {
 }
 
 interface addProps {
-  target: HTMLElement | ShadowRoot | null | Element;
+  target: HTMLElement | ShadowRoot | null | Element | undefined;
   template: string;
 }
 
