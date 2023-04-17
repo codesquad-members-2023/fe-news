@@ -10,7 +10,7 @@ export class NavbarRightComponent implements Component {
     this._model = new NavbarRightModel();
     this._view = new NavbarRightView();
 
-    const isGrid = true;
+    this.setState(props!);
   }
 
   get element() {

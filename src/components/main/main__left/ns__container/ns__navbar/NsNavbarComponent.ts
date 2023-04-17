@@ -13,7 +13,7 @@ export class NsNavbarComponent implements Component {
     this._view = new NsNavbarView();
 
     const navbarLeft = new NavbarLeftComponent();
-    const navbarRight = new NavbarRightComponent();
+    const navbarRight = new NavbarRightComponent(props);
     navbarLeft.attachTo(this);
     navbarRight.attachTo(this);
   }

@@ -19,12 +19,12 @@ export class NsContainerComponent implements Component {
   constructor(props?: Props) {
     this._model = new NsContainerModel();
     this._view = new NsContainerView();
-    // props 처리부터 해서 child component attach하기
+    // props 전달부터 하기
     const articlesPromise = this.getRandomArticles();
-    this.attachChildComponents({ articlesPromise });
-
     const view: ViewState = 'GRID';
     const handleToView = this.handleToView.bind(this);
+    this.attachChildComponents({ articlesPromise, handleToView });
+    // props 전달 후에 setState
     this.setState({ view, handleToView });
   }
 
@@ -46,7 +46,7 @@ export class NsContainerComponent implements Component {
   }
 
   attachChildComponents(props?: Props) {
-    const nsNavbar = new NsNavbarComponent();
+    const nsNavbar = new NsNavbarComponent(props);
     const nsPressContainer = new NsPressContainerComponent(props);
     const nsCategoryContainer = new NsCategoryContainerObserverViewComponent(
       props,

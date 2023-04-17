@@ -15,6 +15,18 @@ export class NavbarRightView extends AbstractView {
   }
 
   render(state: State) {
+    console.log(state);
+    this.addChangeViewEvent(state);
     return;
+  }
+
+  addChangeViewEvent(state: State) {
+    const { handleToView } = state;
+    this.setEvent('#list-btn', 'click', (e) => {
+      (handleToView as (state: State) => void)({ view: 'LIST' });
+    });
+    this.setEvent('#grid-btn', 'click', (e) => {
+      (handleToView as (state: State) => void)({ view: 'GRID' });
+    });
   }
 }

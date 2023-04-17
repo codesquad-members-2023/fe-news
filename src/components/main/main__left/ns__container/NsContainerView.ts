@@ -12,7 +12,6 @@ export class NsContainerView extends AbstractView {
 
   render(state: State) {
     this.changeView(state);
-    this.addChangeViewEvent(state);
     return;
   }
 
@@ -26,15 +25,5 @@ export class NsContainerView extends AbstractView {
       $('#category-container', this.element)!.classList.remove('hidden');
       $('#press-container', this.element)!.classList.add('hidden');
     }
-  }
-
-  addChangeViewEvent(state: State) {
-    const { handleToView } = state;
-    this.setEvent('#list-btn', 'click', (e) => {
-      (handleToView as (state: State) => void)({ view: 'LIST' });
-    });
-    this.setEvent('#grid-btn', 'click', (e) => {
-      (handleToView as (state: State) => void)({ view: 'GRID' });
-    });
   }
 }
