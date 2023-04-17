@@ -3,7 +3,8 @@ export class Journal {
     this.journalList = jsonData;
   }
 
-  getJournalItem() {
+  // (Refactor) 콜백함수와 이벤트를 분리해서 더 작게 만들어 보기
+  getJournalItems() {
     const journalItems = this.journalList.map((journalData) => {
       const journalItem = document.createElement("div");
       journalItem.classList.add("journal-item");

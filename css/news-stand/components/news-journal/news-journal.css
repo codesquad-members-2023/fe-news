@@ -10,10 +10,12 @@
 
 .journal-area {
   gap: 20px;
+  cursor: pointer;
 }
 
 .journal-btns {
   gap: 10px;
+  cursor: pointer;
 }
 
 .journal-container {

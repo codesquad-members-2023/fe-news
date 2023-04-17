@@ -1,5 +1,5 @@
 import { getHeadLine } from "../../api/getData.js";
-import { HeadLine } from "./headLineClass.js";
+import { HeadLine } from "./headLine.js";
 
 export const createNewsStandHeadLine = () => {
   const headLineHotURL = "http://localhost:3000/headLineHot";

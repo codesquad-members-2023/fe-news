@@ -1,19 +1,23 @@
-export function Carousel(toApplyEl) {
-  this.container = toApplyEl;
+export function Carousel() {
+  this.element = document.createElement("div");
+  this.element.classList.add("journal-carousel");
+  this.render();
+  this.container;
   this.leftBtn;
   this.rightBtn;
   this.page = 0;
 }
 
 Carousel.prototype.beElement = function () {
-  const journalCarousel = `<div class="journal-carousel">
+  const journalCarousel = `
     <button class="journal-carousel-btn">
     <img src="src/assets/icons/LeftButton.svg" /></button>
     <button class="journal-carousel-btn">
     <img src="src/assets/icons/RightButton.svg" /></button>
     <div class="journal-container"></div>
   </div>`;
-  return journalCarousel;
+
+  this.element.innerHTML = journalCarousel;
 };
 
 Carousel.prototype.moveCarousel = function (direction) {
@@ -39,15 +43,6 @@ Carousel.prototype.moveCarousel = function (direction) {
 };
 
 Carousel.prototype.addEvent = function () {
-  const journalCarousel = document.querySelector(".journal-carousel");
-  this.container = journalCarousel.querySelector(".journal-container");
-  this.leftBtn = journalCarousel.querySelector(
-    ".journal-carousel-btn:first-child"
-  );
-  this.rightBtn = journalCarousel.querySelector(
-    ".journal-carousel-btn:nth-child(2)"
-  );
-
   this.leftBtn.classList.add("display-none");
 
   this.leftBtn.addEventListener("click", this.moveCarousel.bind(this, "left"));
@@ -55,4 +50,16 @@ Carousel.prototype.addEvent = function () {
     "click",
     this.moveCarousel.bind(this, "right")
   );
+};
+
+Carousel.prototype.render = function () {
+  this.beElement();
+  this.leftBtn = this.element.querySelector(
+    ".journal-carousel-btn:first-child"
+  );
+  this.rightBtn = this.element.querySelector(
+    ".journal-carousel-btn:nth-child(2)"
+  );
+  this.container = this.element.querySelector(".journal-container");
+  this.addEvent();
 };
