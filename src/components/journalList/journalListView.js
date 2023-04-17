@@ -16,7 +16,7 @@ const createJournalList = () => {
         ? journalHeader.journalHeaderStore.getJournalListAll()
         : journalHeader.journalHeaderStore.getJournalSubscribe();
     journalList.forEach((item) => {
-      journalContainer.appendChild(item);
+      journalContainer.appendChild(item.element);
     });
   };
 
@@ -29,10 +29,11 @@ const createJournalList = () => {
 
   const fetchJournalData = async (journalURL) => {
     try {
-      const journalData = await dataRequestToAPI(journalURL);
-      const journal = new Journal(journalData);
-      const journalItems = journal.getJournalItems();
-      return journalItems;
+      const journalDatas = await dataRequestToAPI(journalURL);
+      const journals = journalDatas.map((journalData) => {
+        return new Journal(journalData);
+      });
+      return journals;
     } catch (error) {
       console.error(error);
     }
@@ -43,9 +44,9 @@ const createJournalList = () => {
     const journalItems = await fetchJournalData(journalURL);
     const journalContainer = document.querySelector(".journal-container");
     journalHeaderStore.setJournalListAll(journalItems);
-    const jounalList = journalHeader.journalHeaderStore.journalListAll;
+    const jounalList = journalHeaderStore.journalListAll;
     jounalList.forEach((item) => {
-      journalContainer.appendChild(item);
+      journalContainer.appendChild(item.element);
     });
   };
 

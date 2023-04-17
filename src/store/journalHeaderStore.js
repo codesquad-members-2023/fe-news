@@ -3,7 +3,7 @@ export class JournalHeaderStore {
     this.journalState = "STATE_ALL"; // "STATE_SUB"
     this.journalFrame = "GRID"; // "DETAIL"
     this.journalListAll = [];
-    this.journalSubscribe = [];
+    this.journalSubscribe = new Set();
     this.updateJournalData = updateJournalData;
   }
 

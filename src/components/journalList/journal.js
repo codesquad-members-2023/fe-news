@@ -1,41 +1,45 @@
 export class Journal {
-  constructor(jsonData) {
-    this.journalList = jsonData;
+  constructor(journalData) {
+    this.journalData = journalData;
+    this.element = document.createElement("div");
+    this.element.classList.add("journal-item");
+    this.render();
   }
 
-  // (Refactor) 콜백함수와 이벤트를 분리해서 더 작게 만들어 보기
   getJournalItems() {
-    const journalItems = this.journalList.map((journalData) => {
-      const journalItem = document.createElement("div");
-      journalItem.classList.add("journal-item");
+    this.showDiv = document.createElement("div");
+    this.showDiv.classList.add("journal-item_show");
+    this.element.appendChild(this.showDiv);
+    this.showDiv.innerHTML = `<img src="${this.journalData.journalSrc}" alt="${this.journalData.journalAlt}">`;
+    this.showDiv.style.display = "flex";
 
-      const showDiv = document.createElement("div");
-      showDiv.classList.add("journal-item_show");
-      journalItem.appendChild(showDiv);
-      showDiv.innerHTML = `<img src="${journalData.journalSrc}" alt="${journalData.journalAlt}">`;
-      showDiv.style.display = "flex";
-
-      const hoverDiv = document.createElement("div");
-      hoverDiv.classList.add("journal-item_hover");
-      hoverDiv.innerHTML = `
+    this.hoverDiv = document.createElement("div");
+    this.hoverDiv.classList.add("journal-item_hover");
+    this.hoverDiv.innerHTML = `
         <button class="subscribe-btn">구독</button>
         <button class="unsubscribe-btn">해지</button>`;
-      hoverDiv.style.display = "none";
+    this.hoverDiv.style.display = "none";
 
-      journalItem.appendChild(hoverDiv);
+    this.element.appendChild(this.hoverDiv);
+    return this.element;
+  }
 
-      journalItem.addEventListener("mouseover", () => {
-        showDiv.style.display = "none";
-        hoverDiv.style.display = "flex";
-      });
-
-      journalItem.addEventListener("mouseout", () => {
-        hoverDiv.style.display = "none";
-        showDiv.style.display = "flex";
-      });
-
-      return journalItem;
+  addEvent() {
+    this.element.addEventListener("mouseover", () => {
+      this.showDiv.style.display = "none";
+      this.hoverDiv.style.display = "flex";
     });
-    return journalItems;
+
+    this.element.addEventListener("mouseout", () => {
+      this.hoverDiv.style.display = "none";
+      this.showDiv.style.display = "flex";
+    });
+  }
+
+  addSubscribeEvent() {}
+
+  render() {
+    this.getJournalItems();
+    this.addEvent();
   }
 }
