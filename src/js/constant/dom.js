@@ -24,8 +24,13 @@ const NS_SECTION_INFO = Object.freeze({
   },
 });
 
+const RENDER_STATE = Object.freeze({
+  READY: 'READY',
+  NOT_READY: 'NOT_READY',
+});
+
 const REFERENCE = Object.freeze({
   NS_CONTAINER: document.querySelector('.newsstand_container'),
 });
 
-export { NS_HEADER_INFO, NS_HEADLINE_INFO, NS_SECTION_INFO, REFERENCE };
+export { NS_HEADER_INFO, NS_HEADLINE_INFO, NS_SECTION_INFO, REFERENCE, RENDER_STATE };

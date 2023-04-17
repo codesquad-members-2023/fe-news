@@ -1,10 +1,10 @@
-import { NS_SECTION_INFO, REFERENCE } from '../constant/dom.js';
+import { NS_SECTION_INFO, REFERENCE, RENDER_STATE } from '../constant/dom.js';
 
 export default class NSSectionButtonView {
   constructor(gridAllModel) {
     this._gridAllModel = gridAllModel;
     this._state = {
-      render: 'notReady',
+      render: RENDER_STATE.NOT_READY,
       view: {
         index: 1,
         gridOrList: 'grid',
@@ -12,8 +12,8 @@ export default class NSSectionButtonView {
     };
   }
 
-  getReady() {
-    this._state.render = 'ready';
+  changeReadyState() {
+    this._state.render = RENDER_STATE.READY;
     this.render();
   }
 

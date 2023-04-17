@@ -12,7 +12,7 @@ export default class NSSectionHeaderView {
     const markup = this.getMarkup();
     const sibling = REFERENCE.NS_CONTAINER.querySelector('.newsstand_headline_container');
     sibling.insertAdjacentHTML('afterend', markup);
-    this._buttonView.getReady();
+    this._buttonView.changeReadyState();
   }
 
   getMarkup() {

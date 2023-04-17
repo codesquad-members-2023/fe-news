@@ -43,7 +43,7 @@ export default class NSHeadlineView {
     this._parentElem.insertAdjacentHTML('beforeend', markUp);
     this.setHeadlineSection();
     this.setHeadlineAnimation();
-    this._model.getReady();
+    this._model.changeReadyState();
   }
 
   generateMarkup(headlineList) {
