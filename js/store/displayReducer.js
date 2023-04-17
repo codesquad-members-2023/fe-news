@@ -1,5 +1,5 @@
 import { displayActions } from '../actions/actionTypes.js';
-import { getStoreState } from './store.js';
+import { getStoreState, dispatch } from './store.js';
 
 export const subscribeReducer = (state, action) => {
   const subscribeList = getStoreState('subscribeData').subscribe;
@@ -31,6 +31,7 @@ export const mainHeaderBtnClickReducer = (state, action) => {
       if (viewOptionData.gridOrList === 'list')
         return { ...state, viewOption: viewOptionData };
       viewOptionData.gridOrList = 'list';
+
       return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_GRID_BUTTON_CLICK:
@@ -70,6 +71,13 @@ export const listPageReducer = (state, action) => {
         typePage: 1,
         currentMediaTypeIdx: action.payload,
         typeLength: mediaTypeIdxArr[action.payload].length,
+      };
+    case displayActions.LIST_PAGE_RESET:
+      return {
+        page: 0,
+        typePage: 1,
+        currentMediaTypeIdx: 0,
+        typeLength: 82,
       };
     default:
       return state;

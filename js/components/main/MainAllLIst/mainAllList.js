@@ -1,9 +1,10 @@
 import { createElement } from '../../../utils/dom.js';
-import { subscribe, getStoreState } from '../../../store/store.js';
+import { subscribe, getStoreState, dispatch } from '../../../store/store.js';
 import {
   tabClickEventHandler,
   subscribeBtnClickEventHandler,
 } from './mainAllListEventHandlers.js';
+import { displayActionCreator } from '../../../actions/actions.js';
 
 export const MEDIA_CATEGORIES = [
   '종합/경제',
@@ -125,6 +126,7 @@ const createNewsContentElement = (mainContent, subContent) => {
 const renderMainAllList = ($main, content) => {
   const mediaData = getStoreState('mediaData').data;
   const pageData = getStoreState('listPageData');
+
   const breakCondition =
     content.viewOption.gridOrList === 'list' &&
     content.viewOption.allOrMine === 'all';
@@ -144,6 +146,7 @@ const renderMainAllList = ($main, content) => {
 const renderNextPage = ($main, content) => {
   const typeIdx = content.currentMediaTypeIdx;
   const mediaData = getStoreState('mediaData').data;
+
   const $mainList = createMainListElement(
     mediaData[content.page],
     typeIdx,

@@ -51,6 +51,11 @@ export const fetchActionCreator = {
 };
 
 export const displayActionCreator = {
+  listPageReset() {
+    return {
+      type: actionTypes.displayActions.LIST_PAGE_RESET,
+    };
+  },
   gridSubscribeBtnClick: (payload) => {
     return {
       type: actionTypes.displayActions.GRID_SUBSCRIBE_BUTTON_CLICK,
@@ -66,6 +71,7 @@ export const displayActionCreator = {
   },
 
   headerListBtnClick() {
+    dispatch(this.listPageReset());
     return {
       type: actionTypes.displayActions.HEADER_LIST_BUTTON_CLICK,
     };
