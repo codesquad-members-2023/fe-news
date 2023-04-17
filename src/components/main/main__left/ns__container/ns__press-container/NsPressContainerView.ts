@@ -13,7 +13,7 @@ export class NsPressContainerView extends AbstractView {
   }
 
   setTemplate() {
-    this._templateElement.innerHTML = `<section id="press-container" class="px-3 py-3 flex-auto flex flex-row justify-between items-center relative">
+    this._templateElement.innerHTML = `<section id="press-container" class="p-3 h-full flex flex-row justify-between items-center relative">
                                          <button id="btn-prev" class="absolute left-0 border rounded-full bg-white drop-shadow-very-xl">
                                            <img src="/public/images/symbols/chevron-left.svg" alt="chevron-left" class="h-6 w-6"/>
                                          </button>

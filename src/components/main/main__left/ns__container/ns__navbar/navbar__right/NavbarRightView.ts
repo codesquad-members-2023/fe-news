@@ -15,7 +15,6 @@ export class NavbarRightView extends AbstractView {
   }
 
   render(state: State) {
-    console.log(state);
     this.addChangeViewEvent(state);
     return;
   }

@@ -20,12 +20,12 @@ export class NsContainerComponent implements Component {
     this._model = new NsContainerModel();
     this._view = new NsContainerView();
     // props 전달부터 하기
-    const articlesPromise = this.getRandomArticles();
-    const view: ViewState = 'GRID';
+    const articlesPromise = this.getArticles();
+    const view: ViewState = 'LIST'; // Category container 작업 중... 잠깐 LIST로 두기
     const handleToView = this.handleToView.bind(this);
     this.attachChildComponents({ articlesPromise, handleToView });
     // props 전달 후에 setState
-    this.setState({ view, handleToView });
+    this.setState({ view });
   }
 
   get element() {
@@ -67,12 +67,5 @@ export class NsContainerComponent implements Component {
       res.json(),
     );
     return articleData;
-  }
-
-  async getRandomArticles() {
-    const articleData = await this.getArticles();
-    const totalItemCount =
-      PRESS_CONTAINER_PAGE_END * PRESS_CONTAINER_ITEM_COUNT;
-    return pickRandomData(articleData, totalItemCount);
   }
 }

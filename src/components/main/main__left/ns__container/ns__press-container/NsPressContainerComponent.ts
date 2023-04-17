@@ -10,7 +10,6 @@ import {
   PRESS_CONTAINER_PAGE_UNIT,
   PRESS_CONTAINER_PAGE_START,
 } from '@src/constants/constants.js';
-
 import { pickRandomData } from '@utils/pickRandomData.js';
 
 export class NsPressContainerComponent implements Component {
@@ -19,9 +18,12 @@ export class NsPressContainerComponent implements Component {
   constructor(props?: Props) {
     this._model = new NsPressContainerModel();
     this._view = new NsPressContainerView();
-    const articlesPromise = props!.articlesPromise as Promise<Article[]>;
+
+    const randomArticlesPromise = this.getRandomArticles(
+      props!.articlesPromise as Promise<Article[]>,
+    );
     this.setInitState({
-      articlesPromise,
+      randomArticlesPromise,
       page: PRESS_CONTAINER_PAGE_START,
       handleToPrev: this.handleToPrev.bind(this),
       handleToNext: this.handleToNext.bind(this),
@@ -46,17 +48,17 @@ export class NsPressContainerComponent implements Component {
   }
 
   async setInitState({
-    articlesPromise,
+    randomArticlesPromise,
     page,
     handleToPrev,
     handleToNext,
   }: {
-    articlesPromise: Promise<Article[]>;
+    randomArticlesPromise: Promise<Article[]>;
     page: number;
     handleToPrev: (e: Event, state: State) => void;
     handleToNext: (e: Event, state: State) => void;
   }) {
-    const articles = await articlesPromise;
+    const articles = await randomArticlesPromise;
     this.setState({ articles, page, handleToPrev, handleToNext });
   }
 
@@ -75,5 +77,12 @@ export class NsPressContainerComponent implements Component {
         : +this.state.page + PRESS_CONTAINER_PAGE_UNIT;
     if (page === PRESS_CONTAINER_PAGE_END) return;
     this.setState({ page });
+  }
+
+  async getRandomArticles(articlesPromise: Promise<Article[]>) {
+    const articleData = await articlesPromise;
+    const totalItemCount =
+      PRESS_CONTAINER_PAGE_END * PRESS_CONTAINER_ITEM_COUNT;
+    return pickRandomData(articleData, totalItemCount);
   }
 }
