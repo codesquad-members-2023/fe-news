@@ -14,10 +14,6 @@ class ListViewItem extends HTMLElement {
   connectedCallback() {
     addShadow({ target: this });
     this.render();
-    addStyle({
-      target: this.shadowRoot,
-      style: style(),
-    });
   }
 
   static get observedAttributes() {
@@ -92,6 +88,10 @@ class ListViewItem extends HTMLElement {
     add({
       target: this.shadowRoot,
       template,
+    });
+    addStyle({
+      target: this.shadowRoot,
+      style: style(),
     });
   }
 }
