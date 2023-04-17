@@ -10,19 +10,19 @@ export default class GridAllModel extends Observer {
       isSelected: true,
     };
     this._data = {
-      1: [],
-      2: [],
-      3: [],
-      4: [],
+      page1: [],
+      page2: [],
+      page3: [],
+      page4: [],
     };
     this._dataFetcher = dataFetcher;
   }
 
   async getData() {
-    if (this._data[this._state.index].length === 0) {
+    if (this._data[`page${this._state.index}`].length === 0) {
       await this._dataFetcher(API_PATH.NS_SECTION, this.generateRandomList.bind(this));
     }
-    return this._data[this._state.index];
+    return this._data[`page${this._state.index}`];
   }
 
   generateRandomList(data) {
@@ -36,7 +36,7 @@ export default class GridAllModel extends Observer {
     let count = 0;
     randomNumber.forEach((number) => {
       const key = Math.ceil((count + 1) / NS_SECTION_INFO.GRID_ALL.PAGE_SIZE);
-      this._data[key].push(data[number].logoImgSrc);
+      this._data[`page${key}`].push(data[number].logoImgSrc);
       count++;
     });
   }
