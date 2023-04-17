@@ -23,15 +23,12 @@
   }
 }
 
-.main-content__container {
+.main-content__grid {
   position: relative;
-  .main-content__grid:last-child {
-    // * 테스트
+  &.display-none {
     display: none;
   }
-}
 
-.main-content__grid {
   &-before-btn.hidden,
   &-next-btn.hidden {
     visibility: hidden;

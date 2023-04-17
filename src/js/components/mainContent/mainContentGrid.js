@@ -1,5 +1,5 @@
 import { $ } from '../../utils/dom.js';
-import { gridPageStore } from '../../store/index.js';
+import { tabStore, gridPageStore } from '../../store/index.js';
 import PressGrid from './pressGrid.js';
 
 export default class MainContentGrid {
@@ -37,20 +37,48 @@ export default class MainContentGrid {
         totalPages: this.pressGridCollection.length === 0 ? 1 : this.pressGridCollection.length
       }
     });
-    gridPageStore.register(() => {
-      const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
-      const $beforeBtn = $({ selector: '.main-content__grid-before-btn', parent: this.$ele });
-      const $nextBtn = $({ selector: '.main-content__grid-next-btn', parent: this.$ele });
 
-      if (currentPage === 0) $beforeBtn.classList.add('hidden');
-      else $beforeBtn.classList.remove('hidden');
-
-      if (currentPage === totalPages - 1) $nextBtn.classList.add('hidden');
-      else $nextBtn.classList.remove('hidden');
-    });
+    this.initDisplay();
+    gridPageStore.register(this.setDisplayBtn.bind(this));
+    tabStore.register(this.setDisplayElement.bind(this));
 
     this.setEvent();
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
+  }
+
+  initDisplay() {
+    const { pressTabType } = this.props;
+    const { activePressTab, activeShowTab } = tabStore.getState();
+    const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
+
+    const $beforeBtn = $({ selector: '.main-content__grid-before-btn', parent: this.$ele });
+    const $nextBtn = $({ selector: '.main-content__grid-next-btn', parent: this.$ele });
+
+    if (activeShowTab !== 'grid' || pressTabType !== activePressTab) this.$ele.classList.add('display-none');
+    if (currentPage === 0) $beforeBtn.classList.add('hidden');
+    if (currentPage === totalPages - 1) $nextBtn.classList.add('hidden');
+  }
+
+  setDisplayElement() {
+    const { pressTabType } = this.props;
+    const { activePressTab, activeShowTab } = tabStore.getState();
+
+    if (activeShowTab !== 'grid' || pressTabType !== activePressTab) this.$ele.classList.add('display-none');
+    else this.$ele.classList.remove('display-none');
+  }
+
+  setDisplayBtn() {
+    const { pressTabType } = this.props;
+    const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
+
+    const $beforeBtn = $({ selector: '.main-content__grid-before-btn', parent: this.$ele });
+    const $nextBtn = $({ selector: '.main-content__grid-next-btn', parent: this.$ele });
+
+    if (currentPage === 0) $beforeBtn.classList.add('hidden');
+    else $beforeBtn.classList.remove('hidden');
+
+    if (currentPage === totalPages - 1) $nextBtn.classList.add('hidden');
+    else $nextBtn.classList.remove('hidden');
   }
 
   render() {
