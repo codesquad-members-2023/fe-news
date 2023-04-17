@@ -1,3 +1,4 @@
+import { $ } from "../utils/dom.js";
 const rollingBarTemplate = () =>
   `<div class= "news__rolling-bar">
   <div class= "rolling-bar_left">
@@ -13,14 +14,14 @@ const renderRollingBar = (root) => {
 };
 
 const insertNewsData = (newsData, rollingBox) => {
-  const rollingBar = document.querySelector(`${rollingBox}`);
+  const rollingBar = $(`${rollingBox}`);
   newsData.map((data) => {
     rollingBar.innerHTML += `<li>${data}</li>`;
   });
 };
 
 const rollingData = (rollingBox) => {
-  const rollingBar = document.querySelector(rollingBox);
+  const rollingBar = $(rollingBox);
   let startTime = null;
   let handle = null;
 
@@ -55,7 +56,7 @@ const rollingData = (rollingBox) => {
 };
 
 const runRollingBar = () => {
-  const root = document.querySelector(".root");
+  const root = $(".root");
   renderRollingBar(root);
   rollingData(".data_list_left");
   setTimeout(() => {

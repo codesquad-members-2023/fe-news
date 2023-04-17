@@ -1,3 +1,4 @@
+import { $ } from "../utils/dom.js";
 const newsCompanyTemplate = () => `
 <div class="news-company">
 <div class="news-company__bar">
@@ -18,39 +19,39 @@ const newsCompanyTemplate = () => `
 </div>
 `;
 const renderNewsCompanyBar = () => {
-  const root = document.querySelector(".root");
+  const root = $(".root");
   const newsCompanyBar = document.createElement("section");
   root.appendChild(newsCompanyBar);
   newsCompanyBar.innerHTML = newsCompanyTemplate();
 };
 
 const insertNewsCompanyGrid = (newsData) => {
-  const gridBox = document.querySelector(".grid_set");
-  const rightButton = document.querySelector(".grid_btn-right");
-  const leftButton = document.querySelector(".grid_btn-left");
+  const gridBox = $(".grid_set");
+  const rightButton = $(".grid_btn-right");
+  const leftButton = $(".grid_btn-left");
   let page = 0;
 
   const eventHandler = () => {
     rightButton.addEventListener("click", () => {
-      controlButton();
       page += 1;
+      controlButton();
       insertNewsData();
     });
     leftButton.addEventListener("click", () => {
-      controlButton();
       page -= 1;
+      controlButton();
       insertNewsData();
     });
   };
   eventHandler();
 
   const controlButton = () => {
-    if (page > 1) {
+    if (page > 0) {
       leftButton.classList.remove("hidden");
     } else {
       leftButton.classList.add("hidden");
     }
-    if (page < 2) {
+    if (page < 3) {
       rightButton.classList.remove("hidden");
     } else {
       rightButton.classList.add("hidden");
@@ -67,7 +68,7 @@ const insertNewsCompanyGrid = (newsData) => {
   insertNewsData();
 };
 const showsubscribeButton = () => {
-  const newsCompanyGrid = document.querySelector(".grid_set");
+  const newsCompanyGrid = $(".grid_set");
   const subscribeButton = document.createElement("button", { class: "subscribe-btn" });
   newsCompanyGrid.addEventListener("mouseover", (e) => {
     e.target.append(subscribeButton);

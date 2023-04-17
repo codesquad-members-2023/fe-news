@@ -1,3 +1,4 @@
+import { $ } from "../utils/dom.js";
 const makeDate = () => {
   const today = new Date();
   const options = { weekday: "long", year: "numeric", month: "2-digit", day: "2-digit" };
@@ -14,7 +15,7 @@ const newsHeaderTemplate = () =>
   </div>`;
 
 const renderNewsHeader = () => {
-  const root = document.querySelector(".root");
+  const root = $(".root");
   const newsHeader = document.createElement("header");
   root.appendChild(newsHeader);
   newsHeader.innerHTML = newsHeaderTemplate();
