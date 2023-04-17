@@ -1,4 +1,4 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css");
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css');
 * {
   margin: 0;
   padding: 0;
@@ -130,6 +130,10 @@ body {
   display: none;
 }
 
+.main-content__grid-before-btn.hidden,
+.main-content__grid-next-btn.hidden {
+  visibility: hidden;
+}
 .main-content__grid-before-btn {
   position: absolute;
   top: 50%;
@@ -181,7 +185,9 @@ body {
   width: 460px;
   height: 49px;
 }
-.nav-bar__press, .nav-bar__headLine, .nav-bar__headLine-wrapper {
+.nav-bar__press,
+.nav-bar__headLine,
+.nav-bar__headLine-wrapper {
   height: 14px;
 }
 .nav-bar__headLine {

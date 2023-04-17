@@ -37,6 +37,12 @@ export default class MainContentGrid {
         totalPages: this.pressGridCollection.length === 0 ? 1 : this.pressGridCollection.length
       }
     });
+    gridPageStore.register(() => {
+      const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
+      const $beforeBtn = $({ selector: '.main-content__grid-before-btn', parent: this.$ele });
+      if (currentPage === 0) $beforeBtn.classList.add('hidden');
+      else $beforeBtn.classList.remove('hidden');
+    });
 
     this.setEvent();
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
@@ -68,6 +74,7 @@ export default class MainContentGrid {
 
       if (target.alt === 'before grid page') {
         gridPageStore.dispatch({ type: 'beforePage', payload: { pressTabType, currentPage, totalPages } });
+        console.log('before btn');
       }
       if (target.alt === 'next grid page') {
         gridPageStore.dispatch({ type: 'nextPage', payload: { pressTabType, currentPage, totalPages } });

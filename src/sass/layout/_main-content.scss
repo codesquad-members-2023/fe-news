@@ -32,6 +32,10 @@
 }
 
 .main-content__grid {
+  &-before-btn.hidden,
+  &-next-btn.hidden {
+    visibility: hidden;
+  }
   &-before-btn {
     position: absolute;
     top: 50%;
