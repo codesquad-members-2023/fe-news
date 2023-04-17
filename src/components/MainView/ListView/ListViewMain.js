@@ -13,6 +13,12 @@ export class ListViewMain extends Component {
       sub_news_titles,
     } = currentCategoryData;
 
+    const subNewsTitleNodes = sub_news_titles.reduce(
+      (acc, title) =>
+        acc + `<li class="list-view-main__sub-news-title">${title}</li>`,
+      ""
+    );
+
     return `
       <div class="list-view-main__section-main">
       <div class="list-view-main__header">
@@ -28,11 +34,7 @@ export class ListViewMain extends Component {
       </div>
     </div>
     <div class="list-view-main__section-sub">
-      ${sub_news_titles.reduce(
-        (acc, title) =>
-          acc + `<li class="list-view-main__sub-news-title">${title}</li>`,
-        ""
-      )}
+      ${subNewsTitleNodes}
       <li class="list-view-main__sub-news-notice">${name} 언론사에서 직접 편집한 뉴스입니다</li>
     </div>
     `;
