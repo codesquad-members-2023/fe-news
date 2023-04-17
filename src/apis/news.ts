@@ -16,8 +16,7 @@ interface getSectionProps {
   page: number;
 }
 
-export const getPress = async ({ page }: getPressProps) => {
-  // const path = `/press?page=${page}`;
+export const getPress = async () => {
   const path = `/press`;
   const method = 'GET';
   const data = await customFetch({ path, method });

@@ -13,7 +13,7 @@ interface getPropertyProps {
 }
 
 interface setPropertyProps {
-  target: HTMLElement | Element | null;
+  target: HTMLElement | Element | null | undefined;
   name: string;
   value: string;
 }

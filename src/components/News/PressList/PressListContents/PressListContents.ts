@@ -6,6 +6,7 @@ import {
   create,
   createWrap,
   toggleClass,
+  setProperty,
 } from '@utils/dom';
 import list from './PressListContentsStyle';
 import { StroeType } from '@utils/redux';
@@ -44,7 +45,7 @@ class PressListContents extends HTMLElement {
 
   render() {
     const template = `
-    <controller-element></controller-element>
+    <controller-element hide="left"></controller-element>
     <section class="general show">
       <div class="view grid show"></div>
       <div class="view list"></div>
@@ -81,7 +82,7 @@ class PressListContents extends HTMLElement {
   handleGridView() {
     return {
       getCurrentPressList: async (page: number) => {
-        const pressList = await getPress({ page: 0 });
+        const pressList = await getPress();
         this.displayStore.dispatch({
           type: 'SET_TOTAL_PAGE',
           payload: {
@@ -92,17 +93,7 @@ class PressListContents extends HTMLElement {
         });
         const start = page * 24;
         const end = start + 24;
-        const paginationedPressList = pressList.slice(start, end);
-
-        this.displayStore.dispatch({
-          type: 'SET_TOTAL_PAGE',
-          payload: {
-            view: 'grid',
-            tab: 'general',
-            totalPage: Math.ceil(paginationedPressList.length / 24),
-          },
-        });
-        this.pressStore = paginationedPressList;
+        this.pressStore = pressList;
       },
 
       createGridViewContainer: (page: number) => {
@@ -112,7 +103,10 @@ class PressListContents extends HTMLElement {
         if (page === 0) {
           gridViewContainer.classList.add('show');
         }
-        const currentPressList = this.pressStore;
+        const start = page * 24;
+        const end = start + 24;
+        const pressList: any = this.pressStore;
+        const currentPressList = pressList.slice(start, end);
 
         const template = `
         <grid-view-element press-list='${JSON.stringify(
@@ -130,6 +124,7 @@ class PressListContents extends HTMLElement {
       },
       appendGridViewContainer: async () => {
         await this.handleGridView().getCurrentPressList(0);
+        console.log(this.displayStore.getState().page);
         const maxPage =
           this.displayStore.getState().page.grid.general.totalPage;
         Array.from({ length: maxPage }).forEach((_, i) => {
@@ -259,6 +254,15 @@ class PressListContents extends HTMLElement {
 
       const currentPage =
         this.displayStore.getState().page[view][tab].currentPage;
+      const totalPage = this.displayStore.getState().page[view][tab].totalPage;
+      const isLastPage = currentPage === totalPage - 1;
+
+      const controller = this.shadowRoot?.querySelector('controller-element');
+      if (isLastPage) {
+        setProperty({ target: controller, name: 'hide', value: 'right' });
+      } else {
+        setProperty({ target: controller, name: 'hide', value: 'false' });
+      }
 
       const changeVisibility = (view: 'grid' | 'list') => {
         const displayContainer = this.wrap?.querySelector(
