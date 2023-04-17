@@ -1,7 +1,7 @@
 import { Component, ObserverViewComponent } from '@custom-types/interfaces';
 import { Article, Props, State } from '@custom-types/types';
 import { AbstractView } from '@src/types/abstracts.js';
-import { NsCategoryNavbarObservableModel } from '@components/main/main__left/ns__container/ns__category-container/ns__category-navbar/NsCategoryNavbarObsevableModel.js';
+import { NsCategoryNavbarObservableModel } from '@components/main/main__left/ns__container/ns__category-container/ns__category-navbar/NsCategoryNavbarObservableModel.js';
 import { $ } from '@utils/dom.js';
 export class NsCategoryNavbarObserverViewComponent
   extends AbstractView

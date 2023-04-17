@@ -6,12 +6,7 @@ import { NsNavbarComponent } from '@components/main/main__left/ns__container/ns_
 import { NsPressContainerComponent } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerComponent.js';
 import { NsCategoryContainerObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/NsCategoryContainerObserverViewComponent.js';
 import { customGet } from '@utils/customFetch.js';
-import {
-  BASIC_URL,
-  PRESS_CONTAINER_ITEM_COUNT,
-  PRESS_CONTAINER_PAGE_END,
-} from '@src/constants/constants.js';
-import { pickRandomData } from '@utils/pickRandomData.js';
+import { BASIC_URL } from '@src/constants/constants.js';
 
 export class NsContainerComponent implements Component {
   private _model: NsContainerModel;
