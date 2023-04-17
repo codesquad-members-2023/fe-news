@@ -1,4 +1,5 @@
 import { $ } from '../../utils/dom.js';
+import { subscriptionListStore } from '../../store/index.js';
 
 export default class PressGridItem {
   constructor($parent, props) {
@@ -35,8 +36,8 @@ export default class PressGridItem {
   setEvent() {
     const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$ele });
     $subscribeToggleBtn.addEventListener('click', () => {
-      // 확인
-      console.log('click');
+      const { pressName } = this.props;
+      subscriptionListStore.dispatch({ type: 'addSubscription', payload: pressName });
     });
   }
 }

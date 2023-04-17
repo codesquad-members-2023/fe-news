@@ -32,4 +32,14 @@ export const gridPageReducer = (state, action) => {
   }
 };
 
-export const subscriptionListReducer = (state, action) => {};
+export const subscriptionListReducer = (state, action) => {
+  switch (action.type) {
+    case 'addSubscription': {
+      const { subscriptionList } = state;
+      if (subscriptionList.includes(action.payload)) return state;
+      return { ...state, subscriptionList: [...subscriptionList, action.payload] };
+    }
+    default:
+      return state;
+  }
+};
