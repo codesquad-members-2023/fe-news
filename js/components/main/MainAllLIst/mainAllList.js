@@ -1,8 +1,8 @@
 import { createElement } from '../../../utils/dom.js';
-import { subscribe, getStoreState, dispatch } from '../../../store/store.js';
-import { displayActionCreator } from '../../../actions/actions.js';
+import { subscribe, getStoreState } from '../../../store/store.js';
+import { tabClickEventHandler } from './mainAllListEventHandlers.js';
 
-const MEDIA_CATEGORIES = [
+export const MEDIA_CATEGORIES = [
   '종합/경제',
   '방송/통신',
   'IT',
@@ -12,25 +12,31 @@ const MEDIA_CATEGORIES = [
   '지역',
 ];
 
-const createMainListElement = (mediaData, typeIdx) => {
+const createMainListElement = (mediaData, typeIdx, content) => {
+  console.log(content);
   const $mainList = createElement('section', {
     class: 'main-list',
   });
-  const $mainNav = createMainListNavElement(typeIdx);
+  const $mainNav = createMainListNavElement(typeIdx, content);
   const $mainNews = createMainListNewsElement(mediaData);
   $mainList.append($mainNav, $mainNews);
 
   return $mainList;
 };
 
-const navItemHTML = (category, typeIdx) => `
+const navItemHTML = (category, typeIdx, content) => `
     <li class="main-list__nav-item ${
       typeIdx === MEDIA_CATEGORIES.indexOf(category) ? 'current-category' : ''
     }" >
-        <a href="#">${category}</a>
+        <a href="#">
+        <span>${category}</span>
+        <span>${
+          typeIdx === MEDIA_CATEGORIES.indexOf(category) ? content.typePage : ''
+        }</span>
+        </a>
     </li>`;
 
-const createMainListNavElement = (typeIdx) => {
+const createMainListNavElement = (typeIdx, content) => {
   const $mainListNav = createElement('nav', {
     class: 'main-list__nav',
   });
@@ -39,7 +45,7 @@ const createMainListNavElement = (typeIdx) => {
   });
 
   $navItems.innerHTML = MEDIA_CATEGORIES.reduce((html, category) => {
-    html += navItemHTML(category, typeIdx);
+    html += navItemHTML(category, typeIdx, content);
     return html;
   }, ``);
   $mainListNav.append($navItems);
@@ -108,35 +114,26 @@ const createNewsContentElement = (mainContent, subContent) => {
 
 const renderMainAllList = ($main, content) => {
   const mediaData = getStoreState('mediaData').data;
-
+  const pageData = getStoreState('listPageData');
   const breakCondition =
     content.viewOption.gridOrList === 'list' &&
     content.viewOption.allOrMine === 'all';
   if (!breakCondition) return;
 
-  const $mainList = createMainListElement(mediaData[content.page], 0);
-  $mainList.addEventListener('click', ({ target }) => {
-    const $tab = target.closest('.main-list__nav-item');
-    if (!$tab || $tab.classList.contains('current-category')) return;
-    $tab.classList.add('current-category');
-    const mediaType = $tab.textContent.trim();
-    const categoryIdx = MEDIA_CATEGORIES.indexOf(mediaType);
-    dispatch(displayActionCreator.listTabBtnClick(categoryIdx));
-  });
+  const $mainList = createMainListElement(mediaData[content.page], 0, pageData);
+  $mainList.addEventListener('click', tabClickEventHandler);
   $main.replaceChild($mainList, $main.lastChild);
 };
 
 const renderNextPage = ($main, content) => {
   const typeIdx = content.currentMediaTypeIdx;
   const mediaData = getStoreState('mediaData').data;
-  const $mainList = createMainListElement(mediaData[content.page], typeIdx);
-  $mainList.addEventListener('click', ({ target }) => {
-    const $tab = target.closest('.main-list__nav-item');
-    if (!$tab || $tab.classList.contains('current-category')) return;
-    const mediaType = $tab.textContent.trim();
-    const categoryIdx = MEDIA_CATEGORIES.indexOf(mediaType);
-    dispatch(displayActionCreator.listTabBtnClick(categoryIdx));
-  });
+  const $mainList = createMainListElement(
+    mediaData[content.page],
+    typeIdx,
+    content,
+  );
+  $mainList.addEventListener('click', tabClickEventHandler);
   $main.replaceChild($mainList, $main.lastChild);
 };
 

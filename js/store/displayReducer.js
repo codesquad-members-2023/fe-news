@@ -57,24 +57,16 @@ export const mainHeaderBtnClickReducer = (state, action) => {
 };
 
 export const listPageReducer = (state, action) => {
-  let listPage = state.page;
   const mediaData = getStoreState('mediaData').data;
-  const mediaDataLength = mediaData.length;
   const mediaTypeIdxArr = mediaTypeIdxChecking(mediaData);
   switch (action.type) {
     case displayActions.LIST_LEFT_BUTTON_CLICK:
-      if (listPage === 0) listPage = mediaDataLength - 1;
-      else listPage -= 1;
-      return { ...state, page: listPage };
+      return checkCurTypePage('left', state, mediaData, mediaTypeIdxArr);
     case displayActions.LIST_RIGHT_BUTTON_CLICK:
-      if (listPage === mediaDataLength - 1) listPage = 0;
-      else listPage += 1;
-      return { ...state, page: listPage };
+      return checkCurTypePage('right', state, mediaData, mediaTypeIdxArr);
     case displayActions.LIST_TAB_BUTTON_CLICK:
-      // TODO: 탭한 언론사 type의 1페이지를 state로 바꿔야함.
-      // TODO : 탭한 언론사 idx 도 바꿔주기!
       return {
-        page: mediaTypeIdxArr[action.payload],
+        page: mediaTypeIdxArr[action.payload].startIdx,
         typePage: 1,
         currentMediaTypeIdx: action.payload,
       };
@@ -83,21 +75,70 @@ export const listPageReducer = (state, action) => {
   }
 };
 
-const checkMediaType = () => {
-  // 이동한 페이지의 언론사가 무슨 type인지 계속 검사!!
-  // 왼쪽 오른쪽 버튼 눌러도 검사해야함!
-};
-
 const mediaTypeIdxChecking = (mediaData) => {
   let currentType;
   const mediaTypeIdxArr = [];
   mediaData.forEach((media, idx) => {
     const mediaType = media.mediaInfo.type;
     if (currentType !== mediaType) {
-      mediaTypeIdxArr.push(idx);
+      mediaTypeIdxArr.push({ startIdx: idx });
       currentType = mediaType;
     }
   });
-  console.log(mediaTypeIdxArr);
+  mediaTypeIdxArr.map((mediaTypeIdx, index) => {
+    if (index === mediaTypeIdxArr.length - 1) {
+      mediaTypeIdx.length = mediaData.length - mediaTypeIdx.startIdx;
+    } else {
+      mediaTypeIdx.length =
+        mediaTypeIdxArr[index + 1].startIdx - mediaTypeIdx.startIdx;
+    }
+  });
   return mediaTypeIdxArr;
+};
+
+const checkCurTypePage = (direction, state, mediaData, mediaTypeIdxArr) => {
+  const currentMediaTypeIdx = state.currentMediaTypeIdx;
+
+  if (direction === 'left') {
+    const prevTypeIdx =
+      currentMediaTypeIdx === 0
+        ? mediaTypeIdxArr.length - 1
+        : currentMediaTypeIdx - 1;
+    const prevPage = state.page === 0 ? mediaData.length - 1 : state.page - 1;
+    if (
+      prevPage < mediaTypeIdxArr[currentMediaTypeIdx].startIdx ||
+      prevPage === mediaData.length - 1
+    ) {
+      return {
+        page: prevPage,
+        typePage: mediaTypeIdxArr[prevTypeIdx].length,
+        currentMediaTypeIdx: prevTypeIdx,
+      };
+    } else {
+      return {
+        page: prevPage,
+        typePage: state.typePage - 1,
+        currentMediaTypeIdx: currentMediaTypeIdx,
+      };
+    }
+  } else if (direction === 'right') {
+    const nextTypeIdx =
+      currentMediaTypeIdx === mediaTypeIdxArr.length - 1
+        ? 0
+        : currentMediaTypeIdx + 1;
+    const nextPage = state.page === mediaData.length - 1 ? 0 : state.page + 1;
+    if (nextPage === mediaTypeIdxArr[nextTypeIdx].startIdx) {
+      return {
+        page: nextPage,
+        typePage: 1,
+        currentMediaTypeIdx: nextTypeIdx,
+      };
+    } else {
+      return {
+        page: nextPage,
+        typePage: state.typePage + 1,
+        currentMediaTypeIdx: currentMediaTypeIdx,
+      };
+    }
+  }
 };
