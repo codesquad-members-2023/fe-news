@@ -53,10 +53,20 @@ const createPopUpBox = () => {
 
 const updateMediaContent = ($element, content) => {
   if (!content.loading) {
-    const $gridBox = $element;
-    const $thumbs = $gridBox.querySelectorAll('.thumb');
-
+    const subscribeData = getStoreState('subscribeData').subscribe;
+    const $grid = $element;
+    const $thumbs = $grid.querySelectorAll('.thumb');
+    const $popupBox = $grid.querySelectorAll('.popup-wrap');
     $thumbs.forEach((item, index) => {
+      if (
+        subscribeData
+          .map((item) => item.mediaId)
+          .includes(content.data[index].mediaId)
+      ) {
+        $popupBox[index].querySelector('img').src =
+          './asset/unsubscribeButton.svg';
+        $popupBox[index].querySelector('img').alt = 'unsubscribe';
+      }
       const $image = createElement('img', {
         class: 'main-grid__logo',
         src: `${content.data[index].mediaInfo.imgSrc}`,

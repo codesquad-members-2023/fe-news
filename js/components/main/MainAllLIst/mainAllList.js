@@ -60,7 +60,7 @@ const createMainListNewsElement = (mediaData) => {
   const $mainListNews = createElement('article', {
     class: 'main-list__news',
   });
-  const $mainListNewsHeader = createNewsHeaderElement(mediaData.mediaInfo);
+  const $mainListNewsHeader = createNewsHeaderElement(mediaData);
 
   const $mainListNewsContent = createNewsContentElement(
     mediaData.mainContent,
@@ -71,15 +71,21 @@ const createMainListNewsElement = (mediaData) => {
   return $mainListNews;
 };
 
-const createNewsHeaderElement = (mediaInfo) => {
+const createNewsHeaderElement = (mediaData) => {
   const $mainNewsHeader = createElement('header', {
     class: 'main-list__news-header',
   });
   const headerInnerHTML = `
-    <img class="main-list__logo" src="${mediaInfo.imgSrc}" />
-      <div class="main-list__edit-time">${mediaInfo.modifiedTime}</div>
+    <img class="main-list__logo" src="${mediaData.mediaInfo.imgSrc}" />
+      <div class="main-list__edit-time">${
+        mediaData.mediaInfo.modifiedTime
+      }</div>
       <a class="list__subscribe-button">
-        <img src="./asset/subscribeButton.svg" alt="subscribe" />
+      ${
+        !checkSubscribe(mediaData.mediaId)
+          ? `<img src="./asset/subscribeButton.svg" alt="subscribe" />`
+          : `<img src="./asset/listUnsubscribeBtn.svg" alt="unsubscribe" />`
+      }
       </a>
       `;
   $mainNewsHeader.innerHTML = headerInnerHTML;
@@ -151,6 +157,14 @@ const renderNextPage = ($main, content) => {
       subscribeBtnClickEventHandler.bind(null, mediaData[content.page].mediaId),
     );
   $main.replaceChild($mainList, $main.lastChild);
+};
+
+const checkSubscribe = (curMediaId) => {
+  const subscribeMediaId = getStoreState('subscribeData').subscribe.map(
+    (item) => item.mediaId,
+  );
+  if (subscribeMediaId.includes(curMediaId)) return true;
+  else return false;
 };
 
 const MainAllList = ($main) => {
