@@ -32,6 +32,7 @@ class Controller extends HTMLElement {
       if (this.hide === 'right') {
         return this.setHideProperty('right');
       }
+      console.log('d');
       this.setHideProperty('none');
     }
   }

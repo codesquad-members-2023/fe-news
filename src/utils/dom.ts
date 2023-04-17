@@ -4,7 +4,7 @@ interface createProps {
 
 interface selectProps {
   selector: string;
-  parent?: HTMLElement | ShadowRoot | null;
+  parent?: HTMLElement | Element | ShadowRoot | null | undefined;
 }
 
 interface getPropertyProps {

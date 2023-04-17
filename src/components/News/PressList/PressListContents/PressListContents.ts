@@ -45,14 +45,17 @@ class PressListContents extends HTMLElement {
 
   render() {
     const template = `
-    <controller-element hide="left"></controller-element>
     <section class="general show">
-      <div class="view grid show"></div>
-      <div class="view list"></div>
+      <div class="view grid show">
+      </div>
+      <div class="view list">
+      </div>
     </section>
     <section class="custom">
-      <div class="view grid show"></div>
-      <div class="view list"></div>
+      <div class="view grid show">
+      </div>
+      <div class="view list">
+      </div>
     </section>
     `;
 
@@ -60,8 +63,6 @@ class PressListContents extends HTMLElement {
       target: this.wrap,
       template,
     });
-
-    this.handlePageController();
   }
 
   async connectedCallback() {
@@ -91,9 +92,10 @@ class PressListContents extends HTMLElement {
             totalPage: Math.ceil(pressList.length / 24),
           },
         });
-        const start = page * 24;
-        const end = start + 24;
-        this.pressStore = pressList;
+        this.pressStore.dispatch({
+          type: 'SET_PRESS_LIST',
+          payload: { pressList },
+        });
       },
 
       createGridViewContainer: (page: number) => {
@@ -105,7 +107,7 @@ class PressListContents extends HTMLElement {
         }
         const start = page * 24;
         const end = start + 24;
-        const pressList: any = this.pressStore;
+        const pressList: any = this.pressStore.getState().pressList;
         const currentPressList = pressList.slice(start, end);
 
         const template = `
@@ -124,24 +126,27 @@ class PressListContents extends HTMLElement {
       },
       appendGridViewContainer: async () => {
         await this.handleGridView().getCurrentPressList(0);
-        console.log(this.displayStore.getState().page);
         const maxPage =
           this.displayStore.getState().page.grid.general.totalPage;
         Array.from({ length: maxPage }).forEach((_, i) => {
           this.handleGridView().createGridViewContainer(i);
         });
+        const controller = create({ tagName: 'controller-element' });
+        setProperty({ target: controller, name: 'hide', value: 'left' });
+        this.shadowRoot
+          ?.querySelector('section.general')
+          ?.querySelector('.view.grid')
+          ?.prepend(controller);
+        this.handlePageController('grid');
       },
     };
   }
 
   handleListView() {
     return {
-      appendListViewContainer: () => {
-        this.handleListView().createListViewContainer(0);
-      },
       createListViewContainer: async (page: number) => {
         const listViewContainer = create({ tagName: 'div' });
-        listViewContainer.classList.add('grid-view-container');
+        listViewContainer.classList.add('list-view-container');
         listViewContainer.setAttribute('page', `${page}`);
         if (page === 0) {
           listViewContainer.classList.add('show');
@@ -162,9 +167,13 @@ class PressListContents extends HTMLElement {
         );
 
         add({
-          target: gridViewContainer ?? null,
+          target: listViewContainer,
           template,
         });
+
+        this.wrap
+          ?.querySelector('section.general .view.list')
+          ?.append(listViewContainer);
         this.handleSubscribe().handleListView();
       },
       getCurrentSection: async ({ page }: getCurrentSectionProps) => {
@@ -174,13 +183,23 @@ class PressListContents extends HTMLElement {
       changeCurrentSection: async (page: number) => {
         const data = await getSection({ page });
         this.sectionStore.dispatch({ type: 'CHANGE_SECTION', payload: data });
-
         this.shadowRoot
           ?.querySelector('list-view-element')
           ?.setAttribute(
             'section-data',
             JSON.stringify(this.sectionStore.getState())
           );
+        this.handleSubscribe().handleListView();
+      },
+      appendListViewContainer: () => {
+        this.handleListView().createListViewContainer(0);
+        const controller = create({ tagName: 'controller-element' });
+        setProperty({ target: controller, name: 'hide', value: 'left' });
+        this.shadowRoot
+          ?.querySelector('section.general')
+          ?.querySelector('.view.list')
+          ?.append(controller);
+        this.handlePageController('list');
       },
     };
   }
@@ -223,20 +242,21 @@ class PressListContents extends HTMLElement {
     this.displayStore.subscribe(toggleShowClass);
   }
 
-  handlePageController() {
+  handlePageController(view: 'grid' | 'list') {
+    const tab = this.displayStore.getState().currentTab;
+
     const controllerElement = select({
       selector: 'controller-element',
       parent: document
         .querySelector('news-element')
         ?.shadowRoot?.querySelector('press-list-element')
-        ?.shadowRoot?.querySelector('presslist-contents-element')?.shadowRoot,
+        ?.shadowRoot?.querySelector('presslist-contents-element')
+        ?.shadowRoot?.querySelector(`section.${tab} .view.${view}`),
     });
 
     controllerElement?.shadowRoot?.addEventListener('click', (e: any) => {
-      const tab = this.displayStore.getState().currentTab;
-      const view = this.displayStore.getState().currentView;
-
       const target = e.target;
+
       const position = target.getAttribute('position');
       const isLeft = position === 'left';
 
@@ -256,12 +276,23 @@ class PressListContents extends HTMLElement {
         this.displayStore.getState().page[view][tab].currentPage;
       const totalPage = this.displayStore.getState().page[view][tab].totalPage;
       const isLastPage = currentPage === totalPage - 1;
+      const isFirstPage = currentPage === 0;
 
-      const controller = this.shadowRoot?.querySelector('controller-element');
       if (isLastPage) {
-        setProperty({ target: controller, name: 'hide', value: 'right' });
+        setProperty({
+          target: controllerElement,
+          name: 'hide',
+          value: 'right',
+        });
+      } else if (isFirstPage) {
+        setProperty({ target: controllerElement, name: 'hide', value: 'left' });
       } else {
-        setProperty({ target: controller, name: 'hide', value: 'false' });
+        console.log('ddd');
+        setProperty({
+          target: controllerElement,
+          name: 'hide',
+          value: 'false',
+        });
       }
 
       const changeVisibility = (view: 'grid' | 'list') => {
@@ -332,22 +363,28 @@ class PressListContents extends HTMLElement {
         });
       },
       handleListView: () => {
-        const listView = this.shadowRoot?.querySelector('list-view-element');
-        console.log({ listView });
+        const listView = this.shadowRoot
+          ?.querySelector('list-view-element')
+          ?.shadowRoot?.querySelector('list-view-item-element')
+          ?.shadowRoot?.querySelector('button-element');
 
-        listView?.shadowRoot?.addEventListener('click', (e) => {
+        listView?.addEventListener('click', (e) => {
           const target = e.target as HTMLElement;
 
-          // const id = listViewItem?.getAttribute('id');
-          // const subscribingPress = storeUser.getState().subscribingPress;
-          // console.log(target.closest('grid-view-item-element'));
-          // if (!id) return;
-          // const isSubscribed = subscribingPress.includes(id);
+          const id = target?.getAttribute('id');
+          const subscribingPress = storeUser.getState().subscribingPress;
+          if (!id) return;
+          const isSubscribed = subscribingPress.includes(id);
 
-          // this.handleSubscribeBtn().runSubscribeAndUnsunscribe({
-          //   isSubscribed,
-          //   id,
-          // });
+          if (isSubscribed) {
+            this.handleSubscribe().runSubscribe({
+              id,
+            });
+          } else {
+            this.handleSubscribe().runUnsunscribe({
+              id,
+            });
+          }
         });
       },
     };

@@ -46,10 +46,13 @@ const reducer: ReducerType<PressListType> = (
 ): PressListType => {
   switch (action.type) {
     case 'SET_PRESS_LIST':
+      console.log(action);
       return setPressList({ payload: action.payload });
     case 'SUBSCRIBE':
+      console.log('subscribe');
       return subscribe({ state, payload: action.payload });
     case 'UNSUBSCRIBE':
+      console.log('unsubscribe');
       return unsubscribe({ state, payload: action.payload });
     default:
       return state;
