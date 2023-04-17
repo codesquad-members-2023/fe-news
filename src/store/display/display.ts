@@ -2,14 +2,8 @@ import { createStore, ReducerType, ActionType, StroeType } from '@utils/redux';
 import { DisplayType } from './displayType';
 
 const initialState: DisplayType = {
-  tab: {
-    general: { isActive: true },
-    custom: { isActive: false },
-  },
-  view: {
-    list: { isActive: false },
-    grid: { isActive: true },
-  },
+  currentTab: 'general',
+  currentView: 'grid',
   page: {
     grid: {
       general: { currentPage: 0, totalPage: 0 },
@@ -43,24 +37,22 @@ interface setTotalPageProps extends props {
 }
 
 const changeTab = ({ state, payload }: changeTabProps) => {
-  state.tab[payload].isActive = true;
-  state.tab[payload === 'general' ? 'custom' : 'general'].isActive = false;
+  state.currentTab = payload;
   return {
     ...state,
   };
 };
 
 const changeView = ({ state, payload }: changeViewProps) => {
-  state.view[payload].isActive = true;
-  state.view[payload === 'grid' ? 'list' : 'grid'].isActive = false;
+  state.currentView = payload;
   return {
     ...state,
   };
 };
 
 const changePageNumber = ({ state, type }: changePageNumberProps) => {
-  const currentView = state.view.gird.isActive ? 'grid' : 'list';
-  const currentTab = state.tab.general.isActive ? 'general' : 'custom';
+  const currentView = state.currentView;
+  const currentTab = state.currentTab;
   if (type === 'NEXT_PAGE') {
     state.page[currentView][currentTab].currentPage++;
   } else if (type === 'PREV_PAGE') {
@@ -72,8 +64,8 @@ const changePageNumber = ({ state, type }: changePageNumberProps) => {
 };
 
 const setTotalPage = ({ state, totalPage }: setTotalPageProps) => {
-  const currentView = state.view.gird.isActive ? 'grid' : 'list';
-  const currentTab = state.tab.general.isActive ? 'general' : 'custom';
+  const currentView = state.currentView;
+  const currentTab = state.currentTab;
   state.page[currentView][currentTab].totalPage = totalPage;
   return state;
 };

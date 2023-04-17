@@ -28,8 +28,24 @@ class PressListHeader extends HTMLElement {
     });
   }
 
-  render({ tab, view }: any = this.displayStore.getState()) {
+  render({ currentTab, currentView }: any = this.displayStore.getState()) {
+    const tab = {
+      general: {
+        isActive: currentTab === 'general',
+      },
+      custom: {
+        isActive: currentTab === 'custom',
+      },
+    };
     const tabInfo = Object.entries(tab);
+    const view = {
+      grid: {
+        isActive: currentView === 'grid',
+      },
+      list: {
+        isActive: currentView === 'list',
+      },
+    };
     const viewInfo = Object.entries(view);
 
     const template = `
@@ -57,7 +73,7 @@ class PressListHeader extends HTMLElement {
         return `
         <li>
           <button class="view">
-            <icon-element name="${name}" size="24"  fill="${
+            <icon-element name="${name}" size="24" fill="${
           isActive ? 'var(--primary)' : 'var(--gray100)'
         }"></icon-element>
           </button>
@@ -79,12 +95,11 @@ class PressListHeader extends HTMLElement {
       if (button.classList.contains('tab')) {
         const buttonClickHandler = (e: MouseEvent) => {
           const tab = e.currentTarget as HTMLElement;
-
           const rerender = () => {
             const state = this.displayStore.getState();
             this.render({
               ...state,
-              tab: this.displayStore.getState().tab,
+              currentTab: this.displayStore.getState().currentTab,
             });
           };
           this.displayStore.subscribe(rerender);
@@ -112,7 +127,7 @@ class PressListHeader extends HTMLElement {
             const state = this.displayStore.getState();
             this.render({
               ...state,
-              view: this.displayStore.getState().view,
+              currentView: this.displayStore.getState().currentView,
             });
           };
           this.displayStore.subscribe(rerender);

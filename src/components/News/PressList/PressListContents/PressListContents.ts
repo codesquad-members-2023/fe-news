@@ -15,7 +15,6 @@ import { getPress, getSection } from '@apis/news';
 import { subscribe, unsubscribe } from '@apis/user';
 import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionType } from '@store/section/sectionType';
-import { ActionType } from '@utils/redux';
 import { PressListType } from '@store/press/pressType';
 
 interface PressListContents {
@@ -197,8 +196,8 @@ class PressListContents extends HTMLElement {
 
     const toggleShowClass = async () => {
       const displayStates = this.displayStore.getState();
-      const isGeneral = displayStates.tab.general.isActive;
-      const isGrid = displayStates.view.grid.isActive;
+      const isGeneral = displayStates.currentTab === 'general';
+      const isGrid = displayStates.currentView === 'grid';
 
       const generalSection = this.wrap?.querySelector('section.general');
       const customSection = this.wrap?.querySelector('section.custom');
@@ -239,12 +238,8 @@ class PressListContents extends HTMLElement {
     });
 
     controllerElement?.shadowRoot?.addEventListener('click', (e: any) => {
-      const tab = this.displayStore.getState().tab.general.isActive
-        ? 'general'
-        : 'custom';
-      const view = this.displayStore.getState().view.grid.isActive
-        ? 'grid'
-        : 'list';
+      const tab = this.displayStore.getState().currentTab;
+      const view = this.displayStore.getState().currentView;
 
       const target = e.target;
       const position = target.getAttribute('position');

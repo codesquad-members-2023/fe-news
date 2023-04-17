@@ -9,6 +9,10 @@ export default function style() {
       padding: 0;
     }
 
+    button:hover {
+      cursor: pointer;
+    }
+
     ul {
       padding: 0;
       margin: 0;
