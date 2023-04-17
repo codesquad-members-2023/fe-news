@@ -13,7 +13,7 @@ const createMainHeaderElement = () => {
 
   const headerChildHTML = `
   <div class="main-header__media">
-    <a class="main-header__all-media">
+    <a class="main-header__all-media bold">
         전체 언론사
     </a>
     <a class="main-header__my-media">
@@ -56,7 +56,8 @@ const listViewButtonRender = ($mainButtons, content) => {
   // 왼쪽 버튼에 넣기!
   if (content.viewOption.gridOrList === 'grid')
     $mainButtons[0].classList.add('none');
-  else $mainButtons.forEach(($button) => $button.classList.remove('none'));
+  else if (content.viewOption.gridOrList === 'list')
+    $mainButtons.forEach(($button) => $button.classList.remove('none'));
 };
 
 const MainCommon = () => {

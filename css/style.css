@@ -116,15 +116,6 @@ main {
   display: flex;
   flex-direction: row;
   align-items: flex-end; }
-  .main-header__media .main-header__all-media {
-    font-weight: 700;
-    font-size: 16px;
-    margin-right: 24px;
-    color: #14212b; }
-  .main-header__media .main-header__my-media {
-    font-weight: 500;
-    font-size: 16px;
-    color: #879298; }
 
 .main-header__buttons {
   display: flex;
@@ -174,6 +165,21 @@ main {
 
 .grid-icon__enable:hover {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M0 8V0H8V8H0ZM0 18V10H8V18H0ZM10 8V0H18V8H10ZM10 18V10H18V18H10ZM2 6H6V2H2V6ZM12 6H16V2H12V6ZM12 16H16V12H12V16ZM2 16H6V12H2V16Z' fill='%234362d0'/%3E%3C/svg%3E"); }
+
+.main-header__all-media {
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 24px;
+  color: #879298; }
+
+.main-header__my-media {
+  font-weight: 500;
+  font-size: 16px;
+  color: #879298; }
+
+.bold {
+  font-weight: 700;
+  color: #14212b; }
 
 .main-grid {
   margin-top: 26.5px;

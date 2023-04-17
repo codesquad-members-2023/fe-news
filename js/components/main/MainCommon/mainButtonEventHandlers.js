@@ -46,14 +46,21 @@ export const headerViewChangeBtnClickEventHandler = ({ target }) => {
   // 아마 case 문으로 싹 바꿔서 해야할듯!
 
   const $clickedBtn = target.closest('a');
+
   let $unClickedBtn;
   if (!$clickedBtn) return;
-  switch ($clickedBtn.classList.value) {
+  switch ($clickedBtn.classList[0]) {
     case VIEW_BTN_CLASS.all:
+      $unClickedBtn = $clickedBtn.nextElementSibling;
+      $clickedBtn.classList.add('bold');
+      $unClickedBtn.classList.remove('bold');
       dispatch(displayActionCreator.headerAllBtnClick());
       break;
 
     case VIEW_BTN_CLASS.mine:
+      $unClickedBtn = $clickedBtn.previousElementSibling;
+      $clickedBtn.classList.add('bold');
+      $unClickedBtn.classList.remove('bold');
       dispatch(displayActionCreator.headerMineBtnClick());
       break;
 

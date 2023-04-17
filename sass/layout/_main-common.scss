@@ -14,17 +14,6 @@ main {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  .main-header__all-media {
-    font-weight: 700;
-    font-size: 16px;
-    margin-right: 24px;
-    color: $black;
-  }
-  .main-header__my-media {
-    font-weight: 500;
-    font-size: 16px;
-    color: $gray200;
-  }
 }
 .main-header__buttons {
   display: flex;
@@ -82,4 +71,20 @@ main {
 }
 .grid-icon__enable:hover {
   background-image: icon(grid, '4362d0');
+}
+
+.main-header__all-media {
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 24px;
+  color: $gray200;
+}
+.main-header__my-media {
+  font-weight: 500;
+  font-size: 16px;
+  color: $gray200;
+}
+.bold {
+  font-weight: 700;
+  color: $black;
 }
