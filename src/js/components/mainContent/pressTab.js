@@ -1,4 +1,4 @@
-import { tabStore } from '../../store/tabStore.js';
+import { tabStore } from '../../store/index.js';
 
 export default class PressTab {
   constructor($parent) {
@@ -22,9 +22,7 @@ export default class PressTab {
     const { activePressTab } = tabStore.getState();
 
     return /* html */ `
-    <span class="press-tab-btn press-tab__all ${
-      activePressTab === 'all' ? 'active' : ''
-    }">전체 언론사</span>
+    <span class="press-tab-btn press-tab__all ${activePressTab === 'all' ? 'active' : ''}">전체 언론사</span>
     <span class="press-tab-btn press-tab__subscribed ${
       activePressTab === 'subscribed' ? 'active' : ''
     }">내가 구독한 언론사</span>
@@ -36,15 +34,9 @@ export default class PressTab {
       const targetClassList = target.classList;
       const { activePressTab } = tabStore.getState();
 
-      if (
-        targetClassList.contains('press-tab__all') &&
-        activePressTab === 'subscribed'
-      )
+      if (targetClassList.contains('press-tab__all') && activePressTab === 'subscribed')
         tabStore.dispatch({ type: 'togglePressTab', payload: 'all' });
-      if (
-        targetClassList.contains('press-tab__subscribed') &&
-        activePressTab === 'all'
-      )
+      if (targetClassList.contains('press-tab__subscribed') && activePressTab === 'all')
         tabStore.dispatch({ type: 'togglePressTab', payload: 'subscribed' });
     });
   }
