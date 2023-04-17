@@ -40,8 +40,13 @@ export default class MainContentGrid {
     gridPageStore.register(() => {
       const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
       const $beforeBtn = $({ selector: '.main-content__grid-before-btn', parent: this.$ele });
+      const $nextBtn = $({ selector: '.main-content__grid-next-btn', parent: this.$ele });
+
       if (currentPage === 0) $beforeBtn.classList.add('hidden');
       else $beforeBtn.classList.remove('hidden');
+
+      if (currentPage === totalPages - 1) $nextBtn.classList.add('hidden');
+      else $nextBtn.classList.remove('hidden');
     });
 
     this.setEvent();
@@ -74,7 +79,6 @@ export default class MainContentGrid {
 
       if (target.alt === 'before grid page') {
         gridPageStore.dispatch({ type: 'beforePage', payload: { pressTabType, currentPage, totalPages } });
-        console.log('before btn');
       }
       if (target.alt === 'next grid page') {
         gridPageStore.dispatch({ type: 'nextPage', payload: { pressTabType, currentPage, totalPages } });
