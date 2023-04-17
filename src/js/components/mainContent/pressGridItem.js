@@ -10,8 +10,10 @@ export default class PressGridItem {
   }
 
   mount() {
-    this.render();
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    // * 만약 props에 담은 정보가 없다면 아무것도 들어있지 않은 grid item을 만들기 위해 return
+    if (!this.props) return;
+    this.render();
     this.setEvent();
   }
 

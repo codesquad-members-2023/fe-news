@@ -31,6 +31,10 @@ export default class MainContentGrid {
     this.pressGridCollection = pressChucks.map(
       (chuck, idx) => new PressGrid($gridWrapper, { pressTabType, page: idx, gridItemsData: chuck })
     );
+    if (this.pressGridCollection.length === 0)
+      this.pressGridCollection.push(
+        new PressGrid($gridWrapper, { pressTabType, page: 0, gridItemsData: [] })
+      );
     this.pressGridCollection.forEach((pressGrid) => pressGrid.mount());
 
     gridPageStore.dispatch({
