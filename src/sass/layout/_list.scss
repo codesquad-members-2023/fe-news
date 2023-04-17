@@ -1,0 +1,116 @@
+.category-area {
+  height: 40px;
+  background-color: $offwhite;
+  border-bottom: 1px solid $gray100;
+  line-height: 40px;
+
+  .list-category {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    li {
+      padding: 0 16px;
+      @include font($bodySM, $medium);
+      color: $gray300;
+
+      &:hover{
+        text-decoration: underline $black;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.content-area {
+  width: $containerWidth;
+  padding: 24px;
+
+  .press-box {
+    height: 25px;
+    line-height: 25px;
+    gap: 16px;
+    display: flex;
+
+    @include font($bodyXS, $medium);
+    color: $gray400;
+
+    img {
+      height: 20px;
+    }
+  }
+
+  .news-box {
+    display: flex;
+    padding: 16px 0;
+    justify-content: flex-start;
+    gap: 32px;
+
+    .main-news {
+      width: 320px;
+
+      .main-thumbnail {
+        display: block;
+        overflow: hidden;
+
+        img {
+          height: 200px;
+          width: 320px;
+          transition: all 0.2s linear;
+
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+      }
+
+      .main-title {
+        height: 40px;
+        display: block;
+        margin-top: 12px;
+        line-height: 20px;
+        overflow: hidden;
+
+        @include font($bodyMD, $medium);
+        color: $black;
+
+        &:hover{
+          text-decoration: underline $black;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .sub-news {
+      height: 245px;
+      width: 530px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .list-news {
+        li {
+          line-height: 42px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          @include font($bodyMD, $medium);
+          color: $gray500;
+
+          &:hover{
+            text-decoration: underline $gray500;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .notice-msg {
+        margin-top: 12px;
+
+        @include font($bodySM, $medium);
+        color: $gray200;
+      }
+    }
+  }
+}

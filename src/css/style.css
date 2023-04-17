@@ -369,14 +369,6 @@ main .view-buttons .grid-active {
   width: 6px;
 }
 
-.visibile-none {
-  visibility: none;
-}
-
-.visible {
-  visibility: visible;
-}
-
 .view-container {
   position: relative;
   width: 930px;
@@ -490,10 +482,15 @@ main .view-buttons .grid-active {
 }
 .content-area .news-box .main-news .main-thumbnail {
   display: block;
+  overflow: hidden;
 }
 .content-area .news-box .main-news .main-thumbnail img {
   height: 200px;
   width: 320px;
+  transition: all 0.2s linear;
+}
+.content-area .news-box .main-news .main-thumbnail img:hover {
+  transform: scale(1.2);
 }
 .content-area .news-box .main-news .main-title {
   height: 40px;

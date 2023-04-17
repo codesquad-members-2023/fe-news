@@ -1,0 +1,38 @@
+.press-button {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 24px;
+  Padding: 0px 8px;
+  border: 1px solid $gray100;
+  border-radius: 50px;
+  cursor: pointer;
+
+  span {
+    color: $gray200;
+    @include font($titleXS, $medium);
+  }
+
+  img {
+    width: 7px;
+  }
+}
+
+.subscribe {
+  width: 74px;
+  background-color: $white;
+}
+
+.unsubscribe {
+  width: 74px;
+  background-color: $offwhite;
+}
+
+.close {
+  width: 24px;
+  background-color: $white;
+
+  img {
+    width: 6px;
+  }
+}

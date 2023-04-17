@@ -35,3 +35,9 @@ export const PRESS_BUTTON = {
   'subscribe' : '구독하기',
   'unsubscribe' : '해지하기',
 }
+
+export const GRID_INFO = {
+  'FIRST_PAGE': 0,
+  'LAST_PAGE': 3,
+  'GRID_COUNT': 24,
+}

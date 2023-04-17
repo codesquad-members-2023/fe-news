@@ -8,32 +8,32 @@ class GridView {
   #viewStore;
   #subscribeStore;
   page = 0;
-  FIRST_PAGE = 0;
-  LAST_PAGE = 3;
-  GRID_COUNT = 24;
-  constructor(gridData) {
+  constructor(gridData, { GRID_INFO }) {
     this.#gridData = gridData;
     this.#viewStore = ViewStore;
     this.#subscribeStore = SubscribeStore;
     this.viewContainer = createEl('div', 'view-container');
+    this.FIRST_PAGE = GRID_INFO.FIRST_PAGE,
+    this.LAST_PAGE = GRID_INFO.LAST_PAGE,
+    this.GRID_COUNT = GRID_INFO.GRID_COUNT,
     this.moveToPage();
   }
 
-  render() {
-    this.viewContainer.innerHTML = this.activateAllPress();
-    const { press, view } = this.#viewStore.getState();
-
-    const reRender = () => {
-      if(press['all']) this.viewContainer.innerHTML = this.activateAllPress();
-      if(press['subscribed']) this.viewContainer.innerHTML = this.activateSubscribedPress.bind(this)();
-      this.onGridCell();
-    }
-    this.#viewStore.subscribe(reRender);
+  #reRender() {
+    const { press } = this.#viewStore.getState();
+    if(press['all']) this.viewContainer.innerHTML = this.renderAllGridView();
+    if(press['subscribed']) this.viewContainer.innerHTML = this.renderSubscribedGridView.bind(this)();
     this.onGridCell();
+  }
+
+  render() {
+    this.viewContainer.innerHTML = this.renderAllGridView();
+    this.onGridCell();
+    this.#viewStore.subscribe(this.#reRender.bind(this));
     return this.viewContainer;
   }
 
-  activateAllPress() {
+  renderAllGridView() {
     const isGrid = this.#viewStore.getState().view['grid'];
     const pressInfo = this.#gridData.slice(
       this.GRID_COUNT * this.page,
@@ -54,7 +54,7 @@ class GridView {
       </div>`;
   }
 
-  activateSubscribedPress() {
+  renderSubscribedGridView() {
     const subscribedPress = this.#subscribeStore.getState().subscribedList;
     if(!subscribedPress.size) return this.isNoSubscription();
     else return this.getSubscribedPress(subscribedPress);
@@ -73,7 +73,6 @@ class GridView {
     const restGridCells = Array(this.GRID_COUNT - subscribedPress.size).fill('');
     // Todo - 24 넘으면 slice하고 나머지 채우기
     const LAST_PAGE_SUBSCRIBE = Math.floor(subscribedPress.size / this.GRID_COUNT);
-
     return `<div class="grid-container${isGrid ? ``: " hidden"}">
       <div class="grid-area">
         ${[...subscribedPress, ...restGridCells].reduce((template, press) => {
@@ -108,12 +107,8 @@ class GridView {
     const gridCells = this.viewContainer.querySelectorAll('.grid-cell');
     gridCells.forEach(cell => {
       cell.addEventListener('mouseenter', this.mouseEnterGridCell.bind(this));
-      cell.addEventListener('mouseleave', ({ target }) => {
-        const pressLogo = target.querySelector('img');
-        pressLogo.classList.remove('hidden');
-        target.querySelector('.cell-button')?.classList.add('hidden');
-      });
-    })
+      cell.addEventListener('mouseleave', this.mouseLeaveGridCell.bind(this));
+    });
   }
 
   mouseEnterGridCell({ target }) {
@@ -139,14 +134,23 @@ class GridView {
           subscribedList: this.#subscribeStore.getState(),
         });
       }
+
+       // 구독한 언론사에서 해지했을때 전체화면으로 돌아가는 이슈 수정 필요함
       this.#subscribeStore.subscribe(reRender);
-      const isSubscribe = target.closest('.cell-button').querySelector('span').textContent === PRESS_BUTTON['subscribe']?
+      const targetBtnText = target.closest('.cell-button').querySelector('span');
+      const isSubscribe = targetBtnText.textContent === PRESS_BUTTON['subscribe']?
       'SUBSCRIBE' : 'UNSUBSCRIBE';
       this.#subscribeStore.dispatch({
         type: `${isSubscribe}`,
         payload: targetPress,
       });
     });
+  }
+
+  mouseLeaveGridCell({ target }) {
+    const pressLogo = target.querySelector('img');
+    pressLogo.classList.remove('hidden');
+    target.querySelector('.cell-button')?.classList.add('hidden');
   }
 
   getSubscribeButton(buttonName) {
