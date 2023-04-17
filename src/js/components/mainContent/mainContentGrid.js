@@ -1,4 +1,5 @@
 import { $ } from '../../utils/dom.js';
+import { gridPageStore } from '../../store/index.js';
 import PressGrid from './pressGrid.js';
 
 export default class MainContentGrid {
@@ -18,15 +19,26 @@ export default class MainContentGrid {
   }
 
   mount() {
-    const { pressChucks } = this.props;
+    const { pressTabType, pressChucks } = this.props;
 
     this.render();
+
     const $gridWrapper = $({ selector: '.main-content__grid-wrapper', parent: this.$ele });
     this.pressGridCollection = pressChucks.map(
-      (chuck) => new PressGrid($gridWrapper, { gridItemsData: chuck })
+      (chuck, idx) => new PressGrid($gridWrapper, { pressTabType, page: idx, gridItemsData: chuck })
     );
     this.pressGridCollection.forEach((pressGrid) => pressGrid.mount());
 
+    gridPageStore.dispatch({
+      type: 'initGridPage',
+      payload: {
+        pressTabType,
+        currentPage: 0,
+        totalPages: this.pressGridCollection.length === 0 ? 1 : this.pressGridCollection.length
+      }
+    });
+
+    this.setEvent();
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 
@@ -47,5 +59,19 @@ export default class MainContentGrid {
       <div class="main-content__grid-wrapper">
       </div>
     `;
+  }
+
+  setEvent() {
+    this.$ele.addEventListener('click', ({ target }) => {
+      const { pressTabType } = this.props;
+      const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
+
+      if (target.alt === 'before grid page') {
+        gridPageStore.dispatch({ type: 'beforePage', payload: { pressTabType, currentPage, totalPages } });
+      }
+      if (target.alt === 'next grid page') {
+        gridPageStore.dispatch({ type: 'nextPage', payload: { pressTabType, currentPage, totalPages } });
+      }
+    });
   }
 }

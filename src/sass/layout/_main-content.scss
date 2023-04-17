@@ -25,6 +25,10 @@
 
 .main-content__container {
   position: relative;
+  .main-content__grid:last-child {
+    // * 테스트
+    display: none;
+  }
 }
 
 .main-content__grid {
@@ -41,13 +45,15 @@
     transform: translate3d(0, -50%, 0);
   }
   &-wrapper {
-    @include flex-row();
     overflow-x: hidden;
   }
 }
 .press-grid {
   display: grid;
   grid-template-columns: repeat($grid-columns-count, calc($app-width/$grid-columns-count));
+  &.display-none {
+    display: none;
+  }
 }
 .press-grid__item {
   @include flex-row($justify-content: center, $align-items: center);

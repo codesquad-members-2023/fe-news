@@ -126,6 +126,9 @@ body {
 .main-content__container {
   position: relative;
 }
+.main-content__container .main-content__grid:last-child {
+  display: none;
+}
 
 .main-content__grid-before-btn {
   position: absolute;
@@ -140,16 +143,15 @@ body {
   transform: translate3d(0, -50%, 0);
 }
 .main-content__grid-wrapper {
-  display: flex;
-  justify-content: normal;
-  align-items: normal;
-  flex-direction: row;
   overflow-x: hidden;
 }
 
 .press-grid {
   display: grid;
   grid-template-columns: repeat(6, 155px);
+}
+.press-grid.display-none {
+  display: none;
 }
 
 .press-grid__item {
