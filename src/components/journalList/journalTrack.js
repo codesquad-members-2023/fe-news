@@ -4,30 +4,39 @@ export class Track {
     this.element = document.createElement("div");
     this.element.classList.add("journal-track");
     this.render();
-    this.container;
     this.prevBtn;
     this.nextBtn;
     this.currentPage = 0;
-    this.batchSize;
   }
 
   beElement() {
-    const journalTrack = `
-    <button class="track-btn">
-    <img src="src/assets/icons/LeftButton.svg" /></button>
-    <button class="track-btn">
-    <img src="src/assets/icons/RightButton.svg" /></button>
-    <div class="journal-container"></div>
-    </div>`;
+    const journalTrack = `<div class="journal-container"></div>`;
     this.element.innerHTML = journalTrack;
   }
 
+  addButton() {
+    const leftBtn = document.createElement("button");
+    leftBtn.classList.add("track-btn");
+    const leftImg = document.createElement("img");
+    leftImg.src = "src/assets/icons/LeftButton.svg";
+    leftBtn.appendChild(leftImg);
+
+    const rightBtn = document.createElement("button");
+    rightBtn.classList.add("track-btn");
+    const rightImg = document.createElement("img");
+    rightImg.src = "src/assets/icons/RightButton.svg";
+    rightBtn.appendChild(rightImg);
+
+    this.element.appendChild(leftBtn);
+    this.element.appendChild(rightBtn);
+  }
+
   moveTrack(direction) {
+    this.container = this.element.querySelector(".journal-container");
+    this.batchSize = this.store.getBatchSize();
     const WIDTH_PER_PAGE = 900;
     const FIRST_PAGE = 0;
-
-    this.batchSize = this.store.getBatchSize();
-    const LAST_PAGE = this.batchSize - 1;
+    const LAST_PAGE = this.store.getBatchSize() - 1;
 
     if (direction === "left") {
       this.currentPage--;
@@ -53,6 +62,8 @@ export class Track {
 
   addEvent() {
     this.batchSize = this.store.getBatchSize();
+    this.prevBtn = this.element.querySelector(".track-btn:nth-child(2)");
+    this.nextBtn = this.element.querySelector(".track-btn:nth-child(3)");
 
     if (this.batchSize === 1) {
       this.prevBtn.classList.add("display-none");
@@ -60,16 +71,13 @@ export class Track {
     }
 
     this.prevBtn.classList.add("display-none");
-    this.prevBtn.addEventListener("click", this.moveTrack.bind(this, "left"));
-    this.nextBtn.addEventListener("click", this.moveTrack.bind(this, "right"));
+
+    this.prevBtn.addEventListener("click", () => this.moveTrack("left"));
+    this.nextBtn.addEventListener("click", () => this.moveTrack("right"));
   }
 
   render() {
+    this.currentPage = 0;
     this.beElement();
-    this.container = this.element.querySelector(".journal-container");
-
-    this.prevBtn = this.element.querySelector(".track-btn:first-child");
-    this.nextBtn = this.element.querySelector(".track-btn:nth-child(2)");
-    this.addEvent();
   }
 }

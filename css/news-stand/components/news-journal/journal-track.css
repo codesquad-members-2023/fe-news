@@ -15,10 +15,10 @@
   border: none;
 }
 
-.track-btn:first-child {
+.track-btn:nth-child(2) {
   left: 1px;
 }
 
-.track-btn:nth-child(2) {
+.track-btn:nth-child(3) {
   right: 1px;
 }

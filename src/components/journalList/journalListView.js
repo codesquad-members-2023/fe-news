@@ -10,6 +10,7 @@ const createJournalList = () => {
   journalListEl.classList.add("news-stand-jounalList");
 
   const updateJournalData = (state) => {
+    journalTrack.render();
     const journalContainer = document.querySelector(".journal-container");
     journalContainer.innerHTML = "";
     const journalList =
@@ -27,11 +28,12 @@ const createJournalList = () => {
       journalContainer.appendChild(batchContainer);
       const batchElments = document.querySelectorAll(".journal-batch");
       journalTrackStore.setBatchSize(batchElments);
-      journalTrack.addEvent();
     } else {
       batchJournalList(journalList);
       const batchElments = document.querySelectorAll(".journal-batch");
       journalTrackStore.setBatchSize(batchElments);
+      journalTrack.addButton();
+      journalTrack.addEvent();
     }
   };
 
@@ -63,6 +65,8 @@ const createJournalList = () => {
     batchJournalList(jounalList);
     const batchElments = document.querySelectorAll(".journal-batch");
     journalTrackStore.setBatchSize(batchElments);
+    journalTrack.addButton();
+    journalTrack.addEvent();
   };
 
   const createBatchContainer = () => {
