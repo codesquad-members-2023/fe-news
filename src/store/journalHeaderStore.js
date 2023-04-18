@@ -3,7 +3,7 @@ export class JournalHeaderStore {
     this.journalState = "STATE_ALL"; // "STATE_SUB"
     this.journalFrame = "GRID"; // "DETAIL"
     this.journalListAll = [];
-    this.journalSubscribe = [];
+    this.journalSubscribe = new Set();
     this.updateJournalData = updateJournalData;
   }
 
@@ -21,11 +21,12 @@ export class JournalHeaderStore {
   }
 
   addSubscribe(clickedJournal) {
-    this.journalSubscribe.push(clickedJournal);
+    this.journalSubscribe.add(clickedJournal);
   }
 
   deleteSubscribe(clickedJournal) {
-    this.journalSubscribe.splice(clickedJournal);
+    this.journalSubscribe.delete(clickedJournal);
+    this.updateJournalData(this.journalState);
   }
 
   getJournalListAll() {
