@@ -11,7 +11,7 @@ export default class Observer {
     this._observers.delete(observer);
   }
 
-  notify() {
-    this._observers.forEach((observer) => observer());
+  notify(state) {
+    this._observers.forEach((observer) => observer(state));
   }
 }
