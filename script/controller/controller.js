@@ -2,6 +2,7 @@ import { insertNewsData } from "../view/newsRollingBar.js";
 import { insertNewsCompanyGrid } from "../view/newsCompany.js";
 import { API_PATH } from "../constants/api.js";
 import { COMPANY, ROLLING } from "../constants/dom.js";
+
 export const fetchController = async () => {
   const rollingData = await fetchRollingoData();
   const companyData = await fetchCompanyData();

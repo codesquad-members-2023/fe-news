@@ -2,14 +2,13 @@ export class store {
   constructor() {
     this.changeListeners = [];
   }
-  subscribe(callBackFunction){
+  subscribe(newsData) {
     this.changeListeners.push(callBackFunction);
   }
-  unsubscribe(callBackFunction){
-    this.changeListeners = this.changeListeners.filter(listener => listener!== callBackFunction);
+  unsubscribe(newsData) {
+    this.changeListeners = this.changeListeners.filter((listener) => listener !== callBackFunction);
   }
-  publish(){
-    this.changeListeners.forEach(changeListener => changeListener());
+  publish() {
+    this.changeListeners.forEach((changeListener) => changeListene);
   }
 }
-

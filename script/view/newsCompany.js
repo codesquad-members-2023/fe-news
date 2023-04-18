@@ -1,6 +1,7 @@
 import { $ } from "../utils/dom.js";
 import { COMPANY, SUBSCRIBE } from "../constants/dom.js";
-
+import { store } from "../store/store.js";
+import { subscribeData } from "../controller/subscribeController.js";
 export const renderNewsCompanyBar = () => {
   const newsCompanyTemplate = `
 <div class="news-company">
@@ -79,18 +80,21 @@ export class insertNewsCompanyGrid {
       controlButton();
       insertNewsData(SUBSCRIBE.REGISTER);
     });
-    subscribe();
+    register(this.newsData, this.page);
   }
 }
 
-export const subscribe = () => {
+export const register = (newsData, page) => {
   const gridBtn = document.querySelector(".grid_set");
+  const subData = new subscribeData();
   gridBtn.addEventListener("click", (e) => {
     let btn = e.target.closest("button");
     if (btn.textContent === SUBSCRIBE.REGISTER) {
       btn.textContent = SUBSCRIBE.CANCEL;
+      subData.deliversubscribeData(e.target.closest(".grid_list").id, newsData, page);
     } else {
       btn.textContent = SUBSCRIBE.REGISTER;
+      subData.deliverUnsubscribeData(e.target.closest(".grid_list").id, newsData, page);
     }
   });
 };
