@@ -5,6 +5,8 @@ import { NsCategoryContainerObservableModel } from '@components/main/main__left/
 import { NsCategoryNavbarObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/ns__category-navbar/NsCategoryNavbarObserverViewComponent.js';
 import { NsArticleContainerObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/ns__article-container/NsArticleContainerObserverViewComponent.js';
 import { $ } from '@utils/dom.js';
+import { CATEGORY_CONTAINER_PAGE_START } from '@src/constants/constants.js';
+
 export class NsCategoryContainerObserverViewComponent
   extends AbstractView
   implements ObserverViewComponent
@@ -63,6 +65,7 @@ export class NsCategoryContainerObserverViewComponent
     this._observerModel.addSubscriber(this.addArticleHeader.bind(this));
     this._observerModel.addSubscriber(this.addMainArticle.bind(this));
     this._observerModel.addSubscriber(this.addSubArticles.bind(this));
+    this._observerModel.addSubscriber(this.toggleGridButton.bind(this));
   }
 
   // 아래는 subscriber이 될 메서드
@@ -144,5 +147,28 @@ export class NsCategoryContainerObserverViewComponent
           `
         );
       }, '');
+  }
+
+  async toggleGridButton(state: State) {
+    // 추후 코드 리팩토링
+    const { page, articlesPromise } = state;
+    const articles = (await articlesPromise) as Article[];
+    const CATEGORY_CONTAINER_PAGE_END = articles.length;
+    ($('#btn-prev', this.element) as HTMLButtonElement).classList.remove(
+      'invisible',
+    );
+    ($('#btn-next', this.element) as HTMLButtonElement).classList.remove(
+      'invisible',
+    );
+    if (page === CATEGORY_CONTAINER_PAGE_START) {
+      ($('#btn-prev', this.element) as HTMLButtonElement).classList.add(
+        'invisible',
+      );
+    }
+    if (page === CATEGORY_CONTAINER_PAGE_END - 1) {
+      ($('#btn-next', this.element) as HTMLButtonElement).classList.add(
+        'invisible',
+      );
+    }
   }
 }
