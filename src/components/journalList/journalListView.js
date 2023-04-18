@@ -13,8 +13,8 @@ const createJournalList = () => {
     journalContainer.innerHTML = "";
     const journalList =
       state === "STATE_ALL"
-        ? journalHeader.journalHeaderStore.getJournalListAll()
-        : journalHeader.journalHeaderStore.getJournalSubscribe();
+        ? journalHeaderStore.getJournalListAll()
+        : journalHeaderStore.getJournalSubscribe();
     journalList.forEach((item) => {
       journalContainer.appendChild(item.element);
     });
@@ -31,7 +31,7 @@ const createJournalList = () => {
     try {
       const journalDatas = await dataRequestToAPI(journalURL);
       const journals = journalDatas.map((journalData) => {
-        return new Journal(journalData);
+        return new Journal(journalData, journalHeaderStore);
       });
       return journals;
     } catch (error) {
