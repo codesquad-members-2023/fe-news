@@ -13,36 +13,41 @@ export default class GridAllModel extends Observer {
       allOrSub: VIEW_STATE.ALL,
       index: 1,
     };
-    this._data = {
-      page1: [],
-      page2: [],
-      page3: [],
-      page4: [],
-    };
+    this._data = [];
     this._dataFetcher = dataFetcher;
   }
 
   async getData() {
-    if (this._data[`page${this._state.index}`].length === 0) {
+    if (this._data.length === 0) {
       await this._dataFetcher(API_PATH.NS_SECTION, this.generateRandomList.bind(this));
     }
-    return this._data[`page${this._state.index}`];
+    const start = (this._state.index - 1) * NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
+    const end = start + NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
+
+    return [...this._data.slice(start, end)];
   }
 
   generateRandomList(data) {
     const randomNumber = new Set();
 
-    const randomNumberArray = Array.from({ length: data.length }, (_, i) => i);
     while (randomNumber.size < NS_SECTION_INFO.GRID_ALL.ALL_SIZE) {
-      randomNumber.add(Math.floor(Math.random() * randomNumberArray.length));
+      randomNumber.add(Math.floor(Math.random() * data.length));
     }
 
-    let count = 0;
     randomNumber.forEach((number) => {
-      const key = Math.ceil((count + 1) / NS_SECTION_INFO.GRID_ALL.PAGE_SIZE);
-      this._data[`page${key}`].push(data[number]);
-      count++;
+      this._data.push(data[number]);
     });
+  }
+
+  getFilterData(pressName) {
+    let result;
+    this._data.some((data) => {
+      if (data.pressName === pressName) {
+        result = data.pressName;
+        return true;
+      }
+    });
+    return result;
   }
 
   changeView(selectedState) {
