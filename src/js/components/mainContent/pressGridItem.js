@@ -14,6 +14,13 @@ export default class PressGridItem {
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
     // * 만약 props에 담은 정보가 없다면 아무것도 들어있지 않은 grid item을 만들기 위해 return
     if (!this.props) return;
+    const { pressName } = this.props;
+    this.render();
+    this.setEvent();
+    subscriptionListStore.register({ listenerType: pressName, listenerCallBack: this.update.bind(this) });
+  }
+
+  update() {
     this.render();
     this.setEvent();
   }
@@ -39,7 +46,10 @@ export default class PressGridItem {
     const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$ele });
     $subscribeToggleBtn.addEventListener('click', () => {
       const { pressName } = this.props;
-      subscriptionListStore.dispatch({ type: 'addSubscription', payload: pressName });
+      subscriptionListStore.dispatch({
+        listenerType: pressName,
+        action: { type: 'addSubscription', payload: pressName }
+      });
     });
   }
 }
