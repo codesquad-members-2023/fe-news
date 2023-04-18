@@ -1,7 +1,9 @@
 @import './variables.scss';
 @import './reset.scss';
 @import './header.scss';
-@import './autoRolling.scss';
+@import './headline.scss';
+@import './grid.scss';
+@import './mainView/header.scss';
 
 html {
   font-size: 10px;

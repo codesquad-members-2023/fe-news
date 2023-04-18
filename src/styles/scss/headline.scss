@@ -1,9 +1,10 @@
-.auto-rolling {
+.newsstand_headline {
   display: flex;
   justify-content: space-between;
+  padding: 40px 0 33px;
 }
 
-.rolling__container {
+.headline_rolling-container {
   display: flex;
   align-items: center;
   gap: 16px;

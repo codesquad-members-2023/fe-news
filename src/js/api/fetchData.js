@@ -9,4 +9,10 @@ const fetchData = async (url) => {
   }
 };
 
-export { fetchData };
+const URL = 'http://localhost:3001';
+
+const [headLineData, mediaData] = await Promise.all([
+  fetchData(`${URL}/headline`),
+  fetchData(`${URL}/media`)]);
+
+export { headLineData, mediaData };
