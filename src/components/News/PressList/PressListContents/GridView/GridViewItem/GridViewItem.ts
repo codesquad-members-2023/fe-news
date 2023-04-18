@@ -29,7 +29,22 @@ class GridViewItem extends HTMLElement {
     });
   }
 
+  static get observedAttributes() {
+    return ['is-subscribed'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'is-subscribed') {
+      this.render();
+    }
+  }
+
   render() {
+    const id = getProperty({
+      target: this,
+      name: 'id',
+    });
+
     const image = getProperty({
       target: this,
       name: 'image',
@@ -60,8 +75,8 @@ class GridViewItem extends HTMLElement {
       <div class="press-subscribe-btn-container hide">
         ${
           isSubscribed === 'true'
-            ? `<button-element icon="close">해지하기</button-element>`
-            : `<button-element icon="plus">구독하기</button-element>`
+            ? `<button-element icon="close" id="${id}">해지하기</button-element>`
+            : `<button-element icon="plus" id="${id}">구독하기</button-element>`
         }
       </div>
     </button>

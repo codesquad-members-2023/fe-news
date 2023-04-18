@@ -17,6 +17,7 @@ import { subscribe, unsubscribe } from '@apis/user';
 import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionType } from '@store/section/sectionType';
 import { PressListType } from '@store/press/pressType';
+import { isFirstPage, sliceByPage } from '@utils/common';
 
 interface PressListContents {
   icon?: string | null;
@@ -99,40 +100,49 @@ class PressListContents extends HTMLElement {
       },
 
       createGridViewContainer: (page: number) => {
-        const gridViewContainer = create({ tagName: 'div' });
-        gridViewContainer.classList.add('grid-view-container');
-        gridViewContainer.setAttribute('page', `${page}`);
-        if (page === 0) {
+        const gridViewContainer = create({
+          tagName: 'div',
+          classList: ['grid-view-container'],
+          attributeList: [['page', String(page)]],
+        });
+
+        if (isFirstPage(page)) {
           gridViewContainer.classList.add('show');
         }
-        const start = page * 24;
-        const end = start + 24;
         const pressList: any = this.pressStore.getState().pressList;
-        const currentPressList = pressList.slice(start, end);
+        const currentPressList = sliceByPage({
+          page,
+          maxItemNum: 24,
+          items: pressList,
+        });
 
         const template = `
-        <grid-view-element press-list='${JSON.stringify(
-          currentPressList
-        )}'></grid-view-element>
+          <grid-view-element press-list='${JSON.stringify(
+            currentPressList
+          )}'></grid-view-element>
         `;
         add({
           target: gridViewContainer,
           template,
         });
-        this.wrap
-          ?.querySelector('section.general .view.grid')
-          ?.append(gridViewContainer);
-        this.handleSubscribe().handleGridView();
+        return gridViewContainer;
       },
       appendGridViewContainer: async () => {
         await this.handleGridView().getCurrentPressList(0);
         const maxPage =
           this.displayStore.getState().page.grid.general.totalPage;
         Array.from({ length: maxPage }).forEach((_, i) => {
-          this.handleGridView().createGridViewContainer(i);
+          const gridViewContainer =
+            this.handleGridView().createGridViewContainer(i);
+          this.wrap
+            ?.querySelector('section.general .view.grid')
+            ?.append(gridViewContainer);
+          this.handleSubscribe().handleGridView();
         });
-        const controller = create({ tagName: 'controller-element' });
-        setProperty({ target: controller, name: 'hide', value: 'left' });
+        const controller = create({
+          tagName: 'controller-element',
+          attributeList: [['hide', 'left']],
+        });
         this.shadowRoot
           ?.querySelector('section.general')
           ?.querySelector('.view.grid')
@@ -287,7 +297,6 @@ class PressListContents extends HTMLElement {
       } else if (isFirstPage) {
         setProperty({ target: controllerElement, name: 'hide', value: 'left' });
       } else {
-        console.log('ddd');
         setProperty({
           target: controllerElement,
           name: 'hide',
@@ -319,9 +328,10 @@ class PressListContents extends HTMLElement {
     const storeUser = store.user;
     interface runSubscribeProps {
       id: string;
+      target: HTMLElement | null | undefined | Element;
     }
     return {
-      runUnsunscribe: ({ id }: runSubscribeProps) => {
+      runUnsunscribe: ({ id, target }: runSubscribeProps) => {
         unsubscribe({ id: 'realsnoopso', pressId: id });
         storeUser.dispatch({
           type: 'UNSUBSCRIBE',
@@ -331,8 +341,14 @@ class PressListContents extends HTMLElement {
           type: 'UNSUBSCRIBE',
           payload: id,
         });
+        const gridViewItemElement = target?.closest('grid-view-item-element');
+        setProperty({
+          target: gridViewItemElement,
+          name: 'is-subscribed',
+          value: 'false',
+        });
       },
-      runSubscribe: ({ id }: runSubscribeProps) => {
+      runSubscribe: ({ id, target }: runSubscribeProps) => {
         subscribe({ id, pressId: id });
         storeUser.dispatch({
           type: 'SUBSCRIBE',
@@ -341,6 +357,12 @@ class PressListContents extends HTMLElement {
         this.pressStore.dispatch({
           type: 'SUBSCRIBE',
           payload: id,
+        });
+        const gridViewItemElement = target?.closest('grid-view-item-element');
+        setProperty({
+          target: gridViewItemElement,
+          name: 'is-subscribed',
+          value: 'true',
         });
       },
       handleGridView: () => {
@@ -355,9 +377,11 @@ class PressListContents extends HTMLElement {
             isSubscribed
               ? this.handleSubscribe().runUnsunscribe({
                   id,
+                  target,
                 })
               : this.handleSubscribe().runSubscribe({
                   id,
+                  target,
                 });
           });
         });
@@ -379,10 +403,12 @@ class PressListContents extends HTMLElement {
           if (isSubscribed) {
             this.handleSubscribe().runSubscribe({
               id,
+              target,
             });
           } else {
             this.handleSubscribe().runUnsunscribe({
               id,
+              target,
             });
           }
         });

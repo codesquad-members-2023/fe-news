@@ -1,6 +1,10 @@
 interface createProps {
   tagName: string;
+  classList?: string[];
+  attributeList?: attributeType[];
 }
+
+type attributeType = string[];
 
 interface selectProps {
   selector: string;
@@ -32,8 +36,18 @@ interface addStyleProps {
   style: HTMLStyleElement;
 }
 
-export function create({ tagName }: createProps) {
-  return document.createElement(tagName);
+export function create({ tagName, classList, attributeList }: createProps) {
+  const element = document.createElement(tagName);
+  if (classList)
+    classList.forEach((_class: string) => {
+      element.classList.add(_class);
+    });
+  if (attributeList)
+    attributeList.forEach((_attribute: attributeType) => {
+      const [key, value] = _attribute;
+      element.setAttribute(key, value);
+    });
+  return element;
 }
 export function createWrap() {
   const wrap = create({ tagName: 'div' });
