@@ -269,6 +269,18 @@ table {
   color: var(--color-gray-200);
 }
 
+.change_gray {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-gray-200);
+}
+
+.change_black {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-black);
+}
+
 .grid_set {
   display: grid;
   margin: 0 auto;

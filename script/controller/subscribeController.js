@@ -1,6 +1,6 @@
 import { store } from "../store/store.js";
 
-export class subscribeData {
+export class SubscribeController {
   constructor() {
     this.subscriber = new store();
   }
@@ -11,5 +11,8 @@ export class subscribeData {
   deliverUnsubscribeData(id, newsData, page) {
     const obj = newsData[page].find((data) => data.mediaId === Number(id));
     this.subscriber.unsubscribe(obj);
+  }
+  deliverPublishData() {
+    return this.subscriber.publish();
   }
 }

@@ -27,6 +27,14 @@
     color: var(--color-gray-200);
   }
 }
+.change_gray {
+  @include font(16px, 500);
+  color: var(--color-gray-200);
+}
+.change_black {
+  @include font(16px, 700);
+  color: var(--color-black);
+}
 
 .grid_set {
   display: grid;

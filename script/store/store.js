@@ -3,12 +3,13 @@ export class store {
     this.changeListeners = [];
   }
   subscribe(newsData) {
-    this.changeListeners.push(callBackFunction);
+    this.changeListeners.push(newsData);
+    console.log(this.changeListeners);
   }
   unsubscribe(newsData) {
-    this.changeListeners = this.changeListeners.filter((listener) => listener !== callBackFunction);
+    this.changeListeners = this.changeListeners.filter((listener) => listener !== newsData);
   }
   publish() {
-    this.changeListeners.forEach((changeListener) => changeListene);
+    return this.changeListeners;
   }
 }

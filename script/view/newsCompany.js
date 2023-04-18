@@ -1,7 +1,7 @@
 import { $ } from "../utils/dom.js";
 import { COMPANY, SUBSCRIBE } from "../constants/dom.js";
-import { store } from "../store/store.js";
-import { subscribeData } from "../controller/subscribeController.js";
+import { SubscribeController } from "../controller/subscribeController.js";
+
 export const renderNewsCompanyBar = () => {
   const newsCompanyTemplate = `
 <div class="news-company">
@@ -86,7 +86,10 @@ export class insertNewsCompanyGrid {
 
 export const register = (newsData, page) => {
   const gridBtn = document.querySelector(".grid_set");
-  const subData = new subscribeData();
+  const subData = new SubscribeController();
+  const rightButton = $(".grid_btn-right");
+  const myNewsCompany = $(".company__choice_subscribe");
+  const allNewsCompany = $(".company__choice_all");
   gridBtn.addEventListener("click", (e) => {
     let btn = e.target.closest("button");
     if (btn.textContent === SUBSCRIBE.REGISTER) {
@@ -97,4 +100,33 @@ export const register = (newsData, page) => {
       subData.deliverUnsubscribeData(e.target.closest(".grid_list").id, newsData, page);
     }
   });
+  myNewsCompany.addEventListener("click", () => {
+    insertMyNewsData(SUBSCRIBE.CANCEL, subData.deliverPublishData());
+    rightButton.classList.add("hidden");
+    allNewsCompany.classList.add("change_gray");
+    myNewsCompany.classList.add("change_black");
+  });
+  allNewsCompany.addEventListener("click", () => {
+    insertNewsData(SUBSCRIBE.REGISTER);
+  });
+};
+
+export const insertMyNewsData = (subscribe, newsData) => {
+  const gridBox = $(".grid_set");
+  gridBox.innerHTML = "";
+  if (!newsData) return;
+  newsData.map((data) => {
+    gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}">
+    <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>
+    <div class ="grid_btn">
+    <button type="button">${subscribe}</button>
+    </div>
+    </div>
+    `;
+  });
+  if (newsData.length !== COMPANY.PAGES_PER) {
+    for (let i = 0; i < COMPANY.PAGES_PER - newsData.length; i++) {
+      gridBox.innerHTML += `<div class="grid_list"></div>`;
+    }
+  }
 };
