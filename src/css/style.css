@@ -449,13 +449,13 @@ main .view-buttons .grid-active {
   flex-direction: row;
   align-items: center;
 }
-.category-area .list-category li {
+.category-area .list-category li:not(.current) {
   padding: 0 16px;
   font-size: 14px;
   font-weight: 500;
   color: #6E8091;
 }
-.category-area .list-category li:hover {
+.category-area .list-category li:not(.current):hover {
   text-decoration: underline #6E8091;
   cursor: pointer;
 }
@@ -536,4 +536,12 @@ main .view-buttons .grid-active {
   font-size: 14px;
   font-weight: 500;
   color: #879298;
+}
+
+.current {
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #4362D0;
+  color: #FFFFFF;
 }

@@ -8,20 +8,25 @@ class GridView {
   #viewStore;
   #subscribeStore;
   page = 0;
+  viewContainer;
   constructor(gridData, { GRID_INFO }) {
     this.#gridData = gridData;
     this.#viewStore = ViewStore;
     this.#subscribeStore = SubscribeStore;
+    this.FIRST_PAGE = GRID_INFO.FIRST_PAGE;
+    this.LAST_PAGE = GRID_INFO.LAST_PAGE;
+    this.GRID_COUNT = GRID_INFO.GRID_COUNT;
+  }
+
+  setTemplate() {
     this.viewContainer = createEl('div', 'view-container');
-    this.FIRST_PAGE = GRID_INFO.FIRST_PAGE,
-    this.LAST_PAGE = GRID_INFO.LAST_PAGE,
-    this.GRID_COUNT = GRID_INFO.GRID_COUNT,
+    this.viewContainer.innerHTML = this.renderAllGridView();
     this.moveToPage();
+    this.onGridCell();
   }
 
   render() {
-    this.viewContainer.innerHTML = this.renderAllGridView();
-    this.onGridCell();
+    this.setTemplate();
     this.#viewStore.subscribe(this.#reRender.bind(this));
     return this.viewContainer;
   }
@@ -70,7 +75,7 @@ class GridView {
     return `<div class="grid-container${isGrid ? ``: " hidden"}">
     <div class="grid-area">
       <div class="no-subscription">
-      <h3>구독한 언론사가 없습니다.</h3>
+        <h3>구독한 언론사가 없습니다.</h3>
         <p>언론사 구독 설정에서 관심있는 언론사를 구독하시면<br>
         언론사가 직접 편집한 뉴스들을 네이버 홈에서 바로 보실 수 있습니다.</p>
       </div>
@@ -103,12 +108,12 @@ class GridView {
 
   moveToPage() {
     this.viewContainer.addEventListener('click', ({ target }) => {
+      if(target.parentElement.className !== 'grid-container') return;
       const isPrevBtn = target.className === 'prev-button';
       const isNextBtn = target.className === 'next-button';
-
       if(!(isPrevBtn || isNextBtn)) return;
-      if (isPrevBtn && this.page > this.FIRST_PAGE) this.page--;
-      if (isNextBtn && this.page < this.LAST_PAGE) this.page++;
+      if(isPrevBtn && this.page > this.FIRST_PAGE) this.page--;
+      if(isNextBtn && this.page < this.LAST_PAGE) this.page++;
       this.viewContainer.querySelector('.grid-container').outerHTML = this.renderAllGridView();
       this.onGridCell();
     });
@@ -142,9 +147,11 @@ class GridView {
     const targetBtn = target.closest('.cell-button');
     const targetPressCell = targetBtn.closest('.grid-cell');
     const subscribedPressInfo = targetPressCell.querySelector('img').src;
-    const addSubscribedPress = () => { const state = this.#subscribeStore.getState() };
-
-    this.#subscribeStore.subscribe(addSubscribedPress);
+    // const addSubscribedPress = () => {
+      // const state = this.#subscribeStore.getState()
+      //구독한, 그리드 페이지 리렌더링 하는 메서드 등록
+    // }
+    // this.#subscribeStore.subscribe(addSubscribedPress);
     const targetBtnText = targetBtn.querySelector('span').textContent;
     const isSubscribe = targetBtnText === PRESS_BUTTON['subscribe']?
       'SUBSCRIBE' : 'UNSUBSCRIBE';

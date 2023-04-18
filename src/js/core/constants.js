@@ -5,7 +5,7 @@ export const CONSTANTS = {
   'subscribed' : '내가 구독한 언론사',
 }
 
-export const category = {
+export const CATEGORY = {
   'toteco' : '종합/경제',
   'tvcom' : '방송/통신',
   'it' : 'IT',

@@ -9,7 +9,7 @@
     flex-direction: row;
     align-items: center;
 
-    li {
+    li:not(.current) {
       padding: 0 16px;
       @include font($bodySM, $medium);
       color: $gray300;
@@ -113,4 +113,11 @@
       }
     }
   }
+}
+
+.current {
+  padding: 0 16px;
+  @include font($bodySM, $medium);
+  background-color: $primary;
+  color: $white;
 }
