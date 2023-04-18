@@ -347,7 +347,6 @@ class PressListContents extends HTMLElement {
           name: 'is-subscribed',
           value: 'false',
         });
-        this.handleSubscribe().handleListView();
       },
       runSubscribe: ({ id, target }: runSubscribeProps) => {
         subscribe({ id, pressId: id });
@@ -364,7 +363,6 @@ class PressListContents extends HTMLElement {
           name: 'is-subscribed',
           value: 'true',
         });
-        this.handleSubscribe().handleListView();
       },
       handleGridView: () => {
         const gridView = this.shadowRoot?.querySelectorAll('grid-view-element');
@@ -391,16 +389,12 @@ class PressListContents extends HTMLElement {
         });
       },
       handleListView: () => {
-        console.log('ddd');
         const listView = this.shadowRoot
           ?.querySelector('list-view-element')
           ?.shadowRoot?.querySelector('list-view-item-element')
-          ?.shadowRoot?.querySelector('button-element');
-
-        console.log(listView);
+          ?.shadowRoot?.querySelector('.btn-container');
 
         listView?.addEventListener('click', (e) => {
-          console.log('click');
           const target = e.target as HTMLElement;
           const id = target?.getAttribute('id');
 
