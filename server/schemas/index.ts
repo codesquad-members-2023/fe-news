@@ -54,5 +54,17 @@ const UserSchema = new Schema<UserInterface>({
   subscribingPressIds: [{ type: String, required: true }],
 });
 
+const PressSchema = new Schema<PressInfoInterface>({
+  pid: { type: String, required: true },
+  pname: { type: String, required: true },
+  newMainLogo: { type: String, required: true },
+  newMainLightLogo: { type: String, required: true },
+  newMainDarkLogo: { type: String, required: true },
+  thumbnailValid: { type: Boolean, required: true },
+  valid: { type: Boolean, required: true },
+  isSubscribed: { type: Boolean, required: true },
+});
+
 export const SectionModel = model<SectionInterface>('Sections', SectionSchema);
 export const UserModel = model<UserInterface>('Users', UserSchema);
+export const PressModel = model<PressInfoInterface>('Presses', PressSchema);

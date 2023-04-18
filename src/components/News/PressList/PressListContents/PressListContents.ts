@@ -342,12 +342,12 @@ class PressListContents extends HTMLElement {
           type: 'UNSUBSCRIBE',
           payload: id,
         });
-
         setProperty({
           target,
           name: 'is-subscribed',
           value: 'false',
         });
+        this.handleSubscribe().handleListView();
       },
       runSubscribe: ({ id, target }: runSubscribeProps) => {
         subscribe({ id, pressId: id });
@@ -364,6 +364,7 @@ class PressListContents extends HTMLElement {
           name: 'is-subscribed',
           value: 'true',
         });
+        this.handleSubscribe().handleListView();
       },
       handleGridView: () => {
         const gridView = this.shadowRoot?.querySelectorAll('grid-view-element');
@@ -390,27 +391,41 @@ class PressListContents extends HTMLElement {
         });
       },
       handleListView: () => {
+        console.log('ddd');
         const listView = this.shadowRoot
           ?.querySelector('list-view-element')
           ?.shadowRoot?.querySelector('list-view-item-element')
           ?.shadowRoot?.querySelector('button-element');
 
+        console.log(listView);
+
         listView?.addEventListener('click', (e) => {
+          console.log('click');
           const target = e.target as HTMLElement;
           const id = target?.getAttribute('id');
+
           const subscribingPress = storeUser.getState().subscribingPress;
           if (!id) return;
           const isSubscribed = subscribingPress.includes(id);
 
-          if (isSubscribed) {
+          const listViewItemElement = document
+            .querySelector('news-element')
+            ?.shadowRoot?.querySelector('press-list-element')
+            ?.shadowRoot?.querySelector('presslist-contents-element')
+            ?.shadowRoot?.querySelector('section.show')
+            ?.querySelector('.view.show')
+            ?.querySelector('list-view-element')
+            ?.shadowRoot?.querySelector('list-view-item-element');
+
+          if (!isSubscribed) {
             this.handleSubscribe().runSubscribe({
               id,
-              target,
+              target: listViewItemElement,
             });
           } else {
             this.handleSubscribe().runUnsunscribe({
               id,
-              target,
+              target: listViewItemElement,
             });
           }
         });

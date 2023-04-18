@@ -75,16 +75,11 @@ class ListViewItem extends HTMLElement {
         press ? `src="${press.newMainLogo}"` : ''
       } height="20px" width="auto">
       <p class="edit-time">${lastEdited ?? ''} 편집</p>
-      ${
-        this.isSubscribed
-          ? `<button-element icon="close" id='${
-              press ? press.pid : ''
-            }'>해지하기</button-element>`
-          : `<button-element icon="plus" id='${
-              press ? press.pid : ''
-            }'>구독하기</button-element>`
-      }
-      
+      <button-element icon="${this.isSubscribed ? 'close' : 'plus'}" id='${
+      press ? press.pid : ''
+    }'>
+        ${this.isSubscribed ? '해지하기' : '구독하기'}
+      </button-element>
     </div>
     <div class="contents">
       ${[mainArticle].map(

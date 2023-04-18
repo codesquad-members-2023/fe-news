@@ -3,7 +3,12 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { SectionModel, PressInfoInterface, UserModel } from './schemas/index';
+import {
+  SectionModel,
+  PressInfoInterface,
+  UserModel,
+  PressModel,
+} from './schemas/index';
 const uuid = require('uuid');
 import fs from 'fs/promises';
 
@@ -41,12 +46,24 @@ app.post('/section', async (req, res) => {
 });
 
 app.get('/press', async (req, res) => {
-  const page = req.query.page;
   const TOTAL_ITEM_AMOUNT = 24 * 4;
   try {
-    const press = await getPress({ sliceNumber: TOTAL_ITEM_AMOUNT });
+    const press = await PressModel.find({}).limit(TOTAL_ITEM_AMOUNT);
     res.status(200).json(press);
   } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
+app.post('/press', async (req, res) => {
+  const body = req.body;
+  try {
+    const result = await PressModel.create({
+      ...body,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
     res.status(400).json({ message: error });
   }
 });
@@ -73,6 +90,7 @@ app.patch('/subscribe', async (req, res) => {
       { id },
       { $push: { subscribingPressIds: pressId } }
     );
+    await PressModel.updateOne({ pid: id }, { $push: { isSubscribed: true } });
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -88,6 +106,7 @@ app.patch('/unsubscribe', async (req, res) => {
       { id },
       { $pull: { subscribingPressIds: pressId } }
     );
+    await PressModel.updateOne({ pid: id }, { $push: { isSubscribed: false } });
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -107,63 +126,6 @@ app.get('/user', async (req, res) => {
     res.status(400).json({ message: error });
   }
 });
-
-const ITEM_AMOUNT_PER_PAGE = 24 * 4;
-const TOTAL_ITEM_AMOUNT = 24 * 4;
-
-interface getPressProps {
-  sliceNumber?: number;
-}
-
-const getPress = async ({ sliceNumber }: getPressProps) => {
-  try {
-    const data = await fs.readFile('./mock/press.json', 'utf8');
-    let press = JSON.parse(data) as PressInfoInterface[];
-    const result = await UserModel.find({ id: TEMP_ID });
-    const subscribingPressIds = result[0].subscribingPressIds;
-    press = press.map((item: any) => {
-      if (subscribingPressIds.includes(item['pid'])) {
-        return {
-          ...item,
-          isSubscribed: true,
-        };
-      }
-      return {
-        ...item,
-        isSubscribed: false,
-      };
-    });
-
-    if (!sliceNumber) {
-      return press;
-    }
-    press = press.slice(0, sliceNumber);
-    // press = press.slice(
-    //   page * ITEM_AMOUNT_PER_PAGE,
-    //   (page + 1) * ITEM_AMOUNT_PER_PAGE
-    // );
-
-    return press;
-  } catch (error) {
-    throw error;
-  }
-};
-
-interface getPressInfoProps {
-  pressId?: string;
-  page?: number;
-}
-const getPressInfo = ({ pressId }: getPressInfoProps) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const press: PressInfoInterface[] = await getPress({ sliceNumber: -1 });
-      const result = press.find((item: any) => item['pid'] === pressId);
-      resolve(result);
-    } catch (error) {
-      reject({ message: error });
-    }
-  });
-};
 
 app.get('/rolling-news', async (req, res) => {
   try {
@@ -191,7 +153,7 @@ app.get('/section', async (req, res) => {
     const section = await SectionModel.find().skip(Number(page)).limit(1);
     if (section) {
       const pressId = section[0].pressId;
-      const press = await getPressInfo({ pressId });
+      const press = await PressModel.findOne({ pid: pressId });
       const data = section[0].toObject() as unknown extends SectionInfoInterface
         ? SectionInfoInterface
         : { press: unknown };
