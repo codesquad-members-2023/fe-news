@@ -19,7 +19,7 @@ export default class PressGrid {
     const { gridItemsData } = this.props;
     const { subscriptionList } = subscriptionListStore.getState();
 
-    gridPageStore.register(this.update.bind(this));
+    gridPageStore.register(this.setDisplayElement.bind(this));
 
     this.gridItems = gridItemsData.map(
       ({ pressName, pressLogo }) =>
@@ -39,7 +39,7 @@ export default class PressGrid {
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 
-  update() {
+  setDisplayElement() {
     const { pressTabType, page } = this.props;
     const { currentPage } = gridPageStore.getState()[pressTabType];
     if (currentPage !== page) this.$ele.classList.add('display-none');
