@@ -15,9 +15,16 @@ const createJournalList = () => {
       state === "STATE_ALL"
         ? journalHeaderStore.getJournalListAll()
         : journalHeaderStore.getJournalSubscribe();
-    journalList.forEach((item) => {
-      journalContainer.appendChild(item.element);
-    });
+
+    if (journalList.size === 0) {
+      const nullSubscribeHTML = `<div class="journal-empty Font_display">
+      <span>구독한 언론사가 없습니다...</span></br>
+      <img src="./src/assets/icons/크롱.png">
+      </div>`;
+      journalContainer.innerHTML = nullSubscribeHTML;
+    } else {
+      batchJournalList(journalList);
+    }
   };
 
   const journalHeaderStore = new JournalHeaderStore(updateJournalData);
@@ -42,11 +49,30 @@ const createJournalList = () => {
   const loadJournalItems = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
-    const journalContainer = document.querySelector(".journal-container");
     journalHeaderStore.setJournalListAll(journalItems);
     const jounalList = journalHeaderStore.journalListAll;
+    batchJournalList(jounalList);
+  };
+
+  const createBatchContainer = () => {
+    const batchContainer = document.createElement("div");
+    batchContainer.className = "journal-batch";
+    return batchContainer;
+  };
+
+  const batchJournalList = (jounalList) => {
+    const journalContainer = document.querySelector(".journal-container");
+    const batchSize = 24;
+    let batchCount = 0;
+    let batchContainer = createBatchContainer();
     jounalList.forEach((item) => {
-      journalContainer.appendChild(item.element);
+      journalContainer.appendChild(batchContainer);
+      batchContainer.appendChild(item.element);
+      batchCount++;
+      if (batchCount === batchSize) {
+        batchContainer = createBatchContainer();
+        batchCount = 0;
+      }
     });
   };
 

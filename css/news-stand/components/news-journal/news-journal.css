@@ -20,10 +20,15 @@
 
 .journal-container {
   display: grid;
-  grid-template-columns: repeat(24, minmax(150px, 150px));
-  grid-template-rows: repeat(4, minmax(95px, 95px));
+  grid-template-columns: repeat(4, minmax(900px, 900px));
   position: relative;
   transition: transform 0.5s ease-in-out;
+}
+
+.journal-batch {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px, 150px));
+  grid-template-rows: repeat(4, minmax(95px, 95px));
 }
 
 .journal-item {
@@ -49,4 +54,17 @@
 
 .journal-item_show img {
   width: 50%;
+}
+
+.journal-empty {
+  width: 900px;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.journal-empty img {
+  width: 150px;
 }
