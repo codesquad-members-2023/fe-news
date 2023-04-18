@@ -23,7 +23,9 @@ export default class PressGridItem {
   }
 
   template() {
-    const { pressName, pressLogo, isSubscribed } = this.props;
+    const { pressName, pressLogo } = this.props;
+    const { subscriptionList } = subscriptionListStore.getState();
+    const isSubscribed = subscriptionList.includes(pressName);
 
     return /* html */ `
       <img class="press-logo" src="${pressLogo}" alt="${pressName}"/>

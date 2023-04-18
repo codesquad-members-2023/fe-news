@@ -1,4 +1,4 @@
-import { gridPageStore, subscriptionListStore } from '../../store/index.js';
+import { gridPageStore } from '../../store/index.js';
 import PressGridItem from './pressGridItem.js';
 
 export default class PressGrid {
@@ -17,7 +17,6 @@ export default class PressGrid {
 
   mount() {
     const { gridItemsData } = this.props;
-    const { subscriptionList } = subscriptionListStore.getState();
 
     gridPageStore.register(this.setDisplayElement.bind(this));
 
@@ -25,8 +24,7 @@ export default class PressGrid {
       ({ pressName, pressLogo }) =>
         new PressGridItem(this.$ele, {
           pressName,
-          pressLogo,
-          isSubscribed: subscriptionList.includes(pressName)
+          pressLogo
         })
     );
 
