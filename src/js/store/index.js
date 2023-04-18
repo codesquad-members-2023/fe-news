@@ -1,4 +1,5 @@
 import Store from '../core/store.js';
+import MyStore from '../core/myStore.js';
 import { tabReducer, gridPageReducer, subscriptionListReducer } from '../reducer/index.js';
 
 const INIT_TAB_STATE = {
@@ -19,4 +20,4 @@ const INIT_SUBSCRIPTION_LIST_STATE = {
   subscriptionList: []
 };
 
-export const subscriptionListStore = new Store(INIT_SUBSCRIPTION_LIST_STATE, subscriptionListReducer);
+export const subscriptionListStore = new MyStore(INIT_SUBSCRIPTION_LIST_STATE, subscriptionListReducer);
