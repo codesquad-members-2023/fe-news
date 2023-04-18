@@ -1,3 +1,7 @@
+import { validatorUtils } from '../utils/index.js';
+
+const { hasKey, hasValue } = validatorUtils;
+
 export default class MyStore {
   #state;
 
@@ -14,21 +18,25 @@ export default class MyStore {
   }
 
   register({ listenerType = 'default', listenerCallBack }) {
-    if (!this.#listeners.has(listenerType)) this.#listeners.set(listenerType, new Set());
-    if (this.#listeners.get(listenerType).has(listenerCallBack)) return;
-    this.#listeners.get(listenerType).add(listenerCallBack);
+    if (!hasKey(listenerType)) this.#listeners.set(listenerType, new Set());
+
+    const typeListeners = this.#listeners.get(listenerType);
+    if (hasValue(typeListeners, listenerCallBack)) return;
+
+    typeListeners.add(listenerCallBack);
   }
 
   deregister({ listenerType = 'default', listenerCallBack }) {
-    if (!this.#listeners.has(listenerType)) throw new Error('ListenerType entered not found');
-    if (!this.#listeners.get(listenerType).has(listenerCallBack))
-      throw new Error('ListenerCallBack entered not found');
+    if (!hasKey(listenerType)) throw new Error('ListenerType not found');
 
-    this.#listeners.get(listenerType).delete(listenerCallBack);
+    const typeListeners = this.#listeners.get(listenerType);
+    if (hasValue(typeListeners, listenerCallBack)) throw new Error('ListenerCallBack entered not found');
+
+    typeListeners.delete(listenerCallBack);
   }
 
   publish(listenerType = 'default') {
-    if (!this.#listeners.has(listenerType)) throw new Error('ListenerType does not exist');
+    if (!hasKey(this.#listeners, listenerType)) throw new Error('ListenerType does not exist');
 
     if (listenerType !== 'default') this.#listeners.get(listenerType).forEach((listener) => listener());
     this.#listeners.get('default').forEach((listener) => listener());
