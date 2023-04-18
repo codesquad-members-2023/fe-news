@@ -2,7 +2,7 @@ import createEl from '../../utils/util.js';
 import { CATEGORY, PRESS_BUTTON } from '../../core/constants.js';
 import { ViewStore } from '../../stores/viewStore.js';
 import { SubscribeStore } from '../../stores/subscribeStore.js';
-import { PageStore } from '../../stores/pageStore.js';
+import { PageStore } from '../../stores/pressPageStore.js';
 
 class ListView {
   #viewStore;
@@ -23,7 +23,10 @@ class ListView {
     this.listContainer = createEl('div', 'list-container');
     this.listContainer.classList.add('hidden');
     this.listContainer.insertAdjacentHTML('afterbegin', this.getCategory());
-    this.listContainer.insertAdjacentHTML('beforeend', this.getPressBox.bind(this)());
+    this.listContainer.insertAdjacentHTML(
+      'beforeend',
+      this.getPressBox.bind(this)(),
+    );
     this.listContainer.addEventListener('click', ({ target }) => {
       this.moveToPage({ target });
       this.clickCategory({ target });
@@ -39,15 +42,17 @@ class ListView {
 
   #reRender() {
     const { press, view } = this.#viewStore.getState();
-    if(press['all'] && view['list']) {
+    if (press['all'] && view['list']) {
       this.listContainer.classList.remove('hidden');
-      this.listContainer.querySelector('.category-area').outerHTML = this.getCategory();
-      this.listContainer.querySelector('.content-area').outerHTML = this.getPressBox.bind(this)();
+      this.listContainer.querySelector('.category-area').outerHTML =
+        this.getCategory();
+      this.listContainer.querySelector('.content-area').outerHTML =
+        this.getPressBox.bind(this)();
     }
-    if(press['all'] && view['grid']) this.listContainer.classList.add('hidden');
+    if (press['all'] && view['grid'])
+      this.listContainer.classList.add('hidden');
     // if(press['subscribed'] && view['list'])
     // if(press['subscribed'] && view['grid'])
-    // this.onPressBox();
   }
 
   getCategory({ page } = this.#pageStore.getState()) {
@@ -55,7 +60,9 @@ class ListView {
       <ul class="list-category">
         ${page.pressData.reduce((list, category, index) => {
           const isCurrentCategory = page.categoryIndex === index;
-          list += `<li${isCurrentCategory? ' class="current"' : ``}>${CATEGORY[category[0]]}</li$>`;
+          list += `<li${isCurrentCategory ? ' class="current"' : ``}>${
+            CATEGORY[category[0]]
+          }</li>`;
           return list;
         }, ``)}
       </ul>
@@ -64,7 +71,9 @@ class ListView {
 
   getPressBox({ page } = this.#pageStore.getState()) {
     const press = page.pressData[page.categoryIndex][1][page.pageIndex];
-    const isSubscribe = this.#subscribeStore.getState().subscribedList.has(press.pressLogo.src);
+    const isSubscribe = this.#subscribeStore
+      .getState()
+      .subscribedList.has(press.pressLogo.src);
     const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
     return `<div class="content-area">
     <div class="press-box">
@@ -91,7 +100,9 @@ class ListView {
             return list;
           }, ``)}
         </ul>
-        <p class="notice-msg">${press.press} 언론사에서 직접 편집한 뉴스입니다.</p>
+        <p class="notice-msg">${
+          press.press
+        } 언론사에서 직접 편집한 뉴스입니다.</p>
       </div>
     </div>
     <a class='prev-button'></a>
@@ -99,15 +110,26 @@ class ListView {
   }
 
   moveToPage({ target }) {
+    const isContentArea = target.closest('.content-area');
     const isPrevBtn = target.className === 'prev-button';
     const isNextBtn = target.className === 'next-button';
-    if(target.parentElement.className !== 'content-area' || !(isPrevBtn || isNextBtn)) return;
-    if(isPrevBtn) this.#pageStore.dispatch({ type: 'CLICK_PREV' });
-    if(isNextBtn) this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
+    if (!isContentArea || !(isPrevBtn || isNextBtn)) return;
+    if (isPrevBtn) this.#pageStore.dispatch({ type: 'CLICK_PREV' });
+    if (isNextBtn) this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
   }
 
   clickCategory({ target }) {
-    
+    const isCategory = target.closest('.list-category');
+    const isCurrent = target.className === 'current';
+    if(!isCategory || isCurrent) return;
+
+    const categories = Object.values(CATEGORY);
+    const targetCategory = target.textContent;
+    const targetCategoryIndex = categories.indexOf(targetCategory);
+    this.#pageStore.dispatch({
+      type: 'CLICK_CATEGORY',
+      payload: targetCategoryIndex,
+    });
   }
 }
 

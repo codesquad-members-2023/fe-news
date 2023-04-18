@@ -16,6 +16,8 @@ const pageReducer = (state = initialState, action) => {
         ...state,
       };
     case 'CLICK_CATEGORY':
+      state.page.categoryIndex = action.payload;
+      state.page.pageIndex = 0;
       return {
         ...state,
       };
