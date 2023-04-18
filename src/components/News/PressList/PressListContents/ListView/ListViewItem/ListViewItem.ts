@@ -1,14 +1,23 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
 import style from './ListViewItemStyle';
 import { ArticleInterface } from '@store/section/sectionType';
+import store from '@store/index';
+import { StroeType } from '@utils/redux';
+import { UserType } from '@store/user/userType';
 
 interface ListViewItem {
   icon?: string | null;
 }
 
 class ListViewItem extends HTMLElement {
+  userStore: StroeType<UserType>;
+  isSubscribed: boolean;
+  pid: string;
   constructor() {
     super();
+    this.userStore = store.user;
+    this.isSubscribed = false;
+    this.pid = '';
   }
 
   connectedCallback() {
@@ -17,12 +26,15 @@ class ListViewItem extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['section-data'];
+    return ['section-data', 'is-subscribed'];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'section-data') {
-      this.render();
+      return this.render();
+    }
+    if (name === 'is-subscribed') {
+      return this.render();
     }
   }
 
@@ -49,9 +61,13 @@ class ListViewItem extends HTMLElement {
     });
 
     const press = sectionData?.press;
+    this.pid = press.pid;
     const articles = sectionData?.articles;
     const mainArticle = articles?.[0];
     const otherArticles = articles?.slice(1);
+    this.isSubscribed = this.userStore
+      .getState()
+      .subscribingPress.includes(this.pid);
 
     const template = `
     <div class="header">
@@ -60,7 +76,7 @@ class ListViewItem extends HTMLElement {
       } height="20px" width="auto">
       <p class="edit-time">${lastEdited ?? ''} 편집</p>
       ${
-        press.isSubscribed
+        this.isSubscribed
           ? `<button-element icon="close" id='${
               press ? press.pid : ''
             }'>해지하기</button-element>`

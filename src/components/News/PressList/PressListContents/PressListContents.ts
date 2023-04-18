@@ -18,6 +18,7 @@ import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionType } from '@store/section/sectionType';
 import { PressListType } from '@store/press/pressType';
 import { isFirstPage, sliceByPage } from '@utils/common';
+import { TEMP_ID } from '@constant/index';
 
 interface PressListContents {
   icon?: string | null;
@@ -332,7 +333,7 @@ class PressListContents extends HTMLElement {
     }
     return {
       runUnsunscribe: ({ id, target }: runSubscribeProps) => {
-        unsubscribe({ id: 'realsnoopso', pressId: id });
+        unsubscribe({ id: TEMP_ID, pressId: id });
         storeUser.dispatch({
           type: 'UNSUBSCRIBE',
           payload: id,
@@ -341,9 +342,9 @@ class PressListContents extends HTMLElement {
           type: 'UNSUBSCRIBE',
           payload: id,
         });
-        const gridViewItemElement = target?.closest('grid-view-item-element');
+
         setProperty({
-          target: gridViewItemElement,
+          target,
           name: 'is-subscribed',
           value: 'false',
         });
@@ -358,9 +359,8 @@ class PressListContents extends HTMLElement {
           type: 'SUBSCRIBE',
           payload: id,
         });
-        const gridViewItemElement = target?.closest('grid-view-item-element');
         setProperty({
-          target: gridViewItemElement,
+          target,
           name: 'is-subscribed',
           value: 'true',
         });
@@ -374,14 +374,17 @@ class PressListContents extends HTMLElement {
             const id = gridViewItem?.getAttribute('id');
             if (!id) return;
             const isSubscribed = target.getAttribute('icon') === 'close';
+            const gridViewItemElement = target?.closest(
+              'grid-view-item-element'
+            );
             isSubscribed
               ? this.handleSubscribe().runUnsunscribe({
                   id,
-                  target,
+                  target: gridViewItemElement,
                 })
               : this.handleSubscribe().runSubscribe({
                   id,
-                  target,
+                  target: gridViewItemElement,
                 });
           });
         });
@@ -394,7 +397,6 @@ class PressListContents extends HTMLElement {
 
         listView?.addEventListener('click', (e) => {
           const target = e.target as HTMLElement;
-
           const id = target?.getAttribute('id');
           const subscribingPress = storeUser.getState().subscribingPress;
           if (!id) return;
