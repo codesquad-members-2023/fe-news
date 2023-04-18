@@ -33,16 +33,17 @@ const createListNavElement = (subscribeData) => {
     class: 'main-list__nav-items',
   });
 
-  $navItems.innerHTML = subscribeData.reduce((html, data) => {
-    html += navItemHTML(data);
+  $navItems.innerHTML = subscribeData.reduce((html, data, idx) => {
+    html += navItemHTML(data, idx);
     return html;
   }, ``);
   $mainListNav.append($navItems);
+
   return $mainListNav;
 };
 
-const navItemHTML = (data) => `
-<li class="mine-list__nav-item" >
+const navItemHTML = (data, idx) => `
+<li class="mine-list__nav-item" id="${idx === 0 ? 'current-category' : ''}" >
       <a href="#">
       ${data.mediaInfo.name}
       </a>

@@ -78,18 +78,21 @@ export const displayActionCreator = {
   },
 
   headerGridBtnClick() {
+    dispatch(this.listPageReset());
     return {
       type: actionTypes.displayActions.HEADER_GRID_BUTTON_CLICK,
     };
   },
 
   headerAllBtnClick() {
+    dispatch(this.listPageReset());
     return {
       type: actionTypes.displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK,
     };
   },
 
   headerMineBtnClick() {
+    dispatch(this.listPageReset());
     return {
       type: actionTypes.displayActions.HEADER_MY_MEDIA_BUTTON_CLICK,
     };

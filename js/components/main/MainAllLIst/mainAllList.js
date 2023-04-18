@@ -28,9 +28,11 @@ const createMainListElement = (mediaData, typeIdx, content) => {
 };
 
 const navItemHTML = (category, typeIdx, content) => `
-    <li class="main-list__nav-item ${
-      typeIdx === MEDIA_CATEGORIES.indexOf(category) ? 'current-category' : ''
-    }" >
+    <li class="main-list__nav-item" ${
+      typeIdx === MEDIA_CATEGORIES.indexOf(category)
+        ? 'id="current-category"'
+        : ''
+    }>
         <a href="#">
         <span>${category}</span>
         <span>${
