@@ -1,8 +1,9 @@
 import { JournalHeader } from "./journalHeader.js";
 import { Journal } from "./journal.js";
-import { Carousel } from "./journalTrack.js";
+import { Track } from "./journalTrack.js";
 import { dataRequestToAPI } from "../../api/fetchData.js";
 import { JournalHeaderStore } from "../../store/journalHeaderStore.js";
+import { JournalTrackStore } from "../../store/journalTrackStore.js";
 
 const createJournalList = () => {
   const journalListEl = document.createElement("article");
@@ -17,13 +18,20 @@ const createJournalList = () => {
         : journalHeaderStore.getJournalSubscribe();
 
     if (journalList.size === 0) {
+      const batchContainer = createBatchContainer();
       const nullSubscribeHTML = `<div class="journal-empty Font_display">
       <span>구독한 언론사가 없습니다...</span></br>
       <img src="./src/assets/icons/크롱.png">
       </div>`;
-      journalContainer.innerHTML = nullSubscribeHTML;
+      batchContainer.innerHTML = nullSubscribeHTML;
+      journalContainer.appendChild(batchContainer);
+      const batchElments = document.querySelectorAll(".journal-batch");
+      journalTrackStore.setBatchSize(batchElments);
+      journalTrack.addEvent();
     } else {
       batchJournalList(journalList);
+      const batchElments = document.querySelectorAll(".journal-batch");
+      journalTrackStore.setBatchSize(batchElments);
     }
   };
 
@@ -31,8 +39,9 @@ const createJournalList = () => {
   const journalHeader = new JournalHeader(journalHeaderStore);
   journalListEl.appendChild(journalHeader.element);
 
-  const journalCarousel = new Carousel();
-  journalListEl.appendChild(journalCarousel.element);
+  const journalTrackStore = new JournalTrackStore();
+  const journalTrack = new Track(journalTrackStore);
+  journalListEl.appendChild(journalTrack.element);
 
   const fetchJournalData = async (journalURL) => {
     try {
@@ -52,6 +61,8 @@ const createJournalList = () => {
     journalHeaderStore.setJournalListAll(journalItems);
     const jounalList = journalHeaderStore.journalListAll;
     batchJournalList(jounalList);
+    const batchElments = document.querySelectorAll(".journal-batch");
+    journalTrackStore.setBatchSize(batchElments);
   };
 
   const createBatchContainer = () => {

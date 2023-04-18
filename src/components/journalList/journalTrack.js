@@ -1,65 +1,75 @@
-export function Carousel() {
-  this.element = document.createElement("div");
-  this.element.classList.add("journal-carousel");
-  this.render();
-  this.container;
-  this.leftBtn;
-  this.rightBtn;
-  this.page = 0;
-}
-
-Carousel.prototype.beElement = function () {
-  const journalCarousel = `
-    <button class="journal-carousel-btn">
-    <img src="src/assets/icons/LeftButton.svg" /></button>
-    <button class="journal-carousel-btn">
-    <img src="src/assets/icons/RightButton.svg" /></button>
-    <div class="journal-container"></div>
-  </div>`;
-
-  this.element.innerHTML = journalCarousel;
-};
-
-Carousel.prototype.moveCarousel = function (direction) {
-  const WIDTH_PER_PAGE = 900;
-  const FIRST_PAGE = 0;
-  const LAST_PAGE = 3;
-
-  if (direction === "left") {
-    this.page--;
-  } else if (direction === "right") {
-    this.page++;
+export class Track {
+  constructor(journalTrackStore) {
+    this.store = journalTrackStore;
+    this.element = document.createElement("div");
+    this.element.classList.add("journal-track");
+    this.render();
+    this.container;
+    this.prevBtn;
+    this.nextBtn;
+    this.currentPage = 0;
+    this.batchSize;
   }
 
-  const currentPosition = this.page * -WIDTH_PER_PAGE;
-  this.container.style.transform = `translateX(${currentPosition}px)`;
+  beElement() {
+    const journalTrack = `
+    <button class="track-btn">
+    <img src="src/assets/icons/LeftButton.svg" /></button>
+    <button class="track-btn">
+    <img src="src/assets/icons/RightButton.svg" /></button>
+    <div class="journal-container"></div>
+    </div>`;
+    this.element.innerHTML = journalTrack;
+  }
 
-  const isOnFirstPage = this.page === FIRST_PAGE;
-  const isOnLastPage = this.page === LAST_PAGE;
-  this.leftBtn.classList.toggle("display-none", isOnFirstPage);
-  this.rightBtn.classList.toggle("display-none", isOnLastPage);
-  this.leftBtn.classList.toggle("display-block", !isOnFirstPage);
-  this.rightBtn.classList.toggle("display-block", !isOnLastPage);
-};
+  moveTrack(direction) {
+    const WIDTH_PER_PAGE = 900;
+    const FIRST_PAGE = 0;
 
-Carousel.prototype.addEvent = function () {
-  this.leftBtn.classList.add("display-none");
+    this.batchSize = this.store.getBatchSize();
+    const LAST_PAGE = this.batchSize - 1;
 
-  this.leftBtn.addEventListener("click", this.moveCarousel.bind(this, "left"));
-  this.rightBtn.addEventListener(
-    "click",
-    this.moveCarousel.bind(this, "right")
-  );
-};
+    if (direction === "left") {
+      this.currentPage--;
+    } else if (direction === "right") {
+      this.currentPage++;
+    }
 
-Carousel.prototype.render = function () {
-  this.beElement();
-  this.leftBtn = this.element.querySelector(
-    ".journal-carousel-btn:first-child"
-  );
-  this.rightBtn = this.element.querySelector(
-    ".journal-carousel-btn:nth-child(2)"
-  );
-  this.container = this.element.querySelector(".journal-container");
-  this.addEvent();
-};
+    const currentPosition = this.currentPage * -WIDTH_PER_PAGE;
+    this.container.style.transform = `translateX(${currentPosition}px)`;
+
+    if (LAST_PAGE === FIRST_PAGE) {
+      this.prevBtn.classList.add("display-none");
+      this.nextBtn.classList.add("display-none");
+    } else {
+      const isOnFirstPage = this.currentPage === FIRST_PAGE;
+      const isOnLastPage = this.currentPage === LAST_PAGE;
+      this.prevBtn.classList.toggle("display-none", isOnFirstPage);
+      this.nextBtn.classList.toggle("display-none", isOnLastPage);
+      this.prevBtn.classList.toggle("display-block", !isOnFirstPage);
+      this.nextBtn.classList.toggle("display-block", !isOnLastPage);
+    }
+  }
+
+  addEvent() {
+    this.batchSize = this.store.getBatchSize();
+
+    if (this.batchSize === 1) {
+      this.prevBtn.classList.add("display-none");
+      this.nextBtn.classList.add("display-none");
+    }
+
+    this.prevBtn.classList.add("display-none");
+    this.prevBtn.addEventListener("click", this.moveTrack.bind(this, "left"));
+    this.nextBtn.addEventListener("click", this.moveTrack.bind(this, "right"));
+  }
+
+  render() {
+    this.beElement();
+    this.container = this.element.querySelector(".journal-container");
+
+    this.prevBtn = this.element.querySelector(".track-btn:first-child");
+    this.nextBtn = this.element.querySelector(".track-btn:nth-child(2)");
+    this.addEvent();
+  }
+}
