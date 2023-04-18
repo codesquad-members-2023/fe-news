@@ -1,17 +1,15 @@
-export class Observable {
+export class store {
   constructor() {
-    this.observers = [];
+    this.changeListeners = [];
   }
-
-  subscribe(observer) {
-    this.observers = [...this.observers, observer];
+  subscribe(callBackFunction){
+    this.changeListeners.push(callBackFunction);
   }
-
-  unsubscribe(observer) {
-    this.observers = this.observers.filter((existObserver) => existObserver !== observer);
+  unsubscribe(callBackFunction){
+    this.changeListeners = this.changeListeners.filter(listener => listener!== callBackFunction);
   }
-
-  notify() {
-    this.observers.forEach((observer) => observer.render());
+  publish(){
+    this.changeListeners.forEach(changeListener => changeListener());
   }
 }
+

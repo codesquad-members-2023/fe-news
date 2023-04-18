@@ -1,5 +1,5 @@
 import { $ } from "../utils/dom.js";
-import { COMPANY } from "../constants/dom.js";
+import { COMPANY, SUBSCRIBE } from "../constants/dom.js";
 
 export const renderNewsCompanyBar = () => {
   const newsCompanyTemplate = `
@@ -37,18 +37,18 @@ export class insertNewsCompanyGrid {
   }
 
   init() {
-    this.insertNewsData();
+    this.insertNewsData(SUBSCRIBE.REGISTER);
     this.controlButton();
     this.onEvents();
   }
 
-  insertNewsData() {
+  insertNewsData(subscribe) {
     this.gridBox.innerHTML = "";
     this.newsData[this.page].map((data) => {
       this.gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}">
       <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>
       <div class ="grid_btn">
-      <button type="button">+구독 하기</button>
+      <button type="button">${subscribe}</button>
       </div>
       </div>
       `;
@@ -72,12 +72,25 @@ export class insertNewsCompanyGrid {
     this.rightButton.addEventListener("click", () => {
       this.page += COMPANY.PAGES;
       controlButton();
-      insertNewsData();
+      insertNewsData(SUBSCRIBE.REGISTER);
     });
     this.leftButton.addEventListener("click", () => {
       this.page -= COMPANY.PAGES;
       controlButton();
-      insertNewsData();
+      insertNewsData(SUBSCRIBE.REGISTER);
     });
+    subscribe();
   }
 }
+
+export const subscribe = () => {
+  const gridBtn = document.querySelector(".grid_set");
+  gridBtn.addEventListener("click", (e) => {
+    let btn = e.target.closest("button");
+    if (btn.textContent === SUBSCRIBE.REGISTER) {
+      btn.textContent = SUBSCRIBE.CANCEL;
+    } else {
+      btn.textContent = SUBSCRIBE.REGISTER;
+    }
+  });
+};
