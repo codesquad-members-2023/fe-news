@@ -1,9 +1,10 @@
 //NS SECTION의 header와 이벤트 핸들러 등록
-import { REFERENCE } from '../constant/dom.js';
+import { REFERENCE, VIEW_STATE } from '../constant/dom.js';
 
 export default class NSSectionHeaderView {
-  constructor(model, buttonView) {
+  constructor(model, buttonView, sectionCurStateModel) {
     this._model = model;
+    this._curViewStateModel = sectionCurStateModel;
     this._buttonView = buttonView;
     this._model.subscribe(this.render.bind(this));
   }
@@ -13,6 +14,44 @@ export default class NSSectionHeaderView {
     const sibling = REFERENCE.NS_CONTAINER.querySelector('.newsstand_headline_container');
     sibling.insertAdjacentHTML('afterend', markup);
     this._buttonView.changeReadyState();
+    this.setEvent();
+  }
+
+  viewButtonHandler({ target }) {
+    const targetButton = target.closest(
+      '.all_press_show_button, .subscribe_press_show_button, .view_list_button, .view_grid_button'
+    );
+    if (!targetButton) return;
+
+    const { gridOrList, allOrSub } = this._curViewStateModel.getCurViewState();
+    const selectedState = {
+      gridOrList: gridOrList,
+      allOrSub: allOrSub,
+    };
+    switch (targetButton.className) {
+      case 'all_press_show_button':
+        selectedState.allOrSub = VIEW_STATE.ALL;
+        break;
+      case 'subscribe_press_show_button':
+        selectedState.allOrSub = VIEW_STATE.SUB;
+        break;
+      case 'view_list_button':
+        selectedState.gridOrList = VIEW_STATE.LIST;
+        break;
+      case 'view_grid_button':
+        selectedState.gridOrList = VIEW_STATE.GRID;
+        break;
+      default:
+        break;
+    }
+
+    this._curViewStateModel.changeState(selectedState);
+  }
+
+  setEvent() {
+    const parentElem = REFERENCE.NS_CONTAINER.querySelector('.newsstand_newssection');
+    const viewButtonContainer = parentElem.querySelector('.newsstand_newssection_header');
+    viewButtonContainer.addEventListener('click', this.viewButtonHandler.bind(this));
   }
 
   getMarkup() {

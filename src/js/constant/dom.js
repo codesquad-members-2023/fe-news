@@ -29,8 +29,15 @@ const RENDER_STATE = Object.freeze({
   NOT_READY: 'NOT_READY',
 });
 
+const VIEW_STATE = Object.freeze({
+  GRID: 'GRID',
+  LIST: 'LIST',
+  ALL: 'ALL',
+  SUB: 'SUB',
+});
+
 const REFERENCE = Object.freeze({
   NS_CONTAINER: document.querySelector('.newsstand_container'),
 });
 
-export { NS_HEADER_INFO, NS_HEADLINE_INFO, NS_SECTION_INFO, REFERENCE, RENDER_STATE };
+export { NS_HEADER_INFO, NS_HEADLINE_INFO, NS_SECTION_INFO, REFERENCE, RENDER_STATE, VIEW_STATE };

@@ -1,13 +1,17 @@
 import { API_PATH } from '../constant/api.js';
-import { NS_SECTION_INFO } from '../constant/dom.js';
+import { NS_SECTION_INFO, VIEW_STATE } from '../constant/dom.js';
+import { isEquivalent } from '../utils/objectUtils.js';
 import Observer from './observer.js';
 
 export default class GridAllModel extends Observer {
-  constructor(dataFetcher) {
+  constructor(NSSectionCurState, dataFetcher) {
     super();
+    this._model = NSSectionCurState;
+    this._model.subscribe(this.changeView.bind(this));
     this._state = {
+      gridOrList: VIEW_STATE.GRID,
+      allOrSub: VIEW_STATE.ALL,
       index: 1,
-      isSelected: true,
     };
     this._data = {
       page1: [],
@@ -39,6 +43,12 @@ export default class GridAllModel extends Observer {
       this._data[`page${key}`].push(data[number].logoImgSrc);
       count++;
     });
+  }
+
+  changeView(selectedState) {
+    if (!isEquivalent(this._state, selectedState)) return;
+    this._state.index = 1;
+    this.notify();
   }
 
   increaseIndex() {
