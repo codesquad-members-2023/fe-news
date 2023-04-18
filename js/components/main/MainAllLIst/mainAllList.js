@@ -59,7 +59,7 @@ const createMainListNavElement = (typeIdx, content) => {
   return $mainListNav;
 };
 
-const createMainListNewsElement = (mediaData) => {
+export const createMainListNewsElement = (mediaData) => {
   const $mainListNews = createElement('article', {
     class: 'main-list__news',
   });

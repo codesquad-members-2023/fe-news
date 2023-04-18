@@ -1,7 +1,8 @@
 import { createElement } from '../../../utils/dom.js';
 import { subscribe, getStoreState } from '../../../store/store.js';
+import { createMainListNewsElement } from '../MainAllLIst/mainAllList.js';
 
-const createMainListElement = (subscribeData) => {
+const createMainListElement = (subscribeData, index) => {
   if (subscribeData.length === 0) {
     const $empty = createElement('section', {
       class: 'empty',
@@ -20,7 +21,8 @@ const createMainListElement = (subscribeData) => {
       class: 'main-list',
     });
     const $mainNav = createListNavElement(subscribeData);
-    $mainList.append($mainNav);
+    const $mainContent = createMainListNewsElement(subscribeData[index]);
+    $mainList.append($mainNav, $mainContent);
     return $mainList;
   }
 };
@@ -49,22 +51,26 @@ const navItemHTML = (data, idx) => `
       </a>
   </li>`;
 
-const render = ($main, content) => {
+const render = ($main, index, content) => {
   const breakCondition =
     content.viewOption.gridOrList === 'list' &&
     content.viewOption.allOrMine === 'mine';
+
   if (!breakCondition) return;
 
   const subscribeData = getStoreState('subscribeData').subscribe;
-  const $list = createMainListElement(subscribeData);
+  const $list = createMainListElement(subscribeData, index);
 
   $main.replaceChild($list, $main.lastChild);
 };
 
 export const MineList = ($main) => {
   subscribe('subscribeData', () => {
+    // 해지하면 바로 다음 위치의 언론사를 렌더링해야함
     const viewOptionData = getStoreState('viewOptionData');
-    render($main, viewOptionData);
+    render($main, 1, viewOptionData);
   });
-  subscribe('viewOptionData', render.bind(null, $main));
+
+  // ViewOption이 바뀌면 첫번째 페이지를 렌더링 해야함.
+  subscribe('viewOptionData', render.bind(null, $main, 0));
 };

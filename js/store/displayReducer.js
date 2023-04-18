@@ -44,12 +44,14 @@ export const mainHeaderBtnClickReducer = (state, action) => {
       if (viewOptionData.allOrMine === 'mine')
         return { ...state, viewOption: viewOptionData };
       viewOptionData.allOrMine = 'mine';
+      viewOptionData.gridOrList = 'list';
       return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK:
       if (viewOptionData.allOrMine === 'all')
         return { ...state, viewOption: viewOptionData };
       viewOptionData.allOrMine = 'all';
+      viewOptionData.gridOrList = 'grid';
       return { ...state, viewOption: viewOptionData };
 
     default:
