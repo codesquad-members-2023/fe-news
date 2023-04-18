@@ -2,7 +2,6 @@ import { Component, ObserverViewComponent } from '@custom-types/interfaces';
 import { Article, Props, State } from '@custom-types/types';
 import { AbstractView } from '@src/types/abstracts.js';
 import { NsArticleContainerObservableModel } from '@components/main/main__left/ns__container/ns__category-container/ns__article-container/NsArticleContainerObservableModel.js';
-import { $ } from '@utils/dom.js';
 
 export class NsArticleContainerObserverViewComponent
   extends AbstractView
@@ -48,46 +47,4 @@ export class NsArticleContainerObserverViewComponent
   }
 
   // 아래 메서드들은 subscriber이 된다.
-  // async addArticleHeader(state: State) {
-  //   const { page, articlesPromise } = state;
-  //   const articles = (await articlesPromise) as Article[];
-  //   const targetArticle = articles[page as number];
-  //   const targetPressImg = targetArticle.mediaInfo.imgSrc;
-  //   const targetModifiedTime = targetArticle.mediaInfo.modifiedTime;
-  //   ($('#article-header', this.element) as HTMLElement).innerHTML = `
-  //            <img src="${targetPressImg}" class="h-5" alt="target-press"/>
-  //            <p class="text-xs text-gray-500">${targetModifiedTime}</p>
-  //            <button id="subscribe-btn" class="px-2 py-px border border-gray-200 bg-gray-100 text-xs text-gray-400 rounded-3xl">+ 구독하기</button>
-  //          `;
-  // }
-  //
-  // async addMainArticle(state: State) {
-  //   // [리팩토링] 아래 반복되는 3줄
-  //   const { page, articlesPromise } = state;
-  //   const articles = (await articlesPromise) as Article[];
-  //   const targetArticle = articles[page as number];
-  //   const targetMainImg = targetArticle.mainContent.mainImgSrc;
-  //   const targetMainTitle = targetArticle.mainContent.mainTitle;
-  //   ($('#main-article', this.element) as HTMLElement).innerHTML = `
-  //        <img src="${targetMainImg}" class="w-4/5" alt="target-main"/>
-  //        <p class="w-3/4 h-3 text-base ">${targetMainTitle}</p>
-  //     `;
-  // }
-  //
-  // async addSubArticles(state: State) {
-  //   // [리팩토링] 아래 반복되는 3줄
-  //   const { page, articlesPromise } = state;
-  //   const articles = (await articlesPromise) as Article[];
-  //   const targetArticle = articles[page as number];
-  //   const targetSubArticles = targetArticle.subContent.subNewsList;
-  //   ($('#sub-articles', this.element) as HTMLElement).innerHTML =
-  //     targetSubArticles.reduce((acc, cur) => {
-  //       return (
-  //         acc +
-  //         `
-  //        <li class="w-full h-full">${cur}</li>
-  //     `
-  //       );
-  //     }, '');
-  // }
 }

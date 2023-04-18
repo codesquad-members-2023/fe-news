@@ -14,6 +14,12 @@ module.exports = {
       gap: {
         half: '0.5px',
       },
+      backgroundImage: {
+        'grid-on': "url('/public/images/symbols/grid-view-on.svg')",
+        'grid-off': "url('/public/images/symbols/grid-view-off.svg')",
+        'list-on': "url('/public/images/symbols/list-view-on.svg')",
+        'list-off': "url('/public/images/symbols/list-view-off.svg')",
+      },
     },
   },
 };
