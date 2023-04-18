@@ -1,6 +1,7 @@
 import { createElement } from '../../../utils/dom.js';
 import { subscribe, getStoreState } from '../../../store/store.js';
 import { createMainListNewsElement } from '../MainAllLIst/mainAllList.js';
+import { mineListHeaderEventHandler } from './mainMineListEventHandler.js';
 
 const createMainListElement = (subscribeData, index) => {
   if (subscribeData.length === 0) {
@@ -20,14 +21,14 @@ const createMainListElement = (subscribeData, index) => {
     const $mainList = createElement('section', {
       class: 'main-list',
     });
-    const $mainNav = createListNavElement(subscribeData);
+    const $mainNav = createListNavElement(subscribeData, index);
     const $mainContent = createMainListNewsElement(subscribeData[index]);
     $mainList.append($mainNav, $mainContent);
     return $mainList;
   }
 };
 
-const createListNavElement = (subscribeData) => {
+const createListNavElement = (subscribeData, targetIndex) => {
   const $mainListNav = createElement('nav', {
     class: 'main-list__nav',
   });
@@ -36,7 +37,7 @@ const createListNavElement = (subscribeData) => {
   });
 
   $navItems.innerHTML = subscribeData.reduce((html, data, idx) => {
-    html += navItemHTML(data, idx);
+    html += navItemHTML(data, idx, targetIndex);
     return html;
   }, ``);
   $mainListNav.append($navItems);
@@ -44,8 +45,10 @@ const createListNavElement = (subscribeData) => {
   return $mainListNav;
 };
 
-const navItemHTML = (data, idx) => `
-<li class="mine-list__nav-item" id="${idx === 0 ? 'current-category' : ''}" >
+const navItemHTML = (data, idx, targetIndex) => `
+<li class="mine-list__nav-item" id="${
+  idx === targetIndex ? 'current-category' : ''
+}" >
       <a href="#">
       ${data.mediaInfo.name}
       </a>
@@ -60,15 +63,19 @@ const render = ($main, index, content) => {
 
   const subscribeData = getStoreState('subscribeData').subscribe;
   const $list = createMainListElement(subscribeData, index);
-
+  const subscribeNameArr = subscribeData.map((data) => data.mediaInfo.name);
+  $list.firstElementChild.addEventListener(
+    'click',
+    mineListHeaderEventHandler.bind(null, subscribeNameArr),
+  );
   $main.replaceChild($list, $main.lastChild);
 };
 
 export const MineList = ($main) => {
-  subscribe('subscribeData', () => {
+  subscribe('subscribeData', (content) => {
     // 해지하면 바로 다음 위치의 언론사를 렌더링해야함
     const viewOptionData = getStoreState('viewOptionData');
-    render($main, 1, viewOptionData);
+    render($main, content.mineListCurPage, viewOptionData);
   });
 
   // ViewOption이 바뀌면 첫번째 페이지를 렌더링 해야함.

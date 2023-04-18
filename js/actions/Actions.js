@@ -117,4 +117,11 @@ export const displayActionCreator = {
       payload,
     };
   },
+
+  mineListTabBtnClick(payload) {
+    return {
+      type: actionTypes.displayActions.MINE_LIST_TAB_BUTTON_CLICK,
+      payload,
+    };
+  },
 };

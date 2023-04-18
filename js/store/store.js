@@ -17,6 +17,7 @@ const defaultMediaData = {
 
 export const defaultSubscribeData = {
   subscribe: [],
+  mineListCurPage: 0,
 };
 
 const defaultViewOptionData = {

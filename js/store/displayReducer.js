@@ -8,7 +8,7 @@ export const subscribeReducer = (state, action) => {
   switch (action.type) {
     case displayActions.GRID_SUBSCRIBE_BUTTON_CLICK:
       subscribeList.push(mediaWholeData[action.payload - 1]);
-      return { subscribe: subscribeList };
+      return { ...state, subscribe: subscribeList };
     case displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK:
       subscribeList.some((subscribeMedia, index) => {
         if (String(subscribeMedia.mediaId) === action.payload) {
@@ -16,8 +16,9 @@ export const subscribeReducer = (state, action) => {
           return true;
         }
       });
-      return { subscribe: subscribeList };
-
+      return { ...state, subscribe: subscribeList };
+    case displayActions.MINE_LIST_TAB_BUTTON_CLICK:
+      return { ...state, mineListCurPage: action.payload };
     default:
       return state;
   }
