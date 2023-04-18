@@ -7,8 +7,10 @@ import {
   select,
 } from '@utils/dom';
 import style from './GridViewItemStyle';
-
+import store from '@store/index';
 import { PressType } from '@store/press/pressType';
+import { StroeType } from '@utils/redux';
+import { UserType } from '@store/user/userType';
 
 interface GridViewItem {
   icon?: string | null;
@@ -17,6 +19,12 @@ interface GridViewItem {
 class GridViewItem extends HTMLElement {
   wrap: HTMLElement | null = null;
   press: PressType | null = null;
+  userStore: StroeType<UserType>;
+
+  constructor() {
+    super();
+    this.userStore = store.user;
+  }
 
   connectedCallback() {
     this.wrap = createWrap();
@@ -27,24 +35,34 @@ class GridViewItem extends HTMLElement {
       target: this.wrap,
       style: style.call(this, this),
     });
+    this.userStore.subscribe(() => {
+      this.renderSubscribingBtn();
+    });
   }
 
-  static get observedAttributes() {
-    return ['is-subscribed'];
-  }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'is-subscribed') {
-      this.render();
-    }
-  }
-
-  render() {
+  renderSubscribingBtn() {
     const id = getProperty({
       target: this,
       name: 'id',
     });
+    const subscribingPress: string[] =
+      this.userStore.getState().subscribingPress;
+    const isSubscribed = id ? subscribingPress.includes(id) : '';
+    const btnContainer = this.querySelector('.press-subscribe-btn-container');
+    const template = `${
+      isSubscribed
+        ? `<button-element icon="close" id="${id}">해지하기</button-element>`
+        : `<button-element icon="plus" id="${id}">구독하기</button-element>`
+    }`;
 
+    btnContainer &&
+      add({
+        target: btnContainer,
+        template,
+      });
+  }
+
+  render() {
     const image = getProperty({
       target: this,
       name: 'image',
@@ -53,11 +71,6 @@ class GridViewItem extends HTMLElement {
     const index = getProperty({
       target: this,
       name: 'index',
-    });
-
-    const isSubscribed = getProperty({
-      target: this,
-      name: 'is-subscribed',
     });
 
     const isRightItem = (Number(index) + 1) % 6 === 0;
@@ -73,11 +86,6 @@ class GridViewItem extends HTMLElement {
         image ? `style="background-image: url(${image})"` : ''
       }></div>
       <div class="press-subscribe-btn-container hide">
-        ${
-          isSubscribed === 'true'
-            ? `<button-element icon="close" id="${id}">해지하기</button-element>`
-            : `<button-element icon="plus" id="${id}">구독하기</button-element>`
-        }
       </div>
     </button>
     `;
@@ -85,6 +93,8 @@ class GridViewItem extends HTMLElement {
       target: this.wrap,
       template,
     });
+
+    this.renderSubscribingBtn();
     this.handleHover();
   }
 
