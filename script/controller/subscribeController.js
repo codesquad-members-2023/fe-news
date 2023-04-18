@@ -4,15 +4,15 @@ export class SubscribeController {
   constructor() {
     this.subscriber = new store();
   }
-  deliversubscribeData(id, newsData, page) {
-    const obj = newsData[page].find((data) => data.mediaId === Number(id));
-    this.subscriber.subscribe(obj);
+  appendSubscribeData(id, newsData, page) {
+    const foundObject = newsData[page].find((data) => data.mediaId === Number(id));
+    this.subscriber.subscribe(foundObject);
   }
-  deliverUnsubscribeData(id, newsData, page) {
-    const obj = newsData[page].find((data) => data.mediaId === Number(id));
-    this.subscriber.unsubscribe(obj);
+  appendUnsubscribeData(id, newsData, page) {
+    const foundObject = newsData[page].find((data) => data.mediaId === Number(id));
+    this.subscriber.unsubscribe(foundObject);
   }
-  deliverPublishData() {
+  showPublishData() {
     return this.subscriber.publish();
   }
 }

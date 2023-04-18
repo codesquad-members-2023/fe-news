@@ -6,13 +6,13 @@ import { COMPANY, ROLLING } from "../constants/dom.js";
 //fetch된 데이터를 불러오고, 데이터들을 각 렌더링 해주는 곳에 넣어준다.
 export const fetchController = async () => {
   const rollingData = await fetchRollingoData();
-  const companyData = await fetchCompanyData();
+  const gridData = await fetchCompanyData();
   const rollingRandomDataLeft = fixedRandomData(rollingData.leftRollingData, ROLLING.TOTAL);
   const rollingRandomDataRight = fixedRandomData(rollingData.rightRollingData, ROLLING.TOTAL);
-  const companyRandomData = fixedRandomData(companyData, COMPANY.TOTAL_GRID);
+  const gridRandomData = fixedRandomData(gridData, COMPANY.TOTAL_GRID);
   insertNewsData(rollingRandomDataLeft, ".data_list_left");
   insertNewsData(rollingRandomDataRight, ".data_list_right");
-  deliverGridData(companyRandomData, COMPANY.PAGES_PER);
+  deliverGridData(gridRandomData, COMPANY.PAGES_PER);
 };
 
 export const fetchRollingoData = async () => {

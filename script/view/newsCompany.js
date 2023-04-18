@@ -94,14 +94,14 @@ export const register = (newsData, page) => {
     let btn = e.target.closest("button");
     if (btn.textContent === SUBSCRIBE.REGISTER) {
       btn.textContent = SUBSCRIBE.CANCEL;
-      subData.deliversubscribeData(e.target.closest(".grid_list").id, newsData, page);
+      subData.appendSubscribeData(e.target.closest(".grid_list").id, newsData, page);
     } else {
       btn.textContent = SUBSCRIBE.REGISTER;
-      subData.deliverUnsubscribeData(e.target.closest(".grid_list").id, newsData, page);
+      subData.appendUnsubscribeData(e.target.closest(".grid_list").id, newsData, page);
     }
   });
   myNewsCompany.addEventListener("click", () => {
-    insertMyNewsData(SUBSCRIBE.CANCEL, subData.deliverPublishData());
+    insertMyNewsData(SUBSCRIBE.CANCEL, subData.showPublishData());
     rightButton.classList.add("hidden");
     allNewsCompany.classList.add("change_gray");
     myNewsCompany.classList.add("change_black");

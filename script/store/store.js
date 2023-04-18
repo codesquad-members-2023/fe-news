@@ -4,7 +4,6 @@ export class store {
   }
   subscribe(newsData) {
     this.changeListeners.push(newsData);
-    console.log(this.changeListeners);
   }
   unsubscribe(newsData) {
     this.changeListeners = this.changeListeners.filter((listener) => listener !== newsData);
