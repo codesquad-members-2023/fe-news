@@ -124,4 +124,16 @@ export const displayActionCreator = {
       payload,
     };
   },
+
+  mineListLeftBtnClick() {
+    return {
+      type: actionTypes.displayActions.MINE_LIST_LEFT_BUTTON_CLICK,
+    };
+  },
+
+  mineListRightBtnClick() {
+    return {
+      type: actionTypes.displayActions.MINE_LIST_RIGHT_BUTTON_CLICK,
+    };
+  },
 };

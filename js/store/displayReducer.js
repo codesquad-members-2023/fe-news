@@ -19,6 +19,18 @@ export const subscribeReducer = (state, action) => {
       return { ...state, subscribe: subscribeList };
     case displayActions.MINE_LIST_TAB_BUTTON_CLICK:
       return { ...state, mineListCurPage: action.payload };
+    case displayActions.MINE_LIST_LEFT_BUTTON_CLICK:
+      const prevPage =
+        state.mineListCurPage === 0
+          ? subscribeList.length - 1
+          : state.mineListCurPage - 1;
+      return { ...state, mineListCurPage: prevPage };
+    case displayActions.MINE_LIST_RIGHT_BUTTON_CLICK:
+      const nextPage =
+        state.mineListCurPage === subscribeList.length - 1
+          ? 0
+          : state.mineListCurPage + 1;
+      return { ...state, mineListCurPage: nextPage };
     default:
       return state;
   }

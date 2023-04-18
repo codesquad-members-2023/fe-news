@@ -4,7 +4,6 @@ import {
   headerViewChangeBtnClickEventHandler,
 } from './mainButtonEventHandlers.js';
 // TODO : 이벤트 등록 해야함.
-import { displayActionCreator } from '../../../actions/actions.js';
 import { dispatch, subscribe } from '../../../store/store.js';
 const createMainHeaderElement = () => {
   const $mainHeader = createElement('header', {

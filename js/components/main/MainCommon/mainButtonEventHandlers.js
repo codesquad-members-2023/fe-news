@@ -12,31 +12,25 @@ export const pageControlBtnClickEventHandler = ({ target, currentTarget }) => {
   const $targetButton = target.closest('a');
   if (!$targetButton) return;
   const $mainSection = currentTarget.parentNode.lastChild;
-
+  const viewOptionData = getStoreState('viewOptionData').viewOption;
   // TODO : 전체 언론사 grid일때, list일때, 다 다른 event를 부여해야함.
   // Case 문으로 좀 빼야할듯...
-  if (
-    $targetButton.classList.contains('left-button') &&
-    $mainSection.classList.contains('main-grid')
-  ) {
+  if ($targetButton.classList.contains('left-button')) {
     const direction = 'left';
-    gridButtonClickHandler(direction, $mainSection, $targetButton);
-  } else if (
-    $targetButton.classList.contains('right-button') &&
-    $mainSection.classList.contains('main-grid')
-  ) {
+    ButtonClickEventHandler(
+      viewOptionData,
+      direction,
+      $mainSection,
+      $targetButton,
+    );
+  } else if ($targetButton.classList.contains('right-button')) {
     const direction = 'right';
-    gridButtonClickHandler(direction, $mainSection, $targetButton);
-  } else if (
-    $targetButton.classList.contains('left-button') &&
-    $mainSection.classList.contains('main-list')
-  ) {
-    dispatch(displayActionCreator.listLeftBtnClick());
-  } else if (
-    $targetButton.classList.contains('right-button') &&
-    $mainSection.classList.contains('main-list')
-  ) {
-    dispatch(displayActionCreator.listRightBtnClick());
+    ButtonClickEventHandler(
+      viewOptionData,
+      direction,
+      $mainSection,
+      $targetButton,
+    );
   }
 };
 
@@ -85,6 +79,53 @@ export const headerViewChangeBtnClickEventHandler = ({
       break;
 
     default:
+      break;
+  }
+};
+
+const ButtonClickEventHandler = (
+  viewOptionData,
+  direction,
+  $mainSection,
+  $targetButton,
+) => {
+  if (direction === 'left')
+    leftSwitchCase(viewOptionData, $mainSection, $targetButton);
+  else rightSwitchCase(viewOptionData, $mainSection, $targetButton);
+};
+
+const leftSwitchCase = (viewOptionData, $mainSection, $targetButton) => {
+  const allOrMine = viewOptionData.allOrMine;
+  const gridOrList = viewOptionData.gridOrList;
+  switch (true) {
+    case allOrMine === 'all' && gridOrList === 'grid':
+      gridButtonClickHandler('left', $mainSection, $targetButton);
+      break;
+    case allOrMine === 'all' && gridOrList === 'list':
+      dispatch(displayActionCreator.listLeftBtnClick());
+      break;
+    case allOrMine === 'mine' && gridOrList === 'grid':
+      break;
+    case allOrMine === 'mine' && gridOrList === 'list':
+      dispatch(displayActionCreator.mineListLeftBtnClick());
+      break;
+  }
+};
+
+const rightSwitchCase = (viewOptionData, $mainSection, $targetButton) => {
+  const allOrMine = viewOptionData.allOrMine;
+  const gridOrList = viewOptionData.gridOrList;
+  switch (true) {
+    case allOrMine === 'all' && gridOrList === 'grid':
+      gridButtonClickHandler('right', $mainSection, $targetButton);
+      break;
+    case allOrMine === 'all' && gridOrList === 'list':
+      dispatch(displayActionCreator.listRightBtnClick());
+      break;
+    case allOrMine === 'mine' && gridOrList === 'grid':
+      break;
+    case allOrMine === 'mine' && gridOrList === 'list':
+      dispatch(displayActionCreator.mineListRightBtnClick());
       break;
   }
 };
