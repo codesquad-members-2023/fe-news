@@ -72,14 +72,14 @@ export default class NSSectionButtonView {
     if (target.closest('.slide_button_left')) {
       if (view.index === MIN_PAGE_INDEX) return;
       view.index -= 1;
-      this._gridAllModel.decreaseIndex();
+      this._gridAllModel.decreaseIndex(view.index);
     }
 
     if (target.closest('.slide_button_right')) {
       if (view.index === MAX_PAGE_INDEX) return;
 
       view.index += 1;
-      this._gridAllModel.increaseIndex();
+      this._gridAllModel.increaseIndex(view.index); // 매개변수로 index를 주자
     }
     this.showOrHiddenGridMoveButton(buttonContainer);
   }

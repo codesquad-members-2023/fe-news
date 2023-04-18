@@ -40,7 +40,7 @@ export default class GridAllModel extends Observer {
     let count = 0;
     randomNumber.forEach((number) => {
       const key = Math.ceil((count + 1) / NS_SECTION_INFO.GRID_ALL.PAGE_SIZE);
-      this._data[`page${key}`].push(data[number].logoImgSrc);
+      this._data[`page${key}`].push(data[number]);
       count++;
     });
   }
@@ -51,13 +51,13 @@ export default class GridAllModel extends Observer {
     this.notify();
   }
 
-  increaseIndex() {
-    this._state.index += 1;
+  increaseIndex(changedIndex) {
+    this._state.index = changedIndex;
     this.notify();
   }
 
-  decreaseIndex() {
-    this._state.index -= 1;
+  decreaseIndex(changedIndex) {
+    this._state.index = changedIndex;
     this.notify();
   }
 }
