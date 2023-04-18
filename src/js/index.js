@@ -1,10 +1,10 @@
-import { $ } from './utils/dom.js';
-import { getData } from './utils/getData.js';
+import { domUtils, dataUtils } from './utils/index.js';
 import Header from './components/header/index.js';
 import Nav from './components/nav/index.js';
 import MainContent from './components/mainContent/index.js';
 
 const app = async ($targetEle) => {
+  const { getData } = dataUtils;
   const { leftNavBarHeadLines, rightNavBarHeadLines } = await getData('http://localhost:3001/navBarData');
   const pressData = await getData('http://localhost:3001/mainContentData');
 
@@ -16,5 +16,7 @@ const app = async ($targetEle) => {
   nav.mount();
   mainContent.mount();
 };
+
+const { $ } = domUtils;
 
 app($({ selector: '#app' }));

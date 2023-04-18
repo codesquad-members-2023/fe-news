@@ -1,7 +1,8 @@
-import { $ } from '../../utils/dom.js';
-import { getChucks } from '../../utils/getData.js';
+import { domUtils, dataUtils } from '../../utils/index.js';
 import { tabStore, gridPageStore } from '../../store/index.js';
 import PressGrid from './pressGrid.js';
+
+const { $ } = domUtils;
 
 export default class MainContentGrid {
   #gridItemCount = 24;
@@ -22,6 +23,7 @@ export default class MainContentGrid {
   }
 
   mount() {
+    const { getChucks } = dataUtils;
     const { pressTabType, pressData } = this.props;
     const pressChucks = getChucks({ arr: pressData, count: this.#gridItemCount });
 
