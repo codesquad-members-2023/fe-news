@@ -16,6 +16,7 @@ export class Journal {
 
     const hoverDiv = document.createElement("div");
     hoverDiv.classList.add("journal-item_hover");
+
     const subscribeBtn = document.createElement("button");
     subscribeBtn.classList.add("subscribe-btn");
     subscribeBtn.textContent = "구독";
@@ -26,6 +27,7 @@ export class Journal {
 
     hoverDiv.appendChild(subscribeBtn);
     hoverDiv.appendChild(unSubscribeBtn);
+
     hoverDiv.style.display = "none";
 
     this.element.appendChild(hoverDiv);
@@ -45,13 +47,15 @@ export class Journal {
     });
   }
 
-  addSubscribeEvent(subscribeBtn, unSubscribeBtn) {
+  addSubscribeEvent(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv) {
     subscribeBtn.addEventListener("click", () => {
       this.journalHeaderStore.addSubscribe(this);
     });
 
     unSubscribeBtn.addEventListener("click", () => {
       this.journalHeaderStore.deleteSubscribe(this);
+      hoverDiv.style.display = "none";
+      showDiv.style.display = "flex";
     });
   }
 
@@ -59,6 +63,6 @@ export class Journal {
     const { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn } =
       this.getJournalItems();
     this.addEvent(showDiv, hoverDiv);
-    this.addSubscribeEvent(subscribeBtn, unSubscribeBtn);
+    this.addSubscribeEvent(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv);
   }
 }
