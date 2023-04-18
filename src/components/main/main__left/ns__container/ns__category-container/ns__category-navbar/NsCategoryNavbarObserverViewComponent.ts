@@ -18,7 +18,6 @@ export class NsCategoryNavbarObserverViewComponent
   // setTemplate은 subscriber 처리하면 안된다. 그러면 element가 초기화되어버림.
   setTemplate() {
     this._templateElement.innerHTML = `<ul id="category-navbar" class="px-3 w-full h-10 flex flex-row justify-start items-center bg-gray-100 text-sm text-gray-500 border border-gray-200 gap-x-8">
-                                         
                                        </ul>`;
   }
 
@@ -26,7 +25,7 @@ export class NsCategoryNavbarObserverViewComponent
     return this._observerModel.state;
   }
 
-  private setState(state: State) {
+  setState(state: State) {
     this.subscribe();
     this._observerModel.setState(state);
   }
@@ -36,20 +35,10 @@ export class NsCategoryNavbarObserverViewComponent
   }
 
   subscribe() {
-    this._observerModel.addSubscriber(this.addCategoryList.bind(this));
+    this._observerModel.addSubscriber(() => {
+      return;
+    });
   }
 
   // 아래 메서드들은 subscriber이 된다.
-  async addCategoryList(state: State) {
-    const { articlesPromise } = state;
-    const articles = (await articlesPromise) as Article[];
-    const categories = articles.map((article) => {
-      return article.mediaInfo.type;
-    });
-
-    const categorySet = new Set(categories);
-    this.element.innerHTML = [...categorySet].reduce((acc, cur) => {
-      return acc + `<li>${cur}</li>`;
-    }, '');
-  }
 }
