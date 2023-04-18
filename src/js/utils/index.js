@@ -15,3 +15,27 @@ export const dataUtils = {
     return chunks;
   }
 };
+
+export const getObjectType = (obj) => {
+  if (!(obj instanceof Object)) throw new Error('obj is not an object');
+  return Object.prototype.toString.call(obj).match(/\[object (\w+)\]/)[1];
+};
+
+export const validatorUtils = {
+  hasValue: (obj, value) => {
+    if (!(obj instanceof Object)) return;
+
+    const objectType = getObjectType(obj);
+    if (objectType === 'Map' || objectType === 'Set') {
+      return obj.has(value);
+    }
+  },
+  hasKey: (obj, value) => {
+    if (!(obj instanceof Object)) return;
+
+    const objectType = getObjectType(obj);
+    if (objectType === 'Map') {
+      return obj.has(value);
+    }
+  }
+};
