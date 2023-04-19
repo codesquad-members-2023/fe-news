@@ -45,7 +45,7 @@ export default function style() {
       height: 200px;
       display: inline-block;
       background-size: cover;
-      border: 1px solid var(--gray100);
+
     }
 
     .headliner > .title {

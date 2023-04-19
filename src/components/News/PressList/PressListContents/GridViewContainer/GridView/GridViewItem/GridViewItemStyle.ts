@@ -14,18 +14,16 @@ export default function style(target: HTMLElement) {
     }
 
     .grid-view-item button {
-      border-color: var(--gray100);
-      border-style: solid;
-      border-right-width: 1px;
-      border-bottom-width: 1px;
+      border-bottom: 1px solid var(--gray100);
+      border-right: 1px solid var(--gray100);
     }
 
-    .wrap.grid-view-item.right-item {
-      border-right-width: 0;
+    .wrap.grid-view-item.right-item button {
+      border-right: none;
     }
 
-    .wrap.grid-view-item.bottom-item {
-      border-bottom-width: 0;
+    .wrap.grid-view-item.bottom-item button {
+      border-bottom: none;
     }
 
     button {

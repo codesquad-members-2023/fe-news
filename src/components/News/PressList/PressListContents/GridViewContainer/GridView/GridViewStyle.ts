@@ -17,7 +17,7 @@ export default function style() {
     }
 
     .press-container.show {
-       display: grid;
+      display: grid;
     }
 
     .press-container.no-press {

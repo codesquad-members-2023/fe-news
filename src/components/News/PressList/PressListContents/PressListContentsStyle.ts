@@ -4,6 +4,7 @@ export default function style() {
   const content = `
     .wrap {
       position: relative;
+      border: 1px solid var(--gray100);
     }
 
     .grid-view-container {
