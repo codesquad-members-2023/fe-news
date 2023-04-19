@@ -2,11 +2,11 @@
 import { REFERENCE, VIEW_STATE } from '../constant/dom.js';
 
 export default class NSSectionHeaderView {
-  constructor(model, buttonView, sectionCurStateModel) {
-    this._model = model;
+  constructor(sectionHeaderModel, buttonView, sectionCurStateModel) {
+    this._sectionHeaderModel = sectionHeaderModel;
     this._curViewStateModel = sectionCurStateModel;
     this._buttonView = buttonView;
-    this._model.subscribe(this.render.bind(this));
+    this._sectionHeaderModel.subscribe(this.render.bind(this));
   }
 
   render() {

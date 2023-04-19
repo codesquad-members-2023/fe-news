@@ -1,13 +1,13 @@
 import { REFERENCE, NS_SECTION_INFO } from '../constant/dom.js';
 
 export default class GridSubView {
-  constructor(model) {
-    this._model = model;
-    this._model.subscribe(this.render.bind(this));
+  constructor(gridSubModel) {
+    this._gridSubModel = gridSubModel;
+    this._gridSubModel.subscribe(this.render.bind(this));
   }
 
   render() {
-    const gridSubSection = this.getMarkUp(this._model.getData());
+    const gridSubSection = this.getMarkUp(this._gridSubModel.getData());
     const parentElem = REFERENCE.NS_CONTAINER.querySelector('.newssection_view');
     parentElem.innerHTML = '';
     parentElem.insertAdjacentHTML('afterbegin', gridSubSection);

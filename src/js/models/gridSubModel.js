@@ -5,8 +5,8 @@ import { isEquivalent } from '../utils/objectUtils.js';
 export default class GridSubModel extends Observer {
   constructor(NSSectionCurState) {
     super();
-    this._model = NSSectionCurState;
-    this._model.subscribe(this.changeView.bind(this));
+    this._curStateModel = NSSectionCurState;
+    this._curStateModel.subscribe(this.changeView.bind(this));
     this._state = {
       gridOrList: VIEW_STATE.GRID,
       allOrSub: VIEW_STATE.SUB,
@@ -27,7 +27,7 @@ export default class GridSubModel extends Observer {
 
   deleteSubData(data) {
     this._data = this._data.filter((subData) => subData.pressName !== data);
-    const curViewState = this._model.getCurViewState();
+    const curViewState = this._curStateModel.getCurViewState();
     if (!isEquivalent(this._state, curViewState)) return;
     this.notify();
   }

@@ -6,8 +6,8 @@ import Observer from './observer.js';
 export default class GridAllModel extends Observer {
   constructor(NSSectionCurState, dataFetcher) {
     super();
-    this._model = NSSectionCurState;
-    this._model.subscribe(this.changeView.bind(this));
+    this._curStateModel = NSSectionCurState;
+    this._curStateModel.subscribe(this.changeView.bind(this));
     this._state = {
       gridOrList: VIEW_STATE.GRID,
       allOrSub: VIEW_STATE.ALL,
