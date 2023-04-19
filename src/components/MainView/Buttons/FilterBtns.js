@@ -18,11 +18,10 @@ export class FilterBtns extends Component {
       const [elementName, btnStatus, type] = className.split(" ");
       const { changeBtnState, changeViewState } = this.props;
 
-      changeBtnState(btnStatus);
-
       const viewStatus = btnStatus === "all-press" ? "grid" : "list";
 
       changeViewState(viewStatus);
+      changeBtnState(btnStatus);
     });
   }
 }
