@@ -10,8 +10,7 @@ export class NsDateComponent implements Component {
   constructor(props?: Props) {
     this._model = new NsDateModel();
     this._view = new NsDateView();
-
-    const date = getKrDate('ko-KR');
+    const date = getKrDate('ko-KR', new Date());
     this.setState({ date });
   }
 

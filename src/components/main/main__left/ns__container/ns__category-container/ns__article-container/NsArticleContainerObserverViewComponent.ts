@@ -21,8 +21,8 @@ export class NsArticleContainerObserverViewComponent
                                          <div id="article-header" class="flex flex-row justify-start items-center gap-x-4">
                                          </div>
                                          <div id="articles" class="p-3 w-full h-full flex flex-row">
-                                          <div id="main-article" class="w-1/3 h-full flex flex-col gap-y-1"></div>
-                                          <ul id="sub-articles" class="w-2/3 h-full flex flex-col justify-between"></ul>
+                                           <div id="main-article" class="w-1/3 h-full flex flex-col gap-y-1"></div>
+                                           <ul id="sub-articles" class="w-2/3 h-full flex flex-col justify-between"></ul>
                                          </div>
                                        </section>`;
   }

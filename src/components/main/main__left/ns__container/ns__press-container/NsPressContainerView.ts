@@ -45,7 +45,10 @@ export class NsPressContainerView extends AbstractView {
         .reduce((acc, cur) => {
           return (
             acc +
-            `<li class="grid place-content-center bg-white"><img class="h-5" src="${cur}" alt="${cur}"></li>`
+            `<li class="grid place-content-center bg-white hover:bg-gray-100">
+               <img class="h-5" src="${cur}" alt="${cur}">
+               <button id="subscribe-btn" class="px-2 py-px border border-gray-200 bg-gray-100 text-xs text-gray-400 rounded-3xl hidden">+ 구독하기</button>
+             </li>`
           );
         }, '');
   }

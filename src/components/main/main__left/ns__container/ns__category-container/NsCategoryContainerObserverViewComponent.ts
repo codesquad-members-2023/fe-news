@@ -13,24 +13,22 @@ export class NsCategoryContainerObserverViewComponent
 {
   _observerModel: NsCategoryContainerObservableModel;
 
-  nsCategoryNavbar: NsCategoryNavbarObserverViewComponent;
-  nsArticleContainer: NsArticleContainerObserverViewComponent;
   constructor(props?: Props) {
     super();
     this._observerModel = new NsCategoryContainerObservableModel();
 
     const page = 0;
 
-    this.nsCategoryNavbar = new NsCategoryNavbarObserverViewComponent({
+    const nsCategoryNavbar = new NsCategoryNavbarObserverViewComponent({
       ...props,
       page,
     });
-    this.nsArticleContainer = new NsArticleContainerObserverViewComponent({
+    const nsArticleContainer = new NsArticleContainerObserverViewComponent({
       ...props,
       page,
     });
-    this.nsCategoryNavbar.attachTo(this);
-    this.nsArticleContainer.attachTo(this);
+    nsCategoryNavbar.attachTo(this);
+    nsArticleContainer.attachTo(this);
     this.setState({ ...props, page });
     this.addButtonEvent(this.state);
   }
