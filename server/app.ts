@@ -46,9 +46,8 @@ app.post('/section', async (req, res) => {
 });
 
 app.get('/press', async (req, res) => {
-  const TOTAL_ITEM_AMOUNT = 24 * 4;
   try {
-    const press = await PressModel.find({}).limit(TOTAL_ITEM_AMOUNT);
+    const press = await PressModel.find({});
     res.status(200).json(press);
   } catch (error) {
     res.status(400).json({ message: error });

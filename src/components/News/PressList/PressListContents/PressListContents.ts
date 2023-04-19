@@ -18,7 +18,7 @@ import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionType } from '@store/section/sectionType';
 import { PressListType } from '@store/press/pressType';
 import { isFirstPage, sliceByPage } from '@utils/common';
-import { TEMP_ID } from '@constant/index';
+import { MAX_ITEM_NUM, TEMP_ID } from '@constant/index';
 import { UserType } from '@store/user/userType';
 
 interface PressListContents {
@@ -93,7 +93,8 @@ class PressListContents extends HTMLElement {
   handleGridView() {
     return {
       getPressList: async () => {
-        const pressList = await getPress();
+        let pressList = await getPress();
+        pressList = pressList.slice(0, MAX_ITEM_NUM * 4);
         this.displayStore.dispatch({
           type: 'SET_TOTAL_PAGE',
           payload: {
@@ -109,8 +110,16 @@ class PressListContents extends HTMLElement {
       },
       getCustomPressList: async () => {
         const pressList = await getPress();
-        const customPressList = pressList.filter((press: any) =>
-          this.userStore.getState().subscribingPress.includes(press.pid)
+        const user = await getUser({ id: TEMP_ID });
+        const subscribingPressIds = user[0].subscribingPressIds;
+        const customPressList = subscribingPressIds.reduce(
+          (result: any, id: string) => {
+            const press = pressList.find((press: any) => {
+              return press.pid === id;
+            });
+            return [...result, press];
+          },
+          []
         );
         this.displayStore.dispatch({
           type: 'SET_TOTAL_PAGE',
@@ -499,8 +508,6 @@ class PressListContents extends HTMLElement {
             ?.querySelector('.view.list')
             ?.querySelector('list-view-element')
             ?.shadowRoot?.querySelector('list-view-item-element');
-          console.log(listViewItemElement);
-
           if (!isSubscribed) {
             this.handleSubscribe().subscribe({
               id,
