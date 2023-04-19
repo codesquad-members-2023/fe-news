@@ -4,11 +4,14 @@ import { Track } from "./journalTrack.js";
 import { dataRequestToAPI } from "../../api/fetchData.js";
 import { JournalHeaderStore } from "../../store/journalHeaderStore.js";
 import { JournalTrackStore } from "../../store/journalTrackStore.js";
+import { JournalDetailStore } from "../../store/journalDetailStore.js";
 
+// 뉴스 스탠드 언론사 영역 전체 View 함수
 const createJournalList = () => {
   const journalListEl = document.createElement("article");
   journalListEl.classList.add("news-stand-jounalList");
 
+  // 전체 언론사 <-> 내가 구독한 언론사
   const updateJournalData = (state) => {
     journalTrack.render();
     const journalContainer = document.querySelector(".journal-container");
@@ -37,19 +40,24 @@ const createJournalList = () => {
     }
   };
 
+  // 언론사 영역 헤더 구성
   const journalHeaderStore = new JournalHeaderStore(updateJournalData);
   const journalHeader = new JournalHeader(journalHeaderStore);
   journalListEl.appendChild(journalHeader.element);
 
+  // 언론사 영역 트렉 구성
   const journalTrackStore = new JournalTrackStore();
   const journalTrack = new Track(journalTrackStore);
   journalListEl.appendChild(journalTrack.element);
+
+  // 언론사 디테일 영역 구성
+  const journalDetailStore = new JournalDetailStore();
 
   const fetchJournalData = async (journalURL) => {
     try {
       const journalDatas = await dataRequestToAPI(journalURL);
       const journals = journalDatas.map((journalData) => {
-        return new Journal(journalData, journalHeaderStore);
+        return new Journal(journalData, journalHeaderStore, journalDetailStore);
       });
       return journals;
     } catch (error) {
@@ -57,9 +65,11 @@ const createJournalList = () => {
     }
   };
 
+  // 최초 전체 언론사 셋팅
   const loadJournalItems = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
+    journalDetailStore.setDetailListAll(journalItems);
     const dividedJournalItems = journalItems.splice(0, 96);
     journalHeaderStore.setJournalListAll(dividedJournalItems);
     const journalList = journalHeaderStore.journalListAll;
@@ -83,7 +93,7 @@ const createJournalList = () => {
     let batchContainer = createBatchContainer();
     jounalList.forEach((item) => {
       journalContainer.appendChild(batchContainer);
-      batchContainer.appendChild(item.element);
+      batchContainer.appendChild(item.gridElement);
       batchCount++;
       if (batchCount === batchSize) {
         batchContainer = createBatchContainer();

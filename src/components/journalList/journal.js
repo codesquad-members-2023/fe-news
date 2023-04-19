@@ -1,16 +1,19 @@
 export class Journal {
-  constructor(journalData, store) {
-    this.journalHeaderStore = store;
+  constructor(journalData, journalHeaderStore, journalDetailStore) {
+    this.journalHeaderStore = journalHeaderStore;
+    this.journalDetailStore = journalDetailStore;
     this.journalData = journalData;
-    this.element = document.createElement("div");
-    this.element.classList.add("journal-item");
-    this.render();
+    this.gridElement = document.createElement("div");
+    this.gridElement.classList.add("journal-item");
+    this.detailElement = document.createElement("div");
+    this.detailElement.classList.add("journal-detail");
+    this.renderGrid();
   }
 
-  getJournalItems() {
+  getGridItems() {
     const showDiv = document.createElement("div");
     showDiv.classList.add("journal-item_show");
-    this.element.appendChild(showDiv);
+    this.gridElement.appendChild(showDiv);
     showDiv.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
                          alt="${this.journalData.mediaInfo.name}">`;
     showDiv.style.display = "flex";
@@ -31,24 +34,24 @@ export class Journal {
 
     hoverDiv.style.display = "none";
 
-    this.element.appendChild(hoverDiv);
+    this.gridElement.appendChild(hoverDiv);
 
     return { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn };
   }
 
-  addEvent(showDiv, hoverDiv) {
-    this.element.addEventListener("mouseover", () => {
+  addDisplayEventToGrid(showDiv, hoverDiv) {
+    this.gridElement.addEventListener("mouseover", () => {
       showDiv.style.display = "none";
       hoverDiv.style.display = "flex";
     });
 
-    this.element.addEventListener("mouseout", () => {
+    this.gridElement.addEventListener("mouseout", () => {
       hoverDiv.style.display = "none";
       showDiv.style.display = "flex";
     });
   }
 
-  addSubscribeEvent(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv) {
+  addSubEventToGrid(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv) {
     subscribeBtn.addEventListener("click", () => {
       this.journalHeaderStore.addSubscribe(this);
     });
@@ -60,10 +63,10 @@ export class Journal {
     });
   }
 
-  render() {
+  renderGrid() {
     const { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn } =
-      this.getJournalItems();
-    this.addEvent(showDiv, hoverDiv);
-    this.addSubscribeEvent(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv);
+      this.getGridItems();
+    this.addDisplayEventToGrid(showDiv, hoverDiv);
+    this.addSubEventToGrid(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv);
   }
 }
