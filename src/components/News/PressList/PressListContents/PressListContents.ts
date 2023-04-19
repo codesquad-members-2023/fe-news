@@ -424,19 +424,17 @@ class PressListContents extends HTMLElement {
 
           this.handleSubscribe().getCustomPressList();
 
-          if (tab === 'custom') {
-            const customPressList = this.pressStore.getState().customPressList;
-            const gridViewContainerElement = this.shadowRoot
-              ?.querySelector(`section.${tab}`)
-              ?.querySelector('.view.grid')
-              ?.querySelector('grid-view-container-element');
-            setProperty({
-              target: gridViewContainerElement,
-              name: 'press-list',
-              value: JSON.stringify(customPressList),
-            });
-            this.handleSubscribe().addClickEvnetToGridView(tab);
-          }
+          const customPressList = this.pressStore.getState().customPressList;
+          const gridViewContainerElement = this.shadowRoot
+            ?.querySelector(`section.custom`)
+            ?.querySelector('.view.grid')
+            ?.querySelector('grid-view-container-element');
+          setProperty({
+            target: gridViewContainerElement,
+            name: 'press-list',
+            value: JSON.stringify(customPressList),
+          });
+          this.handleSubscribe().addClickEvnetToGridView('custom');
         };
 
         gridView?.forEach((gridViewElement) => {
