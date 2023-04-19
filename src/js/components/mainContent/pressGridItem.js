@@ -37,7 +37,9 @@ export default class PressGridItem {
     return /* html */ `
       <img class="press-logo" src="${pressLogo}" alt="${pressName}"/>
       <div class="subscribe-toggle-btn-container">
-        <button class="subscribe-toggle-btn">+ ${isSubscribed ? '해지하기' : '구독하기'}</button>
+        <button class="subscribe-toggle-btn ${isSubscribed ? 'unsubscribe-btn' : 'subscribe-btn'}">+ ${
+      isSubscribed ? '해지하기' : '구독하기'
+    }</button>
       </div>
     `;
   }
@@ -46,12 +48,22 @@ export default class PressGridItem {
     const { $ } = domUtils;
     const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$ele });
 
-    $subscribeToggleBtn.addEventListener('click', () => {
+    $subscribeToggleBtn.addEventListener('click', ({ target }) => {
       const { pressName } = this.props;
-      subscriptionListStore.dispatch({
-        listenerType: pressName,
-        action: { type: 'addSubscription', payload: pressName }
-      });
+
+      if (target.classList.contains('subscribe-btn')) {
+        subscriptionListStore.dispatch({
+          listenerType: pressName,
+          action: { type: 'addSubscription', payload: pressName }
+        });
+      }
+
+      if (target.classList.contains('unsubscribe-btn')) {
+        subscriptionListStore.dispatch({
+          listenerType: pressName,
+          action: { type: 'deleteSubscription', payload: pressName }
+        });
+      }
     });
   }
 }

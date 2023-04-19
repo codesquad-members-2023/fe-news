@@ -42,6 +42,14 @@ export const subscriptionListReducer = (state, action) => {
 
       return { ...state, subscriptionList: newSubscriptionList };
     }
+    case 'deleteSubscription': {
+      const { subscriptionList } = state;
+
+      const newSubscriptionList = new Set(Array.from(subscriptionList));
+      newSubscriptionList.delete(action.payload);
+
+      return { ...state, subscriptionList: newSubscriptionList };
+    }
     default:
       return state;
   }
