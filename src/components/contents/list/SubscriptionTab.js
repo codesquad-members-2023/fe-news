@@ -1,8 +1,9 @@
 import Component from "../../../core/Component.js";
+import { store } from "../../../store/store.js";
 
 export default class SubscriptionTab extends Component {
   template() {
-    const { press, subscribingPresses } = this.props;
+    const { press, subscribingPresses } = store.getState().contents;
     const name = press?.name;
     const subscribingPressesHtml = subscribingPresses.reduce(
       (subscribingPressesString, subscribingPress) => {

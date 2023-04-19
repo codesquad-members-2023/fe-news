@@ -1,29 +1,16 @@
 import Component from "../../../core/Component.js";
+import { store } from "../../../store/store.js";
 
 export default class NewsContent extends Component {
-  initState() {
-    const { subscribingPresses, press } = this.props;
-
-    const isSubscribing = subscribingPresses.some(
-      (subscribingPress) => subscribingPress === press.name
-    );
-
-    return {
-      isSubscribing,
-    };
-  }
-
   setEvent() {
-    const { addSubscribing, removeSubscribing, press, subscriptionOption } =
-      this.props;
+    const { addSubscribing, removeSubscribing, press } =
+      store.getState().contents;
 
     const toggleSubscribing = () => {
       if (!press) return;
       const name = press.name;
 
-      this.state.isSubscribing
-        ? removeSubscribing(name, subscriptionOption !== "all")
-        : addSubscribing(name, subscriptionOption !== "all");
+      this.state.isSubscribing ? removeSubscribing(name) : addSubscribing(name);
 
       this.setState({
         isSubscribing: !this.state.isSubscribing,
@@ -34,12 +21,20 @@ export default class NewsContent extends Component {
   }
 
   template() {
-    const { press, subscriptionOption } = this.props;
-    const { isSubscribing } = this.state;
+    const {
+      contents: { presses, subscribingPresses, subscriptionOption },
+      listView: { index },
+    } = store.getState();
+
+    const press = presses[index];
 
     if (!press && subscriptionOption === "sub")
       return `<span>구독한 언론사가 없습니다.</span>`;
     if (!press) return `<span>loading...</span>`;
+
+    const isSubscribing = subscribingPresses.some(
+      (subscribingPress) => subscribingPress === presses[index].name
+    );
 
     const {
       logo_src,
@@ -75,7 +70,7 @@ export default class NewsContent extends Component {
                 <span class="caption">${name} 언론사에서 직접 편집한 뉴스입니다.</span>
             </div>
         </div>
-    
+
     `;
   }
 }

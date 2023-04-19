@@ -1,5 +1,5 @@
 import Component from "../../core/Component.js";
-import { observe } from "../../core/observer.js";
+import { store } from "../../store/store.js";
 
 export default class LatestNewsBar extends Component {
   initState() {
@@ -46,8 +46,8 @@ export default class LatestNewsBar extends Component {
     return `
     <div class="latest-news__window">
         <div class="latest-news__container">
-            ${newses.length ? `<div>${newses[idx].title}</div>` : ""}
-            ${newses.length ? `<div>${newses[(idx + 1) % 5].title}</div>` : ""}
+            ${newses?.length ? `<div>${newses[idx].title}</div>` : ""}
+            ${newses?.length ? `<div>${newses[(idx + 1) % 5].title}</div>` : ""}
         </div>
     </div>
   `;

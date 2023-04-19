@@ -8,6 +8,7 @@ import GridView from "./grid/GridView.js";
 import ListView from "./list/ListView.js";
 import StyleMenu from "./menu/StyleMenu.js";
 import SubscriptionMenu from "./menu/SubscriptionMenu.js";
+import { fetchPresses, loadSubscribing, store } from "../../store/store.js";
 
 const ALL = "all";
 const SUBSCRIBING = "sub";
@@ -15,64 +16,13 @@ const GRID = "grid";
 const LIST = "list";
 
 export default class Contents extends Component {
-  initState() {
-    return {
-      subscribingPresses: [],
-      presses: [],
-      viewOption: LIST,
-      subscriptionOption: ALL,
-    };
-  }
-
-  async componentDidMount() {
+  componentDidMount() {
     let subscribingPresses = getLocalData(SUBSCRIBING_PRESSES_KEY);
-    if (!subscribingPresses) subscribingPresses = [];
-
-    try {
-      const res = await fetch("http://localhost:3001/presses");
-      if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-      const presses = await res.json();
-
-      presses.sort(() => Math.random() - 0.5);
-
-      this.setState({ presses, subscribingPresses });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  addSubscribing(press, shouldUpdate) {
-    const newSubscribingPresses = [...this.state.subscribingPresses, press];
-    setLocalData(SUBSCRIBING_PRESSES_KEY, newSubscribingPresses);
-    this.setState({ subscribingPresses: newSubscribingPresses }, shouldUpdate);
-  }
-
-  removeSubscribing(press, shouldUpdate) {
-    const newSubscribingPresses = this.state.subscribingPresses.filter(
-      (subscribingPress) => subscribingPress !== press
-    );
-    setLocalData(SUBSCRIBING_PRESSES_KEY, newSubscribingPresses);
-    this.setState({ subscribingPresses: newSubscribingPresses }, shouldUpdate);
-  }
-
-  setViewGrid() {
-    this.setState({ viewOption: GRID });
-  }
-
-  setViewList() {
-    this.setState({ viewOption: LIST });
-  }
-
-  setSubscriptionAll() {
-    this.setState({ subscriptionOption: ALL });
-  }
-
-  setSubscriptionSubscribing() {
-    this.setState({ subscriptionOption: SUBSCRIBING });
+    setTimeout(() => store.dispatch(loadSubscribing(subscribingPresses)), 0);
+    store.dispatch(fetchPresses());
   }
 
   template() {
-    this.state.presses;
     return `
        <div class="options">
          <div class="options__subscription-menu"></div>
@@ -86,40 +36,18 @@ export default class Contents extends Component {
     const subscriptionMenu = this.parentElement.querySelector(
       ".options__subscription-menu"
     );
-    new SubscriptionMenu(subscriptionMenu, {
-      setSubscriptionAll: this.setSubscriptionAll.bind(this),
-      setSubscriptionSubscribing: this.setSubscriptionSubscribing.bind(this),
-    });
+    new SubscriptionMenu(subscriptionMenu);
 
     const viewerContainers = this.parentElement.querySelector(
       ".options__style-menu"
     );
-    new StyleMenu(viewerContainers, {
-      setViewGrid: this.setViewGrid.bind(this),
-      setViewList: this.setViewList.bind(this),
-    });
+    new StyleMenu(viewerContainers);
 
     const viewContainer = this.parentElement.querySelector(".view-container");
-    const { presses, subscribingPresses, viewOption, subscriptionOption } =
-      this.state;
+    const { viewOption } = store.getState().contents;
 
-    const addSubscribing = this.addSubscribing.bind(this);
-    const removeSubscribing = this.removeSubscribing.bind(this);
-
-    this.state.viewOption === GRID
-      ? new GridView(viewContainer, {
-          presses,
-          subscribingPresses,
-          subscriptionOption,
-          addSubscribing,
-          removeSubscribing,
-        })
-      : new ListView(viewContainer, {
-          presses,
-          subscribingPresses,
-          subscriptionOption,
-          addSubscribing,
-          removeSubscribing,
-        });
+    viewOption === GRID
+      ? new GridView(viewContainer)
+      : new ListView(viewContainer);
   }
 }

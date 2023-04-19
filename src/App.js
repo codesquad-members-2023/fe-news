@@ -18,10 +18,8 @@ export default class App extends Component {
   renderChildComponents() {
     const newsStand = this.parentElement.querySelector(".news-stand");
     new Label(newsStand);
-
     const latestNews = this.parentElement.querySelector(".latest-news");
     new LatestNews(latestNews);
-
     const contents = this.parentElement.querySelector(".contents");
     new Contents(contents);
   }

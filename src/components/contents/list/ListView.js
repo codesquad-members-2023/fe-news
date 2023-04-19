@@ -4,43 +4,12 @@ import RightButton from "../button/RightButton.js";
 import NewsContent from "./NewsContent.js";
 import AllTab from "./AllTab.js";
 import SubscriptionTab from "./SubscriptionTab.js";
+import { setListIdx, store } from "../../../store/store.js";
 
 const LEFT = -1;
 const RIGHT = 1;
 
 export default class ListView extends Component {
-  initState() {
-    const { presses, subscribingPresses, subscriptionOption } = this.props;
-
-    let sortedPresses =
-      subscriptionOption === "all"
-        ? [...presses].sort((a, b) => (a.category_id < b.category_id ? -1 : 1))
-        : subscribingPresses.map((subscribingPress) =>
-            presses.find((press) => press.name === subscribingPress)
-          );
-
-    const categoriesId = [
-      ...new Set(sortedPresses.map((press) => press?.category_id)),
-    ];
-
-    const categories = categoriesId.map((categoryId) => {
-      return {
-        categoryId,
-        newses: sortedPresses.filter(
-          (press) => press?.category_id === categoryId
-        ),
-      };
-    });
-
-    const idx = 0;
-
-    return {
-      idx,
-      categories,
-      sortedPresses,
-    };
-  }
-
   setEvent() {
     const handleButtonClick = ({ target }) => {
       if (!target.closest(".button")) return;
@@ -54,12 +23,6 @@ export default class ListView extends Component {
     };
 
     this.addEvent("click", ".news-list__list", handleButtonClick);
-  }
-
-  setIdx(idx) {
-    const { subscribingPresses } = this.props;
-    const len = subscribingPresses.length;
-    this.setState({ idx: (idx + len) % len });
   }
 
   template() {
@@ -80,39 +43,16 @@ export default class ListView extends Component {
     const rightButton = this.parentElement.querySelector(".button--right");
     new RightButton(rightButton);
 
-    const { idx, categories, sortedPresses } = this.state;
-
     const {
-      subscribingPresses,
-      addSubscribing,
-      removeSubscribing,
-      subscriptionOption,
-    } = this.props;
+      contents: { subscriptionOption },
+    } = store.getState();
 
-    const press = sortedPresses[idx];
     const tabContainer = this.parentElement.querySelector(".tab-container");
-
     subscriptionOption === "all"
-      ? new AllTab(tabContainer, {
-          press,
-          categories,
-        })
-      : new SubscriptionTab(tabContainer, {
-          press,
-          categories,
-          subscribingPresses,
-        });
+      ? new AllTab(tabContainer)
+      : new SubscriptionTab(tabContainer);
 
     const newsContent = this.parentElement.querySelector(".news-content");
-
-    new NewsContent(newsContent, {
-      idx,
-      setIdx: this.setIdx.bind(this),
-      press,
-      subscribingPresses,
-      subscriptionOption,
-      addSubscribing,
-      removeSubscribing,
-    });
+    new NewsContent(newsContent);
   }
 }
