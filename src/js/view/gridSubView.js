@@ -7,8 +7,6 @@ export default class GridSubView {
   }
 
   render() {
-    // data의 길이가 24가 되지 않는 경우 문제 발생
-
     const gridSubSection = this.getMarkUp(this._model.getData());
     const parentElem = REFERENCE.NS_CONTAINER.querySelector('.newssection_view');
     parentElem.innerHTML = '';
