@@ -11,7 +11,8 @@ export class Journal {
     const showDiv = document.createElement("div");
     showDiv.classList.add("journal-item_show");
     this.element.appendChild(showDiv);
-    showDiv.innerHTML = `<img src="${this.journalData.journalSrc}" alt="${this.journalData.journalAlt}">`;
+    showDiv.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
+                         alt="${this.journalData.mediaInfo.name}">`;
     showDiv.style.display = "flex";
 
     const hoverDiv = document.createElement("div");
