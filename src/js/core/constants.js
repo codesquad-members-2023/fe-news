@@ -5,16 +5,6 @@ export const CONSTANTS = {
   'subscribed' : '내가 구독한 언론사',
 }
 
-export const CATEGORY = {
-  'toteco' : '종합/경제',
-  'tvcom' : '방송/통신',
-  'it' : 'IT',
-  'eng' : '영자지',
-  'sporent' : '스포츠/연예',
-  'magtec' : '매거진/전문지',
-  'local' : '지역',
-}
-
 export const rollingPositionClassName = ['left', 'right'];
 
 const URL = 'http://localhost:3001';

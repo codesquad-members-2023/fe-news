@@ -2,7 +2,7 @@ import Store from '../core/Store.js';
 
 const initialState = {
   page: {
-    pressData: [],
+    pressData: [], //map객체
     categoryIndex: 0,
     pageIndex: 0,
   }
@@ -45,8 +45,9 @@ const pageReducer = (state = initialState, action) => {
 /**
  * @param {*} media
  * @returns [카테고리 key, 카테고리에 해당하는 배열]
- * ['toteco', Array(82)] ['tvcom', Array(23)] ['it', Array(12)]
- * ['eng', Array(6)] ['sporent', Array(24)] ['magtec', Array(59)] ['local', Array(36)]
+ * {"종합/경제" => Array(82)} {"방송/통신" => Array(23)}
+ * {"IT" => Array(12)} {"영자지" => Array(6)} {"스포츠/연예" => Array(23)}
+ * {"매거진/전문지" => Array(59)} {"지역" => Array(36)}
  */
 const categoryMap = media => {
   const map = new Map();
@@ -55,24 +56,25 @@ const categoryMap = media => {
     if(!map.has(category)) map.set(category, []);
     map.get(category).push(data);
   });
-  return [...map];
+  console.log(map);
+  return map;
 }
 
 const movePrevPage = (page, pressData) => {
-  const LAST_CATEGORY = pressData.length - 1;
+  const LAST_CATEGORY = pressData.size - 1;
   page.pageIndex--;
   if(page.pageIndex < 0) {
     page.categoryIndex--;
     if(page.categoryIndex < 0) page.categoryIndex = LAST_CATEGORY;
-    page.pageIndex = pressData[page.categoryIndex][1].length - 1;
+    page.pageIndex = [...pressData.values()][page.categoryIndex].length - 1;
   }
   return { page };
 }
 
 const moveNextPage = (page, pressData) => {
-  const LAST_CATEGORY = pressData.length - 1;
+  const LAST_CATEGORY = pressData.size - 1;
   page.pageIndex++;
-  if(page.pageIndex === pressData[page.categoryIndex][1].length - 1) {
+  if(page.pageIndex === [...pressData.values()][page.categoryIndex].length - 1) {
     page.categoryIndex++;
     if(page.categoryIndex > LAST_CATEGORY) page.categoryIndex = 0;
     page.pageIndex = 0;
