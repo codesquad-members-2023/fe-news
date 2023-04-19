@@ -50,21 +50,17 @@ class GridViewContainer extends HTMLElement {
     });
 
     this.displayStore.subscribe(() => {
-      console.log('display Changed');
       this.changePage();
     });
   }
 
   changePage() {
-    console.log('changePage');
     const currentTab = this.displayStore.getState().currentTab;
     const currentPage =
       this.displayStore.getState().page.grid[currentTab].currentPage;
-    console.log(currentPage);
     this.shadowRoot
       ?.querySelectorAll('grid-view-element')
       .forEach((gridViewElement: any, i: number) => {
-        console.log(gridViewElement);
         setProperty({
           target: gridViewElement,
           name: 'show',
@@ -76,14 +72,25 @@ class GridViewContainer extends HTMLElement {
   render(pressList: any) {
     const template = `
     <div class="wrap">
-    ${pressList
-      .map(
-        (press: any, i: number) =>
-          `<grid-view-element press-list='${JSON.stringify(press)}' show="${
-            i === 0 ? 'true' : 'false'
-          }"></grid-view-element>`
-      )
-      .join('')}
+      ${
+        pressList.length > 0
+          ? `${pressList
+              .map(
+                (press: any, i: number) =>
+                  `<grid-view-element press-list='${JSON.stringify(
+                    press
+                  )}' show="${i === 0 ? 'true' : 'false'}"></grid-view-element>`
+              )
+              .join('')}`
+          : `
+        <div class="press-container no-press">
+          <div class="empty">
+            <h3 class="typo-title-md">구독할 언론사가 없습니다.</h3>
+            <p class="typo-body-sm">언론사 구독 설정에서 관심있는 언론사를 구독하시면</p>
+            <p class="typo-body-sm">언론사가 직접 편집한 뉴스들을 네이버 홈에서 바로 보실 수 있습니다.</p>
+          </div>
+        </div>`
+      }
     </div>`;
     add({
       target: this.shadowRoot,

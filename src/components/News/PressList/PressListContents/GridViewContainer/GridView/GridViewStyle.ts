@@ -6,10 +6,6 @@ export default function style() {
       border: 0;
     }
 
-
-
-    
-
     .press-container {
 
       grid-template-columns: repeat(6, 1fr);

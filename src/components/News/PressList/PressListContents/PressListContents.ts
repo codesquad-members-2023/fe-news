@@ -57,7 +57,7 @@ class PressListContents extends HTMLElement {
       </div>
     </section>
     <section class="custom">
-      <div class="view grid show">
+      <div class="view grid">
       </div>
       <div class="view list">
       </div>
@@ -84,7 +84,8 @@ class PressListContents extends HTMLElement {
     this.userStore.dispatch({ type: 'SET_USER', payload: userData[0] });
 
     this.handleDisplay();
-    this.handleGridView().appendGridViewContainer();
+    this.handleGridView().appendGridViewContainer('general');
+    this.handleGridView().appendGridViewContainer('custom');
     console.log(this.pressStore.getState());
     this.handleListView().appendListViewContainer();
   }
@@ -105,77 +106,35 @@ class PressListContents extends HTMLElement {
           type: 'SET_PRESS_LIST',
           payload: { pressList },
         });
-        console.log(this.pressStore.getState());
       },
 
-      createGridViewContainer: (page: number, pressList: any) => {
-        const gridViewContainer = create({
-          tagName: 'grid-view-container-element',
-          classList: ['grid-view-container'],
-          attributeList: [['press-list', JSON.stringify(pressList)]],
-        });
-        if (isFirstPage(page)) {
-          gridViewContainer.classList.add('show');
-        }
-        // const slicedPressList = sliceByPage({
-        //   page,
-        //   maxItemNum: 24,
-        //   items: pressList,
-        // });
-        // const template = `
-        //   <grid-view-container-element press-list='${JSON.stringify(
-        //     slicedPressList
-        //   )}'></grid-view-container-element>
-        // `;
-        // add({
-        //   target: gridViewContainer,
-        //   template,
-        // });
-        // return gridViewContainer;
-      },
-      appendGridViewContainer: async () => {
+      appendGridViewContainer: async (view: 'general' | 'custom') => {
         await this.handleGridView().getCurrentPressList();
-        const maxPage =
-          this.displayStore.getState().page.grid.general.totalPage;
-        const pressList: any = this.pressStore.getState().pressList;
+        let pressList: any = this.pressStore.getState().pressList;
+        if (view === 'custom') {
+          pressList = pressList.filter((press: any) =>
+            this.userStore.getState().subscribingPress.includes(press.pid)
+          );
+        }
         const gridViewContainer = create({
           tagName: 'grid-view-container-element',
           attributeList: [['press-list', JSON.stringify(pressList)]],
         });
+        this.shadowRoot
+          ?.querySelector(`section.${view}`)
+          ?.querySelector('.view.grid')
+          ?.prepend(gridViewContainer);
         const controller = create({
           tagName: 'controller-element',
           attributeList: [['hide', 'left']],
         });
         this.shadowRoot
-          ?.querySelector('section.general')
-          ?.querySelector('.view.grid')
-          ?.prepend(gridViewContainer);
-        this.shadowRoot
-          ?.querySelector('section.general')
+          ?.querySelector(`section.${view}`)
           ?.querySelector('.view.grid')
           ?.prepend(controller);
-        this.handlePageController('grid');
-        // this.handleGridView().appendGridViewContainerForCustomTab();
+        this.handlePageController(view, 'grid');
       },
-      appendGridViewContainerForCustomTab: () => {
-        const subscribingPress = this.userStore.getState().subscribingPress;
-        const pressList = this.pressStore.getState();
 
-        const customPressList = this.pressStore
-          .getState()
-          .pressList.filter((press) => subscribingPress.includes(press.pid));
-
-        // const gridViewContainer = this.handleGridView().createGridViewContainer(
-        //   0,
-        //   customPressList
-        // );
-
-        // const target = this.wrap?.querySelector('section.custom .view.grid');
-        // if (target) target.innerHTML = '';
-        // target?.append(gridViewContainer);
-        // this.handleSubscribe().handleGridView();
-        // this.handleGridView().updateCustomTabGridData();
-      },
       updateCustomTabGridData: () => {
         this.displayStore.subscribe(() => {});
       },
@@ -245,46 +204,36 @@ class PressListContents extends HTMLElement {
   }
 
   async handleDisplay() {
-    // 탭이 변화하면 감지하여 그에 맞는 컨텐츠를 보여줌
-    // 자식 컴포넌트에서 custom event 발생하면 변경하는 것으로 코드 수정 필요
-
     const toggleShowClass = async () => {
       const displayStates = this.displayStore.getState();
-      const isGeneral = displayStates.currentTab === 'general';
-      const isCustom = displayStates.currentTab === 'custom';
-      const isGrid = displayStates.currentView === 'grid';
-      const isList = displayStates.currentView === 'list';
 
-      const generalSection = this.wrap?.querySelector('section.general');
-      const customSection = this.wrap?.querySelector('section.custom');
-      const gridView = this.wrap?.querySelector('section.show .view.grid');
-      const listView = this.wrap?.querySelector('section.show .view.list');
-      if (!generalSection || !customSection || !gridView || !listView) {
-        return;
+      const displaySection = this.wrap?.querySelector(
+        `section.${displayStates.currentTab}`
+      );
+      const hideSection =
+        displaySection?.nextElementSibling ??
+        displaySection?.previousElementSibling;
+
+      if (displaySection && hideSection) {
+        toggleClass(displaySection, 'show');
+        toggleClass(hideSection, 'hide');
       }
-      if (isGeneral) {
-        toggleClass(generalSection, 'show');
-        toggleClass(customSection, 'hide');
-      }
-      if (isCustom) {
-        toggleClass(generalSection, 'hide');
-        toggleClass(customSection, 'show');
-      }
-      if (isGrid) {
-        toggleClass(gridView, 'show');
-        toggleClass(listView, 'hide');
-      }
-      if (isList) {
-        toggleClass(gridView, 'hide');
-        toggleClass(listView, 'show');
+
+      const displayView = this.wrap?.querySelector(
+        `section.${displayStates.currentTab} .view.${displayStates.currentView}`
+      );
+      const hideView =
+        displayView?.nextElementSibling ?? displayView?.previousElementSibling;
+
+      if (displaySection && hideSection && displayView && hideView) {
+        toggleClass(displayView, 'show');
+        toggleClass(hideView, 'hide');
       }
     };
     this.displayStore.subscribe(toggleShowClass);
   }
 
-  handlePageController(view: 'grid' | 'list') {
-    const tab = this.displayStore.getState().currentTab;
-
+  handlePageController(tab: 'general' | 'custom', view: 'grid' | 'list') {
     const controllerElement = select({
       selector: 'controller-element',
       parent: document
@@ -296,7 +245,6 @@ class PressListContents extends HTMLElement {
 
     controllerElement?.shadowRoot?.addEventListener('click', (e: any) => {
       const target = e.target;
-
       const position = target.getAttribute('position');
       const isLeft = position === 'left';
 
