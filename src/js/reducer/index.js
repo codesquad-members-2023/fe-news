@@ -36,8 +36,11 @@ export const subscriptionListReducer = (state, action) => {
   switch (action.type) {
     case 'addSubscription': {
       const { subscriptionList } = state;
-      if (subscriptionList.includes(action.payload)) return state;
-      return { ...state, subscriptionList: [...subscriptionList, action.payload] };
+
+      const newSubscriptionList = new Set(Array.from(subscriptionList));
+      newSubscriptionList.add(action.payload);
+
+      return { ...state, subscriptionList: newSubscriptionList };
     }
     default:
       return state;

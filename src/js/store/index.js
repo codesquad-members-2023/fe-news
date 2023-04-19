@@ -17,7 +17,7 @@ const INIT_GRID_PAGE_STATE = {
 export const gridPageStore = new Store(INIT_GRID_PAGE_STATE, gridPageReducer);
 
 const INIT_SUBSCRIPTION_LIST_STATE = {
-  subscriptionList: []
+  subscriptionList: new Set()
 };
 
 export const subscriptionListStore = new MyStore(INIT_SUBSCRIPTION_LIST_STATE, subscriptionListReducer);

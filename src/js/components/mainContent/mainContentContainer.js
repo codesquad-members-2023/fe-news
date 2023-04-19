@@ -16,7 +16,7 @@ export default class MainContentContainer {
   mount() {
     const { allPressData } = this.props;
     const { subscriptionList } = subscriptionListStore.getState();
-    const subscribedPressData = allPressData.filter(({ pressName }) => subscriptionList.includes(pressName));
+    const subscribedPressData = allPressData.filter(({ pressName }) => subscriptionList.has(pressName));
 
     this.allGrid = new MainContentGrid(this.$ele, { pressTabType: 'all', pressData: allPressData });
     this.subscribedGrid = new MainContentGrid(this.$ele, {
