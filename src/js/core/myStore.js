@@ -11,6 +11,12 @@ export default class MyStore {
     this.#state = initState;
     this.#listeners = new Map();
     this.reducer = reducer;
+
+    this.initListeners();
+  }
+
+  initListeners() {
+    this.#listeners.set('default', new Set());
   }
 
   getState() {
