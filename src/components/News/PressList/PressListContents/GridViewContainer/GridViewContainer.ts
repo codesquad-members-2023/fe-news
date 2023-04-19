@@ -24,17 +24,8 @@ class GridViewContainer extends HTMLElement {
 
     const pressListStr = getProperty({ target: this, name: 'press-list' });
     const pressList = pressListStr ? JSON.parse(pressListStr) : [];
-    const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);
-    const slicedPressList = Array.from({ length: maxPage }).map(
-      (v: any, i: number) =>
-        sliceByPage({
-          page: i,
-          maxItemNum: MAX_ITEM_NUM,
-          items: pressList,
-        })
-    );
 
-    this.render(slicedPressList);
+    this.render(pressList);
     addStyle({
       target: this.shadowRoot,
       style: style(),
@@ -43,6 +34,18 @@ class GridViewContainer extends HTMLElement {
     this.displayStore.subscribe(() => {
       this.changePage();
     });
+  }
+
+  static get observedAttributes() {
+    return ['press-list'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'press-list') {
+      const pressList = JSON.parse(newValue);
+
+      this.render(pressList);
+    }
   }
 
   changePage() {
@@ -61,11 +64,20 @@ class GridViewContainer extends HTMLElement {
   }
 
   render(pressList: any) {
+    const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);
+    const slicedPressList = Array.from({ length: maxPage }).map(
+      (v: any, i: number) =>
+        sliceByPage({
+          page: i,
+          maxItemNum: MAX_ITEM_NUM,
+          items: pressList,
+        })
+    );
     const template = `
     <div class="wrap">
       ${
-        pressList.length > 0
-          ? `${pressList
+        slicedPressList.length > 0
+          ? `${slicedPressList
               .map(
                 (press: any, i: number) =>
                   `<grid-view-element press-list='${JSON.stringify(

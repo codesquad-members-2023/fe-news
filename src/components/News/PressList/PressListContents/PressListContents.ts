@@ -85,7 +85,6 @@ class PressListContents extends HTMLElement {
 
     this.handleDisplay();
     this.handleGridView().append('general');
-
     this.handleGridView().append('custom');
     this.handleListView().append('general');
   }
@@ -147,7 +146,7 @@ class PressListContents extends HTMLElement {
         this.handlePageController().appendController(tab, 'grid');
         this.handlePageController().movePage(tab, 'grid');
 
-        this.handleSubscribe().addClickEvnetToGridView();
+        this.handleSubscribe().addClickEvnetToGridView(tab);
       },
       updateCustomTabGridData: () => {
         this.displayStore.subscribe(() => {});
@@ -346,6 +345,17 @@ class PressListContents extends HTMLElement {
       target: HTMLElement | null | undefined | Element;
     }
     return {
+      getCustomPressList: () => {
+        const subscribingPressIds = this.userStore.getState().subscribingPress;
+        const pressList = this.pressStore.getState().pressList;
+        const customPressList = pressList.filter((press: any) =>
+          subscribingPressIds.includes(press.pid)
+        );
+        this.pressStore.dispatch({
+          type: 'SET_CUSTOM_PRESS_LIST',
+          payload: { pressList: customPressList },
+        });
+      },
       unsubscribe: ({ id, target }: runSubscribeProps) => {
         unsubscribe({ id: TEMP_ID, pressId: id });
         storeUser.dispatch({
@@ -384,7 +394,6 @@ class PressListContents extends HTMLElement {
           ?.querySelector('.view.grid')
           ?.querySelector('grid-view-container-element')
           ?.shadowRoot?.querySelectorAll('grid-view-element');
-        console.log(gridView);
         const handleClick = (e: Event) => {
           const target = e.target as HTMLElement;
           const gridViewItem = target.closest('grid-view-item-element');
@@ -401,6 +410,22 @@ class PressListContents extends HTMLElement {
                 id,
                 target: gridViewItemElement,
               });
+
+          this.handleSubscribe().getCustomPressList();
+
+          if (tab === 'custom') {
+            const customPressList = this.pressStore.getState().customPressList;
+            const gridViewContainerElement = this.shadowRoot
+              ?.querySelector(`section.${tab}`)
+              ?.querySelector('.view.grid')
+              ?.querySelector('grid-view-container-element');
+            setProperty({
+              target: gridViewContainerElement,
+              name: 'press-list',
+              value: JSON.stringify(customPressList),
+            });
+            this.handleSubscribe().addClickEvnetToGridView(tab);
+          }
         };
 
         gridView?.forEach((gridViewElement) => {

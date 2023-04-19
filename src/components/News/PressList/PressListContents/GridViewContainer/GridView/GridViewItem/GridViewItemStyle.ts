@@ -8,6 +8,7 @@ export default function style(target: HTMLElement) {
       width: 100%;
       min-width: 154px;
       height: 100%;
+      max-height: 96px;
       display: inline-block;
       background-color: var(--white);
       
