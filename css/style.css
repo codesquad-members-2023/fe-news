@@ -362,7 +362,8 @@ main {
 
 .main-list__nav {
   overflow-x: auto;
-  overflow-y: hidden; }
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory; }
 
 .main-list__nav::-webkit-scrollbar {
   display: none;

@@ -15,7 +15,7 @@ export const pageControlBtnClickEventHandler = ({ target, currentTarget }) => {
   const $leftButton = $mainSection.parentNode.querySelector('.left-button');
   const $rightButton = $mainSection.parentNode.querySelector('.right-button');
   const $buttons = [$leftButton, $rightButton];
-  console.log($buttons);
+
   const viewOptionData = getStoreState('viewOptionData').viewOption;
   // TODO : 전체 언론사 grid일때, list일때, 다 다른 event를 부여해야함.
   // Case 문으로 좀 빼야할듯...
@@ -155,7 +155,7 @@ const mineGridButtonClickHandler = (direction, $mainSection, $buttons) => {
   const $targetPage = $pages[targetPageNum];
   $currentPage.classList.replace('grid', 'none');
   $targetPage.classList.replace('none', 'grid');
-  console.log($buttons);
+
   if (targetPageNum === 0) {
     btnCreate($buttons[1]);
     leftBtnDelete($buttons);

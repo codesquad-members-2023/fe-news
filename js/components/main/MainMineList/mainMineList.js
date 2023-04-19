@@ -73,6 +73,25 @@ const render = ($main, index, content) => {
     mineListHeaderEventHandler.bind(null, subscribeNameArr),
   );
   $main.replaceChild($list, $main.lastChild);
+  scrollMove();
+};
+
+const scrollMove = () => {
+  const currentCategory = document.querySelector('#current-category');
+
+  // current-category가 있는 li 요소의 위치를 계산하여 스크롤 이동
+  if (currentCategory) {
+    const navItems = document.querySelector('.main-list__nav');
+    const navItemWidth = navItems.offsetWidth;
+    const currentItemWidth = currentCategory.offsetWidth;
+    const currentItemLeft = currentCategory.offsetLeft;
+
+    // 스크롤 이동할 위치 계산
+    const scrollLeft = currentItemLeft - (navItemWidth - currentItemWidth);
+
+    // 스크롤 이동
+    navItems.scrollLeft = scrollLeft;
+  }
 };
 
 export const MineList = ($main) => {
