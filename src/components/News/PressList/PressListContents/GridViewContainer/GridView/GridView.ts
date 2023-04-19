@@ -1,6 +1,6 @@
 import { add, addStyle, addShadow, getProperty, createWrap } from '@utils/dom';
 import style from './GridViewStyle';
-import { PressType } from '@store/press/pressType';
+import { MAX_ITEM_NUM } from '@constant/index';
 
 interface GridView {
   icon?: string | null;
@@ -51,11 +51,15 @@ class GridView extends HTMLElement {
     const pressList = pressListStr ? JSON.parse(pressListStr) : [];
     const template = `
     <div class="press-container${show === 'true' ? ' show' : ''}">
-    ${pressList
-      .map(
-        (press: PressType, i: number) =>
-          `<grid-view-item-element id='${press.pid}' image='${press.newMainLogo}' index='${i}' is-subscribed='${press.isSubscribed}'></grid-view-item-element>`
-      )
+    ${Array.from({ length: MAX_ITEM_NUM })
+      .map((_, i: number) => {
+        const press = pressList[i];
+        console.log(press);
+        if (press) {
+          return `<grid-view-item-element id='${press.pid}' image='${press.newMainLogo}' index='${i}' is-subscribed='${press.isSubscribed}'></grid-view-item-element>`;
+        }
+        return `<grid-view-item-element index='${i}'></grid-view-item-element>`;
+      })
       .join('')}
     </div>
     `;

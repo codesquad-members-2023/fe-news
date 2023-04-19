@@ -60,7 +60,11 @@ export default function style(target: HTMLElement) {
 
     .press-subscribe-btn-container:hover {
       background-color: var(--offwhite);
-    }    
+    }
+
+    .wrap.no-hover .press-subscribe-btn-container:hover {
+      background-color: var(--white);
+    }
     `;
 
   style.textContent = content;

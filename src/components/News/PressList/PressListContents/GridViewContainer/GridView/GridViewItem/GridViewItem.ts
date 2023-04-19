@@ -45,6 +45,10 @@ class GridViewItem extends HTMLElement {
       target: this,
       name: 'id',
     });
+    if (!id) {
+      this.wrap?.classList.add('no-hover');
+      return;
+    }
     const subscribingPress: string[] =
       this.userStore.getState().subscribingPress;
     const isSubscribed = id ? subscribingPress.includes(id) : false;
