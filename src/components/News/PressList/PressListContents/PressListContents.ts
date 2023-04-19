@@ -171,7 +171,7 @@ class PressListContents extends HTMLElement {
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
       },
       getCustomSection: () => {},
-      changeCurrentSection: async (page: number) => {
+      updateSection: async (page: number) => {
         const section = await getSection({ page });
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
         this.shadowRoot
@@ -180,6 +180,7 @@ class PressListContents extends HTMLElement {
             'section-data',
             JSON.stringify(this.sectionStore.getState())
           );
+        this.handleSubscribe().addClickEvnetToListView();
       },
       append: async (tab: 'general' | 'custom', page: number = 0) => {
         let section;
@@ -205,6 +206,7 @@ class PressListContents extends HTMLElement {
 
         this.handlePageController().appendController(tab, 'list');
         this.handlePageController().movePage(tab, 'list');
+        this.handleSubscribe().addClickEvnetToListView();
       },
     };
   }
@@ -311,7 +313,7 @@ class PressListContents extends HTMLElement {
         changeVisibility(view);
 
         if (view === 'list') {
-          this.handleListView().changeCurrentSection(currentPage);
+          this.handleListView().updateSection(currentPage);
         }
       },
       movePage: (tab: 'general' | 'custom', view: 'grid' | 'list') => {
@@ -421,20 +423,7 @@ class PressListContents extends HTMLElement {
                 id,
                 target: gridViewItemElement,
               });
-
-          this.handleSubscribe().getCustomPressList();
-
-          const customPressList = this.pressStore.getState().customPressList;
-          const gridViewContainerElement = this.shadowRoot
-            ?.querySelector(`section.custom`)
-            ?.querySelector('.view.grid')
-            ?.querySelector('grid-view-container-element');
-          setProperty({
-            target: gridViewContainerElement,
-            name: 'press-list',
-            value: JSON.stringify(customPressList),
-          });
-          this.handleSubscribe().addClickEvnetToGridView('custom');
+          this.handleSubscribe().updateCustomGridViewData();
         };
 
         gridView?.forEach((gridViewElement) => {
@@ -443,20 +432,27 @@ class PressListContents extends HTMLElement {
           );
         });
       },
+      updateCustomGridViewData: () => {
+        this.handleSubscribe().getCustomPressList();
+        const customPressList = this.pressStore.getState().customPressList;
+        const gridViewContainerElement = this.shadowRoot
+          ?.querySelector(`section.custom`)
+          ?.querySelector('.view.grid')
+          ?.querySelector('grid-view-container-element');
+        setProperty({
+          target: gridViewContainerElement,
+          name: 'press-list',
+          value: JSON.stringify(customPressList),
+        });
+        this.handleSubscribe().addClickEvnetToGridView('custom');
+      },
       addClickEvnetToListView: () => {
-        const listView = this.shadowRoot
-          ?.querySelector('list-view-element')
-          ?.shadowRoot?.querySelector('list-view-item-element')
-          ?.shadowRoot?.querySelector('.btn-container');
-
-        listView?.addEventListener('click', (e) => {
+        const handleClick = (e: Event) => {
           const target = e.target as HTMLElement;
           const id = target?.getAttribute('id');
-
-          const subscribingPress = storeUser.getState().subscribingPress;
           if (!id) return;
+          const subscribingPress = storeUser.getState().subscribingPress;
           const isSubscribed = subscribingPress.includes(id);
-
           const listViewItemElement = document
             .querySelector('news-element')
             ?.shadowRoot?.querySelector('press-list-element')
@@ -477,7 +473,14 @@ class PressListContents extends HTMLElement {
               target: listViewItemElement,
             });
           }
-        });
+          this.handleSubscribe().updateCustomGridViewData();
+        };
+        const listView = this.shadowRoot
+          ?.querySelector('list-view-element')
+          ?.shadowRoot?.querySelector('list-view-item-element')
+          ?.shadowRoot?.querySelector('.btn-container');
+
+        listView?.addEventListener('click', (e) => handleClick(e));
       },
     };
   }
