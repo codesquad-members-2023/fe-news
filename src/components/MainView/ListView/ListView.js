@@ -3,8 +3,22 @@ import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
 import { ListViewHeader } from "./ListViewHeader.js";
 import { ListViewMain } from "./ListViewMain.js";
 import { getPageNumberByDir } from "../../../utils/utils.js";
+import { ProgressBarAnimationManager } from "./ListViewAnimaionManager.js";
 
 export class ListView extends Component {
+  constructor(target, props) {
+    super(target, props);
+    this.progressBarAnimation = new ProgressBarAnimationManager({
+      moveToNextPageToward: this.moveToNextPageToward.bind(this),
+      getCurrentCategoryNode: this.getCurrentCategoryNode.bind(this),
+    });
+    this.initProgressBarAnimation();
+  }
+
+  initProgressBarAnimation() {
+    this.progressBarAnimation.init();
+  }
+
   setUp() {
     this._state = this.getCurrentListViewState(this.props);
   }
@@ -24,7 +38,7 @@ export class ListView extends Component {
     this.target.addEventListener("click", ({ target }) => {
       if (target.closest(".view-page-btn")) {
         const [_, dir] = target.closest(".view-page-btn").className.split(" ");
-        this.setState(this.getCurrentListViewState(this._state, dir));
+        this.moveToNextPageToward(dir);
       }
     });
   }
@@ -41,7 +55,7 @@ export class ListView extends Component {
       subscribeStatus,
     } = this._state;
     const { subscribePress, pressCategories } = this.props;
-    const { moveToTargetCategoryBy } = this;
+    const { moveToTargetCategoryBy, initProgressBarAnimation } = this;
 
     new ListViewHeader(listViewHeader, {
       currentPageInCategory,
@@ -51,6 +65,7 @@ export class ListView extends Component {
       pressCategories,
       btnState,
       moveToTargetCategoryBy: moveToTargetCategoryBy.bind(this),
+      initProgressBarAnimation: initProgressBarAnimation.bind(this),
     });
 
     const listViewMain = this.target.querySelector(".list-view__main");
@@ -199,6 +214,18 @@ export class ListView extends Component {
         btnState,
         targetCategory,
       })
+    );
+    this.initProgressBarAnimation();
+  }
+
+  moveToNextPageToward(dir) {
+    this.setState(this.getCurrentListViewState(this._state, dir));
+    this.initProgressBarAnimation();
+  }
+
+  getCurrentCategoryNode() {
+    return this.target.querySelector(
+      `[data-category-id="${this._state.currentCategory}"`
     );
   }
 }
