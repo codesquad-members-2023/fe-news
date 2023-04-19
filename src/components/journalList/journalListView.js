@@ -60,10 +60,10 @@ const createJournalList = () => {
   const loadJournalItems = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
-    journalHeaderStore.setJournalListAll(journalItems);
+    const dividedJournalItems = journalItems.splice(0, 96);
+    journalHeaderStore.setJournalListAll(dividedJournalItems);
     const journalList = journalHeaderStore.journalListAll;
-    const dividedJournalList = journalList.splice(0, 96);
-    batchJournalList(dividedJournalList);
+    batchJournalList(journalList);
     const batchElments = document.querySelectorAll(".journal-batch");
     journalTrackStore.setBatchSize(batchElments);
     journalTrack.addButton();
