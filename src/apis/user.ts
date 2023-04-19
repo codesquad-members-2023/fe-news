@@ -22,8 +22,6 @@ export const subscribe = async ({ pressId }: subscribeProps) => {
   const path = `/subscribe?id=${TEMP_ID}&pressId=${pressId}`;
   const method = 'PATCH';
   const data = await customFetch({ path, method });
-  const user = await getUser({ id: TEMP_ID });
-  store.user.dispatch({ type: 'SET_USER', payload: user });
   return data;
 };
 
@@ -36,7 +34,5 @@ export const unsubscribe = async ({ pressId }: unsubscribeProps) => {
   const path = `/unsubscribe?id=${TEMP_ID}&pressId=${pressId}`;
   const method = 'PATCH';
   const data = await customFetch({ path, method });
-  const user = await getUser({ id: TEMP_ID });
-  store.user.dispatch({ type: 'SET_USER', payload: user });
   return data;
 };

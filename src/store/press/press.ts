@@ -27,7 +27,6 @@ const setPressList = ({ state, payload }: setPressListProps) => {
 };
 
 const setCustomPressList = ({ state, payload }: setPressListProps) => {
-  console.log(payload);
   return {
     ...state,
     customPressList: payload.pressList,

@@ -85,6 +85,7 @@ class PressListContents extends HTMLElement {
 
     this.handleDisplay();
     this.handleGridView().append('general');
+
     this.handleGridView().append('custom');
     this.handleListView().append('general');
   }
@@ -145,6 +146,8 @@ class PressListContents extends HTMLElement {
 
         this.handlePageController().appendController(tab, 'grid');
         this.handlePageController().movePage(tab, 'grid');
+
+        this.handleSubscribe().addClickEvnetToGridView();
       },
       updateCustomTabGridData: () => {
         this.displayStore.subscribe(() => {});
@@ -185,7 +188,6 @@ class PressListContents extends HTMLElement {
           await this.handleListView().getSection(0);
           section = this.sectionStore.getState();
         }
-
         const listViewContainer = create({
           tagName: 'div',
           classList: ['list-view-container'],
@@ -202,8 +204,8 @@ class PressListContents extends HTMLElement {
           ?.querySelector('.view.list')
           ?.prepend(listViewContainer);
 
-        this.handlePageController().appendController(tab, 'grid');
-        this.handlePageController().movePage(tab, 'grid');
+        this.handlePageController().appendController(tab, 'list');
+        this.handlePageController().movePage(tab, 'list');
       },
     };
   }
@@ -344,7 +346,7 @@ class PressListContents extends HTMLElement {
       target: HTMLElement | null | undefined | Element;
     }
     return {
-      runUnsunscribe: ({ id, target }: runSubscribeProps) => {
+      unsubscribe: ({ id, target }: runSubscribeProps) => {
         unsubscribe({ id: TEMP_ID, pressId: id });
         storeUser.dispatch({
           type: 'UNSUBSCRIBE',
@@ -360,7 +362,7 @@ class PressListContents extends HTMLElement {
           value: 'false',
         });
       },
-      runSubscribe: ({ id, target }: runSubscribeProps) => {
+      subscribe: ({ id, target }: runSubscribeProps) => {
         subscribe({ id, pressId: id });
         storeUser.dispatch({
           type: 'SUBSCRIBE',
@@ -376,31 +378,38 @@ class PressListContents extends HTMLElement {
           value: 'true',
         });
       },
-      handleGridView: () => {
-        const gridView = this.shadowRoot?.querySelectorAll('grid-view-element');
+      addClickEvnetToGridView: (tab: 'general' | 'custom' = 'general') => {
+        const gridView = this.shadowRoot
+          ?.querySelector(`section.${tab}`)
+          ?.querySelector('.view.grid')
+          ?.querySelector('grid-view-container-element')
+          ?.shadowRoot?.querySelectorAll('grid-view-element');
+        console.log(gridView);
+        const handleClick = (e: Event) => {
+          const target = e.target as HTMLElement;
+          const gridViewItem = target.closest('grid-view-item-element');
+          const id = gridViewItem?.getAttribute('id');
+          if (!id) return;
+          const isSubscribed = target.getAttribute('icon') === 'close';
+          const gridViewItemElement = target?.closest('grid-view-item-element');
+          isSubscribed
+            ? this.handleSubscribe().unsubscribe({
+                id,
+                target: gridViewItemElement,
+              })
+            : this.handleSubscribe().subscribe({
+                id,
+                target: gridViewItemElement,
+              });
+        };
+
         gridView?.forEach((gridViewElement) => {
-          gridViewElement.shadowRoot?.addEventListener('click', (e) => {
-            const target = e.target as HTMLElement;
-            const gridViewItem = target.closest('grid-view-item-element');
-            const id = gridViewItem?.getAttribute('id');
-            if (!id) return;
-            const isSubscribed = target.getAttribute('icon') === 'close';
-            const gridViewItemElement = target?.closest(
-              'grid-view-item-element'
-            );
-            isSubscribed
-              ? this.handleSubscribe().runUnsunscribe({
-                  id,
-                  target: gridViewItemElement,
-                })
-              : this.handleSubscribe().runSubscribe({
-                  id,
-                  target: gridViewItemElement,
-                });
-          });
+          gridViewElement.shadowRoot?.addEventListener('click', (e) =>
+            handleClick(e)
+          );
         });
       },
-      handleListView: () => {
+      addClickEvnetToListView: () => {
         const listView = this.shadowRoot
           ?.querySelector('list-view-element')
           ?.shadowRoot?.querySelector('list-view-item-element')
@@ -424,12 +433,12 @@ class PressListContents extends HTMLElement {
             ?.shadowRoot?.querySelector('list-view-item-element');
 
           if (!isSubscribed) {
-            this.handleSubscribe().runSubscribe({
+            this.handleSubscribe().subscribe({
               id,
               target: listViewItemElement,
             });
           } else {
-            this.handleSubscribe().runUnsunscribe({
+            this.handleSubscribe().unsubscribe({
               id,
               target: listViewItemElement,
             });

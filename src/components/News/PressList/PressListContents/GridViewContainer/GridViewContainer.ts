@@ -1,11 +1,4 @@
-import {
-  add,
-  addStyle,
-  addShadow,
-  getProperty,
-  createWrap,
-  setProperty,
-} from '@utils/dom';
+import { add, addStyle, addShadow, getProperty, setProperty } from '@utils/dom';
 import style from './GridViewContainerStyle';
 import { MAX_ITEM_NUM } from '@constant/index';
 import { sliceByPage } from '@utils/common';
@@ -31,9 +24,7 @@ class GridViewContainer extends HTMLElement {
 
     const pressListStr = getProperty({ target: this, name: 'press-list' });
     const pressList = pressListStr ? JSON.parse(pressListStr) : [];
-
     const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);
-
     const slicedPressList = Array.from({ length: maxPage }).map(
       (v: any, i: number) =>
         sliceByPage({
@@ -70,7 +61,6 @@ class GridViewContainer extends HTMLElement {
   }
 
   render(pressList: any) {
-    console.log(pressList);
     const template = `
     <div class="wrap">
       ${
