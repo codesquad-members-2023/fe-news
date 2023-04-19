@@ -12,7 +12,7 @@ import list from './PressListContentsStyle';
 import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
-import { getPress, getSection } from '@apis/news';
+import { getPress, getSection, getCustomSection } from '@apis/news';
 import { getUser, subscribe, unsubscribe } from '@apis/user';
 import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionType } from '@store/section/sectionType';
@@ -87,6 +87,7 @@ class PressListContents extends HTMLElement {
     this.handleGridView().append('general');
     this.handleGridView().append('custom');
     this.handleListView().append('general');
+    this.handleListView().append('custom');
   }
 
   handleGridView() {
@@ -170,12 +171,38 @@ class PressListContents extends HTMLElement {
         });
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
       },
-      getCustomSection: () => {},
+      getCustomSection: async (page: number = 0) => {
+        const section = await getCustomSection({ page });
+        section.articles.forEach((article: ArticleInterface) => {
+          article.title = parseQuotationMarks(article.title);
+        });
+        this.displayStore.dispatch({
+          type: 'SET_TOTAL_PAGE',
+          payload: {
+            view: 'list',
+            tab: 'custom',
+          },
+        });
+        this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
+      },
       updateSection: async (page: number) => {
         const section = await getSection({ page });
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
         this.shadowRoot
-          ?.querySelector('list-view-element')
+          ?.querySelector('section.general .view.list list-view-element')
+          ?.setAttribute(
+            'section-data',
+            JSON.stringify(this.sectionStore.getState())
+          );
+
+        this.handleSubscribe().addClickEvnetToListView();
+      },
+      updateCustomSection: async (page: number) => {
+        const section = await getCustomSection({ page });
+        this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
+
+        this.shadowRoot
+          ?.querySelector('section.custom .view.list list-view-element')
           ?.setAttribute(
             'section-data',
             JSON.stringify(this.sectionStore.getState())
@@ -186,6 +213,10 @@ class PressListContents extends HTMLElement {
         let section;
         if (tab === 'general') {
           await this.handleListView().getSection(0);
+          section = this.sectionStore.getState();
+        }
+        if (tab === 'custom') {
+          await this.handleListView().getCustomSection(0);
           section = this.sectionStore.getState();
         }
         const listViewContainer = create({
@@ -313,7 +344,11 @@ class PressListContents extends HTMLElement {
         changeVisibility(view);
 
         if (view === 'list') {
-          this.handleListView().updateSection(currentPage);
+          if (tab === 'general') {
+            this.handleListView().updateSection(currentPage);
+          } else {
+            this.handleListView().updateCustomSection(currentPage);
+          }
         }
       },
       movePage: (tab: 'general' | 'custom', view: 'grid' | 'list') => {
@@ -325,7 +360,6 @@ class PressListContents extends HTMLElement {
             ?.shadowRoot?.querySelector('presslist-contents-element')
             ?.shadowRoot?.querySelector(`section.${tab} .view.${view}`),
         });
-
         controllerElement?.shadowRoot?.addEventListener('click', (e) =>
           this.handlePageController().handleClick(
             e,

@@ -29,3 +29,10 @@ export const getSection = async ({ page }: getSectionProps) => {
   const section = await customFetch({ path, method });
   return section;
 };
+
+export const getCustomSection = async ({ page }: getSectionProps) => {
+  const path = `/custom-section?page=${page}`;
+  const method = 'GET';
+  const section = await customFetch({ path, method });
+  return section;
+};
