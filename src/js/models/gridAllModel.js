@@ -43,7 +43,7 @@ export default class GridAllModel extends Observer {
     let result;
     this._data.some((data) => {
       if (data.pressName === pressName) {
-        result = data.pressName;
+        result = data;
         return true;
       }
     });

@@ -12,16 +12,29 @@ export default class GridSubModel extends Observer {
       allOrSub: VIEW_STATE.SUB,
       index: 1,
     };
-    this._data = {
-      page1: [],
-      page2: [],
-      page3: [],
-      page4: [],
-    };
+    this._data = [];
+  }
+
+  containsData(pressName) {
+    return this._data.some((data) => {
+      return data.pressName === pressName;
+    });
+  }
+
+  setSubData(data) {
+    this._data.push(data);
+  }
+
+  deleteSubData(data) {
+    this._data = this._data.filter((el) => el !== data);
+    this.notify();
   }
 
   getData() {
-    return this._data.page1;
+    const start = (this._state.index - 1) * NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
+    const end = start + NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
+
+    return [...this._data.slice(start, end)];
   }
 
   changeView(selectedState) {

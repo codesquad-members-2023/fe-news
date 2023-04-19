@@ -63,6 +63,10 @@ body {
     .newssection_view .newssection_view_grid .grid_items .press_logo {
       width: 50px;
       height: 28px; }
+    .newssection_view .newssection_view_grid .grid_items .hidden {
+      display: none; }
+    .newssection_view .newssection_view_grid .grid_items a {
+      cursor: pointer; }
 
 .newsstand_header {
   display: flex;

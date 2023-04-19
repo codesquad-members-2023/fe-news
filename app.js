@@ -23,5 +23,5 @@ const buttonView = new NSSectionButtonView(gridAllModel);
 new NSSectionHeaderView(sectionHeaderModel, buttonView, NSSectionCurState);
 
 new GridSubView(gridSubModel);
-new GridAllView(gridAllModel);
+new GridAllView(gridAllModel, gridSubModel);
 // subscribe 로직을 entry에 넣어서 전체 로직을 보이게?

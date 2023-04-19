@@ -49,8 +49,9 @@ export default class NSSectionHeaderView {
   }
 
   setEvent() {
-    const parentElem = REFERENCE.NS_CONTAINER.querySelector('.newsstand_newssection');
-    const viewButtonContainer = parentElem.querySelector('.newsstand_newssection_header');
+    const viewButtonContainer = REFERENCE.NS_CONTAINER.querySelector(
+      '.newsstand_newssection_header'
+    );
     viewButtonContainer.addEventListener('click', this.viewButtonHandler.bind(this));
   }
 
@@ -63,7 +64,7 @@ export default class NSSectionHeaderView {
       </div>
       <div class="header_view_buttons">
         <a class="view_list_button">
-          <img src="/src/asset/newsSectionListViewButton.svg " alt="listViewButton" />
+          <img src="/src/asset/newsSectionListViewButton.svg" alt="listViewButton" />
         </a>
         <a class="view_grid_button">
           <img src="/src/asset/newsSectionGridViewButton.svg" alt="gridViewButton" />
