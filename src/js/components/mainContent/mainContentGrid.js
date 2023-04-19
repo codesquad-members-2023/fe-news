@@ -28,7 +28,7 @@ export default class MainContentGrid {
   mount() {
     const { getChucks } = dataUtils;
     const { pressTabType, allPressData } = this.props;
-    const { subscriptionList } = subscriptionListStore.getState();
+    const subscriptionList = subscriptionListStore.getState();
 
     const pressData =
       pressTabType === 'all'

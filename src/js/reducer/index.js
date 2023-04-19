@@ -35,20 +35,16 @@ export const gridPageReducer = (state, action) => {
 export const subscriptionListReducer = (state, action) => {
   switch (action.type) {
     case 'addSubscription': {
-      const { subscriptionList } = state;
-
-      const newSubscriptionList = new Set(Array.from(subscriptionList));
+      const newSubscriptionList = new Set(Array.from(state));
       newSubscriptionList.add(action.payload);
 
-      return { ...state, subscriptionList: newSubscriptionList };
+      return newSubscriptionList;
     }
     case 'deleteSubscription': {
-      const { subscriptionList } = state;
-
-      const newSubscriptionList = new Set(Array.from(subscriptionList));
+      const newSubscriptionList = new Set(Array.from(state));
       newSubscriptionList.delete(action.payload);
 
-      return { ...state, subscriptionList: newSubscriptionList };
+      return newSubscriptionList;
     }
     default:
       return state;

@@ -1,4 +1,3 @@
-import { subscriptionListStore } from '../../store/index.js';
 import MainContentGrid from './mainContentGrid.js';
 
 export default class MainContentContainer {
@@ -15,7 +14,6 @@ export default class MainContentContainer {
 
   mount() {
     const { allPressData } = this.props;
-    const { subscriptionList } = subscriptionListStore.getState();
 
     this.allGrid = new MainContentGrid(this.$ele, { pressTabType: 'all', allPressData });
     this.subscribedGrid = new MainContentGrid(this.$ele, {
