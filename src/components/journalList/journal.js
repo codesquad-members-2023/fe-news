@@ -10,7 +10,7 @@ export class Journal {
     this.renderGrid();
   }
 
-  getGridItems() {
+  getGridHTML() {
     const showDiv = document.createElement("div");
     showDiv.classList.add("journal-item_show");
     this.gridElement.appendChild(showDiv);
@@ -39,7 +39,7 @@ export class Journal {
     return { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn };
   }
 
-  addDisplayEventToGrid(showDiv, hoverDiv) {
+  addHoverEventToGrid(showDiv, hoverDiv) {
     this.gridElement.addEventListener("mouseover", () => {
       showDiv.style.display = "none";
       hoverDiv.style.display = "flex";
@@ -65,8 +65,12 @@ export class Journal {
 
   renderGrid() {
     const { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn } =
-      this.getGridItems();
-    this.addDisplayEventToGrid(showDiv, hoverDiv);
+      this.getGridHTML();
+    this.addHoverEventToGrid(showDiv, hoverDiv);
     this.addSubEventToGrid(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv);
+  }
+
+  getDetailHTML() {
+    const detailDiv = "";
   }
 }
