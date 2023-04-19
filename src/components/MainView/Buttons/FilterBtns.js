@@ -1,7 +1,7 @@
 import { Component } from "../../../core/Component.js";
 
 export class FilterBtns extends Component {
-  templete() {
+  template() {
     const { btnState } = this.props;
     return `
       <div class="main__btn all-press ${

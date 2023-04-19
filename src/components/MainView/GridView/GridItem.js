@@ -16,7 +16,7 @@ export class GridItem extends Component {
     };
   }
 
-  templete() {
+  template() {
     const { currentIcon, btnText, btnIcon } = this._state;
     const itemNode =
       currentIcon === btnIcon

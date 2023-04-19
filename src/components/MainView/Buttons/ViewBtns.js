@@ -1,7 +1,7 @@
 import { Component } from "../../../core/Component.js";
 
 export class ViewBtns extends Component {
-  templete() {
+  template() {
     const { viewState } = this.props;
     const listColor = viewState === "list" ? "blue" : "gray";
     const gridColor = listColor === "blue" ? "gray" : "blue";

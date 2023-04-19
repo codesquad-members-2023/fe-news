@@ -1,7 +1,7 @@
 import { Component } from "../../../core/Component.js";
 
 export class ListViewHeader extends Component {
-  templete() {
+  template() {
     const {
       currentPageInCategory,
       currentCategory,

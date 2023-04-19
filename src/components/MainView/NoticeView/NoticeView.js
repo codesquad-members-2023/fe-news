@@ -1,7 +1,7 @@
 import { Component } from "../../../core/Component.js";
 
 export class NoticeView extends Component {
-  templete() {
+  template() {
     return `
       <div class="notice-view">
         <p class="notice-view__title">구독한 언론사가 없습니다</p>

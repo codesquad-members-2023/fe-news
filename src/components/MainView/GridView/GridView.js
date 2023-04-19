@@ -8,7 +8,7 @@ export class GridView extends Component {
     this._state = sortedItems;
   }
 
-  templete() {
+  template() {
     const { itemLimitPerPage } = this.props;
     const { allPressData, btnDir } = this._state;
 

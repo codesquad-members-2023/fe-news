@@ -14,7 +14,7 @@ export class TrendNews extends Component {
     };
   }
 
-  templete() {
+  template() {
     const { news } = this._state;
     return `
       <div class="trend-section left">

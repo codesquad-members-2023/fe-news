@@ -6,7 +6,7 @@ import { getDataBy } from "./api/api.js";
 import { suffleData } from "./utils/utils.js";
 
 export class App extends Component {
-  templete() {
+  template() {
     return `
       <div class="newsstand-header"></div>
       <div class="newsstand-trendnews"></div>

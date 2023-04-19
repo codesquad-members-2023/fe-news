@@ -23,7 +23,7 @@ export class ListView extends Component {
     this._state = this.getCurrentListViewState(this.props);
   }
 
-  templete() {
+  template() {
     return `
       <div class="list-view">
         <div class="view-page-btn left"><</div>
