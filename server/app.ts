@@ -57,7 +57,12 @@ app.get('/press', async (req, res) => {
 
 app.post('/press', async (req, res) => {
   const body = req.body;
+
   try {
+    const section = await SectionModel.findOne({ pressId: req.body.pid });
+    if (!section) {
+      return res.status(204).json({ message: 'cannot post' });
+    }
     const result = await PressModel.create({
       ...body,
     });

@@ -172,7 +172,20 @@ class PressListContents extends HTMLElement {
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
       },
       getCustomSection: async (page: number = 0) => {
-        const section = await getCustomSection({ page });
+        let section;
+        if (this.userStore.getState().subscribingPress.length === page) {
+          section = await getCustomSection({ page: 0 });
+          this.displayStore.dispatch({
+            type: 'SET_CURRENT_PAGE',
+            payload: {
+              view: 'list',
+              tab: 'custom',
+              currentPage: 0,
+            },
+          });
+        } else {
+          section = await getCustomSection({ page });
+        }
         section.articles.forEach((article: ArticleInterface) => {
           article.title = parseQuotationMarks(article.title);
         });
@@ -186,27 +199,19 @@ class PressListContents extends HTMLElement {
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
       },
       updateSection: async (page: number) => {
-        const section = await getSection({ page });
-        this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
+        await this.handleListView().getSection(page);
+        const section = this.sectionStore.getState();
         this.shadowRoot
           ?.querySelector('section.general .view.list list-view-element')
-          ?.setAttribute(
-            'section-data',
-            JSON.stringify(this.sectionStore.getState())
-          );
-
+          ?.setAttribute('section-data', JSON.stringify(section));
         this.handleSubscribe().addClickEvnetToListView();
       },
       updateCustomSection: async (page: number) => {
-        const section = await getCustomSection({ page });
-        this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
-
+        await this.handleListView().getCustomSection(page);
+        const section = this.sectionStore.getState();
         this.shadowRoot
           ?.querySelector('section.custom .view.list list-view-element')
-          ?.setAttribute(
-            'section-data',
-            JSON.stringify(this.sectionStore.getState())
-          );
+          ?.setAttribute('section-data', JSON.stringify(section));
         this.handleSubscribe().addClickEvnetToListView();
       },
       append: async (tab: 'general' | 'custom', page: number = 0) => {
