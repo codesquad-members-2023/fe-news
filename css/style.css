@@ -357,7 +357,7 @@ main {
   font-weight: 700;
   align-items: center;
   color: white;
-  background: #4362d0;
+  background: linear-gradient(90deg, #4362d0 0%, #7890e7 0%);
   pointer-events: none; }
 
 .main-list__nav {

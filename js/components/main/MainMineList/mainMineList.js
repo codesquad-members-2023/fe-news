@@ -2,6 +2,7 @@ import { createElement } from '../../../utils/dom.js';
 import { subscribe, getStoreState } from '../../../store/store.js';
 import { createMainListNewsElement } from '../MainAllLIst/mainAllList.js';
 import { mineListHeaderEventHandler } from './mainMineListEventHandler.js';
+import { animationStart } from '../progressBarAnimation.js';
 
 const createMainListElement = (subscribeData, index) => {
   if (subscribeData.length === 0) {
@@ -74,6 +75,7 @@ const render = ($main, index, content) => {
   );
   $main.replaceChild($list, $main.lastChild);
   scrollMove();
+  animationStart($main.querySelector('#current-category'));
 };
 
 const scrollMove = () => {

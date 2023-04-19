@@ -150,7 +150,7 @@ const renderNextPage = ($main, listPageData, viewOptionData) => {
       ),
     );
   $main.replaceChild($mainList, $main.lastChild);
-  animationStart();
+  animationStart($mainList.querySelector('#current-category'));
 };
 
 const checkSubscribe = (curMediaId) => {
