@@ -1,8 +1,9 @@
-import { domUtils, dataUtils } from '../../utils/index.js';
+import { domUtils, dataUtils, validatorUtils } from '../../utils/index.js';
 import { tabStore, gridPageStore } from '../../store/index.js';
 import PressGrid from './pressGrid.js';
 
 const { $ } = domUtils;
+const { isActiveTab, isFirstPage, isLastPage } = validatorUtils;
 
 export default class MainContentGrid {
   #gridItemCount = 24;
@@ -57,23 +58,16 @@ export default class MainContentGrid {
   }
 
   initDisplay() {
-    const { pressTabType } = this.props;
-    const { activePressTab, activeShowTab } = tabStore.getState();
-    const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
-
-    const $beforeBtn = $({ selector: '.main-content__grid-before-btn', parent: this.$ele });
-    const $nextBtn = $({ selector: '.main-content__grid-next-btn', parent: this.$ele });
-
-    if (activeShowTab !== 'grid' || pressTabType !== activePressTab) this.$ele.classList.add('display-none');
-    if (currentPage === 0) $beforeBtn.classList.add('hidden');
-    if (currentPage === totalPages - 1) $nextBtn.classList.add('hidden');
+    this.setDisplayElement();
+    this.setDisplayBtn();
   }
 
   setDisplayElement() {
     const { pressTabType } = this.props;
     const { activePressTab, activeShowTab } = tabStore.getState();
 
-    if (activeShowTab !== 'grid' || pressTabType !== activePressTab) this.$ele.classList.add('display-none');
+    if (!isActiveTab({ pressTabType, showTabType: 'grid', activePressTab, activeShowTab }))
+      this.$ele.classList.add('display-none');
     else this.$ele.classList.remove('display-none');
   }
 
@@ -84,10 +78,10 @@ export default class MainContentGrid {
     const $beforeBtn = $({ selector: '.main-content__grid-before-btn', parent: this.$ele });
     const $nextBtn = $({ selector: '.main-content__grid-next-btn', parent: this.$ele });
 
-    if (currentPage === 0) $beforeBtn.classList.add('hidden');
+    if (isFirstPage(currentPage)) $beforeBtn.classList.add('hidden');
     else $beforeBtn.classList.remove('hidden');
 
-    if (currentPage === totalPages - 1) $nextBtn.classList.add('hidden');
+    if (isLastPage(currentPage, totalPages)) $nextBtn.classList.add('hidden');
     else $nextBtn.classList.remove('hidden');
   }
 

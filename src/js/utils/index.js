@@ -37,5 +37,10 @@ export const validatorUtils = {
     if (objectType === 'Map') {
       return obj.has(value);
     }
-  }
+  },
+
+  isActiveTab: ({ pressTabType, showTabType, activePressTab, activeShowTab }) =>
+    pressTabType === activePressTab && showTabType === activeShowTab,
+  isFirstPage: (currentPage) => currentPage === 0,
+  isLastPage: (currentPage, totalPages) => currentPage === totalPages - 1
 };
