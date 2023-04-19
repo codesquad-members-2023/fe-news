@@ -9,18 +9,18 @@ class PressListView extends HTMLElement {
     this.innerHTML = `
       <div class="main__list-view">
         <div class="progress-bar">
-          ${this.createProgressBar()}
+          ${this.#createProgressBar()}
         </div>
         <div class="press__news">
           <div class="press__title">
-            ${this.createPressTitle(this.pressesData)}
+            ${this.#createPressTitle(this.pressesData)}
           </div>
           <div class="news">
             <div class="news__main">
-              ${this.createMainNews(this.pressesData)}
+              ${this.#createMainNews(this.pressesData)}
             </div>
             <div class="news__sub">
-              ${this.createSubNews(this.pressesData)}
+              ${this.#createSubNews(this.pressesData)}
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@ class PressListView extends HTMLElement {
     `
   }
 
-  createProgressBar() {
+  #createProgressBar() {
     const categories = [
       '종합/경제',
       '방송/통신',
@@ -46,7 +46,7 @@ class PressListView extends HTMLElement {
     return categoryHTML
   }
 
-  createPressTitle(data) {
+  #createPressTitle(data) {
     const subscriptionImage = data.isSubscription
       ? './asset/unsubscribeButton.svg'
       : './asset/SubscribeButton.svg'
@@ -61,14 +61,14 @@ class PressListView extends HTMLElement {
     `
   }
 
-  createMainNews(data) {
+  #createMainNews(data) {
     return `
       <img src="${data.main_news_image}" alt="main_news_image" />
       <span class="body-md">${data.main_news_title}</span>
     `
   }
 
-  createSubNews(data) {
+  #createSubNews(data) {
     const subNewsTitles = data[0].sub_news_titles
       .map(title => `<span class="body-md">${title}</span>`)
       .join('')

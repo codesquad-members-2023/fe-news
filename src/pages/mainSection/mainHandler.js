@@ -13,7 +13,7 @@ class MainHandler {
   constructor(url) {
     this.#fetchData(url)
     this.#currentViewType = 'grid'
-    this.#currentPage = 1
+    this.#currentPage = 0
     this.#subscriptionList = new Set()
   }
 
@@ -61,15 +61,14 @@ class MainHandler {
     })
   }
 
-  #getViewData(data) {
+  #getViewData(currentViewData) {
     if (this.#currentViewType === 'grid') {
       const PRESSES_PER_PAGE = 24
 
-      const endPress = PRESSES_PER_PAGE * this.#currentPage
+      const endPress = PRESSES_PER_PAGE * (this.#currentPage + 1)
       const startPress = endPress - PRESSES_PER_PAGE
 
-      const slicedData = data.slice(startPress, endPress)
-
+      const slicedData = currentViewData.slice(startPress, endPress)
       const gridViewData = slicedData.map(press => {
         const isSubscription = this.#subscriptionList.has(press.name)
         press.isSubscription = isSubscription
@@ -81,7 +80,7 @@ class MainHandler {
     }
 
     if (this.#currentViewType === 'list') {
-      const listViewData = data[this.#currentPage]
+      const listViewData = currentViewData[this.#currentPage]
 
       return listViewData
     }
@@ -187,14 +186,13 @@ class MainHandler {
 
     // reset page
     if (this.#currentViewType === 'grid') {
-      this.#currentPage = 1
+      this.#currentPage = 0
     }
 
     if (this.#currentViewType === 'list') {
       this.#currentPage = 0
     }
 
-    // this.#currentPage = 1
     this.#renderView(this.#currentViewType)
   }
 }

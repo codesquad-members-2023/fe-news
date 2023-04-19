@@ -37,6 +37,7 @@ class PressesGridView {
     const subscribeBtnCell = document.createElement('ns-main-grid-cell')
     subscribeBtnCell.classList.add('subscribe-btn', 'subscribe-grid', 'none')
     subscribeBtnCell.pressesData = {
+      // TODO: img 경로 하드 코딩 하지 않기
       logoId: data.isSubscription
         ? './asset/unsubscribeButton.svg'
         : './asset/SubscribeButton.svg',

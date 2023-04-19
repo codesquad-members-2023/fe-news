@@ -9,14 +9,14 @@ class MainView {
   #directionButton
   #currentView
 
-  constructor(data) {
+  constructor(currentViewData) {
     this.app = getElement('.app')
     this.#mainViewContainer = createNode('div')
     this.#mainViewContainer.classList.add('main-view')
 
     this.#createMainViewButtons()
+    this.#createGridView(currentViewData)
     this.#createUnsubscribingModal()
-    this.#createGridView(data)
     this.app.appendChild(this.#mainViewContainer)
   }
 
