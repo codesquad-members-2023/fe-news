@@ -1,16 +1,19 @@
 import createEl from "../../utils/util.js";
 import { CONSTANTS } from '../../core/constants.js';
 import { ViewStore } from "../../stores/viewStore.js";
+import { PageStore } from "../../stores/pressPageStore.js";
 
 class SortButton {
   #viewStore;
+  #pageStore;
   constructor() {
     this.#viewStore = ViewStore;
+    this.#pageStore = PageStore;
     this.sortButtons = createEl('div', 'sort-buttons');
   }
 
   render() {
-    const { press, view } = this.#viewStore.getState()
+    const { press, view } = this.#viewStore.getState();
     const pressType = Object.keys(press);
     const viewType = Object.keys(view);
 
@@ -71,13 +74,15 @@ class SortButton {
             press: this.#viewStore.getState().press,
           });
         }
-
         this.#viewStore.subscribe(reRender);
         const isGrid = currentTarget.className.includes('grid');
         const clickTargetName = isGrid? 'grid' : 'list';
         this.#viewStore.dispatch({
           type: 'CHANGE_VIEW',
           payload: clickTargetName,
+        });
+        this.#pageStore.dispatch({
+          type: 'RESET_PAGE',
         });
       })
     })

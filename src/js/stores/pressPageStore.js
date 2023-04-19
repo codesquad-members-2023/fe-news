@@ -59,20 +59,22 @@ const categoryMap = media => {
 }
 
 const movePrevPage = (page, pressData) => {
+  const LAST_CATEGORY = pressData.length - 1;
   page.pageIndex--;
   if(page.pageIndex < 0) {
     page.categoryIndex--;
-    if(page.categoryIndex < 0) page.categoryIndex = 6;
+    if(page.categoryIndex < 0) page.categoryIndex = LAST_CATEGORY;
     page.pageIndex = pressData[page.categoryIndex][1].length - 1;
   }
   return { page };
 }
 
 const moveNextPage = (page, pressData) => {
+  const LAST_CATEGORY = pressData.length - 1;
   page.pageIndex++;
   if(page.pageIndex === pressData[page.categoryIndex][1].length - 1) {
     page.categoryIndex++;
-    if(page.categoryIndex > 6) page.categoryIndex = 0;
+    if(page.categoryIndex > LAST_CATEGORY) page.categoryIndex = 0;
     page.pageIndex = 0;
   }
   return { page };

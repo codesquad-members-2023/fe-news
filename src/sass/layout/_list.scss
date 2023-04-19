@@ -116,8 +116,15 @@
 }
 
 .current {
+  width: 166px;
   padding: 0 16px;
-  @include font($bodySM, $medium);
+  @include font($bodySM, $bold);
   background-color: $primary;
   color: $white;
+  display: flex;
+  justify-content: space-between;
+
+  div > span:nth-child(2) {
+    color: rgba(255, 255, 255, 0.7);
+  }
 }

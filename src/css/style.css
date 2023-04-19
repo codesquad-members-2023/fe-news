@@ -539,9 +539,15 @@ main .view-buttons .grid-active {
 }
 
 .current {
+  width: 166px;
   padding: 0 16px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   background-color: #4362D0;
   color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+}
+.current div > span:nth-child(2) {
+  color: rgba(255, 255, 255, 0.7);
 }

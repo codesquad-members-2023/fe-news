@@ -9,7 +9,9 @@ class ListView {
   #subscribeStore;
   #pageStore;
   listContainer;
-  constructor(pressData) {
+  movePages;
+  constructor(pressData, delayTime) {
+    this.DELAY_TIME = delayTime;
     this.#viewStore = ViewStore;
     this.#subscribeStore = SubscribeStore;
     this.#pageStore = PageStore;
@@ -17,6 +19,7 @@ class ListView {
       type: 'GET_PRESSDATA',
       payload: pressData,
     });
+    this.rafState = false;
   }
 
   setTemplate() {
@@ -43,14 +46,14 @@ class ListView {
   #reRender() {
     const { press, view } = this.#viewStore.getState();
     if (press['all'] && view['list']) {
+      this.rafState = true;
       this.listContainer.classList.remove('hidden');
       this.listContainer.querySelector('.category-area').outerHTML =
         this.getCategory();
       this.listContainer.querySelector('.content-area').outerHTML =
         this.getPressBox.bind(this)();
     }
-    if (press['all'] && view['grid'])
-      this.listContainer.classList.add('hidden');
+    if (press['all'] && view['grid']) this.listContainer.classList.add('hidden');
     // if(press['subscribed'] && view['list'])
     // if(press['subscribed'] && view['grid'])
   }
@@ -60,9 +63,8 @@ class ListView {
       <ul class="list-category">
         ${page.pressData.reduce((list, category, index) => {
           const isCurrentCategory = page.categoryIndex === index;
-          list += `<li${isCurrentCategory ? ' class="current"' : ``}>${
-            CATEGORY[category[0]]
-          }</li>`;
+          list += `<li${isCurrentCategory ? ' class="current"' : ``}><a href="#">${CATEGORY[category[0]]}</a>${isCurrentCategory? `<div><span>${page.pageIndex + 1}</span>
+          <span>/${page.pressData[page.categoryIndex][1].length}</span></div>` : ``}</li>`;
           return list;
         }, ``)}
       </ul>
@@ -114,6 +116,7 @@ class ListView {
     const isPrevBtn = target.className === 'prev-button';
     const isNextBtn = target.className === 'next-button';
     if (!isContentArea || !(isPrevBtn || isNextBtn)) return;
+
     if (isPrevBtn) this.#pageStore.dispatch({ type: 'CLICK_PREV' });
     if (isNextBtn) this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
   }
@@ -121,7 +124,8 @@ class ListView {
   clickCategory({ target }) {
     const isCategory = target.closest('.list-category');
     const isCurrent = target.className === 'current';
-    if(!isCategory || isCurrent) return;
+    const isLI = target.closest('li');
+    if(!isCategory || isCurrent || !isLI) return;
 
     const categories = Object.values(CATEGORY);
     const targetCategory = target.textContent;
@@ -131,6 +135,19 @@ class ListView {
       payload: targetCategoryIndex,
     });
   }
+
+  // autoMovePages() {
+  //   let lastTime = 0;
+  //   this.movePages = currentTime => {
+  //     let deltaTime = currentTime - lastTime;
+  //     // if (deltaTime > this.DELAY_TIME) {
+  //       this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
+  //       lastTime = currentTime;
+  //     }
+  //     if (this.rafState) requestAnimationFrame(this.movePages);
+  //   }
+  //   requestAnimationFrame(this.movePages);
+  // }
 }
 
 export default ListView;
