@@ -212,7 +212,7 @@ class PressListContents extends HTMLElement {
         this.shadowRoot
           ?.querySelector('section.custom .view.list list-view-element')
           ?.setAttribute('section-data', JSON.stringify(section));
-        this.handleSubscribe().addClickEvnetToListView();
+        this.handleSubscribe().addClickEvnetToListView('custom');
       },
       append: async (tab: 'general' | 'custom', page: number = 0) => {
         let section;
@@ -242,7 +242,7 @@ class PressListContents extends HTMLElement {
 
         this.handlePageController().appendController(tab, 'list');
         this.handlePageController().movePage(tab, 'list');
-        this.handleSubscribe().addClickEvnetToListView();
+        this.handleSubscribe().addClickEvnetToListView(tab);
       },
     };
   }
@@ -440,12 +440,22 @@ class PressListContents extends HTMLElement {
           value: 'true',
         });
       },
-      addClickEvnetToGridView: (tab: 'general' | 'custom' = 'general') => {
-        const gridView = this.shadowRoot
-          ?.querySelector(`section.${tab}`)
+
+      updateCustomGridViewData: () => {
+        this.handleSubscribe().getCustomPressList();
+        const customPressList = this.pressStore.getState().customPressList;
+        const gridViewContainerElement = this.shadowRoot
+          ?.querySelector(`section.custom`)
           ?.querySelector('.view.grid')
-          ?.querySelector('grid-view-container-element')
-          ?.shadowRoot?.querySelectorAll('grid-view-element');
+          ?.querySelector('grid-view-container-element');
+        setProperty({
+          target: gridViewContainerElement,
+          name: 'press-list',
+          value: JSON.stringify(customPressList),
+        });
+        this.handleSubscribe().addClickEvnetToGridView('custom');
+      },
+      addClickEvnetToGridView: (tab: 'general' | 'custom' = 'general') => {
         const handleClick = (e: Event) => {
           const target = e.target as HTMLElement;
           const gridViewItem = target.closest('grid-view-item-element');
@@ -464,42 +474,32 @@ class PressListContents extends HTMLElement {
               });
           this.handleSubscribe().updateCustomGridViewData();
         };
-
+        const gridView = this.shadowRoot
+          ?.querySelector(`section.${tab}`)
+          ?.querySelector('.view.grid')
+          ?.querySelector('grid-view-container-element')
+          ?.shadowRoot?.querySelectorAll('grid-view-element');
         gridView?.forEach((gridViewElement) => {
           gridViewElement.shadowRoot?.addEventListener('click', (e) =>
             handleClick(e)
           );
         });
       },
-      updateCustomGridViewData: () => {
-        this.handleSubscribe().getCustomPressList();
-        const customPressList = this.pressStore.getState().customPressList;
-        const gridViewContainerElement = this.shadowRoot
-          ?.querySelector(`section.custom`)
-          ?.querySelector('.view.grid')
-          ?.querySelector('grid-view-container-element');
-        setProperty({
-          target: gridViewContainerElement,
-          name: 'press-list',
-          value: JSON.stringify(customPressList),
-        });
-        this.handleSubscribe().addClickEvnetToGridView('custom');
-      },
-      addClickEvnetToListView: () => {
+      addClickEvnetToListView: (tab: 'general' | 'custom' = 'general') => {
         const handleClick = (e: Event) => {
           const target = e.target as HTMLElement;
           const id = target?.getAttribute('id');
           if (!id) return;
-          const subscribingPress = storeUser.getState().subscribingPress;
-          const isSubscribed = subscribingPress.includes(id);
+          const isSubscribed = target.getAttribute('icon') === 'close';
           const listViewItemElement = document
             .querySelector('news-element')
             ?.shadowRoot?.querySelector('press-list-element')
             ?.shadowRoot?.querySelector('presslist-contents-element')
-            ?.shadowRoot?.querySelector('section.show')
-            ?.querySelector('.view.show')
+            ?.shadowRoot?.querySelector(`section.${tab}`)
+            ?.querySelector('.view.list')
             ?.querySelector('list-view-element')
             ?.shadowRoot?.querySelector('list-view-item-element');
+          console.log(listViewItemElement);
 
           if (!isSubscribed) {
             this.handleSubscribe().subscribe({
@@ -515,7 +515,7 @@ class PressListContents extends HTMLElement {
           this.handleSubscribe().updateCustomGridViewData();
         };
         const listView = this.shadowRoot
-          ?.querySelector('list-view-element')
+          ?.querySelector(`section.${tab} .view.list list-view-element`)
           ?.shadowRoot?.querySelector('list-view-item-element')
           ?.shadowRoot?.querySelector('.btn-container');
 
