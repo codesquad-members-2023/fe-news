@@ -92,13 +92,13 @@ class PressListContents extends HTMLElement {
 
   handleGridView() {
     return {
-      getCurrentPressList: async (tab: 'general' | 'custom' = 'general') => {
+      getCurrentPressList: async () => {
         const pressList = await getPress();
         this.displayStore.dispatch({
           type: 'SET_TOTAL_PAGE',
           payload: {
             view: 'grid',
-            tab,
+            tab: 'general',
             totalPage: Math.ceil(pressList.length / 24),
           },
         });
@@ -107,14 +107,33 @@ class PressListContents extends HTMLElement {
           payload: { pressList },
         });
       },
-
+      getCurrentCustomPressList: async () => {
+        const pressList = await getPress();
+        const customPressList = pressList.filter((press: any) =>
+          this.userStore.getState().subscribingPress.includes(press.pid)
+        );
+        this.displayStore.dispatch({
+          type: 'SET_TOTAL_PAGE',
+          payload: {
+            view: 'grid',
+            tab: 'custom',
+            totalPage: Math.ceil(customPressList.length / 24),
+          },
+        });
+        this.pressStore.dispatch({
+          type: 'SET_CUSTOM_PRESS_LIST',
+          payload: { pressList: customPressList },
+        });
+      },
       appendGridViewContainer: async (view: 'general' | 'custom') => {
-        await this.handleGridView().getCurrentPressList();
-        let pressList: any = this.pressStore.getState().pressList;
+        let pressList;
+        if (view === 'general') {
+          await this.handleGridView().getCurrentPressList();
+          pressList = this.pressStore.getState().pressList;
+        }
         if (view === 'custom') {
-          pressList = pressList.filter((press: any) =>
-            this.userStore.getState().subscribingPress.includes(press.pid)
-          );
+          await this.handleGridView().getCurrentCustomPressList();
+          pressList = this.pressStore.getState().customPressList;
         }
         const gridViewContainer = create({
           tagName: 'grid-view-container-element',
@@ -198,7 +217,7 @@ class PressListContents extends HTMLElement {
           ?.querySelector('section.general')
           ?.querySelector('.view.list')
           ?.append(controller);
-        this.handlePageController('list');
+        this.handlePageController('general', 'list');
       },
     };
   }
@@ -263,6 +282,7 @@ class PressListContents extends HTMLElement {
       const currentPage =
         this.displayStore.getState().page[view][tab].currentPage;
       const totalPage = this.displayStore.getState().page[view][tab].totalPage;
+      console.log(this.displayStore.getState());
       const isLastPage = currentPage === totalPage - 1;
       const isFirstPage = currentPage === 0;
 

@@ -31,9 +31,9 @@ class GridViewContainer extends HTMLElement {
 
     const pressListStr = getProperty({ target: this, name: 'press-list' });
     const pressList = pressListStr ? JSON.parse(pressListStr) : [];
-    const currentTab = this.displayStore.getState().currentTab;
-    const maxPage =
-      this.displayStore.getState().page.grid[currentTab].totalPage;
+
+    const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);
+
     const slicedPressList = Array.from({ length: maxPage }).map(
       (v: any, i: number) =>
         sliceByPage({
@@ -70,6 +70,7 @@ class GridViewContainer extends HTMLElement {
   }
 
   render(pressList: any) {
+    console.log(pressList);
     const template = `
     <div class="wrap">
       ${

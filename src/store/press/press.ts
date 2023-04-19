@@ -3,12 +3,13 @@ import { PressListType } from './pressType';
 
 const initialState: PressListType = {
   pressList: [],
+  customPressList: [],
 };
 
 interface props {
   state: PressListType;
 }
-interface setPressListProps {
+interface setPressListProps extends props {
   payload: PressListType;
 }
 interface subscribeProps extends props {
@@ -18,9 +19,18 @@ interface unsubscribeProps extends props {
   payload: string;
 }
 
-const setPressList = ({ payload }: setPressListProps) => {
+const setPressList = ({ state, payload }: setPressListProps) => {
   return {
+    ...state,
     pressList: payload.pressList,
+  };
+};
+
+const setCustomPressList = ({ state, payload }: setPressListProps) => {
+  console.log(payload);
+  return {
+    ...state,
+    customPressList: payload.pressList,
   };
 };
 
@@ -46,7 +56,9 @@ const reducer: ReducerType<PressListType> = (
 ): PressListType => {
   switch (action.type) {
     case 'SET_PRESS_LIST':
-      return setPressList({ payload: action.payload });
+      return setPressList({ state, payload: action.payload });
+    case 'SET_CUSTOM_PRESS_LIST':
+      return setCustomPressList({ state, payload: action.payload });
     case 'SUBSCRIBE':
       return subscribe({ state, payload: action.payload });
     case 'UNSUBSCRIBE':

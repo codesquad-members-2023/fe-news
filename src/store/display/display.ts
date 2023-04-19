@@ -32,8 +32,14 @@ interface changePageNumberProps extends props {
   type: 'NEXT_PAGE' | 'PREV_PAGE' | 'RESET_PAGE';
 }
 
-interface setTotalPageProps extends props {
+interface setTotlaPagePayload {
+  view: 'grid' | 'view';
+  tab: 'general' | 'custom';
   totalPage: number;
+}
+
+interface setTotalPageProps extends props {
+  payload: setTotlaPagePayload;
 }
 
 const changeTab = ({ state, payload }: changeTabProps) => {
@@ -63,10 +69,8 @@ const changePageNumber = ({ state, type }: changePageNumberProps) => {
   return state;
 };
 
-const setTotalPage = ({ state, totalPage }: setTotalPageProps) => {
-  const currentView = state.currentView;
-  const currentTab = state.currentTab;
-  state.page[currentView][currentTab].totalPage = totalPage;
+const setTotalPage = ({ state, payload }: setTotalPageProps) => {
+  state.page[payload.view][payload.tab].totalPage = payload.totalPage;
   return state;
 };
 
@@ -86,7 +90,7 @@ const reducer: ReducerType<DisplayType> = (
     case 'RESET_PAGE':
       return changePageNumber({ state, type: action.type });
     case 'SET_TOTAL_PAGE':
-      return setTotalPage({ state, totalPage: action.payload.totalPage });
+      return setTotalPage({ state, payload: action.payload });
     default:
       return state;
   }
