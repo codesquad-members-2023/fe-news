@@ -5,6 +5,8 @@ import { mineListHeaderEventHandler } from './mainMineListEventHandler.js';
 
 const createMainListElement = (subscribeData, index) => {
   if (subscribeData.length === 0) {
+    document.querySelector('.left-button').classList.add('none');
+    document.querySelector('.right-button').classList.add('none');
     const $empty = createElement('section', {
       class: 'empty',
     });
@@ -18,6 +20,8 @@ const createMainListElement = (subscribeData, index) => {
     </div>`;
     return $empty;
   } else {
+    document.querySelector('.left-button').classList.remove('none');
+    document.querySelector('.right-button').classList.remove('none');
     const $mainList = createElement('section', {
       class: 'main-list',
     });

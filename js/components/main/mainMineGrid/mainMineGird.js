@@ -7,6 +7,8 @@ import { createElement } from '../../../utils/dom.js';
 
 const createMainGridElement = (items) => {
   if (items.length === 0) {
+    document.querySelector('.left-button').classList.add('none');
+    document.querySelector('.right-button').classList.add('none');
     const $empty = createElement('section', {
       class: 'empty',
     });
@@ -21,6 +23,13 @@ const createMainGridElement = (items) => {
     return $empty;
   } else {
     const pageNum = Math.ceil(items.length / 24);
+    if (pageNum === 1) {
+      document.querySelector('.left-button').classList.add('none');
+      document.querySelector('.right-button').classList.add('none');
+    } else {
+      document.querySelector('.left-button').classList.add('none');
+      document.querySelector('.right-button').classList.remove('none');
+    }
     const $mainGrid = createElement('section', {
       class: 'main-grid',
     });

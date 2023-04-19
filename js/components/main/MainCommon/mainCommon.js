@@ -53,9 +53,10 @@ const listViewButtonRender = ($mainButtons, content) => {
   // 1. gird -> list 무조건 두개다 none 없어야함.
   // 2. list -> grid 첫번째 거 무조건 none 해야함. 얘는 그냥 됨. grid에서 구현해놓음
   // 왼쪽 버튼에 넣기!
-  if (content.viewOption.gridOrList === 'grid')
+  if (content.viewOption.gridOrList === 'grid') {
     $mainButtons[0].classList.add('none');
-  else if (content.viewOption.gridOrList === 'list')
+    $mainButtons[1].classList.remove('none');
+  } else if (content.viewOption.gridOrList === 'list')
     $mainButtons.forEach(($button) => $button.classList.remove('none'));
 };
 

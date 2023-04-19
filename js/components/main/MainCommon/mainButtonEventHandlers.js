@@ -12,6 +12,10 @@ export const pageControlBtnClickEventHandler = ({ target, currentTarget }) => {
   const $targetButton = target.closest('a');
   if (!$targetButton) return;
   const $mainSection = currentTarget.parentNode.lastChild;
+  const $leftButton = $mainSection.parentNode.querySelector('.left-button');
+  const $rightButton = $mainSection.parentNode.querySelector('.right-button');
+  const $buttons = [$leftButton, $rightButton];
+  console.log($buttons);
   const viewOptionData = getStoreState('viewOptionData').viewOption;
   // TODO : 전체 언론사 grid일때, list일때, 다 다른 event를 부여해야함.
   // Case 문으로 좀 빼야할듯...
@@ -22,6 +26,7 @@ export const pageControlBtnClickEventHandler = ({ target, currentTarget }) => {
       direction,
       $mainSection,
       $targetButton,
+      $buttons,
     );
   } else if ($targetButton.classList.contains('right-button')) {
     const direction = 'right';
@@ -30,6 +35,7 @@ export const pageControlBtnClickEventHandler = ({ target, currentTarget }) => {
       direction,
       $mainSection,
       $targetButton,
+      $buttons,
     );
   }
 };
@@ -38,10 +44,6 @@ export const headerViewChangeBtnClickEventHandler = ({
   target,
   currentTarget,
 }) => {
-  // TODO : 그리드 버튼, 리스트 버튼에 dispatch 다르게 해줘야함!!
-  // 이 이벤트 핸들러는 이벤트 헨들러 js 파일로 옮기기!
-  // 아마 case 문으로 싹 바꿔서 해야할듯!
-
   const $clickedBtn = target.closest('a');
   const [$listBtn, $gridBtn] = currentTarget.querySelectorAll('i');
 
@@ -83,18 +85,25 @@ export const headerViewChangeBtnClickEventHandler = ({
   }
 };
 
+// TODO :객체로 전달하기.
 const ButtonClickEventHandler = (
   viewOptionData,
   direction,
   $mainSection,
   $targetButton,
+  $buttons,
 ) => {
   if (direction === 'left')
-    leftSwitchCase(viewOptionData, $mainSection, $targetButton);
-  else rightSwitchCase(viewOptionData, $mainSection, $targetButton);
+    leftSwitchCase(viewOptionData, $mainSection, $targetButton, $buttons);
+  else rightSwitchCase(viewOptionData, $mainSection, $targetButton, $buttons);
 };
 
-const leftSwitchCase = (viewOptionData, $mainSection, $targetButton) => {
+const leftSwitchCase = (
+  viewOptionData,
+  $mainSection,
+  $targetButton,
+  $buttons,
+) => {
   const allOrMine = viewOptionData.allOrMine;
   const gridOrList = viewOptionData.gridOrList;
   switch (true) {
@@ -105,6 +114,7 @@ const leftSwitchCase = (viewOptionData, $mainSection, $targetButton) => {
       dispatch(displayActionCreator.listLeftBtnClick());
       break;
     case allOrMine === 'mine' && gridOrList === 'grid':
+      mineGridButtonClickHandler('left', $mainSection, $buttons);
       break;
     case allOrMine === 'mine' && gridOrList === 'list':
       dispatch(displayActionCreator.mineListLeftBtnClick());
@@ -112,7 +122,12 @@ const leftSwitchCase = (viewOptionData, $mainSection, $targetButton) => {
   }
 };
 
-const rightSwitchCase = (viewOptionData, $mainSection, $targetButton) => {
+const rightSwitchCase = (
+  viewOptionData,
+  $mainSection,
+  $targetButton,
+  $buttons,
+) => {
   const allOrMine = viewOptionData.allOrMine;
   const gridOrList = viewOptionData.gridOrList;
   switch (true) {
@@ -123,11 +138,50 @@ const rightSwitchCase = (viewOptionData, $mainSection, $targetButton) => {
       dispatch(displayActionCreator.listRightBtnClick());
       break;
     case allOrMine === 'mine' && gridOrList === 'grid':
+      mineGridButtonClickHandler('right', $mainSection, $buttons);
       break;
     case allOrMine === 'mine' && gridOrList === 'list':
       dispatch(displayActionCreator.mineListRightBtnClick());
       break;
   }
+};
+
+const mineGridButtonClickHandler = (direction, $mainSection, $buttons) => {
+  const $pages = $mainSection.querySelectorAll('.main-grid__page');
+  const directionNum = direction === 'left' ? -1 : 1;
+  const $currentPage = $mainSection.querySelector('.grid');
+  const currentPageNum = Array.from($pages).indexOf($currentPage);
+  const targetPageNum = currentPageNum + directionNum;
+  const $targetPage = $pages[targetPageNum];
+  $currentPage.classList.replace('grid', 'none');
+  $targetPage.classList.replace('none', 'grid');
+  console.log($buttons);
+  if (targetPageNum === 0) {
+    btnCreate($buttons[1]);
+    leftBtnDelete($buttons);
+  } else if (targetPageNum === $pages.length - 1) {
+    btnCreate($buttons[0]);
+    rightBtnDelete($buttons);
+  } else {
+    btnCreate($buttons[0]);
+    btnCreate($buttons[1]);
+  }
+  // 1. 그리드 페이지 none, grid 해주기
+  // 2. 버튼 page 번호에 맞게 삭제.
+};
+
+const leftBtnDelete = ($buttons) => {
+  const $leftButton = $buttons[0];
+  $leftButton.classList.add('none');
+};
+
+const rightBtnDelete = ($buttons) => {
+  const $rightButton = $buttons[1];
+  $rightButton.classList.add('none');
+};
+
+const btnCreate = ($button) => {
+  $button.classList.remove('none');
 };
 
 const gridButtonClickHandler = (direction, $mainSection, $targetButton) => {

@@ -36,7 +36,8 @@ body {
   height: 100%;
   margin: 0;
   place-items: center;
-  min-height: 100vh; }
+  min-height: 100vh;
+  overflow-x: hidden; }
 
 #root {
   width: 930px; }
