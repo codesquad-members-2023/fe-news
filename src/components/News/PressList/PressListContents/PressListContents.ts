@@ -13,12 +13,13 @@ import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
 import { getPress, getSection } from '@apis/news';
-import { subscribe, unsubscribe } from '@apis/user';
+import { getUser, subscribe, unsubscribe } from '@apis/user';
 import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionType } from '@store/section/sectionType';
 import { PressListType } from '@store/press/pressType';
 import { isFirstPage, sliceByPage } from '@utils/common';
 import { TEMP_ID } from '@constant/index';
+import { UserType } from '@store/user/userType';
 
 interface PressListContents {
   icon?: string | null;
@@ -32,6 +33,7 @@ class PressListContents extends HTMLElement {
   wrap: HTMLElement | null = null;
   displayStore: StroeType<DisplayType>;
   sectionStore: StroeType<SectionType>;
+  userStore: StroeType<UserType>;
   pressStore: StroeType<PressListType>;
   pressList: any[] = [];
   section: any;
@@ -43,6 +45,7 @@ class PressListContents extends HTMLElement {
     this.displayStore = store.display;
     this.sectionStore = store.section;
     this.pressStore = store.press;
+    this.userStore = store.user;
   }
 
   render() {
@@ -77,20 +80,24 @@ class PressListContents extends HTMLElement {
       style: list(),
     });
 
+    const userData = await getUser({ id: TEMP_ID });
+    this.userStore.dispatch({ type: 'SET_USER', payload: userData[0] });
+
     this.handleDisplay();
     this.handleGridView().appendGridViewContainer();
+    console.log(this.pressStore.getState());
     this.handleListView().appendListViewContainer();
   }
 
   handleGridView() {
     return {
-      getCurrentPressList: async (page: number) => {
+      getCurrentPressList: async (tab: 'general' | 'custom' = 'general') => {
         const pressList = await getPress();
         this.displayStore.dispatch({
           type: 'SET_TOTAL_PAGE',
           payload: {
             view: 'grid',
-            tab: 'general',
+            tab,
             totalPage: Math.ceil(pressList.length / 24),
           },
         });
@@ -98,9 +105,10 @@ class PressListContents extends HTMLElement {
           type: 'SET_PRESS_LIST',
           payload: { pressList },
         });
+        console.log(this.pressStore.getState());
       },
 
-      createGridViewContainer: (page: number) => {
+      createGridViewContainer: (page: number, pressList: any) => {
         const gridViewContainer = create({
           tagName: 'div',
           classList: ['grid-view-container'],
@@ -110,16 +118,14 @@ class PressListContents extends HTMLElement {
         if (isFirstPage(page)) {
           gridViewContainer.classList.add('show');
         }
-        const pressList: any = this.pressStore.getState().pressList;
-        const currentPressList = sliceByPage({
+        const slicedPressList = sliceByPage({
           page,
           maxItemNum: 24,
           items: pressList,
         });
-
         const template = `
           <grid-view-element press-list='${JSON.stringify(
-            currentPressList
+            slicedPressList
           )}'></grid-view-element>
         `;
         add({
@@ -129,12 +135,13 @@ class PressListContents extends HTMLElement {
         return gridViewContainer;
       },
       appendGridViewContainer: async () => {
-        await this.handleGridView().getCurrentPressList(0);
+        await this.handleGridView().getCurrentPressList();
         const maxPage =
           this.displayStore.getState().page.grid.general.totalPage;
+        const pressList: any = this.pressStore.getState().pressList;
         Array.from({ length: maxPage }).forEach((_, i) => {
           const gridViewContainer =
-            this.handleGridView().createGridViewContainer(i);
+            this.handleGridView().createGridViewContainer(i, pressList);
           this.wrap
             ?.querySelector('section.general .view.grid')
             ?.append(gridViewContainer);
@@ -149,6 +156,29 @@ class PressListContents extends HTMLElement {
           ?.querySelector('.view.grid')
           ?.prepend(controller);
         this.handlePageController('grid');
+        this.handleGridView().appendGridViewContainerForCustomTab();
+      },
+      appendGridViewContainerForCustomTab: () => {
+        const subscribingPress = this.userStore.getState().subscribingPress;
+        const pressList = this.pressStore.getState();
+
+        const customPressList = this.pressStore
+          .getState()
+          .pressList.filter((press) => subscribingPress.includes(press.pid));
+
+        const gridViewContainer = this.handleGridView().createGridViewContainer(
+          0,
+          customPressList
+        );
+
+        const target = this.wrap?.querySelector('section.custom .view.grid');
+        if (target) target.innerHTML = '';
+        target?.append(gridViewContainer);
+        this.handleSubscribe().handleGridView();
+        this.handleGridView().updateCustomTabGridData();
+      },
+      updateCustomTabGridData: () => {
+        this.displayStore.subscribe(() => {});
       },
     };
   }
@@ -222,7 +252,9 @@ class PressListContents extends HTMLElement {
     const toggleShowClass = async () => {
       const displayStates = this.displayStore.getState();
       const isGeneral = displayStates.currentTab === 'general';
+      const isCustom = displayStates.currentTab === 'custom';
       const isGrid = displayStates.currentView === 'grid';
+      const isList = displayStates.currentView === 'list';
 
       const generalSection = this.wrap?.querySelector('section.general');
       const customSection = this.wrap?.querySelector('section.custom');
@@ -234,18 +266,16 @@ class PressListContents extends HTMLElement {
       if (isGeneral) {
         toggleClass(generalSection, 'show');
         toggleClass(customSection, 'hide');
-        toggleClass(gridView, 'show');
-        toggleClass(listView, 'hide');
-      } else {
+      }
+      if (isCustom) {
         toggleClass(generalSection, 'hide');
         toggleClass(customSection, 'show');
-        toggleClass(gridView, 'hide');
-        toggleClass(listView, 'show');
       }
       if (isGrid) {
         toggleClass(gridView, 'show');
         toggleClass(listView, 'hide');
-      } else {
+      }
+      if (isList) {
         toggleClass(gridView, 'hide');
         toggleClass(listView, 'show');
       }

@@ -11,6 +11,10 @@ interface props {
   state: UserType;
 }
 
+interface setUserProps extends props {
+  payload: any;
+}
+
 interface subscribeProps extends props {
   payload: string;
 }
@@ -18,6 +22,10 @@ interface subscribeProps extends props {
 interface unsubscribeProps extends props {
   payload: string;
 }
+
+const setUser = ({ payload }: setUserProps) => {
+  return { ...payload, subscribingPress: payload.subscribingPressIds };
+};
 
 const subscribe = ({ state, payload }: subscribeProps) => {
   if (state.subscribingPress.length === 0)
@@ -40,6 +48,8 @@ const reducer: ReducerType<UserType> = (
   action: ActionType
 ): UserType => {
   switch (action.type) {
+    case 'SET_USER':
+      return setUser({ state, payload: action.payload });
     case 'SUBSCRIBE':
       return subscribe({ state, payload: action.payload });
     case 'UNSUBSCRIBE':
