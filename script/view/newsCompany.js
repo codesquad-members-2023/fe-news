@@ -2,7 +2,8 @@ import { $ } from "../utils/dom.js";
 import { COMPANY, SUBSCRIBE } from "../constants/dom.js";
 import { SubscribeController } from "../controller/subscribeController.js";
 
-export const renderNewsCompanyBar = () => {
+//처음 뉴스 그리드 부분과 그리드 부분 바의 토대를 만든다.
+export const renderNewsCompanyBar = (selector, element) => {
   const newsCompanyTemplate = `
 <div class="news-company">
 <div class="news-company__bar">
@@ -17,36 +18,37 @@ export const renderNewsCompanyBar = () => {
   </div>
   <div class="news-company__grid">
     <div class="grid_btn-left"><img src="assets/leftButton.svg"/></div>
-    <div class="grid_set"></div>
+    <div class="grid_set">
+    <div class="grid_all">
+    <div class="all_first-page" index="0"></div>
+    <div class="all_second-page none"></div>
+    <div class="all_third-page none"></div>
+    <div class="all_fourth-page none"></div>
+    </div>
+    <div class="grid_subscribe"></div>
+    </div>
     <div class="grid_btn-right"><img src="assets/rightButton.svg"/></div>
   </div>
 </div>
 `;
-  const root = $(".root");
-  const newsCompanyBar = document.createElement("section");
+  const root = $(selector);
+  const newsCompanyBar = document.createElement(element);
   root.appendChild(newsCompanyBar);
   newsCompanyBar.innerHTML = newsCompanyTemplate;
 };
 
-export class insertNewsCompanyGrid {
-  constructor(newsData) {
-    this.gridBox = $(".grid_set");
-    this.rightButton = $(".grid_btn-right");
-    this.leftButton = $(".grid_btn-left");
-    this.page = COMPANY.FIRST_PAGE;
-    this.newsData = newsData;
-  }
+export const insertMediaLogosGrid = (mediaDataSet) => {
+  const gridFirstPage = $(".all_first-page");
+  const gridSecondPage = $(".all_second-page");
+  const gridThirdPage = $(".all_third-page");
+  const gridFourthPage = $(".all_fourth-page");
+  const rightButton = $(".grid_btn-right");
+  const leftButton = $(".grid_btn-left");
+  const mediaData = mediaDataSet;
 
-  init() {
-    this.insertNewsData(SUBSCRIBE.REGISTER);
-    this.controlButton();
-    this.onEvents();
-  }
-
-  insertNewsData(subscribe) {
-    this.gridBox.innerHTML = "";
-    this.newsData[this.page].map((data) => {
-      this.gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}">
+  const insertMediaLogosGrid = (subscribe, gridBox, mediaLogoData, page) => {
+    mediaLogoData.map((data) => {
+      gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}" index="${page}">
       <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>
       <div class ="grid_btn">
       <button type="button">${subscribe}</button>
@@ -54,67 +56,134 @@ export class insertNewsCompanyGrid {
       </div>
       `;
     });
-  }
+  };
 
-  controlButton() {
-    if (this.page > COMPANY.FIRST_PAGE) {
-      this.leftButton.classList.remove("hidden");
-    } else {
-      this.leftButton.classList.add("hidden");
-    }
-    if (this.page < COMPANY.LAST_PAGE) {
-      this.rightButton.classList.remove("hidden");
-    } else {
-      this.rightButton.classList.add("hidden");
-    }
-  }
+  const insertPagesData = () => {
+    insertMediaLogosGrid(SUBSCRIBE.REGISTER, gridFirstPage, mediaData[COMPANY.FIRST_PAGE], COMPANY.FIRST_PAGE);
+    insertMediaLogosGrid(SUBSCRIBE.REGISTER, gridSecondPage, mediaData[COMPANY.SECOND_PAGE], COMPANY.SECOND_PAGE);
+    insertMediaLogosGrid(SUBSCRIBE.REGISTER, gridThirdPage, mediaData[COMPANY.THIRD_PAGE], COMPANY.THIRD_PAGE);
+    insertMediaLogosGrid(SUBSCRIBE.REGISTER, gridFourthPage, mediaData[COMPANY.LAST_PAGE], COMPANY.LAST_PAGE);
+  };
+  insertPagesData();
 
-  onEvents() {
-    this.rightButton.addEventListener("click", () => {
-      this.page += COMPANY.PAGES;
-      controlButton();
-      insertNewsData(SUBSCRIBE.REGISTER);
+  const toggle = (hiddenBtn, page) => {
+    if (page > COMPANY.FIRST_PAGE) {
+      leftButton.classList.remove(hiddenBtn);
+    } else {
+      leftButton.classList.add(hiddenBtn);
+    }
+    if (page < COMPANY.LAST_PAGE) {
+      rightButton.classList.remove(hiddenBtn);
+    } else {
+      rightButton.classList.add(hiddenBtn);
+    }
+  };
+  toggle("hidden", COMPANY.FIRST_PAGE);
+
+  const togglePage = (page, isDisplayNone) => {
+    switch (page) {
+      case COMPANY.FIRST_PAGE: {
+        gridFirstPage.classList.remove(isDisplayNone);
+        gridSecondPage.classList.add(isDisplayNone);
+        gridThirdPage.classList.add(isDisplayNone);
+        gridFourthPage.classList.add(isDisplayNone);
+        break;
+      }
+      case COMPANY.SECOND_PAGE: {
+        gridFirstPage.classList.add(isDisplayNone);
+        gridSecondPage.classList.remove(isDisplayNone);
+        gridThirdPage.classList.add(isDisplayNone);
+        gridFourthPage.classList.add(isDisplayNone);
+        break;
+      }
+      case COMPANY.THIRD_PAGE: {
+        gridFirstPage.classList.add(isDisplayNone);
+        gridSecondPage.classList.add(isDisplayNone);
+        gridThirdPage.classList.remove(isDisplayNone);
+        gridFourthPage.classList.add(isDisplayNone);
+        break;
+      }
+      case COMPANY.LAST_PAGE: {
+        gridFirstPage.classList.add(isDisplayNone);
+        gridSecondPage.classList.add(isDisplayNone);
+        gridThirdPage.classList.add(isDisplayNone);
+        gridFourthPage.classList.remove(isDisplayNone);
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  };
+  const onEvents = (page) => {
+    let currentPage = page;
+    rightButton.addEventListener("click", () => {
+      currentPage += COMPANY.SECOND_PAGE;
+      togglePage(currentPage, "none");
+      toggle("hidden", currentPage);
     });
-    this.leftButton.addEventListener("click", () => {
-      this.page -= COMPANY.PAGES;
-      controlButton();
-      insertNewsData(SUBSCRIBE.REGISTER);
+    leftButton.addEventListener("click", () => {
+      currentPage -= COMPANY.SECOND_PAGE;
+      togglePage(currentPage, "none");
+      toggle("hidden", currentPage);
     });
-    register(this.newsData, this.page);
-  }
-}
+    register(mediaData);
+  };
+  onEvents(COMPANY.FIRST_PAGE);
+};
+export const register = (newsData) => {
+  const subscribeData = new SubscribeController();
+  const subscribeButtonClicked = (selector) => {
+    const gridBtn = $(selector);
+    gridBtn.addEventListener("click", (e) => {
+      let btn = e.target.closest("button");
+      let id = e.target.closest(".grid_list").id;
+      let page = e.target.closest(".grid_list").getAttribute("index");
 
-export const register = (newsData, page) => {
-  const gridBtn = document.querySelector(".grid_set");
-  const subData = new SubscribeController();
-  const rightButton = $(".grid_btn-right");
-  const myNewsCompany = $(".company__choice_subscribe");
-  const allNewsCompany = $(".company__choice_all");
-  gridBtn.addEventListener("click", (e) => {
-    let btn = e.target.closest("button");
-    if (btn.textContent === SUBSCRIBE.REGISTER) {
-      btn.textContent = SUBSCRIBE.CANCEL;
-      subData.appendSubscribeData(e.target.closest(".grid_list").id, newsData, page);
-    } else {
-      btn.textContent = SUBSCRIBE.REGISTER;
-      subData.appendUnsubscribeData(e.target.closest(".grid_list").id, newsData, page);
-    }
+      if (btn.textContent === SUBSCRIBE.REGISTER) {
+        btn.textContent = SUBSCRIBE.CANCEL;
+        subscribeData.appendSubscribeData(id, newsData[page]);
+      } else {
+        btn.textContent = SUBSCRIBE.REGISTER;
+        subscribeData.appendUnsubscribeData(id, newsData[page]);
+      }
+    });
+  };
+  subscribeButtonClicked(".grid_all");
+  showMyNewsSourcesLogo(".grid_btn-right", ".company__choice_all", ".company__choice_subscribe", subscribeData);
+  showAllNewsSourcesLogo(".company__choice_all", ".company__choice_subscribe", newsData);
+};
+
+const showMyNewsSourcesLogo = (btnSelector, allNewsSelector, myNewsSelector, registerData) => {
+  const myMediaLogos = $(myNewsSelector);
+  const allMediaLogos = $(allNewsSelector);
+  const gridBox = $(".grid_all");
+  const myGridBox = $(".grid_subscribe");
+  myMediaLogos.addEventListener("click", () => {
+    gridBox.classList.add("none");
+    myGridBox.classList.remove("none");
+    insertMyNewsData(SUBSCRIBE.CANCEL, registerData.showPublishData());
+    allMediaLogos.classList.add("change_gray");
+    myMediaLogos.classList.add("change_black");
   });
-  myNewsCompany.addEventListener("click", () => {
-    insertMyNewsData(SUBSCRIBE.CANCEL, subData.showPublishData());
-    rightButton.classList.add("hidden");
-    allNewsCompany.classList.add("change_gray");
-    myNewsCompany.classList.add("change_black");
-  });
-  allNewsCompany.addEventListener("click", () => {
-    insertNewsData(SUBSCRIBE.REGISTER);
+};
+
+const showAllNewsSourcesLogo = (allNewsSelector, myNewsSelector) => {
+  const allMediaLogos = $(allNewsSelector);
+  const myMediaLogos = $(myNewsSelector);
+  const gridBox = $(".grid_all");
+  const myGridBox = $(".grid_subscribe");
+  allMediaLogos.addEventListener("click", () => {
+    gridBox.classList.remove("none");
+    myGridBox.classList.add("none");
+    allMediaLogos.classList.remove("change_gray");
+    myMediaLogos.classList.remove("change_black");
   });
 };
 
 export const insertMyNewsData = (subscribe, newsData) => {
-  const gridBox = $(".grid_set");
+  const gridBox = $(".grid_subscribe");
   gridBox.innerHTML = "";
-  if (!newsData) return;
   newsData.map((data) => {
     gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}">
     <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>

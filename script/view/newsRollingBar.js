@@ -1,32 +1,34 @@
 import { $ } from "../utils/dom.js";
-const renderRollingBar = (root) => {
+
+const renderRollingBar = (selector, element) => {
   const rollingBarTemplate = `<div class= "news__rolling-bar">
   <div class= "rolling-bar_left">
   <img src="assets/rollingLogo.svg" /><ul class="data_list_left"></ul></div>
   <div class= "rolling-bar_right">
   <img src="assets/rollingLogo.svg" /><ul class="data_list_right"></ul></div>
   </div>`;
-  const newsRollingBar = document.createElement("article");
+  const root = $(selector);
+  const newsRollingBar = document.createElement(element);
   root.appendChild(newsRollingBar);
   newsRollingBar.innerHTML = rollingBarTemplate;
 };
 
-const insertNewsData = (newsData, rollingBox) => {
-  const rollingBar = $(`${rollingBox}`);
-  newsData.map((data) => {
-    rollingBar.innerHTML += `<li>${data}</li>`;
+export const insertNewsHeadlineData = (headlineData, selector) => {
+  const rollingBar = $(selector);
+  headlineData.map((headline) => {
+    rollingBar.innerHTML += `<li>${headline}</li>`;
   });
 };
 
-const rollingData = (rollingBox) => {
-  const rollingBar = $(rollingBox);
+export const autoRoll = (selector, interval) => {
+  const rollingBar = $(selector);
   let startTime = null;
   let handle = null;
 
   const autoRolling = (timestamp) => {
     if (!startTime) startTime = timestamp;
     const progress = timestamp - startTime;
-    if (progress >= 5000) {
+    if (progress >= interval) {
       rollingBar.style.transform = `translate3d(0, -31px, 0)`;
       rollingBar.style.transitionDuration = "500ms";
       startTime = timestamp;
@@ -46,20 +48,18 @@ const rollingData = (rollingBox) => {
     if (handle) cancelAnimationFrame(handle);
     handle = null;
   };
-  const eventHandler = () => {
+
+  const onEvents = () => {
     rollingBar.addEventListener("mouseover", stop);
     rollingBar.addEventListener("mouseout", start);
   };
-  eventHandler();
+  onEvents();
 };
 
-const runRollingBar = () => {
-  const root = $(".root");
-  renderRollingBar(root);
-  rollingData(".data_list_left");
+export const runRollingBar = () => {
+  renderRollingBar(".root", "article");
+  autoRoll(".data_list_left", 5000);
   setTimeout(() => {
-    rollingData(".data_list_right");
+    autoRoll(".data_list_right", 5000);
   }, 1000);
 };
-
-export { runRollingBar, insertNewsData, rollingData };

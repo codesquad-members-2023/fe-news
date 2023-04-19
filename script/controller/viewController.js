@@ -1,17 +1,17 @@
-import { insertNewsData } from "../view/newsRollingBar.js";
-import { insertNewsCompanyGrid } from "../view/newsCompany.js";
+import { insertNewsHeadlineData } from "../view/newsRollingBar.js";
+import { insertMediaLogosGrid } from "../view/newsCompany.js";
 import { API_PATH } from "../constants/api.js";
 import { COMPANY, ROLLING } from "../constants/dom.js";
 
 //fetch된 데이터를 불러오고, 데이터들을 각 렌더링 해주는 곳에 넣어준다.
-export const fetchController = async () => {
+export const preprocessData = async () => {
   const rollingData = await fetchRollingoData();
   const gridData = await fetchCompanyData();
   const rollingRandomDataLeft = fixedRandomData(rollingData.leftRollingData, ROLLING.TOTAL);
   const rollingRandomDataRight = fixedRandomData(rollingData.rightRollingData, ROLLING.TOTAL);
   const gridRandomData = fixedRandomData(gridData, COMPANY.TOTAL_GRID);
-  insertNewsData(rollingRandomDataLeft, ".data_list_left");
-  insertNewsData(rollingRandomDataRight, ".data_list_right");
+  insertNewsHeadlineData(rollingRandomDataLeft, ".data_list_left");
+  insertNewsHeadlineData(rollingRandomDataRight, ".data_list_right");
   deliverGridData(gridRandomData, COMPANY.PAGES_PER);
 };
 
@@ -43,6 +43,5 @@ const deliverGridData = (spreadGridData, size) => {
   for (let i = 0; i < spreadGridData.length; i += size) {
     gridDataPage.push(spreadGridData.slice(i, i + size));
   }
-  const insertNewsCompany = new insertNewsCompanyGrid(gridDataPage);
-  insertNewsCompany.init();
+  insertMediaLogosGrid(gridDataPage);
 };

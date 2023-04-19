@@ -1,4 +1,4 @@
-export class store {
+export class NewsStore {
   constructor() {
     this.changeListeners = [];
   }

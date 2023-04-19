@@ -15,12 +15,10 @@ const newsHeaderTemplate = (DateTemplate) =>
   <div class="header__date">${DateTemplate}</div>
   </div>`;
 
-const renderNewsHeader = () => {
+export const renderNewsHeader = (selector, element) => {
   const DateTemplate = makeDate();
-  const root = $(".root");
-  const newsHeader = document.createElement("header");
+  const root = $(selector);
+  const newsHeader = document.createElement(element);
   root.appendChild(newsHeader);
   newsHeader.innerHTML = newsHeaderTemplate(DateTemplate);
 };
-
-export { renderNewsHeader };

@@ -1,18 +1,18 @@
-import { store } from "../store/store.js";
+import { NewsStore } from "../store/NewsStore.js";
 
 export class SubscribeController {
   constructor() {
-    this.subscriber = new store();
+    this.newsStore = new NewsStore();
   }
-  appendSubscribeData(id, newsData, page) {
-    const foundObject = newsData[page].find((data) => data.mediaId === Number(id));
-    this.subscriber.subscribe(foundObject);
+  appendSubscribeData(id, newsData) {
+    const foundObject = newsData.find((data) => data.mediaId === Number(id));
+    this.newsStore.subscribe(foundObject);
   }
-  appendUnsubscribeData(id, newsData, page) {
-    const foundObject = newsData[page].find((data) => data.mediaId === Number(id));
-    this.subscriber.unsubscribe(foundObject);
+  appendUnsubscribeData(id, newsData) {
+    const foundObject = newsData.find((data) => data.mediaId === Number(id));
+    this.newsStore.unsubscribe(foundObject);
   }
   showPublishData() {
-    return this.subscriber.publish();
+    return this.newsStore.publish();
   }
 }
