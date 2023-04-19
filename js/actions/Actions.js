@@ -99,12 +99,14 @@ export const displayActionCreator = {
   },
 
   listLeftBtnClick() {
+    dispatch(this.progressBarAnimationEnd());
     return {
       type: actionTypes.displayActions.LIST_LEFT_BUTTON_CLICK,
     };
   },
 
   listRightBtnClick() {
+    dispatch(this.progressBarAnimationEnd());
     return {
       type: actionTypes.displayActions.LIST_RIGHT_BUTTON_CLICK,
     };
@@ -112,6 +114,7 @@ export const displayActionCreator = {
 
   listTabBtnClick(payload) {
     // 여기서 payload는 탭 한 놈의 미디어 타입 정보.
+    dispatch(this.progressBarAnimationEnd());
     return {
       type: actionTypes.displayActions.LIST_TAB_BUTTON_CLICK,
       payload,
@@ -119,6 +122,7 @@ export const displayActionCreator = {
   },
 
   mineListTabBtnClick(payload) {
+    dispatch(this.progressBarAnimationEnd());
     return {
       type: actionTypes.displayActions.MINE_LIST_TAB_BUTTON_CLICK,
       payload,
@@ -126,14 +130,29 @@ export const displayActionCreator = {
   },
 
   mineListLeftBtnClick() {
+    dispatch(this.progressBarAnimationEnd());
     return {
       type: actionTypes.displayActions.MINE_LIST_LEFT_BUTTON_CLICK,
     };
   },
 
   mineListRightBtnClick() {
+    dispatch(this.progressBarAnimationEnd());
     return {
       type: actionTypes.displayActions.MINE_LIST_RIGHT_BUTTON_CLICK,
+    };
+  },
+
+  progressBarAnimationStart(payload) {
+    return {
+      type: actionTypes.displayActions.PROGRESS_BAR_ANIMATION_START,
+      payload,
+    };
+  },
+
+  progressBarAnimationEnd() {
+    return {
+      type: actionTypes.displayActions.PROGRESS_BAR_ANIMATION_END,
     };
   },
 };

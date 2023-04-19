@@ -4,6 +4,7 @@ import {
   subscribeReducer,
   mainHeaderBtnClickReducer,
   listPageReducer,
+  animationReducer,
 } from './displayReducer.js';
 
 const defaultAutoRollingData = {
@@ -35,6 +36,10 @@ const defaultListPageData = {
   typeLength: 82,
 };
 
+const defaultAnimaitonData = {
+  animaitionId: null,
+};
+
 // Store의 State 초기화.
 const initialState = {
   ['autoData']: defaultAutoRollingData,
@@ -42,6 +47,7 @@ const initialState = {
   ['subscribeData']: defaultSubscribeData,
   ['viewOptionData']: defaultViewOptionData,
   ['listPageData']: defaultListPageData,
+  ['animationData']: defaultAnimaitonData,
 };
 
 const store = createStore();
@@ -58,5 +64,12 @@ store.addDomain(
   mainHeaderBtnClickReducer,
   initialState['viewOptionData'],
 );
+
+store.addDomain(
+  'animationData',
+  animationReducer,
+  initialState['animationData'],
+);
+
 store.addDomain('listPageData', listPageReducer, initialState['listPageData']);
 export const { dispatch, subscribe, getStoreState } = store;

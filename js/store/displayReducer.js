@@ -99,6 +99,23 @@ export const listPageReducer = (state, action) => {
   }
 };
 
+export const animationReducer = (state, action) => {
+  const animationData = getStoreState('animationData');
+  switch (action.type) {
+    case displayActions.PROGRESS_BAR_ANIMATION_START:
+      return {
+        ...state,
+        animaionId: action.payload,
+      };
+    case displayActions.PROGRESS_BAR_ANIMATION_END:
+      cancelAnimationFrame(animationData.animaionId);
+      return {
+        ...state,
+        animaionId: null,
+      };
+  }
+};
+
 const mediaTypeIdxChecking = (mediaData) => {
   let currentType;
   const mediaTypeIdxArr = [];

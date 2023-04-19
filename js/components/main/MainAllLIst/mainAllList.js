@@ -4,7 +4,7 @@ import {
   tabClickEventHandler,
   subscribeBtnClickEventHandler,
 } from './mainAllListEventHandlers.js';
-import { displayActionCreator } from '../../../actions/actions.js';
+import { animationStart } from '../progressBarAnimation.js';
 
 export const MEDIA_CATEGORIES = [
   '종합/경제',
@@ -125,43 +125,32 @@ const createNewsContentElement = (mainContent, subContent) => {
   return $mainListNewsContent;
 };
 
-const renderMainAllList = ($main, content) => {
+const renderNextPage = ($main, listPageData, viewOptionData) => {
+  const typeIdx = listPageData.currentMediaTypeIdx;
   const mediaData = getStoreState('mediaData').data;
-  const pageData = getStoreState('listPageData');
 
   const breakCondition =
-    content.viewOption.gridOrList === 'list' &&
-    content.viewOption.allOrMine === 'all';
+    viewOptionData.viewOption.gridOrList === 'list' &&
+    viewOptionData.viewOption.allOrMine === 'all';
   if (!breakCondition) return;
 
-  const $mainList = createMainListElement(mediaData[content.page], 0, pageData);
-  $mainList.addEventListener('click', tabClickEventHandler);
-  $mainList
-    .querySelector('.list__subscribe-button')
-    .addEventListener(
-      'click',
-      subscribeBtnClickEventHandler.bind(null, mediaData[content.page].mediaId),
-    );
-  $main.replaceChild($mainList, $main.lastChild);
-};
-
-const renderNextPage = ($main, content) => {
-  const typeIdx = content.currentMediaTypeIdx;
-  const mediaData = getStoreState('mediaData').data;
-
   const $mainList = createMainListElement(
-    mediaData[content.page],
+    mediaData[listPageData.page],
     typeIdx,
-    content,
+    listPageData,
   );
   $mainList.addEventListener('click', tabClickEventHandler);
   $mainList
     .querySelector('.list__subscribe-button')
     .addEventListener(
       'click',
-      subscribeBtnClickEventHandler.bind(null, mediaData[content.page].mediaId),
+      subscribeBtnClickEventHandler.bind(
+        null,
+        mediaData[listPageData.page].mediaId,
+      ),
     );
   $main.replaceChild($mainList, $main.lastChild);
+  animationStart();
 };
 
 const checkSubscribe = (curMediaId) => {
@@ -173,8 +162,14 @@ const checkSubscribe = (curMediaId) => {
 };
 
 const MainAllList = ($main) => {
-  subscribe('viewOptionData', renderMainAllList.bind(null, $main));
-  subscribe('listPageData', renderNextPage.bind(null, $main));
+  subscribe('viewOptionData', (content) => {
+    const listPageData = getStoreState('listPageData');
+    renderNextPage($main, listPageData, content);
+  });
+  subscribe('listPageData', (content) => {
+    const viewOptionData = getStoreState('viewOptionData');
+    renderNextPage($main, content, viewOptionData);
+  });
 };
 
 export default MainAllList;
