@@ -26,7 +26,9 @@ export default class GridSubModel extends Observer {
   }
 
   deleteSubData(data) {
-    this._data = this._data.filter((el) => el !== data);
+    this._data = this._data.filter((subData) => subData.pressName !== data);
+    const curViewState = this._model.getCurViewState();
+    if (!isEquivalent(this._state, curViewState)) return;
     this.notify();
   }
 

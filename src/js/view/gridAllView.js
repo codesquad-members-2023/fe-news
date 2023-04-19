@@ -75,7 +75,11 @@ export default class GridAllView {
     this._noSubPopupWrap.classList.remove('hidden');
   }
 
-  noSubButtonHandler() {}
+  noSubButtonHandler() {
+    this._girdSubModel.deleteSubData(this._pressName);
+    this._subPopupWrap.classList.remove('hidden');
+    this._noSubPopupWrap.classList.add('hidden');
+  }
 
   gridSectionClickEventHandler({ target }) {
     if (!target.classList.contains('sub_button') && !target.classList.contains('nosub_button'))
