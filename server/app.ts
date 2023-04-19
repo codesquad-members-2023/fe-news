@@ -165,6 +165,25 @@ app.get('/section', async (req, res) => {
   }
 });
 
+app.get('/custom-section', async (req, res) => {
+  const { page } = req.query;
+  try {
+    const user = await UserModel.findOne({ id: TEMP_ID }).limit(1);
+    const subscribingPressIds = user?.subscribingPressIds;
+    const pressId = subscribingPressIds?.[Number(page)];
+    const section = await SectionModel.find({ pressId });
+    if (!section) res.status(204).json({ message: 'no section' });
+    const press = await PressModel.findOne({ pid: pressId });
+    const data = section[0].toObject() as unknown extends SectionInfoInterface
+      ? SectionInfoInterface
+      : { press: unknown };
+    data.press = press;
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
