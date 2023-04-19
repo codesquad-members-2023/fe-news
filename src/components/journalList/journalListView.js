@@ -50,9 +50,6 @@ const createJournalList = () => {
   const journalTrack = new Track(journalTrackStore);
   journalListEl.appendChild(journalTrack.element);
 
-  // 언론사 디테일 영역 구성
-  const journalDetailStore = new JournalDetailStore();
-
   const fetchJournalData = async (journalURL) => {
     try {
       const journalDatas = await dataRequestToAPI(journalURL);
@@ -65,11 +62,21 @@ const createJournalList = () => {
     }
   };
 
-  // 최초 전체 언론사 셋팅
-  const loadJournalItems = async () => {
+  const loadJournalDetail = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
     journalDetailStore.setDetailListAll(journalItems);
+    journalDetailStore.setDetailByType();
+  };
+
+  // 언론사 디테일 영역 구성
+  const journalDetailStore = new JournalDetailStore();
+  loadJournalDetail();
+
+  // 최초 언론사 Grid 셋팅
+  const loadJournalItems = async () => {
+    const journalURL = "http://localhost:3000/journal";
+    const journalItems = await fetchJournalData(journalURL);
     const dividedJournalItems = journalItems.splice(0, 96);
     journalHeaderStore.setJournalListAll(dividedJournalItems);
     const journalList = journalHeaderStore.journalListAll;
