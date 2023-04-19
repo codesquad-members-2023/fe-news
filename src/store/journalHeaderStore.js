@@ -1,7 +1,7 @@
 export class JournalHeaderStore {
   constructor(updateJournalData) {
     this.journalState = "STATE_ALL"; // "STATE_SUB"
-    this.journalFrame = "GRID"; // "DETAIL"
+    this.journalFrame = "FRAME_GRID"; // "FRAME_DETAIL"
     this.journalListAll = [];
     this.journalSubscribe = new Set();
     this.updateJournalData = updateJournalData;
@@ -35,5 +35,13 @@ export class JournalHeaderStore {
 
   getJournalSubscribe() {
     return this.journalSubscribe;
+  }
+
+  setFrame(newFrame) {
+    this.journalFrame = newFrame;
+  }
+
+  getFrame() {
+    return this.journalFrame;
   }
 }

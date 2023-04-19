@@ -6,16 +6,33 @@ export class JournalHeader {
     this.render();
     this.journalAllBtn;
     this.journalSubBtn;
+    this.journalDetailBtn;
+    this.journalGridBtn;
   }
 
-  headerMarkup(headerState) {
+  headerMarkup(currentState, currentFrame) {
     const FONT_TITLE = "Title-MD";
     const FONT_BODY = "Body-MD";
-    const SVG_DETAIL = "src/assets/icons/list-view.svg";
-    const SVG_GRID = "src/assets/icons/grid-view-on.svg";
+    const SVG_DETAIL_OFF = "src/assets/icons/list-view.svg";
+    const SVG_DETAIL_ON = "src/assets/icons/list-view-on.svg";
+    const SVG_GRID_OFF = "src/assets/icons/grid-view.svg";
+    const SVG_GRID_ON = "src/assets/icons/grid-view-on.svg";
 
-    const fontAll = headerState === "STATE_ALL" ? FONT_TITLE : FONT_BODY;
-    const fontSub = headerState === "STATE_SUB" ? FONT_TITLE : FONT_BODY;
+    const fontAll = currentState === "STATE_ALL" ? FONT_TITLE : FONT_BODY;
+    const fontSub = currentState === "STATE_SUB" ? FONT_TITLE : FONT_BODY;
+
+    const svgDetail =
+      currentFrame === "FRAME_GRID"
+        ? SVG_DETAIL_OFF
+        : currentFrame === "FRAME_DETAIL"
+        ? SVG_DETAIL_ON
+        : SVG_DETAIL_OFF;
+    const svgGrid =
+      currentFrame === "FRAME_DETAIL"
+        ? SVG_GRID_OFF
+        : currentFrame === "FRAME_GRID"
+        ? SVG_GRID_ON
+        : SVG_GRID_OFF;
 
     const journalHeader = `
       <div class="journal-area display-flex">
@@ -24,10 +41,10 @@ export class JournalHeader {
       </div>
       <div class="journal-btns display-flex">
         <div class="journal-btn__detail">
-          <img src="${SVG_DETAIL}" />
+          <img src="${svgDetail}" />
         </div>
         <div class="journal-btn__grid">
-          <img src="${SVG_GRID}" />
+          <img src="${svgGrid}" />
         </div>
       </div>
     `;
@@ -45,12 +62,26 @@ export class JournalHeader {
       this.journalHeaderStore.setState("STATE_SUB");
       this.render();
     });
+
+    this.journalDetailBtn.addEventListener("click", () => {
+      this.journalHeaderStore.setFrame("FRAME_DETAIL");
+      this.render();
+    });
+
+    this.journalGridBtn.addEventListener("click", () => {
+      this.journalHeaderStore.setFrame("FRAME_GRID");
+      this.render();
+    });
   }
 
   render() {
-    this.headerMarkup(this.journalHeaderStore.getState());
+    const currentState = this.journalHeaderStore.getState();
+    const currentFrame = this.journalHeaderStore.getFrame();
+    this.headerMarkup(currentState, currentFrame);
     this.journalAllBtn = this.element.querySelector(".journal-all");
     this.journalSubBtn = this.element.querySelector(".journal-subList");
+    this.journalDetailBtn = this.element.querySelector(".journal-btn__detail");
+    this.journalGridBtn = this.element.querySelector(".journal-btn__grid");
     this.addEvent();
   }
 }
