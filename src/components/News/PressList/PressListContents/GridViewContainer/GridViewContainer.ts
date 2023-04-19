@@ -65,6 +65,7 @@ class GridViewContainer extends HTMLElement {
 
   render(pressList: any) {
     const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);
+    // this.displayStore.dispatch({type:'SET_TOTAL_PAGE', payload: {view:'grid', tab:, totalPage:}})
     const slicedPressList = Array.from({ length: maxPage }).map(
       (v: any, i: number) =>
         sliceByPage({

@@ -267,10 +267,18 @@ class PressListContents extends HTMLElement {
           this.displayStore.getState().page[view][tab].currentPage;
         const totalPage =
           this.displayStore.getState().page[view][tab].totalPage;
+
         const isLastPage = currentPage === totalPage - 1;
         const isFirstPage = currentPage === 0;
+        const isOnePage = totalPage === 1;
 
-        if (isLastPage) {
+        if (isOnePage) {
+          setProperty({
+            target: controllerElement,
+            name: 'hide',
+            value: 'all',
+          });
+        } else if (isLastPage) {
           setProperty({
             target: controllerElement,
             name: 'hide',
@@ -326,9 +334,12 @@ class PressListContents extends HTMLElement {
         );
       },
       appendController: (tab: 'general' | 'custom', view: 'grid' | 'list') => {
+        const isOnePage =
+          this.displayStore.getState().page[view][tab].totalPage === 1;
+        const hide = isOnePage ? 'all' : 'left';
         const controller = create({
           tagName: 'controller-element',
-          attributeList: [['hide', 'left']],
+          attributeList: [['hide', hide]],
         });
         this.shadowRoot
           ?.querySelector(`section.${tab}`)

@@ -26,6 +26,9 @@ class Controller extends HTMLElement {
     if (name === 'hide') {
       this.hide = getProperty({ target: this, name: 'hide' });
 
+      if (this.hide === 'all') {
+        return this.setHideProperty('all');
+      }
       if (this.hide === 'left') {
         return this.setHideProperty('left');
       }
@@ -36,20 +39,20 @@ class Controller extends HTMLElement {
     }
   }
 
-  setHideProperty(positon: 'left' | 'right' | 'none') {
+  setHideProperty(positon: 'left' | 'right' | 'none' | 'all') {
     setProperty({
       target: this.shadowRoot?.querySelector(
         `controller-item-element[position="left"]`
       ),
       name: 'hide',
-      value: String(positon === 'left'),
+      value: String(positon === 'all' || positon === 'left'),
     });
     setProperty({
       target: this.shadowRoot?.querySelector(
         `controller-item-element[position="right"]`
       ),
       name: 'hide',
-      value: String(positon === 'right'),
+      value: String(positon === 'all' || positon === 'right'),
     });
   }
 
