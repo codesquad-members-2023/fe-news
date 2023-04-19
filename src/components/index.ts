@@ -7,11 +7,14 @@ customElements.define('headline-element', Headline);
 import HeadlineItem from './News/Headline/HeadlineItem/HeadlineItem';
 customElements.define('headline-item-element', HeadlineItem);
 
-import GridView from './News/PressList/PressListContents/GridView/GridView';
+import GridView from './News/PressList/PressListContents/GridViewContainer/GridView/GridView';
 customElements.define('grid-view-element', GridView);
 
-import GridViewItem from './News/PressList/PressListContents/GridView/GridViewItem/GridViewItem';
+import GridViewItem from './News/PressList/PressListContents/GridViewContainer/GridView/GridViewItem/GridViewItem';
 customElements.define('grid-view-item-element', GridViewItem);
+
+import GridViewContainerItem from './News/PressList/PressListContents/GridViewContainer/GridViewContainer';
+customElements.define('grid-view-container-element', GridViewContainerItem);
 
 import ListView from './News/PressList/PressListContents/ListView/ListView';
 customElements.define('list-view-element', ListView);

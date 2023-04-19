@@ -6,19 +6,22 @@ export default function style() {
       border: 0;
     }
 
-    .wrap.grid-view {
-      border: 1px solid var(--gray100); 
-      border-bottom-width: 0;
-      border-right-width: 0;
-    }
+
+
+    
 
     .press-container {
-      display: grid;
+
       grid-template-columns: repeat(6, 1fr);
       grid-template-rows: repeat(2, 96px);
     
       background-color: var(--white);
       height: var(--presslist-content-height);
+      display: none;
+    }
+
+    .press-container.show {
+       display: grid;
     }
 
     .press-container.no-press {

@@ -22,16 +22,38 @@ class GridView extends HTMLElement {
     });
   }
 
+  static get observedAttributes() {
+    return ['show'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'show') {
+      console.log('changed!');
+      if (newValue === 'true')
+        this.shadowRoot
+          ?.querySelector('.press-container')
+          ?.classList.add('show');
+      if (newValue === 'false')
+        this.shadowRoot
+          ?.querySelector('.press-container')
+          ?.classList.remove('show');
+    }
+  }
+
   render() {
     const pressListStr = getProperty({
       target: this,
       name: 'press-list',
     });
+    const show = getProperty({
+      target: this,
+      name: 'show',
+    });
     const pressList = pressListStr ? JSON.parse(pressListStr) : [];
     const template =
       pressList.length > 0
         ? `
-    <div class="press-container">
+    <div class="press-container${show === 'true' ? ' show' : ''}">
     ${pressList
       .map(
         (press: PressType, i: number) =>

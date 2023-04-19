@@ -110,42 +110,37 @@ class PressListContents extends HTMLElement {
 
       createGridViewContainer: (page: number, pressList: any) => {
         const gridViewContainer = create({
-          tagName: 'div',
+          tagName: 'grid-view-container-element',
           classList: ['grid-view-container'],
-          attributeList: [['page', String(page)]],
+          attributeList: [['press-list', JSON.stringify(pressList)]],
         });
-
         if (isFirstPage(page)) {
           gridViewContainer.classList.add('show');
         }
-        const slicedPressList = sliceByPage({
-          page,
-          maxItemNum: 24,
-          items: pressList,
-        });
-        const template = `
-          <grid-view-element press-list='${JSON.stringify(
-            slicedPressList
-          )}'></grid-view-element>
-        `;
-        add({
-          target: gridViewContainer,
-          template,
-        });
-        return gridViewContainer;
+        // const slicedPressList = sliceByPage({
+        //   page,
+        //   maxItemNum: 24,
+        //   items: pressList,
+        // });
+        // const template = `
+        //   <grid-view-container-element press-list='${JSON.stringify(
+        //     slicedPressList
+        //   )}'></grid-view-container-element>
+        // `;
+        // add({
+        //   target: gridViewContainer,
+        //   template,
+        // });
+        // return gridViewContainer;
       },
       appendGridViewContainer: async () => {
         await this.handleGridView().getCurrentPressList();
         const maxPage =
           this.displayStore.getState().page.grid.general.totalPage;
         const pressList: any = this.pressStore.getState().pressList;
-        Array.from({ length: maxPage }).forEach((_, i) => {
-          const gridViewContainer =
-            this.handleGridView().createGridViewContainer(i, pressList);
-          this.wrap
-            ?.querySelector('section.general .view.grid')
-            ?.append(gridViewContainer);
-          this.handleSubscribe().handleGridView();
+        const gridViewContainer = create({
+          tagName: 'grid-view-container-element',
+          attributeList: [['press-list', JSON.stringify(pressList)]],
         });
         const controller = create({
           tagName: 'controller-element',
@@ -154,9 +149,13 @@ class PressListContents extends HTMLElement {
         this.shadowRoot
           ?.querySelector('section.general')
           ?.querySelector('.view.grid')
+          ?.prepend(gridViewContainer);
+        this.shadowRoot
+          ?.querySelector('section.general')
+          ?.querySelector('.view.grid')
           ?.prepend(controller);
         this.handlePageController('grid');
-        this.handleGridView().appendGridViewContainerForCustomTab();
+        // this.handleGridView().appendGridViewContainerForCustomTab();
       },
       appendGridViewContainerForCustomTab: () => {
         const subscribingPress = this.userStore.getState().subscribingPress;
@@ -166,16 +165,16 @@ class PressListContents extends HTMLElement {
           .getState()
           .pressList.filter((press) => subscribingPress.includes(press.pid));
 
-        const gridViewContainer = this.handleGridView().createGridViewContainer(
-          0,
-          customPressList
-        );
+        // const gridViewContainer = this.handleGridView().createGridViewContainer(
+        //   0,
+        //   customPressList
+        // );
 
-        const target = this.wrap?.querySelector('section.custom .view.grid');
-        if (target) target.innerHTML = '';
-        target?.append(gridViewContainer);
-        this.handleSubscribe().handleGridView();
-        this.handleGridView().updateCustomTabGridData();
+        // const target = this.wrap?.querySelector('section.custom .view.grid');
+        // if (target) target.innerHTML = '';
+        // target?.append(gridViewContainer);
+        // this.handleSubscribe().handleGridView();
+        // this.handleGridView().updateCustomTabGridData();
       },
       updateCustomTabGridData: () => {
         this.displayStore.subscribe(() => {});
