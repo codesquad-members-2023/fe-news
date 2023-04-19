@@ -14,7 +14,6 @@ const mainView = ({ media }) => {
   const list = new ListView(media).render();
   viewContainer.append(list);
   main.append(sortButtons, viewContainer);
-  // main.append(sortButtons, viewContainer);
   return main;
 }
 

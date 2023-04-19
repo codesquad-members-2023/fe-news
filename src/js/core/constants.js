@@ -27,6 +27,7 @@ export const autoAnimationInfo = {
   transitionDuration : '500ms',
   leftDelayTime : 4000,
   timeDiff : 1000,
+  pageDelayTime: 5000,
 }
 
 export const TOTAL_GRID_COUNT = 96;

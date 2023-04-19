@@ -14,7 +14,7 @@
       @include font($bodySM, $medium);
       color: $gray300;
 
-      &:hover{
+      &:hover {
         text-decoration: underline $gray300;
         cursor: pointer;
       }
@@ -123,6 +123,7 @@
   color: $white;
   display: flex;
   justify-content: space-between;
+  cursor: default;
 
   div > span:nth-child(2) {
     color: rgba(255, 255, 255, 0.7);

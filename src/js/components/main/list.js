@@ -3,6 +3,7 @@ import { CATEGORY, PRESS_BUTTON } from '../../core/constants.js';
 import { ViewStore } from '../../stores/viewStore.js';
 import { SubscribeStore } from '../../stores/subscribeStore.js';
 import { PageStore } from '../../stores/pressPageStore.js';
+import { autoAnimationInfo } from '../../core/constants.js';
 
 class ListView {
   #viewStore;
@@ -10,8 +11,8 @@ class ListView {
   #pageStore;
   listContainer;
   movePages;
-  constructor(pressData, delayTime) {
-    this.DELAY_TIME = delayTime;
+  constructor(pressData) {
+    this.DELAY_TIME = autoAnimationInfo.pageDelayTime;
     this.#viewStore = ViewStore;
     this.#subscribeStore = SubscribeStore;
     this.#pageStore = PageStore;
@@ -19,7 +20,7 @@ class ListView {
       type: 'GET_PRESSDATA',
       payload: pressData,
     });
-    this.rafState = false;
+    this.rafState = true;
   }
 
   setTemplate() {
@@ -38,6 +39,7 @@ class ListView {
 
   render() {
     this.setTemplate();
+    this.autoMovePages();
     this.#viewStore.subscribe(this.#reRender.bind(this));
     this.#pageStore.subscribe(this.#reRender.bind(this));
     return this.listContainer;
@@ -46,7 +48,6 @@ class ListView {
   #reRender() {
     const { press, view } = this.#viewStore.getState();
     if (press['all'] && view['list']) {
-      this.rafState = true;
       this.listContainer.classList.remove('hidden');
       this.listContainer.querySelector('.category-area').outerHTML =
         this.getCategory();
@@ -63,7 +64,7 @@ class ListView {
       <ul class="list-category">
         ${page.pressData.reduce((list, category, index) => {
           const isCurrentCategory = page.categoryIndex === index;
-          list += `<li${isCurrentCategory ? ' class="current"' : ``}><a href="#">${CATEGORY[category[0]]}</a>${isCurrentCategory? `<div><span>${page.pageIndex + 1}</span>
+          list += `<li${isCurrentCategory ? ' class="current"' : ``}><span href="#">${CATEGORY[category[0]]}</span>${isCurrentCategory? `<div><span>${page.pageIndex + 1}</span>
           <span>/${page.pressData[page.categoryIndex][1].length}</span></div>` : ``}</li>`;
           return list;
         }, ``)}
@@ -77,6 +78,7 @@ class ListView {
       .getState()
       .subscribedList.has(press.pressLogo.src);
     const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
+
     return `<div class="content-area">
     <div class="press-box">
       <a src="" class="">
@@ -84,7 +86,7 @@ class ListView {
       </a>
       <span>${press.editedDate}</span>
       <button type="button" class="${buttonType} press-button">
-        <img src="/src/assets/icons/subscribe.svg">
+        <img src="/src/assets/icons/${buttonType}.svg">
         <span>${PRESS_BUTTON[buttonType]}</span>
       </button>
     </div>
@@ -123,9 +125,10 @@ class ListView {
 
   clickCategory({ target }) {
     const isCategory = target.closest('.list-category');
-    const isCurrent = target.className === 'current';
     const isLI = target.closest('li');
-    if(!isCategory || isCurrent || !isLI) return;
+    if(!isCategory || !isLI) return;
+    const isCurrent = target.closest('li').className === 'current';
+    if(isCurrent) return;
 
     const categories = Object.values(CATEGORY);
     const targetCategory = target.textContent;
@@ -136,18 +139,18 @@ class ListView {
     });
   }
 
-  // autoMovePages() {
-  //   let lastTime = 0;
-  //   this.movePages = currentTime => {
-  //     let deltaTime = currentTime - lastTime;
-  //     // if (deltaTime > this.DELAY_TIME) {
-  //       this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
-  //       lastTime = currentTime;
-  //     }
-  //     if (this.rafState) requestAnimationFrame(this.movePages);
-  //   }
-  //   requestAnimationFrame(this.movePages);
-  // }
+  autoMovePages() {
+    let lastTime = 0;
+    this.movePages = currentTime => {
+      let deltaTime = currentTime - lastTime;
+      if (deltaTime > this.DELAY_TIME) {
+        this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
+        lastTime = currentTime;
+      }
+      if (this.rafState) requestAnimationFrame(this.movePages);
+    }
+    requestAnimationFrame(this.movePages);
+  }
 }
 
 export default ListView;
