@@ -1,5 +1,5 @@
 import { domUtils, dataUtils, validatorUtils } from '../../utils/index.js';
-import { tabStore, gridPageStore } from '../../store/index.js';
+import { tabStore, gridPageStore, subscriptionListStore } from '../../store/index.js';
 import PressGrid from './pressGrid.js';
 
 const { $ } = domUtils;
@@ -16,16 +16,24 @@ export default class MainContentGrid {
   constructor($parent, props) {
     this.$parent = $parent;
     this.$ele = document.createElement('section');
-    this.$ele.className = 'main-content__grid';
 
     this.props = props;
+    const { pressTabType } = this.props;
+
+    this.$ele.classList.add('main-content__grid', `${pressTabType}-grid__section`);
 
     this.pressGridCollection;
   }
 
   mount() {
     const { getChucks } = dataUtils;
-    const { pressTabType, pressData } = this.props;
+    const { pressTabType, allPressData } = this.props;
+    const { subscriptionList } = subscriptionListStore.getState();
+
+    const pressData =
+      pressTabType === 'all'
+        ? allPressData
+        : allPressData.filter(({ pressName }) => subscriptionList.has(pressName));
     const pressChucks = getChucks({ arr: pressData, count: this.#gridItemCount });
 
     this.render();
