@@ -84,15 +84,14 @@ class PressListContents extends HTMLElement {
     this.userStore.dispatch({ type: 'SET_USER', payload: userData[0] });
 
     this.handleDisplay();
-    this.handleGridView().appendGridViewContainer('general');
-    this.handleGridView().appendGridViewContainer('custom');
-    console.log(this.pressStore.getState());
-    this.handleListView().appendListViewContainer();
+    this.handleGridView().append('general');
+    this.handleGridView().append('custom');
+    this.handleListView().append('general');
   }
 
   handleGridView() {
     return {
-      getCurrentPressList: async () => {
+      getPressList: async () => {
         const pressList = await getPress();
         this.displayStore.dispatch({
           type: 'SET_TOTAL_PAGE',
@@ -107,7 +106,7 @@ class PressListContents extends HTMLElement {
           payload: { pressList },
         });
       },
-      getCurrentCustomPressList: async () => {
+      getCustomPressList: async () => {
         const pressList = await getPress();
         const customPressList = pressList.filter((press: any) =>
           this.userStore.getState().subscribingPress.includes(press.pid)
@@ -125,14 +124,14 @@ class PressListContents extends HTMLElement {
           payload: { pressList: customPressList },
         });
       },
-      appendGridViewContainer: async (view: 'general' | 'custom') => {
+      append: async (tab: 'general' | 'custom') => {
         let pressList;
-        if (view === 'general') {
-          await this.handleGridView().getCurrentPressList();
+        if (tab === 'general') {
+          await this.handleGridView().getPressList();
           pressList = this.pressStore.getState().pressList;
         }
-        if (view === 'custom') {
-          await this.handleGridView().getCurrentCustomPressList();
+        if (tab === 'custom') {
+          await this.handleGridView().getCustomPressList();
           pressList = this.pressStore.getState().customPressList;
         }
         const gridViewContainer = create({
@@ -140,20 +139,13 @@ class PressListContents extends HTMLElement {
           attributeList: [['press-list', JSON.stringify(pressList)]],
         });
         this.shadowRoot
-          ?.querySelector(`section.${view}`)
+          ?.querySelector(`section.${tab}`)
           ?.querySelector('.view.grid')
           ?.prepend(gridViewContainer);
-        const controller = create({
-          tagName: 'controller-element',
-          attributeList: [['hide', 'left']],
-        });
-        this.shadowRoot
-          ?.querySelector(`section.${view}`)
-          ?.querySelector('.view.grid')
-          ?.prepend(controller);
-        this.handlePageController(view, 'grid');
-      },
 
+        this.handlePageController().appendController(tab, 'grid');
+        this.handlePageController().movePage(tab, 'grid');
+      },
       updateCustomTabGridData: () => {
         this.displayStore.subscribe(() => {});
       },
@@ -162,62 +154,56 @@ class PressListContents extends HTMLElement {
 
   handleListView() {
     return {
-      createListViewContainer: async (page: number) => {
-        const listViewContainer = create({ tagName: 'div' });
-        listViewContainer.classList.add('list-view-container');
-        listViewContainer.setAttribute('page', `${page}`);
-        if (page === 0) {
-          listViewContainer.classList.add('show');
-        }
-        const currentSection = await this.handleListView().getCurrentSection({
-          page: 0,
-        });
-        currentSection.articles.forEach((article: ArticleInterface) => {
+      getSection: async (page: number = 0) => {
+        const section = await getSection({ page });
+        section.articles.forEach((article: ArticleInterface) => {
           article.title = parseQuotationMarks(article.title);
         });
-        const template = `
-        <list-view-element section-data='${JSON.stringify(
-          currentSection
-        )}'></list-view-element>
-        `;
-        const gridViewContainer = this.wrap?.querySelector(
-          'section.general .view.list'
-        );
-
-        add({
-          target: listViewContainer,
-          template,
+        this.displayStore.dispatch({
+          type: 'SET_TOTAL_PAGE',
+          payload: {
+            view: 'list',
+            tab: 'general',
+          },
         });
-
-        this.wrap
-          ?.querySelector('section.general .view.list')
-          ?.append(listViewContainer);
-        this.handleSubscribe().handleListView();
+        this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
       },
-      getCurrentSection: async ({ page }: getCurrentSectionProps) => {
-        const section = await getSection({ page });
-        return section;
-      },
+      getCustomSection: () => {},
       changeCurrentSection: async (page: number) => {
-        const data = await getSection({ page });
-        this.sectionStore.dispatch({ type: 'CHANGE_SECTION', payload: data });
+        const section = await getSection({ page });
+        this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
         this.shadowRoot
           ?.querySelector('list-view-element')
           ?.setAttribute(
             'section-data',
             JSON.stringify(this.sectionStore.getState())
           );
-        this.handleSubscribe().handleListView();
       },
-      appendListViewContainer: () => {
-        this.handleListView().createListViewContainer(0);
-        const controller = create({ tagName: 'controller-element' });
-        setProperty({ target: controller, name: 'hide', value: 'left' });
+      append: async (tab: 'general' | 'custom', page: number = 0) => {
+        let section;
+        if (tab === 'general') {
+          await this.handleListView().getSection(0);
+          section = this.sectionStore.getState();
+        }
+
+        const listViewContainer = create({
+          tagName: 'div',
+          classList: ['list-view-container'],
+          attributeList: [['page', `${page}`]],
+        });
+        const listViewElement = create({
+          tagName: 'list-view-element',
+          classList: ['list-view-container'],
+          attributeList: [['section-data', JSON.stringify(section)]],
+        });
+        listViewContainer?.prepend(listViewElement);
         this.shadowRoot
-          ?.querySelector('section.general')
+          ?.querySelector(`section.${tab}`)
           ?.querySelector('.view.list')
-          ?.append(controller);
-        this.handlePageController('general', 'list');
+          ?.prepend(listViewContainer);
+
+        this.handlePageController().appendController(tab, 'grid');
+        this.handlePageController().movePage(tab, 'grid');
       },
     };
   }
@@ -252,74 +238,103 @@ class PressListContents extends HTMLElement {
     this.displayStore.subscribe(toggleShowClass);
   }
 
-  handlePageController(tab: 'general' | 'custom', view: 'grid' | 'list') {
-    const controllerElement = select({
-      selector: 'controller-element',
-      parent: document
-        .querySelector('news-element')
-        ?.shadowRoot?.querySelector('press-list-element')
-        ?.shadowRoot?.querySelector('presslist-contents-element')
-        ?.shadowRoot?.querySelector(`section.${tab} .view.${view}`),
-    });
+  handlePageController() {
+    return {
+      handleClick: (
+        e: any,
+        view: 'grid' | 'list',
+        tab: 'general' | 'custom',
+        controllerElement: any
+      ) => {
+        const target = e.target;
+        const position = target.getAttribute('position');
+        const isLeft = position === 'left';
 
-    controllerElement?.shadowRoot?.addEventListener('click', (e: any) => {
-      const target = e.target;
-      const position = target.getAttribute('position');
-      const isLeft = position === 'left';
+        if (!isLeft) {
+          this.displayStore.dispatch({
+            type: 'NEXT_PAGE',
+            payload: { view, tab },
+          });
+        } else {
+          this.displayStore.dispatch({
+            type: 'PREV_PAGE',
+            payload: { view, tab },
+          });
+        }
 
-      if (!isLeft) {
-        this.displayStore.dispatch({
-          type: 'NEXT_PAGE',
-          payload: { view, tab },
+        const currentPage =
+          this.displayStore.getState().page[view][tab].currentPage;
+        const totalPage =
+          this.displayStore.getState().page[view][tab].totalPage;
+        const isLastPage = currentPage === totalPage - 1;
+        const isFirstPage = currentPage === 0;
+
+        if (isLastPage) {
+          setProperty({
+            target: controllerElement,
+            name: 'hide',
+            value: 'right',
+          });
+        } else if (isFirstPage) {
+          setProperty({
+            target: controllerElement,
+            name: 'hide',
+            value: 'left',
+          });
+        } else {
+          setProperty({
+            target: controllerElement,
+            name: 'hide',
+            value: 'false',
+          });
+        }
+
+        const changeVisibility = (view: 'grid' | 'list') => {
+          const displayContainer = this.wrap?.querySelector(
+            `.${view}-view-container.show`
+          );
+          const newDisplayContainer = this.wrap?.querySelector(
+            `.${view}-view-container[page='${currentPage}']`
+          );
+          displayContainer?.classList.remove('show');
+          newDisplayContainer?.classList.add('show');
+        };
+        changeVisibility(view);
+
+        if (view === 'list') {
+          this.handleListView().changeCurrentSection(currentPage);
+        }
+      },
+      movePage: (tab: 'general' | 'custom', view: 'grid' | 'list') => {
+        const controllerElement = select({
+          selector: 'controller-element',
+          parent: document
+            .querySelector('news-element')
+            ?.shadowRoot?.querySelector('press-list-element')
+            ?.shadowRoot?.querySelector('presslist-contents-element')
+            ?.shadowRoot?.querySelector(`section.${tab} .view.${view}`),
         });
-      } else {
-        this.displayStore.dispatch({
-          type: 'PREV_PAGE',
-          payload: { view, tab },
-        });
-      }
 
-      const currentPage =
-        this.displayStore.getState().page[view][tab].currentPage;
-      const totalPage = this.displayStore.getState().page[view][tab].totalPage;
-      console.log(this.displayStore.getState());
-      const isLastPage = currentPage === totalPage - 1;
-      const isFirstPage = currentPage === 0;
-
-      if (isLastPage) {
-        setProperty({
-          target: controllerElement,
-          name: 'hide',
-          value: 'right',
-        });
-      } else if (isFirstPage) {
-        setProperty({ target: controllerElement, name: 'hide', value: 'left' });
-      } else {
-        setProperty({
-          target: controllerElement,
-          name: 'hide',
-          value: 'false',
-        });
-      }
-
-      const changeVisibility = (view: 'grid' | 'list') => {
-        const displayContainer = this.wrap?.querySelector(
-          `.${view}-view-container.show`
+        controllerElement?.shadowRoot?.addEventListener('click', (e) =>
+          this.handlePageController().handleClick(
+            e,
+            view,
+            tab,
+            controllerElement
+          )
         );
-        const newDisplayContainer = this.wrap?.querySelector(
-          `.${view}-view-container[page='${currentPage}']`
-        );
-        displayContainer?.classList.remove('show');
-        newDisplayContainer?.classList.add('show');
-      };
-      changeVisibility(view);
-
-      if (view === 'list') {
-        this.sectionStore = store.section;
-        store.section.dispatch;
-        this.handleListView().changeCurrentSection(currentPage);
-      }
-    });
+      },
+      appendController: (tab: 'general' | 'custom', view: 'grid' | 'list') => {
+        const controller = create({
+          tagName: 'controller-element',
+          attributeList: [['hide', 'left']],
+        });
+        this.shadowRoot
+          ?.querySelector(`section.${tab}`)
+          ?.querySelector(`.view.${view}`)
+          ?.prepend(controller);
+      },
+    };
   }
 
   handleSubscribe() {

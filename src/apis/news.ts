@@ -26,8 +26,6 @@ export const getPress = async () => {
 export const getSection = async ({ page }: getSectionProps) => {
   const path = `/section?page=${page}`;
   const method = 'GET';
-  const data = await customFetch({ path, method });
-  store.section.dispatch({ type: 'CHANGE_SECTION', payload: data });
-  const section = store.section.getState();
+  const section = await customFetch({ path, method });
   return section;
 };

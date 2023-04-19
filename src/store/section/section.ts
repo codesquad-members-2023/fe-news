@@ -27,7 +27,7 @@ interface chnageSectionProps extends props {
   payload: SectionType;
 }
 
-const changeSection = ({ state, payload }: chnageSectionProps) => {
+const setSection = ({ state, payload }: chnageSectionProps) => {
   return {
     ...payload,
   };
@@ -38,8 +38,8 @@ const reducer: ReducerType<SectionType> = (
   action: ActionType
 ): SectionType => {
   switch (action.type) {
-    case 'CHANGE_SECTION':
-      return changeSection({ state, payload: action.payload });
+    case 'SET_SECTION':
+      return setSection({ state, payload: action.payload });
     default:
       return state;
   }
