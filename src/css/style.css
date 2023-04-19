@@ -547,6 +547,7 @@ main .view-buttons .grid-active {
   color: #FFFFFF;
   display: flex;
   justify-content: space-between;
+  cursor: default;
 }
 .current div > span:nth-child(2) {
   color: rgba(255, 255, 255, 0.7);

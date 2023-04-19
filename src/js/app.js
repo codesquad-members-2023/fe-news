@@ -16,8 +16,6 @@ const app = async () => {
     { autoAnimationInfo },
   ).render();
   const main = mainView(mediaData);
-  // const main = new View(mediaData).render();
-
   root.append(header, section, main);
 };
 

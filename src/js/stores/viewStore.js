@@ -1,4 +1,4 @@
-import Store from '../core/Store.js';
+import Store from '../core/store.js';
 
 const initialState = {
   press: {
@@ -8,7 +8,7 @@ const initialState = {
   view: {
     list: false,
     grid: true,
-  }
+  },
 };
 
 const viewReducer = (state = initialState, action) => {
