@@ -10,16 +10,16 @@ export default class ShowTab {
 
   constructor($parent) {
     this.$parent = $parent;
-    this.$ele = document.createElement('div');
-    this.$ele.className = 'show-tab';
+    this.$mainEle = document.createElement('div');
+    this.$mainEle.className = 'show-tab';
 
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
 
     tabStore.register(this.render.bind(this));
   }
 
   render() {
-    this.$ele.innerHTML = this.template();
+    this.$mainEle.innerHTML = this.template();
     this.setEvent();
   }
 
@@ -34,7 +34,7 @@ export default class ShowTab {
   }
 
   setEvent() {
-    this.$ele.addEventListener('click', ({ target }) => {
+    this.$mainEle.addEventListener('click', ({ target }) => {
       const targetClassList = target.classList;
       const { activeShowTab } = tabStore.getState();
 

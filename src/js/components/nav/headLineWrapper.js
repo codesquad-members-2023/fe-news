@@ -5,8 +5,8 @@ export default class HeadLineWrapper {
 
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('div');
-    this.$ele.className = 'nav-bar__headLine-wrapper';
+    this.$mainEle = document.createElement('div');
+    this.$mainEle.className = 'nav-bar__headLine-wrapper';
 
     this.props = props;
     this.state = {};
@@ -14,16 +14,16 @@ export default class HeadLineWrapper {
 
     this.setEvent();
     this.setAutoRolling();
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
   }
 
   render() {
     const { isRolling } = this.state;
 
-    if (isRolling) this.$ele.classList.add('rolling');
-    else this.$ele.classList.remove('rolling');
+    if (isRolling) this.$mainEle.classList.add('rolling');
+    else this.$mainEle.classList.remove('rolling');
 
-    this.$ele.innerHTML = this.template();
+    this.$mainEle.innerHTML = this.template();
   }
 
   update({ newState }) {
@@ -56,7 +56,7 @@ export default class HeadLineWrapper {
   }
 
   setEvent() {
-    this.$ele.addEventListener('transitionend', () => {
+    this.$mainEle.addEventListener('transitionend', () => {
       const { currentIdx, nextIdx, count } = this.state;
       this.update({
         newState: {

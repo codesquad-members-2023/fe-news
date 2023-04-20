@@ -16,21 +16,21 @@ export default class MainContentGrid {
 
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('section');
+    this.$mainEle = document.createElement('section');
 
     this.props = props;
     const { pressTabType } = this.props;
 
-    this.$ele.classList.add('main-content__grid', `${pressTabType}-grid__section`);
+    this.$mainEle.classList.add('main-content__grid', `${pressTabType}-grid__section`);
 
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
 
     gridPageStore.register(this.displayBtn.bind(this));
     tabStore.register(this.displayElement.bind(this));
   }
 
   render() {
-    this.$ele.innerHTML = this.template();
+    this.$mainEle.innerHTML = this.template();
 
     this.renderPressGridContainers();
 
@@ -51,7 +51,7 @@ export default class MainContentGrid {
     });
     const $gridWrapper = $({
       selector: '.main-content__grid-wrapper',
-      parent: this.$ele
+      parent: this.$mainEle
     });
 
     const pagesCount = pressDataSlices.length === 0 ? 1 : pressDataSlices.length;
@@ -87,8 +87,8 @@ export default class MainContentGrid {
         activeShowTab
       })
     )
-      this.$ele.classList.add('display-none');
-    else this.$ele.classList.remove('display-none');
+      this.$mainEle.classList.add('display-none');
+    else this.$mainEle.classList.remove('display-none');
   }
 
   displayBtn() {
@@ -97,11 +97,11 @@ export default class MainContentGrid {
 
     const $beforeBtn = $({
       selector: '.main-content__grid-before-btn',
-      parent: this.$ele
+      parent: this.$mainEle
     });
     const $nextBtn = $({
       selector: '.main-content__grid-next-btn',
-      parent: this.$ele
+      parent: this.$mainEle
     });
 
     if (isFirstPage(currentPage)) $beforeBtn.classList.add('hidden');
@@ -127,7 +127,7 @@ export default class MainContentGrid {
   }
 
   setEvent() {
-    this.$ele.addEventListener('click', ({ target }) => {
+    this.$mainEle.addEventListener('click', ({ target }) => {
       const { pressTabType } = this.props;
       const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
 

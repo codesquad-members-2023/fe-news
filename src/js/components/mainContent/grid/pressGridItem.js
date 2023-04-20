@@ -6,12 +6,12 @@ const { $ } = domUtils;
 export default class PressGridItem {
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('div');
-    this.$ele.className = 'press-grid__item';
+    this.$mainEle = document.createElement('div');
+    this.$mainEle.className = 'press-grid__item';
 
     this.props = props;
 
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
 
     // ! logo 이미지가 없는 grid item도 렌더링 함수 등록해야함
     if (this.props)
@@ -24,7 +24,7 @@ export default class PressGridItem {
   render() {
     // * 만약 props에 담은 정보가 없다면 아무것도 들어있지 않은 grid item을 만들기 위해 return
     if (!this.props) return;
-    this.$ele.innerHTML = this.template();
+    this.$mainEle.innerHTML = this.template();
     this.setEvent();
   }
 
@@ -44,7 +44,7 @@ export default class PressGridItem {
   }
 
   setEvent() {
-    const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$ele });
+    const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$mainEle });
 
     $subscribeToggleBtn.addEventListener('click', ({ target }) => {
       const { pressName } = this.props;

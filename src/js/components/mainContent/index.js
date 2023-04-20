@@ -4,18 +4,18 @@ import MainContentContainer from './mainContentContainer.js';
 export default class MainContent {
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('main');
-    this.$ele.id = 'main-content';
+    this.$mainEle = document.createElement('main');
+    this.$mainEle.id = 'main-content';
 
     this.props = props;
 
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
   }
 
   render() {
     const { pressData } = this.props;
 
-    new MainContentHeader(this.$ele).render();
-    new MainContentContainer(this.$ele, { allPressData: pressData }).render();
+    new MainContentHeader(this.$mainEle).render();
+    new MainContentContainer(this.$mainEle, { allPressData: pressData }).render();
   }
 }

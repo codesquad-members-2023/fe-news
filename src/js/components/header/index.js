@@ -10,14 +10,14 @@ const getDateContent = (data) => {
 export default class Header {
   constructor($parent) {
     this.$parent = $parent;
-    this.$ele = document.createElement('header');
-    this.$ele.id = 'header';
+    this.$mainEle = document.createElement('header');
+    this.$mainEle.id = 'header';
 
-    this.$parent.insertAdjacentElement('afterbegin', this.$ele);
+    this.$parent.insertAdjacentElement('afterbegin', this.$mainEle);
   }
 
   render() {
-    this.$ele.innerHTML = this.template();
+    this.$mainEle.innerHTML = this.template();
   }
 
   template() {

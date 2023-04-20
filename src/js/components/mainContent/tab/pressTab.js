@@ -3,16 +3,16 @@ import { tabStore } from '../../../store/index.js';
 export default class PressTab {
   constructor($parent) {
     this.$parent = $parent;
-    this.$ele = document.createElement('div');
-    this.$ele.className = 'press-tab';
+    this.$mainEle = document.createElement('div');
+    this.$mainEle.className = 'press-tab';
 
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
 
     tabStore.register(this.render.bind(this));
   }
 
   render() {
-    this.$ele.innerHTML = this.template();
+    this.$mainEle.innerHTML = this.template();
     this.setEvent();
   }
 
@@ -28,7 +28,7 @@ export default class PressTab {
   }
 
   setEvent() {
-    this.$ele.addEventListener('click', ({ target }) => {
+    this.$mainEle.addEventListener('click', ({ target }) => {
       const targetClassList = target.classList;
       const { activePressTab } = tabStore.getState();
 
