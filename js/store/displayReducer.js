@@ -3,12 +3,19 @@ import { getStoreState, dispatch } from './store.js';
 
 export const subscribeReducer = (state, action) => {
   const subscribeList = getStoreState('subscribeData').subscribe;
-
   const mediaWholeData = getStoreState('mediaData').data;
   switch (action.type) {
     case displayActions.GRID_SUBSCRIBE_BUTTON_CLICK:
-      subscribeList.push(mediaWholeData[action.payload - 1]);
+      let curIndex;
+      mediaWholeData.some((media, index) => {
+        if (media.mediaId === Number(action.payload)) {
+          curIndex = index;
+          return true;
+        }
+      });
+      subscribeList.push(mediaWholeData[curIndex]);
       return { ...state, subscribe: subscribeList };
+
     case displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK:
       subscribeList.some((subscribeMedia, index) => {
         if (String(subscribeMedia.mediaId) === action.payload) {
@@ -17,20 +24,24 @@ export const subscribeReducer = (state, action) => {
         }
       });
       return { ...state, subscribe: subscribeList };
+
     case displayActions.MINE_LIST_TAB_BUTTON_CLICK:
       return { ...state, mineListCurPage: action.payload };
+
     case displayActions.MINE_LIST_LEFT_BUTTON_CLICK:
       const prevPage =
         state.mineListCurPage === 0
           ? subscribeList.length - 1
           : state.mineListCurPage - 1;
       return { ...state, mineListCurPage: prevPage };
+
     case displayActions.MINE_LIST_RIGHT_BUTTON_CLICK:
       const nextPage =
         state.mineListCurPage === subscribeList.length - 1
           ? 0
           : state.mineListCurPage + 1;
       return { ...state, mineListCurPage: nextPage };
+
     default:
       return state;
   }

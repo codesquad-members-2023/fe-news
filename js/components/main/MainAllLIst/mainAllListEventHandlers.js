@@ -10,16 +10,16 @@ export const tabClickEventHandler = ({ target }) => {
   dispatch(displayActionCreator.listTabBtnClick(categoryIdx));
 };
 
-export const subscribeBtnClickEventHandler = (mediaIdx, event) => {
+export const subscribeBtnClickEventHandler = (mediaId, event) => {
   const $img = event.currentTarget.querySelector('img');
 
   if ($img.alt === 'subscribe') {
     $img.alt = 'unsubscribe';
     $img.src = './asset/listUnsubscribeBtn.svg';
-    dispatch(displayActionCreator.gridSubscribeBtnClick(mediaIdx));
+    dispatch(displayActionCreator.gridSubscribeBtnClick(mediaId));
   } else {
     $img.alt = 'subscribe';
     $img.src = './asset/subscribeButton.svg';
-    dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaIdx));
+    dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaId));
   }
 };

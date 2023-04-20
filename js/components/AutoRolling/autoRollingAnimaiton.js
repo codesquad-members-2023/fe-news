@@ -62,22 +62,21 @@ export const autoRollingFrame = (obj, timestamp) => {
     // obj.rightTime = obj.leftTime;
   }
 
-  const now = timestamp;
-  const leftDuration = now - obj.leftTime;
-  const rightDuration = obj.rightTime === null ? 0 : now - obj.rightTime;
+  const leftDuration = timestamp - obj.leftTime;
+  const rightDuration = obj.rightTime === null ? 0 : timestamp - obj.rightTime;
 
   // TODO : Magic Number 제거.
-  if (leftDuration >= LEFT_ANIMATION_TIME) {
+  if (leftDuration > LEFT_ANIMATION_TIME) {
     obj.leftIdx++;
     rollingLeftAnimation(obj.element, obj.content, obj.leftIdx);
-    obj.leftTime = now;
-    obj.rightTime = now;
+    obj.leftTime = timestamp;
+    obj.rightTime = timestamp;
   }
 
-  if (rightDuration >= RIGHT_ANIMATION_TIME) {
+  if (rightDuration > RIGHT_ANIMATION_TIME) {
     obj.rightIdx++;
     rollingRightAnimation(obj.element, obj.content, obj.rightIdx);
     obj.rightTime = null;
   }
-  window.requestAnimationFrame(autoRollingFrame.bind(null, obj));
+  requestAnimationFrame(autoRollingFrame.bind(null, obj));
 };

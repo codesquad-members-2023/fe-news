@@ -38,8 +38,18 @@ export const fetchActionCreator = {
     // 여기선 this를 사용 불가.. 왜냐면 화살표 함수를 사용해서...!
     dispatch(fetchActionCreator.fetchMediaDataRequest());
 
-    const response = await fetchMediaData();
-    dispatch(fetchActionCreator.fetchMediaDataSuccess(response.data));
+    let response = await fetchMediaData();
+
+    dispatch(
+      fetchActionCreator.fetchMediaDataSuccess(
+        response.data.sort((prev, cur) => {
+          if (prev.mediaInfo.type === cur.mediaInfo.type) {
+            return Math.random() > 0.5 ? -1 : 1;
+          }
+          return 0;
+        }),
+      ),
+    );
   },
 
   startActionCreator: () => {
