@@ -102,16 +102,17 @@ class MainHandler {
     })
   }
 
+  #onSubscriptionButton(target, eventType) {
+    target.addEventListener(eventType, ({ target }) => {
+      this.#toggleSubscriptionButton(target, 'none')
+    })
+  }
+
   #onMainViewEvent() {
     const mainView = getElement('.main-view')
 
-    mainView.addEventListener('mouseover', ({ target }) => {
-      this.#toggleSubscriptionButton(target, 'none')
-    })
-
-    mainView.addEventListener('mouseout', ({ target }) => {
-      this.#toggleSubscriptionButton(target, 'none')
-    })
+    this.#onSubscriptionButton(mainView, 'mouseover')
+    this.#onSubscriptionButton(mainView, 'mouseout')
 
     mainView.addEventListener('click', ({ target }) => {
       const cell = target.closest('.press__info')
@@ -127,6 +128,10 @@ class MainHandler {
           // 아니오(confirm-btn)를 누르면 모달만 닫힘
           this.#currentTypeData = this.#getSubscriptionData(this.#allData)
           this.#renderView()
+        }
+
+        if (this.#currentViewType === 'list') {
+          // TODO: 스낵바 띄우기
         }
       }
 
