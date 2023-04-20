@@ -13,6 +13,12 @@ const createJournalList = () => {
 
   // 전체 언론사 <-> 내가 구독한 언론사
   const updateJournalData = (state) => {
+    const currentFrame = journalHeaderStore.getFrame();
+    if (currentFrame === "FRAME_DETAIL") {
+      const journalHeaderState = journalHeaderStore.getState();
+      updateJournalDetail(journalHeaderState);
+      return;
+    }
     journalTrack.render();
     const journalContainer = document.querySelector(".journal-container");
     journalContainer.innerHTML = "";
@@ -99,6 +105,7 @@ const createJournalList = () => {
     journalTrack.addEvent();
   };
 
+  // 언론사 디테일 스토어 생성
   const journalDetailStore = new JournalDetailStore(renderJournalDetail);
   loadJournalDetail();
 
