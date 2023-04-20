@@ -2,37 +2,40 @@ import { $ } from "../../utils/dom.js";
 import { COMPANY, SUBSCRIBE } from "../../constants/dom.js";
 import { SubscribeController } from "../../controller/subscribeController.js";
 import { updateNewsLogo } from "./newsCompanySubscribe.js";
-import { changeNewsDetailColor } from "./newsCompanyList.js";
+import { changeNewsDetailColor, changeNewsDetailDisplay } from "./newsCompanyDetail.js";
 //처음 뉴스 그리드 부분과 그리드 부분 바의 토대를 만든다.
 export const renderNewsCompanyBar = (selector, element) => {
   const newsCompanyTemplate = `
-<div class="news-company">
-<div class="news-company__bar">
-  <div class="company__choice">
-    <span class="company__choice_all">전체 언론사</span>
-    <span class="company__choice_subscribe">내가 구독한 언론사</span>
-  </div>
-  <div class = "company__view">
-  <object id="company__view_detail" type="image/svg+xml" data="assets/viewDetail.svg">
-		<img />
-  </object>
-  <object id="company__view_logo" type="image/svg+xml" data="assets/viewLogo.svg">
-		<img />
-  </object>
-  </div>
+  <div class="news-company">
+  <div class="news-company__bar">
+    <div class="company__choice">
+      <span class="company__choice_all">전체 언론사</span>
+      <span class="company__choice_subscribe">내가 구독한 언론사</span>
+    </div>
+    <div class="company__view">
+      <object id="company__view_detail" type="image/svg+xml" data="assets/viewDetail.svg">
+        <img />
+      </object>
+      <object id="company__view_logo" type="image/svg+xml" data="assets/viewLogo.svg">
+        <img />
+      </object>
+    </div>
   </div>
   <div class="news-company__grid">
-    <div class="grid_btn-left"><img src="assets/leftButton.svg"/></div>
+    <div class="grid_btn-left"><img src="assets/leftButton.svg" /></div>
     <div class="grid_set">
-    <div class="grid_all">
-    <div class="all_first-page" index="0"></div>
-    <div class="all_second-page none"></div>
-    <div class="all_third-page none"></div>
-    <div class="all_fourth-page none"></div>
+      <div class="grid_all">
+        <div class="all_first-page" index="0"></div>
+        <div class="all_second-page none"></div>
+        <div class="all_third-page none"></div>
+        <div class="all_fourth-page none"></div>
+      </div>
+      <div class="grid_subscribe"></div>
     </div>
-    <div class="grid_subscribe"></div>
-    </div>
-    <div class="grid_btn-right"><img src="assets/rightButton.svg"/></div>
+    <div class="grid_btn-right"><img src="assets/rightButton.svg" /></div>
+  </div>
+  <div class="news-company__detail none">
+    <div class="news_detail_container"><div class="news_category-bar"></div></div>
   </div>
 </div>
 `;
@@ -134,6 +137,7 @@ export const insertMediaLogosGrid = (mediaDataSet) => {
     });
     register(mediaData);
     changeNewsDetailColor();
+    changeNewsDetailDisplay();
   };
   onEvents(COMPANY.FIRST_PAGE);
 };

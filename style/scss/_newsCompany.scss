@@ -103,7 +103,20 @@
     border: 1px solid var(--color-gray-100);
   }
 }
-
+.news_detail_container {
+  width: 930px;
+  height: 388px;
+  margin: 0 auto;
+  margin-top: 10px;
+  border: 1px solid var(--color-gray-100);
+}
+.news_category-bar {
+  width: 928px;
+  height: 40px;
+  margin: 0 auto;
+  background: var(--color-off-white);
+  border-bottom: 1px solid var(--color-gray-100);
+}
 .hidden {
   visibility: hidden;
 }
