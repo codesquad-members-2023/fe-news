@@ -1,6 +1,10 @@
+import { gridPageStore } from '../../store/index.js';
 import PressGridItem from './pressGridItem.js';
 
 export default class PressGrid {
+  // Todo: #gridItemCount constants 폴더에 상수로 관리하기
+  #gridItemCount = 24;
+
   constructor($parent, props) {
     this.$parent = $parent;
     this.$ele = document.createElement('div');
@@ -14,9 +18,29 @@ export default class PressGrid {
   mount() {
     const { gridItemsData } = this.props;
 
-    this.gridItems = gridItemsData.map((data) => new PressGridItem(this.$ele, { ...data }));
+    gridPageStore.register(this.setDisplayElement.bind(this));
+
+    this.gridItems = gridItemsData.map(
+      ({ pressName, pressLogo }) =>
+        new PressGridItem(this.$ele, {
+          pressName,
+          pressLogo
+        })
+    );
+
+    while (this.gridItems.length < this.#gridItemCount) {
+      this.gridItems.push(new PressGridItem(this.$ele));
+    }
+
     this.gridItems.forEach((item) => item.mount());
 
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
+  }
+
+  setDisplayElement() {
+    const { pressTabType, page } = this.props;
+    const { currentPage } = gridPageStore.getState()[pressTabType];
+    if (currentPage !== page) this.$ele.classList.add('display-none');
+    else this.$ele.classList.remove('display-none');
   }
 }

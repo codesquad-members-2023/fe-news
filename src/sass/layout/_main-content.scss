@@ -24,11 +24,37 @@
 }
 
 .main-content__grid {
-  @include flex-row();
+  position: relative;
+  &.display-none {
+    display: none;
+  }
+
+  &-before-btn.hidden,
+  &-next-btn.hidden {
+    visibility: hidden;
+  }
+  &-before-btn {
+    position: absolute;
+    top: 50%;
+    left: -47px;
+    transform: translate3d(0, -50%, 0);
+  }
+  &-next-btn {
+    position: absolute;
+    top: 50%;
+    right: -47px;
+    transform: translate3d(0, -50%, 0);
+  }
+  &-wrapper {
+    overflow-x: hidden;
+  }
 }
 .press-grid {
   display: grid;
   grid-template-columns: repeat($grid-columns-count, calc($app-width/$grid-columns-count));
+  &.display-none {
+    display: none;
+  }
 }
 .press-grid__item {
   @include flex-row($justify-content: center, $align-items: center);

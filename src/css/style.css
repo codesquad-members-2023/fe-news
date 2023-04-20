@@ -124,15 +124,36 @@ body {
 }
 
 .main-content__grid {
-  display: flex;
-  justify-content: normal;
-  align-items: normal;
-  flex-direction: row;
+  position: relative;
+}
+.main-content__grid.display-none {
+  display: none;
+}
+.main-content__grid-before-btn.hidden, .main-content__grid-next-btn.hidden {
+  visibility: hidden;
+}
+.main-content__grid-before-btn {
+  position: absolute;
+  top: 50%;
+  left: -47px;
+  transform: translate3d(0, -50%, 0);
+}
+.main-content__grid-next-btn {
+  position: absolute;
+  top: 50%;
+  right: -47px;
+  transform: translate3d(0, -50%, 0);
+}
+.main-content__grid-wrapper {
+  overflow-x: hidden;
 }
 
 .press-grid {
   display: grid;
   grid-template-columns: repeat(6, 155px);
+}
+.press-grid.display-none {
+  display: none;
 }
 
 .press-grid__item {

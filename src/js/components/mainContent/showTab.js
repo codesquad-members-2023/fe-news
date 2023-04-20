@@ -1,4 +1,4 @@
-import { tabStore } from '../../store/tabStore.js';
+import { tabStore } from '../../store/index.js';
 
 export default class ShowTab {
   #imgSrc = {

@@ -1,4 +1,4 @@
-import { $ } from '../../utils/dom.js';
+import { domUtils } from '../../utils/index.js';
 import HeadLineWrapper from './headLineWrapper.js';
 
 export default class NavBar {
@@ -15,6 +15,7 @@ export default class NavBar {
   mount() {
     this.render();
 
+    const { $ } = domUtils;
     const $headLine = $({ selector: '.nav-bar__headLine', parent: this.$ele });
     const { headLines } = this.props.navBarData;
 
