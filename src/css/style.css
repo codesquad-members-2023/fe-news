@@ -369,20 +369,12 @@ main .view-buttons .grid-active {
   width: 6px;
 }
 
-.visibile-none {
-  visibility: none;
-}
-
-.visible {
-  visibility: visible;
-}
-
 .view-container {
   position: relative;
   width: 930px;
   height: 390px;
 }
-.view-container .list-container, .view-container .no-subscription,
+.view-container .list-container,
 .view-container .grid-area {
   width: 930px;
   height: 390px;
@@ -423,11 +415,16 @@ main .view-buttons .grid-active {
 }
 
 .no-subscription {
+  width: 930px;
+  height: 390px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 16px;
+  background-color: #FFFFFF;
+  border: solid #D2DAE0;
+  border-width: 0 1px 1px 0;
 }
 .no-subscription h3 {
   font-size: 16px;
@@ -452,14 +449,14 @@ main .view-buttons .grid-active {
   flex-direction: row;
   align-items: center;
 }
-.category-area .list-category li {
+.category-area .list-category li:not(.current) {
   padding: 0 16px;
   font-size: 14px;
   font-weight: 500;
   color: #6E8091;
 }
-.category-area .list-category li:hover {
-  text-decoration: underline #14212B;
+.category-area .list-category li:not(.current):hover {
+  text-decoration: underline #6E8091;
   cursor: pointer;
 }
 
@@ -483,17 +480,22 @@ main .view-buttons .grid-active {
   display: flex;
   padding: 16px 0;
   justify-content: flex-start;
-  gap: 32px;
+  gap: 45px;
 }
 .content-area .news-box .main-news {
   width: 320px;
 }
 .content-area .news-box .main-news .main-thumbnail {
   display: block;
+  overflow: hidden;
 }
 .content-area .news-box .main-news .main-thumbnail img {
   height: 200px;
   width: 320px;
+  transition: all 0.2s linear;
+}
+.content-area .news-box .main-news .main-thumbnail img:hover {
+  transform: scale(1.1);
 }
 .content-area .news-box .main-news .main-title {
   height: 40px;
@@ -517,7 +519,7 @@ main .view-buttons .grid-active {
   justify-content: space-between;
 }
 .content-area .news-box .sub-news .list-news li {
-  line-height: 42px;
+  line-height: 36px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -534,4 +536,19 @@ main .view-buttons .grid-active {
   font-size: 14px;
   font-weight: 500;
   color: #879298;
+}
+
+.current {
+  width: 166px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  background-color: #4362D0;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  cursor: default;
+}
+.current div > span:nth-child(2) {
+  color: rgba(255, 255, 255, 0.7);
 }

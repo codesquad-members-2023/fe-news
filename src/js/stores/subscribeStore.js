@@ -1,4 +1,4 @@
-import Store from '../core/Store.js';
+import Store from '../core/store.js';
 
 const initialState = { subscribedList: new Set() };
 
