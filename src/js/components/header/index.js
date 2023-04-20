@@ -13,12 +13,6 @@ export default class Header {
     this.$ele = document.createElement('header');
     this.$ele.id = 'header';
 
-    this.state = {};
-    this.initState();
-  }
-
-  mount() {
-    this.render();
     this.$parent.insertAdjacentElement('afterbegin', this.$ele);
   }
 
@@ -27,18 +21,12 @@ export default class Header {
   }
 
   template() {
-    const { today } = this.state;
-
     return /* html */ `
       <a href="/" class="header__logo">
         <img src="../../src/images/logo.svg">
         <span>뉴스스탠드</span>
       </a>
-      <div class="header__today">${getDateContent(today)}</div>
+      <div class="header__today">${getDateContent(new Date())}</div>
     `;
-  }
-
-  initState() {
-    this.state = { today: new Date() };
   }
 }

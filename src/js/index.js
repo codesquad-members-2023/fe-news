@@ -12,7 +12,7 @@ const app = async ($targetEle) => {
   const nav = new Nav($targetEle, { leftNavBarHeadLines, rightNavBarHeadLines });
   const mainContent = new MainContent($targetEle, { pressData });
 
-  header.mount();
+  header.render();
   nav.mount();
   mainContent.mount();
 };
