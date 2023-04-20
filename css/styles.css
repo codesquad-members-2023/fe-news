@@ -8,6 +8,7 @@
 @import "news-stand/components/news-head-line/news-head-line.css";
 @import "news-stand/components/news-journal/news-journal.css";
 @import "news-stand/components/news-journal/journal-track.css";
+@import "news-stand/components/news-journal/journal-detail.css";
 
 /* SCREENS */
 @import "news-stand/news-stand.css";

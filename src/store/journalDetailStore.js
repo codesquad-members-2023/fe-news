@@ -1,5 +1,5 @@
 export class JournalDetailStore {
-  constructor() {
+  constructor(renderJournalDetail) {
     this.detailListAll = [];
     this.typeEconomy = [];
     this.typeBroad = [];
@@ -9,6 +9,8 @@ export class JournalDetailStore {
     this.typeMagazine = [];
     this.typeArea = [];
     this.typeETC = [];
+    this.currentType = "종합/경제";
+    this.renderJournalDetail = renderJournalDetail;
   }
 
   setDetailListAll(journalItems) {
@@ -48,5 +50,14 @@ export class JournalDetailStore {
           this.typeETC.push(journal);
       }
     });
+  }
+
+  setCurrentType(selectedType) {
+    this.currentType = selectedType;
+    this.renderJournalDetail();
+  }
+
+  getCurrentType() {
+    return this.currentType;
   }
 }

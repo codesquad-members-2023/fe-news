@@ -40,8 +40,21 @@ const createJournalList = () => {
     }
   };
 
+  // 디테일 <-> 그리드
+  const updateJournalDetail = (frame) => {
+    const journalContainer = document.querySelector(".journal-container");
+    journalContainer.innerHTML = "";
+    const currentState = journalHeaderStore.getState();
+    frame === "FRAME_GRID"
+      ? journalHeaderStore.setState(currentState)
+      : renderJournalDetail();
+  };
+
   // 언론사 영역 헤더 구성
-  const journalHeaderStore = new JournalHeaderStore(updateJournalData);
+  const journalHeaderStore = new JournalHeaderStore(
+    updateJournalData,
+    updateJournalDetail
+  );
   const journalHeader = new JournalHeader(journalHeaderStore);
   journalListEl.appendChild(journalHeader.element);
 
@@ -62,6 +75,7 @@ const createJournalList = () => {
     }
   };
 
+  // 언론사 디테일 영역 구성
   const loadJournalDetail = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
@@ -69,11 +83,26 @@ const createJournalList = () => {
     journalDetailStore.setDetailByType();
   };
 
-  // 언론사 디테일 영역 구성
-  const journalDetailStore = new JournalDetailStore();
+  const renderJournalDetail = () => {
+    journalTrack.render();
+    const journalContainer = document.querySelector(".journal-container");
+    journalContainer.innerHTML = "";
+    const journalDetailItems = journalDetailStore.detailListAll;
+    journalDetailItems.forEach((journalItem) => {
+      const batchContainer = createBatchContainer();
+      batchContainer.appendChild(journalItem.detailElement);
+      journalContainer.appendChild(batchContainer);
+    });
+    const batchElments = document.querySelectorAll(".journal-batch");
+    journalTrackStore.setBatchSize(batchElments);
+    journalTrack.addButton();
+    journalTrack.addEvent();
+  };
+
+  const journalDetailStore = new JournalDetailStore(renderJournalDetail);
   loadJournalDetail();
 
-  // 최초 언론사 Grid 셋팅
+  // 최초 언론사 Grid 영역 구성
   const loadJournalItems = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
