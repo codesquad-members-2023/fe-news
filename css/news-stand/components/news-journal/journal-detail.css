@@ -16,6 +16,9 @@
   color: var(--gray300);
   background-color: var(--gray100);
   border-bottom: 1px solid var(--gray100);
+  position: absolute;
+  width: 900px;
+  top: 225px;
 }
 
 .hover-color {
@@ -41,7 +44,8 @@
 
 .detail-contents-column:first-child {
   display: flex;
-  padding: 16px;
+  padding: 20px 16px 0 16px;
+  align-items: center;
 }
 
 .detail-contents-column:first-child div {
@@ -54,6 +58,10 @@
   padding: 0px 16px 16px 16px;
 }
 
+.mainContent {
+  width: 300px;
+}
+
 .mainTitle {
   margin-top: 10px;
   color: black;
@@ -61,9 +69,19 @@
 
 .subContent {
   margin-left: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .noticeMessage {
   margin-top: 16px;
   color: var(--gray200);
+}
+
+.subNewsList {
+  gap: 20px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
 }

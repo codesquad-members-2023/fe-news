@@ -8,6 +8,7 @@ import { JournalDetailStore } from "../../store/journalDetailStore.js";
 
 // 뉴스 스탠드 언론사 영역 전체 View 함수
 const createJournalList = () => {
+  // 언론사 영역 엘리먼트 생성
   const journalListEl = document.createElement("article");
   journalListEl.classList.add("news-stand-jounalList");
 
@@ -56,19 +57,7 @@ const createJournalList = () => {
       : renderJournalDetail();
   };
 
-  // 언론사 영역 헤더 구성
-  const journalHeaderStore = new JournalHeaderStore(
-    updateJournalData,
-    updateJournalDetail
-  );
-  const journalHeader = new JournalHeader(journalHeaderStore);
-  journalListEl.appendChild(journalHeader.element);
-
-  // 언론사 영역 트렉 구성
-  const journalTrackStore = new JournalTrackStore();
-  const journalTrack = new Track(journalTrackStore);
-  journalListEl.appendChild(journalTrack.element);
-
+  // DB DATA에 있는 언론사 인스턴스 생성
   const fetchJournalData = async (journalURL) => {
     try {
       const journalDatas = await dataRequestToAPI(journalURL);
@@ -81,14 +70,22 @@ const createJournalList = () => {
     }
   };
 
-  // 언론사 디테일 영역 구성
-  const loadJournalDetail = async () => {
-    const journalURL = "http://localhost:3000/journal";
-    const journalItems = await fetchJournalData(journalURL);
-    journalDetailStore.setDetailListAll(journalItems);
-    journalDetailStore.setDetailByType();
-  };
+  // 언론사 헤더 스토어 생성
+  const journalHeaderStore = new JournalHeaderStore(
+    updateJournalData,
+    updateJournalDetail
+  );
 
+  // 언론사 헤더 생성
+  const journalHeader = new JournalHeader(journalHeaderStore);
+  journalListEl.appendChild(journalHeader.element);
+
+  // 언론사 트렉, 트렉 스토어 생성
+  const journalTrackStore = new JournalTrackStore();
+  const journalTrack = new Track(journalTrackStore);
+  journalListEl.appendChild(journalTrack.element);
+
+  // batch 페이지에 언론사 디테일 삽입
   const renderJournalDetail = () => {
     journalTrack.render();
     journalTrack.getDetailNavHTML();
@@ -104,6 +101,14 @@ const createJournalList = () => {
     journalTrackStore.setBatchSize(batchElments);
     journalTrack.addButton();
     journalTrack.addEvent();
+  };
+
+  // 언론사 디테일 영역 구성
+  const loadJournalDetail = async () => {
+    const journalURL = "http://localhost:3000/journal";
+    const journalItems = await fetchJournalData(journalURL);
+    journalDetailStore.setDetailListAll(journalItems);
+    journalDetailStore.setDetailByType();
   };
 
   // 언론사 디테일 스토어 생성
@@ -124,12 +129,14 @@ const createJournalList = () => {
     journalTrack.addEvent();
   };
 
+  // Track에 들어갈 batch 페이지 생성
   const createBatchContainer = () => {
     const batchContainer = document.createElement("div");
     batchContainer.className = "journal-batch";
     return batchContainer;
   };
 
+  // batch 페이지에 언론사 리스트 그리드 삽입
   const batchJournalList = (jounalList) => {
     const journalContainer = document.querySelector(".journal-container");
     const batchSize = 24;

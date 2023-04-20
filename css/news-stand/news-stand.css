@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  position: relative;
 }
 
 .news-stand-component_size {
