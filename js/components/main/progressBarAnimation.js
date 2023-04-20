@@ -1,5 +1,11 @@
 import { dispatch, getStoreState } from '../../store/store.js';
 import { displayActionCreator } from '../../actions/actions.js';
+
+const ANIMATION = {
+  DURATION: 20000,
+  MAKE_PERCENT: 100,
+};
+
 export const animationStart = ($progressBar) => {
   const viewOption = getStoreState('viewOptionData').viewOption;
   let startTime = null;
@@ -7,9 +13,9 @@ export const animationStart = ($progressBar) => {
     if (startTime === null) startTime = timestamp;
     const duration = timestamp - startTime;
 
-    if (duration <= 20000) {
+    if (duration <= ANIMATION.DURATION) {
       $progressBar.style.background = `linear-gradient(90deg, #4362d0 ${
-        (duration / 20000) * 100
+        (duration / ANIMATION.DURATION) * ANIMATION.MAKE_PERCENT
       }%, #7890e7 0%)`;
       dispatch(
         displayActionCreator.progressBarAnimationStart(
