@@ -5,23 +5,6 @@
   height: 388px;
   display: flex;
   flex-direction: column;
-  .main-list__nav-items {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 40px;
-    background: $off-white;
-    border: 1px solid $gray100;
-    .main-list__nav-item {
-      padding: 0px 16px;
-      font-weight: 500;
-      font-size: 14px;
-      color: $gray300;
-    }
-    .main-list__nav-item:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
 .main-list__news {
@@ -84,6 +67,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        width: 500px;
         .sub-news__item {
           height: 22px;
           margin-bottom: 16px;
@@ -91,6 +75,13 @@
           font-size: 16px;
           line-height: 22px;
           color: $gray500;
+        }
+        a {
+          display: inline-block;
+          width: 500px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
       .news-footer {
@@ -108,7 +99,7 @@
   height: 24px;
 }
 
-.sub-news__item:hover {
+.sub-news__item a:hover {
   text-decoration: underline;
 }
 
@@ -120,3 +111,78 @@
     text-decoration: underline;
   }
 }
+
+.main-list__nav-item {
+  padding: 0px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  color: $gray300;
+  a {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+  }
+  span {
+    display: block;
+  }
+}
+
+.main-list__nav-item:hover {
+  text-decoration: underline;
+}
+
+#current-category {
+  width: 166px;
+  height: 40px;
+  font-weight: 700;
+  align-items: center;
+  color: white;
+  background: linear-gradient(90deg, #4362d0 0%, #7890e7 0%);
+  pointer-events: none;
+}
+
+.main-list__nav {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+}
+
+.main-list__nav::-webkit-scrollbar {
+  display: none; /* Chrome , Safari , Opera */
+}
+
+.main-list__nav-items {
+  display: flex;
+  flex-direction: row;
+  min-width: 100%;
+  width: max-content;
+  align-items: center;
+  height: 40px;
+  background: $off-white;
+  border: 1px solid $gray100;
+}
+
+.mine-list__nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  max-width: 166px;
+  height: 40px;
+  background: $off-white;
+  color: $gray300;
+  border: 1px solid $gray100;
+  border-left: none;
+  border-right: none;
+}
+
+.mine-list__nav-item:first-child {
+  border-left: 1px solid $gray100;
+}
+// .mine-list__nav-item:last-child {
+//   border-right: 1px solid $gray100;
+// }

@@ -18,6 +18,7 @@ export const cilckEventHandler = ({ target }) => {
   const mediaName = target
     .closest('.main-grid__box')
     .querySelector('.thumb img').alt;
+
   if (target.alt === SUBSCRIBE) subscribeBtnClickHandler(target, mediaName);
   else if (target.alt === UNSUBSCRIBE)
     unsubscribeBtnClickHandler(target, mediaName);
@@ -44,11 +45,13 @@ const unsubscribeBtnClickHandler = (target, mediaName) => {
 };
 
 const mouseOverHandler = ($targetBox) => {
-  $targetBox.firstChild.classList.add('none');
-  $targetBox.lastChild.classList.remove('none');
+  if ($targetBox.querySelector('img') === null) return;
+  $targetBox.querySelector('.thumb').classList.add('none');
+  $targetBox.querySelector('.popup-wrap').classList.remove('none');
 };
 
 const mouseOutHandler = ($targetBox) => {
-  $targetBox.firstChild.classList.remove('none');
-  $targetBox.lastChild.classList.add('none');
+  if ($targetBox.querySelector('img') === null) return;
+  $targetBox.querySelector('.thumb').classList.remove('none');
+  $targetBox.querySelector('.popup-wrap').classList.add('none');
 };

@@ -1,7 +1,12 @@
 import { createElement } from '../../../utils/dom.js';
-import { subscribe, getStoreState } from '../../../store/store.js';
+import { subscribe, getStoreState, dispatch } from '../../../store/store.js';
+import {
+  tabClickEventHandler,
+  subscribeBtnClickEventHandler,
+} from './mainAllListEventHandlers.js';
+import { animationStart } from '../progressBarAnimation.js';
 
-const MEDIA_CATEGORIES = [
+export const MEDIA_CATEGORIES = [
   '종합/경제',
   '방송/통신',
   'IT',
@@ -11,23 +16,34 @@ const MEDIA_CATEGORIES = [
   '지역',
 ];
 
-const createMainListElement = (mediaData) => {
+const createMainListElement = (mediaData, typeIdx, content) => {
   const $mainList = createElement('section', {
     class: 'main-list',
   });
-  const $mainNav = createMainListNavElement();
+  const $mainNav = createMainListNavElement(typeIdx, content);
   const $mainNews = createMainListNewsElement(mediaData);
   $mainList.append($mainNav, $mainNews);
 
   return $mainList;
 };
 
-const navItemHTML = (category) => `
-    <li class="main-list__nav-item">
-        <a href="#">${category}</a>
+const navItemHTML = (category, typeIdx, content) => `
+    <li class="main-list__nav-item" ${
+      typeIdx === MEDIA_CATEGORIES.indexOf(category)
+        ? 'id="current-category"'
+        : ''
+    }>
+        <a href="#">
+        <span>${category}</span>
+        <span>${
+          typeIdx === MEDIA_CATEGORIES.indexOf(category)
+            ? content.typePage + '/' + content.typeLength
+            : ''
+        }</span>
+        </a>
     </li>`;
 
-const createMainListNavElement = () => {
+const createMainListNavElement = (typeIdx, content) => {
   const $mainListNav = createElement('nav', {
     class: 'main-list__nav',
   });
@@ -36,18 +52,18 @@ const createMainListNavElement = () => {
   });
 
   $navItems.innerHTML = MEDIA_CATEGORIES.reduce((html, category) => {
-    html += navItemHTML(category);
+    html += navItemHTML(category, typeIdx, content);
     return html;
   }, ``);
   $mainListNav.append($navItems);
   return $mainListNav;
 };
 
-const createMainListNewsElement = (mediaData) => {
+export const createMainListNewsElement = (mediaData) => {
   const $mainListNews = createElement('article', {
     class: 'main-list__news',
   });
-  const $mainListNewsHeader = createNewsHeaderElement(mediaData.mediaInfo);
+  const $mainListNewsHeader = createNewsHeaderElement(mediaData);
 
   const $mainListNewsContent = createNewsContentElement(
     mediaData.mainContent,
@@ -58,15 +74,21 @@ const createMainListNewsElement = (mediaData) => {
   return $mainListNews;
 };
 
-const createNewsHeaderElement = (mediaInfo) => {
+const createNewsHeaderElement = (mediaData) => {
   const $mainNewsHeader = createElement('header', {
     class: 'main-list__news-header',
   });
   const headerInnerHTML = `
-    <img class="main-list__logo" src="${mediaInfo.imgSrc}" />
-      <div class="main-list__edit-time">${mediaInfo.modifiedTime}</div>
+    <img class="main-list__logo" src="${mediaData.mediaInfo.imgSrc}" />
+      <div class="main-list__edit-time">${
+        mediaData.mediaInfo.modifiedTime
+      }</div>
       <a class="list__subscribe-button">
-        <img src="./asset/subscribeButton.svg" alt="subscribe" />
+      ${
+        !checkSubscribe(mediaData.mediaId)
+          ? `<img src="./asset/subscribeButton.svg" alt="subscribe" />`
+          : `<img src="./asset/listUnsubscribeBtn.svg" alt="unsubscribe" />`
+      }
       </a>
       `;
   $mainNewsHeader.innerHTML = headerInnerHTML;
@@ -103,29 +125,51 @@ const createNewsContentElement = (mainContent, subContent) => {
   return $mainListNewsContent;
 };
 
-const renderMainAllList = ($main, content) => {
+const renderNextPage = ($main, listPageData, viewOptionData) => {
+  const typeIdx = listPageData.currentMediaTypeIdx;
   const mediaData = getStoreState('mediaData').data;
 
   const breakCondition =
-    content.viewOption.gridOrList === 'list' &&
-    content.viewOption.allOrMine === 'all';
+    viewOptionData.viewOption.gridOrList === 'list' &&
+    viewOptionData.viewOption.allOrMine === 'all';
   if (!breakCondition) return;
 
-  const $mainList = createMainListElement(mediaData[content.page]);
-  $mainList.addEventListener('click', () => {});
+  const $mainList = createMainListElement(
+    mediaData[listPageData.page],
+    typeIdx,
+    listPageData,
+  );
+  $mainList.addEventListener('click', tabClickEventHandler);
+  $mainList
+    .querySelector('.list__subscribe-button')
+    .addEventListener(
+      'click',
+      subscribeBtnClickEventHandler.bind(
+        null,
+        mediaData[listPageData.page].mediaId,
+      ),
+    );
   $main.replaceChild($mainList, $main.lastChild);
+  animationStart($mainList.querySelector('#current-category'));
 };
 
-const renderNextPage = ($main, content) => {
-  const mediaData = getStoreState('mediaData').data;
-  const $mainList = createMainListElement(mediaData[content.page]);
-  $mainList.addEventListener('click', () => {});
-  $main.replaceChild($mainList, $main.lastChild);
+const checkSubscribe = (curMediaId) => {
+  const subscribeMediaId = getStoreState('subscribeData').subscribe.map(
+    (item) => item.mediaId,
+  );
+  if (subscribeMediaId.includes(curMediaId)) return true;
+  else return false;
 };
 
 const MainAllList = ($main) => {
-  subscribe('viewOptionData', renderMainAllList.bind(null, $main));
-  subscribe('listPageData', renderNextPage.bind(null, $main));
+  subscribe('viewOptionData', (content) => {
+    const listPageData = getStoreState('listPageData');
+    renderNextPage($main, listPageData, content);
+  });
+  subscribe('listPageData', (content) => {
+    const viewOptionData = getStoreState('viewOptionData');
+    renderNextPage($main, content, viewOptionData);
+  });
 };
 
 export default MainAllList;

@@ -4,7 +4,6 @@ import {
   headerViewChangeBtnClickEventHandler,
 } from './mainButtonEventHandlers.js';
 // TODO : 이벤트 등록 해야함.
-import { displayActionCreator } from '../../../actions/actions.js';
 import { dispatch, subscribe } from '../../../store/store.js';
 const createMainHeaderElement = () => {
   const $mainHeader = createElement('header', {
@@ -13,7 +12,7 @@ const createMainHeaderElement = () => {
 
   const headerChildHTML = `
   <div class="main-header__media">
-    <a class="main-header__all-media">
+    <a class="main-header__all-media bold">
         전체 언론사
     </a>
     <a class="main-header__my-media">
@@ -54,9 +53,11 @@ const listViewButtonRender = ($mainButtons, content) => {
   // 1. gird -> list 무조건 두개다 none 없어야함.
   // 2. list -> grid 첫번째 거 무조건 none 해야함. 얘는 그냥 됨. grid에서 구현해놓음
   // 왼쪽 버튼에 넣기!
-  if (content.viewOption.gridOrList === 'grid')
+  if (content.viewOption.gridOrList === 'grid') {
     $mainButtons[0].classList.add('none');
-  else $mainButtons.forEach(($button) => $button.classList.remove('none'));
+    $mainButtons[1].classList.remove('none');
+  } else if (content.viewOption.gridOrList === 'list')
+    $mainButtons.forEach(($button) => $button.classList.remove('none'));
 };
 
 const MainCommon = () => {
