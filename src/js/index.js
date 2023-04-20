@@ -13,7 +13,7 @@ const app = async ($targetEle) => {
   const mainContent = new MainContent($targetEle, { pressData });
 
   header.render();
-  nav.mount();
+  nav.render();
   mainContent.mount();
 };
 

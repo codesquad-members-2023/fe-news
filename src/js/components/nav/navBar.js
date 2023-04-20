@@ -1,6 +1,8 @@
 import { domUtils } from '../../utils/index.js';
 import HeadLineWrapper from './headLineWrapper.js';
 
+const { $ } = domUtils;
+
 export default class NavBar {
   constructor($parent, props) {
     this.$parent = $parent;
@@ -9,24 +11,19 @@ export default class NavBar {
 
     this.props = props;
 
-    this.headLineWrapper;
-  }
-
-  mount() {
-    this.render();
-
-    const { $ } = domUtils;
-    const $headLine = $({ selector: '.nav-bar__headLine', parent: this.$ele });
-    const { headLines } = this.props.navBarData;
-
-    this.headLineWrapper = new HeadLineWrapper($headLine, { headLines });
-    this.headLineWrapper.mount();
-
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 
   render() {
     this.$ele.innerHTML = this.template();
+    this.renderHeadLineWrapper();
+  }
+
+  renderHeadLineWrapper() {
+    const $headLine = $({ selector: '.nav-bar__headLine', parent: this.$ele });
+    const { headLines } = this.props.navBarData;
+
+    new HeadLineWrapper($headLine, { headLines }).render();
   }
 
   template() {

@@ -11,18 +11,10 @@ export default class HeadLineWrapper {
     this.props = props;
     this.state = {};
     this.initState();
-  }
 
-  mount() {
-    this.render();
     this.setEvent();
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
     this.setAutoRolling();
-  }
-
-  update({ newState }) {
-    this.setState(newState);
-    this.render();
+    this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 
   render() {
@@ -32,6 +24,11 @@ export default class HeadLineWrapper {
     else this.$ele.classList.remove('rolling');
 
     this.$ele.innerHTML = this.template();
+  }
+
+  update({ newState }) {
+    this.setState(newState);
+    this.render();
   }
 
   template() {

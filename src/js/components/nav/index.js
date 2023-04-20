@@ -8,18 +8,13 @@ export default class Nav {
 
     this.props = props;
 
-    this.leftBar;
-    this.rightBar;
+    this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 
-  mount() {
+  render() {
     const { leftNavBarHeadLines, rightNavBarHeadLines } = this.props;
 
-    this.leftBar = new NavBar(this.$ele, { navBarData: leftNavBarHeadLines });
-    this.rightBar = new NavBar(this.$ele, { navBarData: rightNavBarHeadLines });
-    this.leftBar.mount();
-    this.rightBar.mount();
-
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    new NavBar(this.$ele, { navBarData: leftNavBarHeadLines }).render();
+    new NavBar(this.$ele, { navBarData: rightNavBarHeadLines }).render();
   }
 }
