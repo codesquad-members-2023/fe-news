@@ -2,9 +2,9 @@
 import { REFERENCE, VIEW_STATE } from '../constant/dom.js';
 
 export default class NSSectionHeaderView {
-  constructor(sectionHeaderModel, buttonView, sectionCurStateModel) {
+  constructor(sectionHeaderModel, buttonView, curViewStateModel) {
     this._sectionHeaderModel = sectionHeaderModel;
-    this._curViewStateModel = sectionCurStateModel;
+    this._curViewStateModel = curViewStateModel;
     this._buttonView = buttonView;
     this._sectionHeaderModel.subscribe(this.render.bind(this));
   }
@@ -45,7 +45,7 @@ export default class NSSectionHeaderView {
         break;
     }
 
-    this._curViewStateModel.changeState(selectedState);
+    this._curViewStateModel.changeCurViewState(selectedState);
   }
 
   setEvent() {

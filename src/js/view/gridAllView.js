@@ -1,4 +1,5 @@
-import { REFERENCE } from '../constant/dom.js';
+import { REFERENCE, VIEW_STATE } from '../constant/dom.js';
+import { isEquivalent } from '../utils/objectUtils.js';
 
 export default class GridAllView {
   _gridPress;
@@ -6,15 +7,20 @@ export default class GridAllView {
   _subPopupWrap;
   _noSubPopupWrap;
 
-  constructor(gridAllModel, gridSubModel) {
-    this._gridAllModel = gridAllModel;
-    this._gridSubModel = gridSubModel;
-    this._gridAllModel.subscribe(this.render.bind(this));
+  constructor(curViewStateModel) {
+    this._curViewStateModel = curViewStateModel;
+    this._curViewStateModel.subscribe(this.render.bind(this));
+    this._state = {
+      gridOrList: VIEW_STATE.GRID,
+      allOrSub: VIEW_STATE.ALL,
+      index: 1,
+    };
     this.render();
   }
 
-  async render() {
-    const gridAllSection = this.getMarkUp(await this._gridAllModel.getData());
+  async render(selectedState) {
+    if (!isEquivalent(this._state, selectedState)) return;
+    const gridAllSection = this.getMarkUp(await this._curViewStateModel.getGridAllPressData());
     const parentElem = REFERENCE.NS_CONTAINER.querySelector('.newssection_view');
     parentElem.innerHTML = '';
     parentElem.insertAdjacentHTML('afterbegin', gridAllSection);
@@ -35,7 +41,7 @@ export default class GridAllView {
   }
 
   isSubscribe() {
-    return this._gridSubModel.containsData(this._pressName);
+    return this._curViewStateModel.containsSubData(this._pressName);
   }
 
   setSelectedGridSection(gridContainer) {
@@ -68,15 +74,15 @@ export default class GridAllView {
   }
 
   subButtonHandler() {
-    const data = this._gridAllModel.getFilterData(this._pressName);
-    this._gridSubModel.setSubData(data);
+    const article = this._curViewStateModel.getArticleByPublish(this._pressName);
+    this._curViewStateModel.setSubData(article);
 
     this._subPopupWrap.classList.add('hidden');
     this._noSubPopupWrap.classList.remove('hidden');
   }
 
   noSubButtonHandler() {
-    this._gridSubModel.deleteSubData(this._pressName);
+    this._curViewStateModel.deleteSubData(this._pressName);
     this._subPopupWrap.classList.remove('hidden');
     this._noSubPopupWrap.classList.add('hidden');
   }
