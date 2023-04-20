@@ -151,12 +151,13 @@ interface SectionInfoInterface {
   press?: PressInfoInterface;
 }
 
-app.get('/sections', async (req, res) => {
+app.get('/section', async (req, res) => {
+  const page = Number(req.query.page);
   try {
     const sectionsWithPress = await SectionModel.aggregate([
       {
         $lookup: {
-          from: 'presses', // 'press'는 실제 PressModel의 컬렉션 이름이어야 합니다.
+          from: 'presses',
           localField: 'pressId',
           foreignField: 'pid',
           as: 'press',
@@ -168,50 +169,100 @@ app.get('/sections', async (req, res) => {
           preserveNullAndEmptyArrays: true,
         },
       },
+      {
+        $skip: page * 1,
+      },
+      {
+        $limit: 1,
+      },
     ]);
+
+    const categoryCounts = await SectionModel.aggregate([
+      {
+        $group: {
+          _id: '$category',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const categoryCountsObj = categoryCounts.reduce((acc, curr) => {
+      acc[curr._id] = curr.count;
+      return acc;
+    }, {});
 
     if (sectionsWithPress.length === 0) {
       return res.status(204).json({ message: 'No sections' });
     }
 
-    res.status(200).json(sectionsWithPress);
-  } catch (error) {
-    res.status(400).json({ message: error });
-  }
-});
-
-app.get('/section', async (req, res) => {
-  const { page } = req.query;
-  try {
-    const section = await SectionModel.find().skip(Number(page)).limit(1);
-    if (section) {
-      const pressId = section[0].pressId;
-      const press = await PressModel.findOne({ pid: pressId });
-      const data = section[0].toObject() as unknown extends SectionInfoInterface
-        ? SectionInfoInterface
-        : { press: unknown };
-      data.press = press;
-      res.status(200).json(data);
-    }
+    res
+      .status(200)
+      .json({ section: sectionsWithPress, categoryCounts: categoryCountsObj });
   } catch (error) {
     res.status(400).json({ message: error });
   }
 });
 
 app.get('/custom-section', async (req, res) => {
-  const { page } = req.query;
+  const page = Number(req.query.page) || 0;
+
   try {
     const user = await UserModel.findOne({ id: TEMP_ID }).limit(1);
     const subscribingPressIds = user?.subscribingPressIds;
-    const pressId = subscribingPressIds?.[Number(page)];
-    const section = await SectionModel.find({ pressId });
-    if (!section) res.status(204).json({ message: 'no section' });
-    const press = await PressModel.findOne({ pid: pressId });
-    const data = section[0].toObject() as unknown extends SectionInfoInterface
-      ? SectionInfoInterface
-      : { press: unknown };
-    data.press = press;
-    res.status(200).json(data);
+    const pressId = subscribingPressIds?.[page];
+
+    const sectionWithPress = await SectionModel.aggregate([
+      {
+        $match: {
+          pressId: pressId,
+        },
+      },
+      {
+        $lookup: {
+          from: 'presses',
+          localField: 'pressId',
+          foreignField: 'pid',
+          as: 'press',
+        },
+      },
+      {
+        $unwind: {
+          path: '$press',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $limit: 1,
+      },
+    ]);
+
+    if (sectionWithPress.length === 0) {
+      return res.status(204).json({ message: 'No section' });
+    }
+
+    const categoryCounts = await SectionModel.aggregate([
+      {
+        $match: {
+          pressId: { $in: subscribingPressIds },
+        },
+      },
+      {
+        $group: {
+          _id: '$category',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const categoryCountsFormatted = categoryCounts.reduce((acc, cur) => {
+      acc[cur._id] = cur.count;
+      return acc;
+    }, {});
+
+    res.status(200).json({
+      ...sectionWithPress[0],
+      categoryCounts: categoryCountsFormatted,
+    });
   } catch (error) {
     res.status(400).json({ message: error });
   }
