@@ -151,6 +151,35 @@ interface SectionInfoInterface {
   press?: PressInfoInterface;
 }
 
+app.get('/sections', async (req, res) => {
+  try {
+    const sectionsWithPress = await SectionModel.aggregate([
+      {
+        $lookup: {
+          from: 'presses', // 'press'는 실제 PressModel의 컬렉션 이름이어야 합니다.
+          localField: 'pressId',
+          foreignField: 'pid',
+          as: 'press',
+        },
+      },
+      {
+        $unwind: {
+          path: '$press',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+    ]);
+
+    if (sectionsWithPress.length === 0) {
+      return res.status(204).json({ message: 'No sections' });
+    }
+
+    res.status(200).json(sectionsWithPress);
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
 app.get('/section', async (req, res) => {
   const { page } = req.query;
   try {
