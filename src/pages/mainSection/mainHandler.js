@@ -40,7 +40,7 @@ class MainHandler {
 
     this.#onClickDirectionBtn()
     this.#onMainViewEvent()
-    this.#onViewTypeEvent()
+    this.#renderView()
   }
 
   #onClickDirectionBtn() {
@@ -80,9 +80,14 @@ class MainHandler {
     }
 
     if (this.#currentViewType === 'list') {
-      const listViewData = currentViewData[this.#currentPage]
+      const currentListViewData = currentViewData[this.#currentPage]
+      const isSubscription = this.#subscriptionList.has(
+        currentListViewData.name
+      )
 
-      return listViewData
+      currentListViewData.isSubscription = isSubscription
+
+      return currentListViewData
     }
   }
 
@@ -149,7 +154,7 @@ class MainHandler {
       ? this.#subscriptionList.delete(pressName)
       : this.#subscriptionList.add(pressName)
 
-    this.#renderView(this.#currentViewType)
+    this.#renderView()
   }
 
   #getSubscriptionData(data) {
@@ -185,14 +190,7 @@ class MainHandler {
     }
 
     // reset page
-    if (this.#currentViewType === 'grid') {
-      this.#currentPage = 0
-    }
-
-    if (this.#currentViewType === 'list') {
-      this.#currentPage = 0
-    }
-
+    this.#currentPage = 0
     this.#renderView(this.#currentViewType)
   }
 }
