@@ -3,8 +3,9 @@ import { store } from "../../../store/store.js";
 
 export default class SubscriptionTab extends Component {
   template() {
-    const { press, subscribingPresses } = store.getState().contents;
-    const name = press?.name;
+    const { subscribingPresses } = store.getState().contents;
+    const { selectedPress } = this.props;
+    const name = selectedPress.name;
     const subscribingPressesHtml = subscribingPresses.reduce(
       (subscribingPressesString, subscribingPress) => {
         const isSelected = name === subscribingPress;

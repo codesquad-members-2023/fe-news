@@ -9,17 +9,31 @@ import { setListIdx, store } from "../../../store/store.js";
 const LEFT = -1;
 const RIGHT = 1;
 
+// 컨테이너 컴포넌트
 export default class ListView extends Component {
+  // Press 결정하고 idx 증가
   setEvent() {
     const handleButtonClick = ({ target }) => {
       if (!target.closest(".button")) return;
 
-      const { idx, sortedPresses } = this.state;
+      const {
+        listView: { index },
+        contents: { presses },
+      } = store.getState();
+
+      if (!presses.length) return;
+
       const direction = target.closest(".button--left") ? LEFT : RIGHT;
 
-      this.setState({
-        idx: (idx + direction + sortedPresses.length) % sortedPresses.length,
-      });
+      const categorizedPresses = presses.sort((a, b) =>
+        a.category_id < b.category_id ? -1 : 1
+      );
+
+      const nextIndex =
+        (index + direction + categorizedPresses.length) %
+        categorizedPresses.length;
+
+      store.dispatch(setListIdx(nextIndex));
     };
 
     this.addEvent("click", ".news-list__list", handleButtonClick);
@@ -36,6 +50,7 @@ export default class ListView extends Component {
     `;
   }
 
+  // press 결정 및 타겟 presses가 뭔지 결정할것
   renderChildComponents() {
     const leftButton = this.parentElement.querySelector(".button--left");
     new LeftButton(leftButton);
@@ -44,15 +59,51 @@ export default class ListView extends Component {
     new RightButton(rightButton);
 
     const {
-      contents: { subscriptionOption },
+      contents: { subscriptionOption, presses, subscribingPresses },
+      listView: { index },
     } = store.getState();
+
+    const categorizedPresses = presses.sort((a, b) =>
+      a.category_id < b.category_id ? -1 : 1
+    );
+    const categories = [
+      ...new Set(categorizedPresses.map((press) => press.category_id)),
+    ];
+
+    const selectedPresses =
+      subscriptionOption === "all"
+        ? categorizedPresses
+        : subscribingPresses?.map((subscribingPressName) =>
+            presses.find((press) => press.name === subscribingPressName)
+          );
+
+    if (!selectedPresses) return;
+
+    const selectedPress = selectedPresses[index];
+
+    if (!selectedPress) return;
+    const selectedCategories = presses.filter(
+      (press) => press.category_id === selectedPress.category_id
+    );
+
+    const categoryLength = selectedCategories.length;
+    const categoryIndex = selectedCategories.findIndex(
+      (press) => press.name === selectedPress.name
+    );
 
     const tabContainer = this.parentElement.querySelector(".tab-container");
     subscriptionOption === "all"
-      ? new AllTab(tabContainer)
-      : new SubscriptionTab(tabContainer);
+      ? new AllTab(tabContainer, {
+          selectedPress,
+          categoryIndex,
+          categoryLength,
+          categories,
+        })
+      : new SubscriptionTab(tabContainer, {
+          selectedPress,
+        });
 
     const newsContent = this.parentElement.querySelector(".news-content");
-    new NewsContent(newsContent);
+    new NewsContent(newsContent, { selectedPress });
   }
 }

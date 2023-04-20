@@ -1,4 +1,13 @@
+import {
+  SUBSCRIBING_PRESSES_KEY,
+  setLocalData,
+} from "../../../../utils/sotrageManager.js";
 import Component from "../../../core/Component.js";
+import {
+  addSubscribing,
+  removeSubscribing,
+  store,
+} from "../../../store/store.js";
 
 export default class Logo extends Component {
   initState() {
@@ -13,6 +22,7 @@ export default class Logo extends Component {
   }
 
   setEvent() {
+    // DOM 만지지말고 STATE로 바꾸기
     const toggleHidden = ({ target }) => {
       const subscribe = target
         .closest(".news-list__item")
@@ -24,34 +34,39 @@ export default class Logo extends Component {
     this.addEvent("mouseenter", ".news-list__item", toggleHidden);
     this.addEvent("mouseleave", ".news-list__item", toggleHidden);
 
-    const { addSubscribing, removeSubscribing } = this.props;
-    const toggleSubscribing = ({ target, currentTarget }) => {
+    // 뜬금 돔조작 바꾸기
+    const toggleSubscribing = ({ target }) => {
       if (!target.closest(".subscribe__button")) return;
+      const {
+        contents: { subscribingPresses },
+      } = store.getState();
+      const { name } = this.props;
 
-      const { name } = currentTarget.querySelector(".news-list__image").dataset;
+      const isSubscribing = subscribingPresses.includes(name);
 
-      this.state.isSubscribing
-        ? removeSubscribing(name, this.props.subscriptionOption === "sub")
-        : addSubscribing(name, this.props.subscriptionOption === "sub");
-
-      this.setState({
-        isSubscribing: !this.state.isSubscribing,
-      });
+      const actionCreator = isSubscribing ? removeSubscribing : addSubscribing;
+      store.dispatch(actionCreator(name));
+      setLocalData(SUBSCRIBING_PRESSES_KEY, subscribingPresses);
     };
 
     this.addEvent("click", ".subscribe", toggleSubscribing);
   }
 
   template() {
-    const name = this.props.name;
-    const src = this.props.src;
+    const { name, logo_src } = this.props;
+
+    const {
+      contents: { subscribingPresses },
+    } = store.getState();
+
+    const isSubscribing = subscribingPresses.includes(name);
     return `
-    <img class="news-list__image" ${src ? `src=${src}` : ""} ${
+    <img class="news-list__image" ${logo_src ? `src=${logo_src}` : ""} ${
       name ? `data-name=${name}` : ""
     } />
     <div class="subscribe hidden">
       <button class="subscribe__button">${
-        this.state.isSubscribing ? "해지하기" : "구독하기"
+        isSubscribing ? "해지하기" : "구독하기"
       }</button>
     </div>`;
   }

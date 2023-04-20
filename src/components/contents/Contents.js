@@ -18,6 +18,7 @@ const LIST = "list";
 export default class Contents extends Component {
   componentDidMount() {
     let subscribingPresses = getLocalData(SUBSCRIBING_PRESSES_KEY);
+    if (!subscribingPresses) subscribingPresses = [];
     setTimeout(() => store.dispatch(loadSubscribing(subscribingPresses)), 0);
     store.dispatch(fetchPresses());
   }

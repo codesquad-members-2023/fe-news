@@ -1,4 +1,5 @@
 import Component from "../../../core/Component.js";
+import { setGridPageNum, store } from "../../../store/store.js";
 import LeftButton from "../button/LeftButton.js";
 import RightButton from "../button/RightButton.js";
 import Logo from "./Logo.js";
@@ -11,39 +12,18 @@ const LEFT = -1;
 const RIGHT = 1;
 
 export default class GridView extends Component {
-  // 상수 빼기
-  initState() {
-    const { presses, subscribingPresses, subscriptionOption } = this.props;
-
-    let selectedPresses =
-      subscriptionOption === "all"
-        ? presses
-        : subscribingPresses.map((subscribingPress) =>
-            presses.find((press) => press.name === subscribingPress)
-          );
-
-    if (subscriptionOption === "all") {
-      selectedPresses = selectedPresses.slice(
-        0,
-        LOGOS_NUM_PER_PAGE * MAX_PAGE_NUM
-      );
-    }
-
-    return {
-      presses: selectedPresses,
-      pageNum: INITIAL_PAGE_NUM,
-    };
-  }
-
   setEvent() {
     const handleButtonClick = ({ target }) => {
       if (!target.closest(".button")) return;
 
-      const { pageNum } = this.state;
+      const {
+        gridView: { pageNum },
+      } = store.getState();
       const direction = target.closest(".button--left") ? LEFT : RIGHT;
-      this.setState({
-        pageNum: (pageNum + direction + MAX_PAGE_NUM) % MAX_PAGE_NUM,
-      });
+
+      store.dispatch(
+        setGridPageNum((pageNum + direction + MAX_PAGE_NUM) % MAX_PAGE_NUM)
+      );
     };
 
     this.addEvent("click", ".news-list__grid", handleButtonClick);
@@ -64,42 +44,40 @@ export default class GridView extends Component {
   }
 
   renderChildComponents() {
-    const { pageNum, presses } = this.state;
+    const {
+      contents: { presses, subscribingPresses },
+      gridView: { pageNum },
+      contents: { subscriptionOption },
+    } = store.getState();
 
+    const selectedPresses =
+      subscriptionOption === "all"
+        ? presses
+        : subscribingPresses?.map((subscribingPress) =>
+            presses.find((press) => press.name === subscribingPress)
+          );
+
+    if (!selectedPresses) return;
     const isFirstPage = pageNum === INITIAL_PAGE_NUM;
-    const isLastPage =
-      pageNum === Math.ceil(presses.length / LOGOS_NUM_PER_PAGE) - 1 ||
-      Math.ceil(presses.length / LOGOS_NUM_PER_PAGE) === 0;
+    const isLastPage = pageNum === MAX_PAGE_NUM - 1;
+
     const leftButton = this.parentElement.querySelector(".button--left");
     const rightButton = this.parentElement.querySelector(".button--right");
-
-    isFirstPage ? null : new LeftButton(leftButton);
-    isLastPage ? null : new RightButton(rightButton);
+    !isFirstPage && new LeftButton(leftButton);
+    !isLastPage && new RightButton(rightButton);
 
     const cellContainers =
       this.parentElement.querySelectorAll(".news-list__item");
     const startIdx = pageNum * LOGOS_NUM_PER_PAGE;
     const endIdx = startIdx + LOGOS_NUM_PER_PAGE;
-    const singleSlidePresses = presses.slice(startIdx, endIdx);
+    const singleSlidePresses = selectedPresses.slice(startIdx, endIdx);
 
     singleSlidePresses.forEach((press, idx) => {
-      const src = press?.logo_src;
-      const name = press?.name;
-
-      const {
-        addSubscribing,
-        removeSubscribing,
-        subscribingPresses,
-        subscriptionOption,
-      } = this.props;
+      const { logo_src, name } = press;
 
       new Logo(cellContainers[idx], {
         name,
-        src,
-        addSubscribing,
-        removeSubscribing,
-        subscribingPresses,
-        subscriptionOption,
+        logo_src,
       });
     });
   }

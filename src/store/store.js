@@ -9,11 +9,14 @@ const initState = {
   contents: {
     subscribingPresses: [],
     presses: [],
-    viewOption: "list",
+    viewOption: "grid",
     subscriptionOption: "all",
   },
   listView: {
     index: 0,
+  },
+  gridView: {
+    pageNum: 0,
   },
 };
 
@@ -30,7 +33,9 @@ export const SET_VIEW_LIST = "SET_VIEW_LIST";
 export const SET_SUBSCRIPTION_ALL = "SET_SUBSCRIPTION_ALL";
 export const SET_SUBSCRIPTION_SUB = "SET_SUBSCRIPTION_SUB";
 
-export const SET_LIST_IDX = "SET_LIST_IDX";
+export const SET_LIST_INDEX = "INCREASE_LIST_IDX";
+
+export const SET_GRID_PAGE_NUM = "SET_GRID_PAGE_NUM";
 
 // STORE (REDUCER)
 export const store = createStore((state = initState, action = {}) => {
@@ -74,7 +79,10 @@ export const store = createStore((state = initState, action = {}) => {
         ...state,
         contents: {
           ...state.contents,
-          subscribingPresses: [...state.subscribingPresses, action.payload],
+          subscribingPresses: [
+            ...state.contents.subscribingPresses,
+            action.payload,
+          ],
         },
       };
 
@@ -83,7 +91,7 @@ export const store = createStore((state = initState, action = {}) => {
         ...state,
         contents: {
           ...state.contents,
-          subscribingPresses: state.subscribingPresses.filter(
+          subscribingPresses: state.contents.subscribingPresses.filter(
             (subscribingPress) => subscribingPress !== action.payload
           ),
         },
@@ -105,6 +113,14 @@ export const store = createStore((state = initState, action = {}) => {
           ...state.contents,
           viewOption: "list",
         },
+        listView: {
+          ...state.listView,
+          index: 0,
+        },
+        gridView: {
+          ...state.gridView,
+          pageNum: 0,
+        },
       };
 
     case SET_SUBSCRIPTION_ALL:
@@ -113,6 +129,14 @@ export const store = createStore((state = initState, action = {}) => {
         contents: {
           ...state.contents,
           subscriptionOption: "all",
+        },
+        listView: {
+          ...state.listView,
+          index: 0,
+        },
+        gridView: {
+          ...state.gridView,
+          pageNum: 0,
         },
       };
 
@@ -123,14 +147,31 @@ export const store = createStore((state = initState, action = {}) => {
           ...state.contents,
           subscriptionOption: "sub",
         },
+        listView: {
+          ...state.listView,
+          index: 0,
+        },
+        gridView: {
+          ...state.gridView,
+          pageNum: 0,
+        },
       };
 
-    case SET_LIST_IDX:
+    case SET_LIST_INDEX:
       return {
         ...state,
         listView: {
           ...state.listView,
           index: action.payload,
+        },
+      };
+
+    case SET_GRID_PAGE_NUM:
+      return {
+        ...state,
+        gridView: {
+          ...state.gridView,
+          pageNum: action.payload,
         },
       };
     default:
@@ -206,6 +247,11 @@ export const setSubscriptionSubscribing = () => ({
 });
 
 export const setListIdx = (payload) => ({
-  type: SET_LIST_IDX,
+  type: SET_LIST_INDEX,
+  payload,
+});
+
+export const setGridPageNum = (payload) => ({
+  type: SET_GRID_PAGE_NUM,
   payload,
 });
