@@ -8,7 +8,7 @@ export default class GridAllView {
 
   constructor(gridAllModel, gridSubModel) {
     this._gridAllModel = gridAllModel;
-    this._girdSubModel = gridSubModel;
+    this._gridSubModel = gridSubModel;
     this._gridAllModel.subscribe(this.render.bind(this));
     this.render();
   }
@@ -35,7 +35,7 @@ export default class GridAllView {
   }
 
   isSubscribe() {
-    return this._girdSubModel.containsData(this._pressName);
+    return this._gridSubModel.containsData(this._pressName);
   }
 
   setSelectedGridSection(gridContainer) {
@@ -69,14 +69,14 @@ export default class GridAllView {
 
   subButtonHandler() {
     const data = this._gridAllModel.getFilterData(this._pressName);
-    this._girdSubModel.setSubData(data);
+    this._gridSubModel.setSubData(data);
 
     this._subPopupWrap.classList.add('hidden');
     this._noSubPopupWrap.classList.remove('hidden');
   }
 
   noSubButtonHandler() {
-    this._girdSubModel.deleteSubData(this._pressName);
+    this._gridSubModel.deleteSubData(this._pressName);
     this._subPopupWrap.classList.remove('hidden');
     this._noSubPopupWrap.classList.add('hidden');
   }
