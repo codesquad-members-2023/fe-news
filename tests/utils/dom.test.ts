@@ -1,4 +1,4 @@
-import { $, $$ } from '@utils/dom';
+import { $, $$ } from '@utils/dom.js';
 import { JSDOM } from 'jsdom';
 
 describe('Select DOM node', () => {

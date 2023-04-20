@@ -1,4 +1,4 @@
-import { getKrDate } from '@utils/date';
+import { getKrDate } from '@utils/date.js';
 
 describe('Get date', () => {
   it('korean date', () => {
