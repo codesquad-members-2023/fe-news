@@ -378,6 +378,14 @@ table {
   border-bottom: 1px solid var(--color-gray-100);
 }
 
+.news-company__detail {
+  display: flex;
+  width: 1100px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .hidden {
   visibility: hidden;
 }

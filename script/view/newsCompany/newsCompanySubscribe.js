@@ -32,15 +32,15 @@ const showAllNewsSourcesLogo = (myMediaLogos, allMediaLogos, gridBox, myGridBox)
 export const insertMyNewsData = (subscribe, newsData) => {
   const gridBox = $(".grid_subscribe");
   gridBox.innerHTML = "";
-  newsData.map((data) => {
-    gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}">
+  gridBox.innerHTML = newsData.reduce((acc, data) => {
+    return (acc += `<div class="grid_list" id="${data.mediaId}">
     <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>
     <div class ="grid_btn">
     <button type="button">${subscribe}</button>
     </div>
     </div>
-    `;
-  });
+    `);
+  }, "");
   if (newsData.length !== COMPANY.PAGES_PER) {
     for (let i = 0; i < COMPANY.PAGES_PER - newsData.length; i++) {
       gridBox.innerHTML += `<div class="grid_list"></div>`;

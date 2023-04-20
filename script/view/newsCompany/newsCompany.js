@@ -35,7 +35,9 @@ export const renderNewsCompanyBar = (selector, element) => {
     <div class="grid_btn-right"><img src="assets/rightButton.svg" /></div>
   </div>
   <div class="news-company__detail none">
+    <div class="detail_btn-left"><img src="assets/leftButton.svg" /></div>
     <div class="news_detail_container"><div class="news_category-bar"></div></div>
+    <div class="detail_btn-right"><img src="assets/rightButton.svg" /></div>
   </div>
 </div>
 `;
@@ -55,15 +57,15 @@ export const insertMediaLogosGrid = (mediaDataSet) => {
   const mediaData = mediaDataSet;
 
   const insertMediaLogosGrid = (subscribe, gridBox, mediaLogoData, page) => {
-    mediaLogoData.map((data) => {
-      gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}" index="${page}">
+    gridBox.innerHTML = mediaLogoData.reduce((acc, data) => {
+      return (acc += `<div class="grid_list" id="${data.mediaId}" index="${page}">
       <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>
       <div class ="grid_btn">
       <button type="button">${subscribe}</button>
       </div>
       </div>
-      `;
-    });
+      `);
+    }, "");
   };
 
   const insertPagesData = () => {
@@ -146,10 +148,10 @@ export const register = (newsData) => {
   const subscribeData = new SubscribeController();
   const subscribeButtonClicked = (newsData, selector) => {
     const gridBtn = $(selector);
-    gridBtn.addEventListener("click", (e) => {
-      let btn = e.target.closest("button");
-      let id = e.target.closest(".grid_list").id;
-      let page = e.target.closest(".grid_list").getAttribute("index");
+    gridBtn.addEventListener("click", ({target}) => {
+      let btn = target.closest("button");
+      let id = target.closest(".grid_list").id;
+      let page = target.closest(".grid_list").getAttribute("index");
 
       if (btn.textContent === SUBSCRIBE.REGISTER) {
         btn.textContent = SUBSCRIBE.CANCEL;
