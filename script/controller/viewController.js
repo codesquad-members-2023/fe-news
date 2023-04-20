@@ -1,5 +1,5 @@
 import { insertNewsHeadlineData } from "../view/newsRollingBar.js";
-import { insertMediaLogosGrid } from "../view/newsCompany.js";
+import { insertMediaLogosGrid } from "../view/newsCompany/newsCompany.js";
 import { API_PATH } from "../constants/api.js";
 import { COMPANY, ROLLING } from "../constants/dom.js";
 

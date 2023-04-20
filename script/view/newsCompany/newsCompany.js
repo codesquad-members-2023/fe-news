@@ -1,7 +1,8 @@
-import { $ } from "../utils/dom.js";
-import { COMPANY, SUBSCRIBE } from "../constants/dom.js";
-import { SubscribeController } from "../controller/subscribeController.js";
-
+import { $ } from "../../utils/dom.js";
+import { COMPANY, SUBSCRIBE } from "../../constants/dom.js";
+import { SubscribeController } from "../../controller/subscribeController.js";
+import { updateNewsLogo } from "./newsCompanySubscribe.js";
+import { changeNewsDetailColor } from "./newsCompanyList.js";
 //처음 뉴스 그리드 부분과 그리드 부분 바의 토대를 만든다.
 export const renderNewsCompanyBar = (selector, element) => {
   const newsCompanyTemplate = `
@@ -12,8 +13,12 @@ export const renderNewsCompanyBar = (selector, element) => {
     <span class="company__choice_subscribe">내가 구독한 언론사</span>
   </div>
   <div class = "company__view">
-    <img class= "company__view_detail" src="assets/viewDetail.svg"/>
-    <img class=" company__view_logo" src="assets/viewLogo.svg"/>
+  <object id="company__view_detail" type="image/svg+xml" data="assets/viewDetail.svg">
+		<img />
+  </object>
+  <object id="company__view_logo" type="image/svg+xml" data="assets/viewLogo.svg">
+		<img />
+  </object>
   </div>
   </div>
   <div class="news-company__grid">
@@ -128,12 +133,14 @@ export const insertMediaLogosGrid = (mediaDataSet) => {
       toggle("hidden", currentPage);
     });
     register(mediaData);
+    changeNewsDetailColor();
   };
   onEvents(COMPANY.FIRST_PAGE);
 };
+
 export const register = (newsData) => {
   const subscribeData = new SubscribeController();
-  const subscribeButtonClicked = (selector) => {
+  const subscribeButtonClicked = (newsData, selector) => {
     const gridBtn = $(selector);
     gridBtn.addEventListener("click", (e) => {
       let btn = e.target.closest("button");
@@ -149,53 +156,6 @@ export const register = (newsData) => {
       }
     });
   };
-  subscribeButtonClicked(".grid_all");
-  showMyNewsSourcesLogo(".grid_btn-right", ".company__choice_all", ".company__choice_subscribe", subscribeData);
-  showAllNewsSourcesLogo(".company__choice_all", ".company__choice_subscribe", newsData);
-};
-
-const showMyNewsSourcesLogo = (btnSelector, allNewsSelector, myNewsSelector, registerData) => {
-  const myMediaLogos = $(myNewsSelector);
-  const allMediaLogos = $(allNewsSelector);
-  const gridBox = $(".grid_all");
-  const myGridBox = $(".grid_subscribe");
-  myMediaLogos.addEventListener("click", () => {
-    gridBox.classList.add("none");
-    myGridBox.classList.remove("none");
-    insertMyNewsData(SUBSCRIBE.CANCEL, registerData.showPublishData());
-    allMediaLogos.classList.add("change_gray");
-    myMediaLogos.classList.add("change_black");
-  });
-};
-
-const showAllNewsSourcesLogo = (allNewsSelector, myNewsSelector) => {
-  const allMediaLogos = $(allNewsSelector);
-  const myMediaLogos = $(myNewsSelector);
-  const gridBox = $(".grid_all");
-  const myGridBox = $(".grid_subscribe");
-  allMediaLogos.addEventListener("click", () => {
-    gridBox.classList.remove("none");
-    myGridBox.classList.add("none");
-    allMediaLogos.classList.remove("change_gray");
-    myMediaLogos.classList.remove("change_black");
-  });
-};
-
-export const insertMyNewsData = (subscribe, newsData) => {
-  const gridBox = $(".grid_subscribe");
-  gridBox.innerHTML = "";
-  newsData.map((data) => {
-    gridBox.innerHTML += `<div class="grid_list" id="${data.mediaId}">
-    <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>
-    <div class ="grid_btn">
-    <button type="button">${subscribe}</button>
-    </div>
-    </div>
-    `;
-  });
-  if (newsData.length !== COMPANY.PAGES_PER) {
-    for (let i = 0; i < COMPANY.PAGES_PER - newsData.length; i++) {
-      gridBox.innerHTML += `<div class="grid_list"></div>`;
-    }
-  }
+  subscribeButtonClicked(newsData, ".grid_all");
+  updateNewsLogo(".company__choice_all", ".company__choice_subscribe", subscribeData);
 };
