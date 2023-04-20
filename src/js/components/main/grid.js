@@ -1,5 +1,5 @@
 import createEl from '../../utils/util.js';
-import { ViewStore } from '../../stores/viewStore.js';
+import { ViewTypeStore } from '../../stores/viewTypeStore.js';
 import { SubscribeStore } from '../../stores/subscribeStore.js';
 import { PRESS_BUTTON } from '../../core/constants.js';
 
@@ -11,7 +11,7 @@ class GridView {
   viewContainer;
   constructor(gridData, { GRID_INFO }) {
     this.#gridData = gridData;
-    this.#viewStore = ViewStore;
+    this.#viewStore = ViewTypeStore;
     this.#subscribeStore = SubscribeStore;
     this.FIRST_PAGE = GRID_INFO.FIRST_PAGE;
     this.LAST_PAGE = GRID_INFO.LAST_PAGE;
@@ -33,13 +33,19 @@ class GridView {
 
   #reRender() {
     const { press, view } = this.#viewStore.getState();
+    const { subscribedList } = this.#subscribeStore.getState();
     const gridContainer = this.viewContainer.querySelector('.grid-container');
-    if(press['all'] && view['list']) gridContainer.classList.add('hidden');
-    if(press['all'] && view['grid']) gridContainer.outerHTML = this.renderAllGridView();
-    if(press['subscribed'] && view['grid']) {
+    if (press['all'] && view['list']) gridContainer.classList.add('hidden');
+    if (press['all'] && view['grid'])
+      gridContainer.outerHTML = this.renderAllGridView();
+    if (press['subscribed'] && view['grid']) {
       gridContainer.outerHTML = this.renderSubscribedGridView.bind(this)();
     }
-    // if(press['subscribed'] && view['list'])
+    if(press['subscribed'] && view['list']) {
+      if(!subscribedList.size) gridContainer.classList.remove('hidden');
+      else gridContainer.classList.add('hidden');
+      console.log(gridContainer);
+    }
     this.onMouseGridCell();
   }
 
@@ -50,7 +56,7 @@ class GridView {
       this.GRID_COUNT * (this.page + 1),
     );
 
-    return `<div class="grid-container${isGrid ? ``: " hidden"}">
+    return `<div class="grid-container${isGrid ? `` : ' hidden'}">
       <div class="grid-area">
         ${pressInfo.reduce((template, press) => {
           template += `<div class="grid-cell"><img src=${press.pressLogo} alt=${press.press}></div>`;
@@ -58,21 +64,23 @@ class GridView {
         }, ``)}
       </div>
       <a class='prev-button' style="visibility:${
-        this.page === this.FIRST_PAGE ? 'hidden' : 'visible'}"></a>
+        this.page === this.FIRST_PAGE ? 'hidden' : 'visible'
+      }"></a>
       <a class='next-button' style="visibility:${
-        this.page === this.LAST_PAGE ? 'hidden' : 'visible'}"></a>
+        this.page === this.LAST_PAGE ? 'hidden' : 'visible'
+      }"></a>
       </div>`;
   }
 
   renderSubscribedGridView() {
     const subscribedPress = this.#subscribeStore.getState().subscribedList;
-    if(!subscribedPress.size) return this.isNoSubscription();
+    if (!subscribedPress.size) return this.isNoSubscription();
     else return this.getSubscribedPress(subscribedPress);
   }
 
   isNoSubscription() {
     const isGrid = this.#viewStore.getState().view['grid'];
-    return `<div class="grid-container${isGrid ? ``: " hidden"}">
+    return `<div class="grid-container${isGrid ? `` : ' hidden'}">
     <div class="grid-area">
       <div class="no-subscription">
         <h3>구독한 언론사가 없습니다.</h3>
@@ -85,10 +93,14 @@ class GridView {
 
   getSubscribedPress(subscribedPress) {
     const isGrid = this.#viewStore.getState().view['grid'];
-    const restGridCells = Array(this.GRID_COUNT - subscribedPress.size).fill('');
+    const restGridCells = Array(this.GRID_COUNT - subscribedPress.size).fill(
+      '',
+    );
     // Todo - 24 넘으면 slice하고 나머지 채우기
-    const LAST_PAGE_SUBSCRIBE = Math.floor(subscribedPress.size / this.GRID_COUNT);
-    return `<div class="grid-container${isGrid ? ``: " hidden"}">
+    const LAST_PAGE_SUBSCRIBE = Math.floor(
+      subscribedPress.size / this.GRID_COUNT,
+    );
+    return `<div class="grid-container${isGrid ? `` : ' hidden'}">
       <div class="grid-area">
         ${[...subscribedPress, ...restGridCells].reduce((template, press) => {
           const pressInfo = press === '' ? `` : `src="${press}"`;
@@ -110,18 +122,23 @@ class GridView {
     this.viewContainer.addEventListener('click', ({ target }) => {
       const isPrevBtn = target.classList.contains('prev-button');
       const isNextBtn = target.classList.contains('next-button');
-      if(!target.parentElement.classList.contains('grid-container') || !(isPrevBtn || isNextBtn)) return;
+      if (
+        !target.parentElement.classList.contains('grid-container') ||
+        !(isPrevBtn || isNextBtn)
+      )
+        return;
 
-      if(isPrevBtn && this.page > this.FIRST_PAGE) this.page--;
-      if(isNextBtn && this.page < this.LAST_PAGE) this.page++;
-      this.viewContainer.querySelector('.grid-container').outerHTML = this.renderAllGridView();
+      if (isPrevBtn && this.page > this.FIRST_PAGE) this.page--;
+      if (isNextBtn && this.page < this.LAST_PAGE) this.page++;
+      this.viewContainer.querySelector('.grid-container').outerHTML =
+        this.renderAllGridView();
       this.onMouseGridCell();
     });
   }
 
   onMouseGridCell() {
     const gridCells = this.viewContainer.querySelectorAll('.grid-cell');
-    gridCells.forEach(cell => {
+    gridCells.forEach((cell) => {
       cell.addEventListener('mouseenter', this.mouseEnterGridCell.bind(this));
       cell.addEventListener('mouseleave', this.mouseLeaveGridCell.bind(this));
     });
@@ -129,30 +146,36 @@ class GridView {
 
   mouseEnterGridCell({ target }) {
     const pressLogo = target.querySelector('img');
-    if(pressLogo.src === '') return;
+    if (pressLogo.src === '') return;
 
     pressLogo.classList.add('hidden');
     const subscribeBtn = target.querySelector('.cell-button');
-    if(subscribeBtn) subscribeBtn.classList.remove('hidden');
+    if (subscribeBtn) subscribeBtn.classList.remove('hidden');
     else {
       const pressLogo = target.querySelector('img');
-      const isSubscribe = this.#subscribeStore.getState().subscribedList.has(pressLogo.src);
+      const isSubscribe = this.#subscribeStore
+        .getState()
+        .subscribedList.has(pressLogo.src);
       const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
-      target.insertAdjacentHTML('beforeend', this.getSubscribeButton(`${buttonType}`));
+      target.insertAdjacentHTML(
+        'beforeend',
+        this.getSubscribeButton(`${buttonType}`),
+      );
     }
-    target.querySelector('.press-button').addEventListener('click', this.clickSubscribeBtn.bind(this));
+    target
+      .querySelector('.press-button')
+      .addEventListener('click', this.clickSubscribeBtn.bind(this));
   }
 
   clickSubscribeBtn({ target }) {
-    const subscribedPressInfo = target.closest('.grid-cell').querySelector('img').src;
-    // const addSubscribedPress = () => {
-      // const state = this.#subscribeStore.getState()
-      //구독한, 그리드 페이지 리렌더링 하는 메서드 등록
-    // }
-    // this.#subscribeStore.subscribe(addSubscribedPress);
-    const targetBtnText = target.closest('.press-button').querySelector('span').textContent;
-    const isSubscribe = targetBtnText === PRESS_BUTTON['subscribe']?
-      'SUBSCRIBE' : 'UNSUBSCRIBE';
+    const subscribedPressInfo = target
+      .closest('.grid-cell')
+      .querySelector('img').src;
+    const targetBtnText = target
+      .closest('.press-button')
+      .querySelector('span').textContent;
+    const isSubscribe =
+      targetBtnText === PRESS_BUTTON['subscribe'] ? 'SUBSCRIBE' : 'UNSUBSCRIBE';
     this.#subscribeStore.dispatch({
       type: `${isSubscribe}`,
       payload: subscribedPressInfo,

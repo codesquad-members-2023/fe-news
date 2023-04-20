@@ -9,7 +9,7 @@
     flex-direction: row;
     align-items: center;
 
-    li:not(.current) {
+    li:not(.current, .current-subscribed) {
       padding: 0 16px;
       @include font($bodySM, $medium);
       color: $gray300;
@@ -128,4 +128,15 @@
   div > span:nth-child(2) {
     color: rgba(255, 255, 255, 0.7);
   }
+}
+
+.current-subscribed {
+  width: 166px;
+  padding: 0 16px;
+  @include font($bodySM, $bold);
+  background-color: $lighterColor;
+  color: $white;
+  display: flex;
+  justify-content: space-between;
+  cursor: default;
 }

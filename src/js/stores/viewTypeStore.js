@@ -11,7 +11,7 @@ const initialState = {
   },
 };
 
-const viewReducer = (state = initialState, action) => {
+const viewTypeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CHANGE_PRESS':
       state.press[action.payload] = true;
@@ -30,4 +30,4 @@ const viewReducer = (state = initialState, action) => {
   }
 };
 
-export const ViewStore = new Store(initialState, viewReducer);
+export const ViewTypeStore = new Store(initialState, viewTypeReducer);

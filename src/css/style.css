@@ -449,13 +449,13 @@ main .view-buttons .grid-active {
   flex-direction: row;
   align-items: center;
 }
-.category-area .list-category li:not(.current) {
+.category-area .list-category li:not(.current, .current-subscribed) {
   padding: 0 16px;
   font-size: 14px;
   font-weight: 500;
   color: #6E8091;
 }
-.category-area .list-category li:not(.current):hover {
+.category-area .list-category li:not(.current, .current-subscribed):hover {
   text-decoration: underline #6E8091;
   cursor: pointer;
 }
@@ -551,4 +551,16 @@ main .view-buttons .grid-active {
 }
 .current div > span:nth-child(2) {
   color: rgba(255, 255, 255, 0.7);
+}
+
+.current-subscribed {
+  width: 166px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  background-color: #7890E7;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  cursor: default;
 }
