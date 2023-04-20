@@ -54,7 +54,6 @@ class GridView extends HTMLElement {
     ${Array.from({ length: MAX_ITEM_NUM })
       .map((_, i: number) => {
         const press = pressList[i];
-        console.log(press);
         if (press) {
           return `<grid-view-item-element id='${press.pid}' image='${press.newMainLogo}' index='${i}' is-subscribed='${press.isSubscribed}'></grid-view-item-element>`;
         }

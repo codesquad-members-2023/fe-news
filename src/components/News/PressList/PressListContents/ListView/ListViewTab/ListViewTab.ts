@@ -20,12 +20,32 @@ class ListViewTab extends HTMLElement {
   }
 
   render() {
+    const categoryCountsStr = getProperty({
+      target: this,
+      name: 'category-counts',
+    });
+    const categoryCounts = categoryCountsStr && JSON.parse(categoryCountsStr);
+    const categories = [
+      '종합/경제',
+      '방송/통신',
+      'IT',
+      '영자지',
+      '스포츠/연예',
+      '매거진/전문지',
+      '지역',
+    ];
+
     const template = `
     <div class="tab-wrap">
-      <list-view-tab-item-element is-active="true" progress="50">종합/경제</list-view-tab-item-element>
-      <list-view-tab-item-element>방송통신</list-view-tab-item-element>
-      <list-view-tab-item-element>IT</list-view-tab-item-element>
-      <list-view-tab-item-element>방송통신</list-view-tab-item-element>
+    ${Object.keys(categoryCounts)
+      .map(
+        (categoryId) =>
+          `<list-view-tab-item-element is-active="true" progress="50" total-number='${
+            categoryCounts[categoryId]
+          }'>${categories[Number(categoryId)]}</list-view-tab-item-element>`
+      )
+      .join('')}
+
     </div>
     `;
     add({

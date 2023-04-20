@@ -44,7 +44,7 @@ class ListViewItem extends HTMLElement {
       name: 'section-data',
     });
     const sectionData = sectionDataStr
-      ? JSON.parse(JSON.parse(sectionDataStr))
+      ? JSON.parse(JSON.parse(sectionDataStr)).section
       : null;
     const id = sectionData?.press.pid;
     const btnContainer = this.shadowRoot?.querySelector('.btn-container');
@@ -65,7 +65,7 @@ class ListViewItem extends HTMLElement {
     });
 
     const sectionData = sectionDataStr
-      ? JSON.parse(JSON.parse(sectionDataStr))
+      ? JSON.parse(JSON.parse(sectionDataStr)).section
       : null;
 
     const now = new Date(sectionData?.lastEdited);

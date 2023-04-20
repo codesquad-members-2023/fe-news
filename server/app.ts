@@ -8,6 +8,7 @@ import {
   PressInfoInterface,
   UserModel,
   PressModel,
+  TestSectionModel,
 } from './schemas/index';
 const uuid = require('uuid');
 import fs from 'fs/promises';
@@ -45,6 +46,37 @@ app.post('/section', async (req, res) => {
   }
 });
 
+app.patch('/test-section', async (req, res) => {
+  try {
+    const sections = await SectionModel.find({});
+    const categoryOrder = [
+      '종합/경제',
+      '방송/통신',
+      'IT',
+      '영자지',
+      '스포츠/연예',
+      '매거진/전문지',
+      '지역',
+    ];
+    const result: any = [];
+    for (const section of sections) {
+      const pressId = section.pressId;
+      const category = section.category;
+      const categoryIndex = categoryOrder.findIndex((v) => v === category);
+      result.push(categoryIndex);
+      await SectionModel.updateOne(
+        { pressId },
+        { $set: { category: categoryIndex } } // Use $set instead of $push
+      );
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
 app.get('/press', async (req, res) => {
   try {
     const press = await PressModel.find({});
@@ -56,7 +88,6 @@ app.get('/press', async (req, res) => {
 
 app.post('/press', async (req, res) => {
   const body = req.body;
-
   try {
     const section = await SectionModel.findOne({ pressId: req.body.pid });
     if (!section) {
@@ -141,16 +172,6 @@ app.get('/rolling-news', async (req, res) => {
   }
 });
 
-interface SectionInfoInterface {
-  id: string;
-  name: string;
-  order: number;
-  pressId: string;
-  updatedAt?: Date;
-  createdAt?: Date;
-  press?: PressInfoInterface;
-}
-
 app.get('/section', async (req, res) => {
   const page = Number(req.query.page);
   try {
@@ -167,6 +188,11 @@ app.get('/section', async (req, res) => {
         $unwind: {
           path: '$press',
           preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $sort: {
+          category: 1,
         },
       },
       {
@@ -195,9 +221,10 @@ app.get('/section', async (req, res) => {
       return res.status(204).json({ message: 'No sections' });
     }
 
-    res
-      .status(200)
-      .json({ section: sectionsWithPress, categoryCounts: categoryCountsObj });
+    res.status(200).json({
+      section: sectionsWithPress[0],
+      categoryCounts: categoryCountsObj,
+    });
   } catch (error) {
     res.status(400).json({ message: error });
   }
@@ -232,6 +259,11 @@ app.get('/custom-section', async (req, res) => {
         },
       },
       {
+        $sort: {
+          category: 1,
+        },
+      },
+      {
         $limit: 1,
       },
     ]);
@@ -260,7 +292,7 @@ app.get('/custom-section', async (req, res) => {
     }, {});
 
     res.status(200).json({
-      ...sectionWithPress[0],
+      section: sectionWithPress[0],
       categoryCounts: categoryCountsFormatted,
     });
   } catch (error) {

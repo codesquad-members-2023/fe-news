@@ -33,9 +33,17 @@ class ListView extends HTMLElement {
       name: 'section-data',
     });
 
+    const currentCategory = sectionData && JSON.parse(sectionData)?.category;
+
+    const categoryCounts = sectionData
+      ? JSON.parse(sectionData).categoryCounts
+      : null;
+
     const template = `
     <div class="listview-container">
-      <list-view-tab-element></list-view-tab-element>
+      <list-view-tab-element category-counts='${JSON.stringify(
+        categoryCounts
+      )}' current-category='${currentCategory}'></list-view-tab-element>
       <list-view-item-element section-data='${JSON.stringify(
         sectionData
       )}' image="headline"></list-view-item-element>

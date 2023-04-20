@@ -1,30 +1,33 @@
 import { createStore, ReducerType, ActionType } from '@utils/redux';
-import { SectionType } from './sectionType';
+import { SectionInfoType } from './sectionType';
 
-const initialState: SectionType = {
-  id: '',
-  pressId: '',
-  lastEdited: new Date(),
-  articles: [],
-  category: '',
-  press: {
-    pid: '',
-    pname: '',
-    newMainLogo: '',
-    newMainLightLogo: '',
-    newMainDarkLogo: '',
-    thumbnailValid: false,
-    valid: false,
-    isSubscribed: false,
+const initialState: SectionInfoType = {
+  categoryCounts: {},
+  section: {
+    id: '',
+    pressId: '',
+    lastEdited: new Date(),
+    articles: [],
+    category: '',
+    press: {
+      pid: '',
+      pname: '',
+      newMainLogo: '',
+      newMainLightLogo: '',
+      newMainDarkLogo: '',
+      thumbnailValid: false,
+      valid: false,
+      isSubscribed: false,
+    },
   },
 };
 
 interface props {
-  state: SectionType;
+  state: SectionInfoType;
 }
 
 interface chnageSectionProps extends props {
-  payload: SectionType;
+  payload: SectionInfoType;
 }
 
 const setSection = ({ state, payload }: chnageSectionProps) => {
@@ -33,10 +36,10 @@ const setSection = ({ state, payload }: chnageSectionProps) => {
   };
 };
 
-const reducer: ReducerType<SectionType> = (
+const reducer: ReducerType<SectionInfoType> = (
   state = initialState,
   action: ActionType
-): SectionType => {
+): SectionInfoType => {
   switch (action.type) {
     case 'SET_SECTION':
       return setSection({ state, payload: action.payload });

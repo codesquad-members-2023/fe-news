@@ -15,7 +15,7 @@ import store from '@store/index';
 import { getPress, getSection, getCustomSection } from '@apis/news';
 import { getUser, subscribe, unsubscribe } from '@apis/user';
 import { parseQuotationMarks } from '@utils/parser';
-import { ArticleInterface, SectionType } from '@store/section/sectionType';
+import { ArticleInterface, SectionInfoType } from '@store/section/sectionType';
 import { PressListType } from '@store/press/pressType';
 import { isFirstPage, sliceByPage } from '@utils/common';
 import { MAX_ITEM_NUM, TEMP_ID } from '@constant/index';
@@ -32,7 +32,7 @@ interface getCurrentSectionProps {
 class PressListContents extends HTMLElement {
   wrap: HTMLElement | null = null;
   displayStore: StroeType<DisplayType>;
-  sectionStore: StroeType<SectionType>;
+  sectionStore: StroeType<SectionInfoType>;
   userStore: StroeType<UserType>;
   pressStore: StroeType<PressListType>;
   pressList: any[] = [];
@@ -168,9 +168,16 @@ class PressListContents extends HTMLElement {
     return {
       getSection: async (page: number = 0) => {
         const section = await getSection({ page });
-        section.articles.forEach((article: ArticleInterface) => {
-          article.title = parseQuotationMarks(article.title);
+        this.sectionStore.dispatch({
+          type: 'SET_SECTION',
+          payload: section,
         });
+
+        this.sectionStore
+          .getState()
+          .section.articles.forEach((article: ArticleInterface) => {
+            article.title = parseQuotationMarks(article.title);
+          });
         this.displayStore.dispatch({
           type: 'SET_TOTAL_PAGE',
           payload: {
@@ -181,9 +188,8 @@ class PressListContents extends HTMLElement {
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
       },
       getCustomSection: async (page: number = 0) => {
-        let section;
         if (this.userStore.getState().subscribingPress.length === page) {
-          section = await getCustomSection({ page: 0 });
+          const section = await getCustomSection({ page: 0 });
           this.displayStore.dispatch({
             type: 'SET_CURRENT_PAGE',
             payload: {
@@ -192,10 +198,21 @@ class PressListContents extends HTMLElement {
               currentPage: 0,
             },
           });
+          this.sectionStore.dispatch({
+            type: 'SET_SECTION',
+            payload: section,
+          });
         } else {
-          section = await getCustomSection({ page });
+          const section = await getCustomSection({ page });
+          this.sectionStore.dispatch({
+            type: 'SET_SECTION',
+            payload: section,
+          });
         }
-        section.articles.forEach((article: ArticleInterface) => {
+
+        const section = this.sectionStore.getState();
+
+        section.section.articles.forEach((article: ArticleInterface) => {
           article.title = parseQuotationMarks(article.title);
         });
         this.displayStore.dispatch({

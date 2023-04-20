@@ -25,6 +25,11 @@ class ListViewTabItem extends HTMLElement {
       target: this,
       name: 'is-active',
     });
+    const totalNumber = getProperty({
+      target: this,
+      name: 'total-number',
+    });
+
     const template = `
     <button class="tab-container typo-body-sm${isActive ? ' is-active' : ''}">
       <span>${name}</span>
@@ -32,7 +37,7 @@ class ListViewTabItem extends HTMLElement {
         isActive
           ? `
           <span class="index-indicator typo-title-xs">
-            <span class="current-index">1</span><span>/</span><span class="total-index">81</span>
+            <span class="current-index">1</span><span>/</span><span class="total-index">${totalNumber}</span>
           </span>`
           : ''
       }

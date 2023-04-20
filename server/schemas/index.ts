@@ -68,3 +68,23 @@ const PressSchema = new Schema<PressInfoInterface>({
 export const SectionModel = model<SectionInterface>('Sections', SectionSchema);
 export const UserModel = model<UserInterface>('Users', UserSchema);
 export const PressModel = model<PressInfoInterface>('Presses', PressSchema);
+
+const TestSectionSchema = new Schema<SectionInterface>({
+  id: { type: String, required: true },
+  pressId: { type: String, required: true },
+  lastEdited: { type: Date, required: true },
+  category: { type: String, required: true },
+  articles: [
+    {
+      id: { type: String, required: true },
+      title: { type: String, required: true },
+      img: { type: String, required: false },
+      link: { type: String, required: false },
+    },
+  ],
+});
+
+export const TestSectionModel = model<SectionInterface>(
+  'TestSections',
+  TestSectionSchema
+);
