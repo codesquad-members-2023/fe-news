@@ -9,20 +9,13 @@ export default class MainContent {
 
     this.props = props;
 
-    this.header;
-    this.grid;
+    this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 
-  mount() {
+  render() {
     const { pressData } = this.props;
 
-    this.header = new MainContentHeader(this.$ele);
-    this.grid = new MainContentContainer(this.$ele, {
-      allPressData: pressData
-    });
-    this.header.mount();
-    this.grid.mount();
-
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    new MainContentHeader(this.$ele).render();
+    new MainContentContainer(this.$ele, { allPressData: pressData }).render();
   }
 }

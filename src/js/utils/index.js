@@ -5,14 +5,14 @@ export const domUtils = {
 
 export const dataUtils = {
   getData: async (url) => await fetch(url).then((res) => res.json()),
-  getChucks: ({ arr, count = 1 }) => {
-    const chunks = [];
+  getDataSlices: ({ dataArr, count = 1 }) => {
+    const dataSlices = [];
 
-    for (let i = 0; i < arr.length; i += count) {
-      chunks.push(arr.slice(i, i + count));
+    for (let i = 0; i < dataArr.length; i += count) {
+      dataSlices.push(dataArr.slice(i, i + count));
     }
 
-    return chunks;
+    return dataSlices;
   }
 };
 

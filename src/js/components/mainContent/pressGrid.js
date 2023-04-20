@@ -12,34 +12,24 @@ export default class PressGrid {
 
     this.props = props;
 
-    this.gridItems;
-  }
-
-  mount() {
-    const { gridItemsData } = this.props;
-
-    gridPageStore.register(this.setDisplayElement.bind(this));
-
-    this.gridItems = gridItemsData.map(
-      ({ pressName, pressLogo }) =>
-        new PressGridItem(this.$ele, {
-          pressName,
-          pressLogo
-        })
-    );
-
-    while (this.gridItems.length < this.#gridItemCount) {
-      this.gridItems.push(new PressGridItem(this.$ele));
-    }
-
-    this.gridItems.forEach((item) => item.mount());
-
+    gridPageStore.register(this.displayElement.bind(this));
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 
-  setDisplayElement() {
+  render() {
+    const { gridItemsData } = this.props;
+
+    for (let idx = 0; idx < this.#gridItemCount; idx += 1) {
+      const data = gridItemsData[idx];
+
+      new PressGridItem(this.$ele, data).render();
+    }
+  }
+
+  displayElement() {
     const { pressTabType, page } = this.props;
     const { currentPage } = gridPageStore.getState()[pressTabType];
+
     if (currentPage !== page) this.$ele.classList.add('display-none');
     else this.$ele.classList.remove('display-none');
   }

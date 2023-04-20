@@ -12,17 +12,15 @@ export default class ShowTab {
     this.$parent = $parent;
     this.$ele = document.createElement('div');
     this.$ele.className = 'show-tab';
-  }
 
-  mount() {
-    this.render();
-    this.setEvent();
     this.$parent.insertAdjacentElement('beforeend', this.$ele);
+
     tabStore.register(this.render.bind(this));
   }
 
   render() {
     this.$ele.innerHTML = this.template();
+    this.setEvent();
   }
 
   template() {

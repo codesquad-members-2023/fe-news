@@ -14,7 +14,7 @@ const app = async ($targetEle) => {
 
   header.render();
   nav.render();
-  mainContent.mount();
+  mainContent.render();
 };
 
 const { $ } = domUtils;

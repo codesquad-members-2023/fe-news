@@ -8,22 +8,13 @@ export default class MainContentContainer {
 
     this.props = props;
 
-    this.allGrid;
-    this.subscribedGrid;
+    this.$parent.insertAdjacentElement('beforeend', this.$ele);
   }
 
-  mount() {
+  render() {
     const { allPressData } = this.props;
 
-    this.allGrid = new MainContentGrid(this.$ele, { pressTabType: 'all', allPressData });
-    this.subscribedGrid = new MainContentGrid(this.$ele, {
-      pressTabType: 'subscribed',
-      allPressData
-    });
-
-    this.allGrid.mount();
-    this.subscribedGrid.mount();
-
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    new MainContentGrid(this.$ele, { pressTabType: 'all', allPressData }).render();
+    new MainContentGrid(this.$ele, { pressTabType: 'subscribed', allPressData }).render();
   }
 }

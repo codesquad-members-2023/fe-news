@@ -7,16 +7,11 @@ export default class MainContentHeader {
     this.$ele = document.createElement('header');
     this.$ele.className = 'main-content__header';
 
-    this.pressTab;
-    this.showTab;
+    this.$parent.insertAdjacentElement('afterbegin', this.$ele);
   }
 
-  mount() {
-    this.pressTab = new PressTab(this.$ele);
-    this.showTab = new ShowTab(this.$ele);
-    this.pressTab.mount();
-    this.showTab.mount();
-
-    this.$parent.insertAdjacentElement('afterbegin', this.$ele);
+  render() {
+    new PressTab(this.$ele).render();
+    new ShowTab(this.$ele).render();
   }
 }
