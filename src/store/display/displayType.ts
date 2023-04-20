@@ -6,4 +6,9 @@ export interface DisplayType {
       [key: string]: { currentPage: number; totalPage: number };
     };
   };
+  category: {
+    [key: string]: {
+      [key: string]: { index: number };
+    };
+  };
 }

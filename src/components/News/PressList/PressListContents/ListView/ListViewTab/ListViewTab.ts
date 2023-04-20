@@ -1,9 +1,11 @@
-import { add, addStyle, addShadow, getProperty } from '@utils/dom';
+import { add, addStyle, addShadow, getProperty, setProperty } from '@utils/dom';
 import style from './ListViewTabStyle';
 import store from '@store/index';
 import { StroeType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
 import { PressListType } from '@store/press/pressType';
+import { SectionInfoType } from '@store/section/sectionType';
+import { DisplayType } from '@store/display/displayType';
 
 interface ListViewTab {
   icon?: string | null;
@@ -12,10 +14,12 @@ interface ListViewTab {
 class ListViewTab extends HTMLElement {
   userStore: StroeType<UserType>;
   pressStore: StroeType<PressListType>;
+  displayStore: StroeType<DisplayType>;
   constructor() {
     super();
     this.userStore = store.user;
     this.pressStore = store.press;
+    this.displayStore = store.display;
   }
 
   connectedCallback() {
@@ -23,11 +27,21 @@ class ListViewTab extends HTMLElement {
     this.render();
   }
 
-  renderTabForCustomTab(subscribingPress: PressListType['customPressList']) {
-    const currentPressId = getProperty({
-      target: this,
-      name: 'current-press-id',
-    });
+  static get observedAttributes() {
+    return ['section-data'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'section-data') {
+      this.render();
+    }
+  }
+
+  renderTabForCustomTab(
+    sectionData: SectionInfoType,
+    subscribingPress: PressListType['customPressList']
+  ) {
+    const currentPressId = sectionData.section.pressId;
     const isActive = (pressId: string) =>
       currentPressId === pressId ? true : false;
 
@@ -38,8 +52,11 @@ class ListViewTab extends HTMLElement {
           (press) =>
             `<list-view-tab-item-element is-active=${
               isActive(press.pid) ? 'true' : 'false'
-            } ${isActive(press.pid) ? `progress="50"` : ''}>
-              ${press.pname}
+            } ${isActive(press.pid) ? `progress="50"` : ''} id='${
+              press.pid
+            }' name='${press.pname}' section-data='${JSON.stringify(
+              sectionData
+            )}'>
             </list-view-tab-item-element>`
         )
         .join('')}
@@ -55,17 +72,14 @@ class ListViewTab extends HTMLElement {
     });
   }
 
-  renderTabForGeneralTab() {
-    const categoryCountsStr = getProperty({
-      target: this,
-      name: 'category-counts',
-    });
-    const currentCategoryStr = getProperty({
-      target: this,
-      name: 'current-category',
-    });
+  renderTabForGeneralTab(sectionData: SectionInfoType) {
+    const currentCategory = sectionData.section.category;
+    const categoryCounts = sectionData.categoryCounts;
+    const currentNumber =
+      this.displayStore.getState().category['list']['general'].index;
+    const isActive = (categoryId: string) =>
+      currentCategory === categoryId ? true : false;
 
-    const categoryCounts = categoryCountsStr && JSON.parse(categoryCountsStr);
     const categories = [
       '종합/경제',
       '방송/통신',
@@ -75,19 +89,37 @@ class ListViewTab extends HTMLElement {
       '매거진/전문지',
       '지역',
     ];
+
+    const getCurrentCategoryIndex = () => {
+      const accumulatedNum = Object.entries(categoryCounts).reduce(
+        (result: number, count: any) => {
+          const key = count[0];
+          const value = count[1];
+          if (Number(key) < Number(currentCategory)) return result + value;
+          return result;
+        },
+        0
+      );
+      console.log(currentNumber - accumulatedNum);
+      return currentNumber - accumulatedNum;
+    };
+
     const template = `
       <div class="tab-wrap">
       ${Object.keys(categoryCounts)
-        .map(
-          (categoryId) =>
-            `<list-view-tab-item-element is-active=${
-              currentCategoryStr === categoryId ? 'true' : 'false'
-            } ${
-              currentCategoryStr === categoryId
-                ? `progress="50" total-number='${categoryCounts[categoryId]}'`
-                : ''
-            }>${categories[Number(categoryId)]}</list-view-tab-item-element>`
-        )
+        .map((categoryId) => {
+          return `<list-view-tab-item-element total-number='${
+            categoryCounts[categoryId]
+          }' name='${
+            categories[Number(categoryId)]
+          }' category-id='${categoryId}' is-active=${
+            isActive(categoryId) ? 'true' : 'false'
+          } ${
+            isActive(categoryId)
+              ? `progress="50" current-number='${getCurrentCategoryIndex()}'`
+              : ''
+          }></list-view-tab-item-element>`;
+        })
         .join('')}
       </div>
     `;
@@ -107,12 +139,18 @@ class ListViewTab extends HTMLElement {
       name: 'is-custom',
     });
 
+    const sectionData = JSON.parse(
+      getProperty({ target: this, name: 'section-data', isStringfied: true })
+    );
+
     if (isCustom !== 'true') {
-      this.renderTabForGeneralTab();
+      this.renderTabForGeneralTab(sectionData);
     } else {
+      const subscribingPress = this.pressStore.getState().customPressList;
+      this.renderTabForCustomTab(sectionData, subscribingPress);
       this.pressStore.subscribe(() => {
         const subscribingPress = this.pressStore.getState().customPressList;
-        this.renderTabForCustomTab(subscribingPress);
+        this.renderTabForCustomTab(sectionData, subscribingPress);
       });
     }
   }

@@ -22,6 +22,9 @@ class ListView extends HTMLElement {
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'section-data') {
       this.shadowRoot
+        ?.querySelector('list-view-tab-element')
+        ?.setAttribute('section-data', JSON.stringify(newValue));
+      this.shadowRoot
         ?.querySelector('list-view-item-element')
         ?.setAttribute('section-data', JSON.stringify(newValue));
     }
@@ -34,20 +37,12 @@ class ListView extends HTMLElement {
     });
 
     const isCustom = this.closest('section')?.classList.contains('custom');
-    const currentCategory =
-      sectionData && JSON.parse(sectionData)?.section.category;
-    const currentPressId =
-      sectionData && JSON.parse(sectionData)?.section.pressId;
-
-    const categoryCounts = sectionData
-      ? JSON.parse(sectionData).categoryCounts
-      : null;
 
     const template = `
     <div class="listview-container">
-      <list-view-tab-element is-custom=${isCustom} category-counts='${JSON.stringify(
-      categoryCounts
-    )}' current-category='${currentCategory}' current-press-id='${currentPressId}'></list-view-tab-element>
+      <list-view-tab-element is-custom='${isCustom}' section-data='${JSON.stringify(
+      sectionData
+    )}' ></list-view-tab-element>
       <list-view-item-element section-data='${JSON.stringify(
         sectionData
       )}' image="headline"></list-view-item-element>

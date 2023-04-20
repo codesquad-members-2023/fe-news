@@ -259,11 +259,6 @@ app.get('/custom-section', async (req, res) => {
         },
       },
       {
-        $sort: {
-          category: 1,
-        },
-      },
-      {
         $limit: 1,
       },
     ]);

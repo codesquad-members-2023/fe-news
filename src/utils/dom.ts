@@ -14,6 +14,7 @@ interface selectProps {
 interface getPropertyProps {
   target: HTMLElement | null;
   name: string;
+  isStringfied?: boolean;
 }
 
 interface setPropertyProps {
@@ -67,9 +68,13 @@ export function selectAll({ selector, parent }: selectProps) {
     : document.querySelectorAll(selector);
 }
 
-export function getProperty({ target, name }: getPropertyProps) {
+export function getProperty({ target, name, isStringfied }: getPropertyProps) {
   if (!target?.hasAttribute(name)) return null;
-  return target.getAttribute(name);
+  const value = target.getAttribute(name);
+  if (value && isStringfied) {
+    return JSON.parse(value);
+  }
+  return value;
 }
 
 export function setProperty({ target, name, value }: setPropertyProps) {

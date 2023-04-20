@@ -14,6 +14,16 @@ const initialState: DisplayType = {
       custom: { currentPage: 0, totalPage: 0 },
     },
   },
+  category: {
+    grid: {
+      general: { index: 0 },
+      custom: { index: 0 },
+    },
+    list: {
+      general: { index: 0 },
+      custom: { index: 0 },
+    },
+  },
 };
 
 interface props {
@@ -70,10 +80,13 @@ const changePageNumber = ({ state, type }: changePageNumberProps) => {
   const currentTab = state.currentTab;
   if (type === 'NEXT_PAGE') {
     state.page[currentView][currentTab].currentPage++;
+    state.category[currentView][currentTab].index++;
   } else if (type === 'PREV_PAGE') {
     state.page[currentView][currentTab].currentPage--;
+    state.category[currentView][currentTab].index--;
   } else {
     state.page[currentView][currentTab].currentPage = 0;
+    state.category[currentView][currentTab].index = 0;
   }
   return state;
 };

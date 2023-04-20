@@ -13,14 +13,32 @@ class ListViewTabItem extends HTMLElement {
   connectedCallback() {
     addShadow({ target: this });
     this.render();
-    addStyle({
-      target: this.shadowRoot,
-      style: style.call(this, this),
-    });
+  }
+
+  static get observedAttributes() {
+    return ['is-active', 'current-number'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'is-active') {
+      this.render();
+    }
+    if (name === 'current-number') {
+      console.log(
+        getProperty({
+          target: this,
+          name: 'current-number',
+        })
+      );
+      this.render();
+    }
   }
 
   render() {
-    const name = this.innerText;
+    const name = getProperty({
+      target: this,
+      name: 'name',
+    });
     const isActive =
       getProperty({
         target: this,
@@ -30,6 +48,10 @@ class ListViewTabItem extends HTMLElement {
       target: this,
       name: 'total-number',
     });
+    const currentNumber = getProperty({
+      target: this,
+      name: 'current-number',
+    });
 
     const template = `
     <button class="tab-container typo-body-sm${isActive ? ' is-active' : ''}">
@@ -38,7 +60,9 @@ class ListViewTabItem extends HTMLElement {
         isActive && totalNumber
           ? `
           <span class="index-indicator typo-title-xs">
-            <span class="current-index">1</span><span>/</span><span class="total-index">${totalNumber}</span>
+            <span class="current-index">${
+              Number(currentNumber) + 1
+            }</span><span>/</span><span class="total-index">${totalNumber}</span>
           </span>`
           : ''
       }
@@ -48,6 +72,10 @@ class ListViewTabItem extends HTMLElement {
     add({
       target: this.shadowRoot,
       template,
+    });
+    addStyle({
+      target: this.shadowRoot,
+      style: style.call(this, this),
     });
   }
 }
