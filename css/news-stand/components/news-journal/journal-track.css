@@ -7,7 +7,8 @@
   position: relative;
 }
 
-.track-btn {
+.track-btn_left,
+.track-btn_right {
   position: absolute;
   z-index: 1;
   top: 44%;
@@ -15,10 +16,10 @@
   border: none;
 }
 
-.track-btn:nth-child(2) {
+.rack-btn_left {
   left: 1px;
 }
 
-.track-btn:nth-child(3) {
+.track-btn_right {
   right: 1px;
 }

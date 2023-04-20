@@ -71,41 +71,6 @@ export class Journal {
     this.addSubEventToGrid(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv);
   }
 
-  getDetailNavHTML() {
-    const detailNavHTML = `<nav class="detail-type-bar">
-    <div class="hover-color">
-      <span>종합/경제</span>
-      <span>1 / 81</span>
-    </div>
-    <div>
-      <span>방송/통신</span>
-      <span>1 / 81</span>
-    </div>
-    <div>
-      <span>IT</span>
-      <span>1 / 81</span>
-    </div>
-    <div>
-      <span>영자지</span>
-      <span>1 / 81</span>
-    </div>
-    <div>
-      <span>스포츠/연예</span>
-      <span>1 / 81</span>
-    </div>
-    <div>
-      <span>메거진/전문지</span>
-      <span>1 / 81</span>
-    </div>
-    <div>
-      <span>지역</span>
-      <span>1 / 81</span>
-    </div>
-  </nav>`;
-
-    this.detailElement.innerHTML += detailNavHTML;
-  }
-
   getdetailArticleHTML() {
     const detailArticleHTML = `<article class="detail-contents">
     <div class="detail-contents-column">
@@ -139,7 +104,6 @@ export class Journal {
   }
 
   renderDetail() {
-    this.getDetailNavHTML();
     this.getdetailArticleHTML();
   }
 }

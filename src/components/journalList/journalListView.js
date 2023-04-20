@@ -91,6 +91,7 @@ const createJournalList = () => {
 
   const renderJournalDetail = () => {
     journalTrack.render();
+    journalTrack.getDetailNavHTML();
     const journalContainer = document.querySelector(".journal-container");
     journalContainer.innerHTML = "";
     const journalDetailItems = journalDetailStore.detailListAll;

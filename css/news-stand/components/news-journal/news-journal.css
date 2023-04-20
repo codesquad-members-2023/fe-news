@@ -18,8 +18,13 @@
   cursor: pointer;
 }
 
+.journal-track {
+  border: 1px solid var(--gray100);
+}
+
 .journal-container {
   display: flex;
+  height: 100%;
   position: relative;
   transition: transform 0.5s ease-in-out;
 }
