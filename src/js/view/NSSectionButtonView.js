@@ -1,10 +1,10 @@
-import { NS_SECTION_INFO, REFERENCE } from '../constant/dom.js';
+import { NS_SECTION_INFO, REFERENCE, RENDER_STATE } from '../constant/dom.js';
 
 export default class NSSectionButtonView {
   constructor(gridAllModel) {
     this._gridAllModel = gridAllModel;
     this._state = {
-      render: 'notReady',
+      render: RENDER_STATE.NOT_READY,
       view: {
         index: 1,
         gridOrList: 'grid',
@@ -12,8 +12,8 @@ export default class NSSectionButtonView {
     };
   }
 
-  getReady() {
-    this._state.render = 'ready';
+  changeReadyState() {
+    this._state.render = RENDER_STATE.READY;
     this.render();
   }
 
@@ -72,14 +72,14 @@ export default class NSSectionButtonView {
     if (target.closest('.slide_button_left')) {
       if (view.index === MIN_PAGE_INDEX) return;
       view.index -= 1;
-      this._gridAllModel.decreaseIndex();
+      this._gridAllModel.decreaseIndex(view.index);
     }
 
     if (target.closest('.slide_button_right')) {
       if (view.index === MAX_PAGE_INDEX) return;
 
       view.index += 1;
-      this._gridAllModel.increaseIndex();
+      this._gridAllModel.increaseIndex(view.index); // 매개변수로 index를 주자
     }
     this.showOrHiddenGridMoveButton(buttonContainer);
   }

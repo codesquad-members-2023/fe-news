@@ -1,13 +1,14 @@
 import Observer from './observer.js';
+import { RENDER_STATE } from '../constant/dom.js';
 
 export default class NSSectionHeaderModel extends Observer {
   constructor() {
     super();
-    this._state = 'notReady';
+    this._state = RENDER_STATE.NOT_READY;
   }
 
-  getReady() {
-    this._state = 'ready';
+  changeReadyState() {
+    this._state = RENDER_STATE.READY;
     this.notify();
   }
 }

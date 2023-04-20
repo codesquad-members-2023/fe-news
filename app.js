@@ -8,14 +8,20 @@ import GridAllView from './src/js/view/gridAllView.js';
 import NSSectionHeaderView from './src/js/view/NSSectionHeaderView.js';
 import NSSectionHeaderModel from './src/js/models/NSSectionHeaderModel.js';
 import NSSectionButtonView from './src/js/view/NSSectionButtonView.js';
+import NSSectionCurStateModel from './src/js/models/NSSectionCurStateModel.js';
+import GridSubModel from './src/js/models/gridSubModel.js';
+import GridSubView from './src/js/view/gridSubView.js';
 
 const dataFetcher = fetcher(API_BASE_URL);
 new NSHeaderView({ NS_HEADER_INFO }, REFERENCE);
 const sectionHeaderModel = new NSSectionHeaderModel();
 new NSHeadlineView({ NS_HEADLINE_INFO }, REFERENCE, dataFetcher, API_PATH, sectionHeaderModel);
-const gridAllModel = new GridAllModel(dataFetcher);
+const NSSectionCurState = new NSSectionCurStateModel();
+const gridAllModel = new GridAllModel(NSSectionCurState, dataFetcher);
+const gridSubModel = new GridSubModel(NSSectionCurState);
 const buttonView = new NSSectionButtonView(gridAllModel);
-new NSSectionHeaderView(sectionHeaderModel, buttonView);
+new NSSectionHeaderView(sectionHeaderModel, buttonView, NSSectionCurState);
 
-new GridAllView(gridAllModel);
+new GridSubView(gridSubModel);
+new GridAllView(gridAllModel, gridSubModel);
 // subscribe 로직을 entry에 넣어서 전체 로직을 보이게?

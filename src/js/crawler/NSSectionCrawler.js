@@ -25,8 +25,3 @@ document.querySelector('.ico_btn').addEventListener('click', () => {
   result.push(obj);
   console.log(result);
 });
-
-// // logoImgAlt === pressName;
-// // mainNewsImgAlt === mainNews;
-
-const data = JSON.stringify();
