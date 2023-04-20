@@ -1,13 +1,13 @@
-.journal-carousel {
+.journal-track {
   width: 900px;
   overflow-x: hidden;
 }
 
-.journal-carousel {
+.journal-track {
   position: relative;
 }
 
-.journal-carousel-btn {
+.track-btn {
   position: absolute;
   z-index: 1;
   top: 44%;
@@ -15,10 +15,10 @@
   border: none;
 }
 
-.journal-carousel-btn:first-child {
+.track-btn:nth-child(2) {
   left: 1px;
 }
 
-.journal-carousel-btn:nth-child(2) {
+.track-btn:nth-child(3) {
   right: 1px;
 }

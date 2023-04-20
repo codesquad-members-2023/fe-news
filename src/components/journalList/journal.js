@@ -1,41 +1,72 @@
 export class Journal {
-  constructor(jsonData) {
-    this.journalList = jsonData;
+  constructor(journalData, journalHeaderStore, journalDetailStore) {
+    this.journalHeaderStore = journalHeaderStore;
+    this.journalDetailStore = journalDetailStore;
+    this.journalData = journalData;
+    this.gridElement = document.createElement("div");
+    this.gridElement.classList.add("journal-item");
+    this.detailElement = document.createElement("div");
+    this.detailElement.classList.add("journal-detail");
+    this.renderGrid();
   }
 
-  // (Refactor) 콜백함수와 이벤트를 분리해서 더 작게 만들어 보기
-  getJournalItems() {
-    const journalItems = this.journalList.map((journalData) => {
-      const journalItem = document.createElement("div");
-      journalItem.classList.add("journal-item");
+  getGridItems() {
+    const showDiv = document.createElement("div");
+    showDiv.classList.add("journal-item_show");
+    this.gridElement.appendChild(showDiv);
+    showDiv.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
+                         alt="${this.journalData.mediaInfo.name}">`;
+    showDiv.style.display = "flex";
 
-      const showDiv = document.createElement("div");
-      showDiv.classList.add("journal-item_show");
-      journalItem.appendChild(showDiv);
-      showDiv.innerHTML = `<img src="${journalData.journalSrc}" alt="${journalData.journalAlt}">`;
-      showDiv.style.display = "flex";
+    const hoverDiv = document.createElement("div");
+    hoverDiv.classList.add("journal-item_hover");
 
-      const hoverDiv = document.createElement("div");
-      hoverDiv.classList.add("journal-item_hover");
-      hoverDiv.innerHTML = `
-        <button class="subscribe-btn">구독</button>
-        <button class="unsubscribe-btn">해지</button>`;
-      hoverDiv.style.display = "none";
+    const subscribeBtn = document.createElement("button");
+    subscribeBtn.classList.add("subscribe-btn");
+    subscribeBtn.textContent = "구독";
 
-      journalItem.appendChild(hoverDiv);
+    const unSubscribeBtn = document.createElement("button");
+    unSubscribeBtn.classList.add("unsubscribe-btn");
+    unSubscribeBtn.textContent = "해지";
 
-      journalItem.addEventListener("mouseover", () => {
-        showDiv.style.display = "none";
-        hoverDiv.style.display = "flex";
-      });
+    hoverDiv.appendChild(subscribeBtn);
+    hoverDiv.appendChild(unSubscribeBtn);
 
-      journalItem.addEventListener("mouseout", () => {
-        hoverDiv.style.display = "none";
-        showDiv.style.display = "flex";
-      });
+    hoverDiv.style.display = "none";
 
-      return journalItem;
+    this.gridElement.appendChild(hoverDiv);
+
+    return { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn };
+  }
+
+  addDisplayEventToGrid(showDiv, hoverDiv) {
+    this.gridElement.addEventListener("mouseover", () => {
+      showDiv.style.display = "none";
+      hoverDiv.style.display = "flex";
     });
-    return journalItems;
+
+    this.gridElement.addEventListener("mouseout", () => {
+      hoverDiv.style.display = "none";
+      showDiv.style.display = "flex";
+    });
+  }
+
+  addSubEventToGrid(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv) {
+    subscribeBtn.addEventListener("click", () => {
+      this.journalHeaderStore.addSubscribe(this);
+    });
+
+    unSubscribeBtn.addEventListener("click", () => {
+      this.journalHeaderStore.deleteSubscribe(this);
+      hoverDiv.style.display = "none";
+      showDiv.style.display = "flex";
+    });
+  }
+
+  renderGrid() {
+    const { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn } =
+      this.getGridItems();
+    this.addDisplayEventToGrid(showDiv, hoverDiv);
+    this.addSubEventToGrid(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv);
   }
 }

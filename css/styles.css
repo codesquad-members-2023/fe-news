@@ -7,7 +7,7 @@
 @import "news-stand/components/news-header.css/news-header.css";
 @import "news-stand/components/news-head-line/news-head-line.css";
 @import "news-stand/components/news-journal/news-journal.css";
-@import "news-stand/components/news-journal/carousel.css";
+@import "news-stand/components/news-journal/journal-track.css";
 
 /* SCREENS */
 @import "news-stand/news-stand.css";

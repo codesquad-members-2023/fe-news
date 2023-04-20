@@ -1,9 +1,9 @@
 export class JournalHeaderStore {
   constructor(updateJournalData) {
-    this.journalState = "ALL"; // "SUB"
-    this.journalFrame = "GRID"; // "DETAIL"
+    this.journalState = "STATE_ALL"; // "STATE_SUB"
+    this.journalFrame = "FRAME_GRID"; // "FRAME_DETAIL"
     this.journalListAll = [];
-    this.journalSubscribe = [];
+    this.journalSubscribe = new Set();
     this.updateJournalData = updateJournalData;
   }
 
@@ -20,8 +20,13 @@ export class JournalHeaderStore {
     this.journalListAll = allItems.sort(() => 0.5 - Math.random());
   }
 
-  setJournalSubscribe(subItems) {
-    this.journalSubscribe = subItems;
+  addSubscribe(clickedJournal) {
+    this.journalSubscribe.add(clickedJournal);
+  }
+
+  deleteSubscribe(clickedJournal) {
+    this.journalSubscribe.delete(clickedJournal);
+    this.updateJournalData(this.journalState);
   }
 
   getJournalListAll() {
@@ -30,5 +35,13 @@ export class JournalHeaderStore {
 
   getJournalSubscribe() {
     return this.journalSubscribe;
+  }
+
+  setFrame(newFrame) {
+    this.journalFrame = newFrame;
+  }
+
+  getFrame() {
+    return this.journalFrame;
   }
 }

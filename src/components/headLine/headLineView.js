@@ -1,4 +1,4 @@
-import { getHeadLine } from "../../api/getData.js";
+import { dataRequestToAPI } from "../../api/fetchData.js";
 import { HeadLine } from "./headLine.js";
 
 export const createNewsStandHeadLine = () => {
@@ -9,13 +9,13 @@ export const createNewsStandHeadLine = () => {
   headLineEl.classList.add("news-stand-headLine");
   headLineEl.classList.add("news-stand-component_size");
 
-  getHeadLine(headLineHotURL).then((jsonData) => {
+  dataRequestToAPI(headLineHotURL).then((jsonData) => {
     const hotHeadLine = new HeadLine(jsonData);
     const hotHeadLineEl = hotHeadLine.getHeadlineHTML();
     headLineEl.innerHTML += hotHeadLineEl;
   });
 
-  getHeadLine(headLineNomalURL).then((jsonData) => {
+  dataRequestToAPI(headLineNomalURL).then((jsonData) => {
     const nomalHeadLine = new HeadLine(jsonData);
     const nomalHeadLineEl = nomalHeadLine.getHeadlineHTML();
     headLineEl.innerHTML += nomalHeadLineEl;
