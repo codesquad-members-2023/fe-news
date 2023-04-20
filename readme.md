@@ -34,5 +34,3 @@ view(component)를 작게 나누고 최소한의 view에 대해 feature 작성
 
 - Bundler(예정)
   - [Vite](https://vitejs-kr.github.io/)
-
-

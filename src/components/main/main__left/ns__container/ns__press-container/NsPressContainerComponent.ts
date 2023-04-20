@@ -10,7 +10,6 @@ import {
   PRESS_CONTAINER_PAGE_UNIT,
   PRESS_CONTAINER_PAGE_START,
 } from '@src/constants/constants.js';
-
 import { pickRandomData } from '@utils/pickRandomData.js';
 
 export class NsPressContainerComponent implements Component {
@@ -20,8 +19,11 @@ export class NsPressContainerComponent implements Component {
     this._model = new NsPressContainerModel();
     this._view = new NsPressContainerView();
 
+    const randomArticlesPromise = this.getRandomArticles(
+      props!.articlesPromise as Promise<Article[]>,
+    );
     this.setInitState({
-      articlesPromise: this.getRandomArticles(),
+      randomArticlesPromise,
       page: PRESS_CONTAINER_PAGE_START,
       handleToPrev: this.handleToPrev.bind(this),
       handleToNext: this.handleToNext.bind(this),
@@ -45,32 +47,18 @@ export class NsPressContainerComponent implements Component {
     component.element.insertAdjacentElement(position, this.element);
   }
 
-  async getArticles(): Promise<Article[]> {
-    const articleData = await customGet(`${BASIC_URL}/articles`).then((res) =>
-      res.json(),
-    );
-    return articleData;
-  }
-
-  async getRandomArticles() {
-    const articleData = await this.getArticles();
-    const totalItemCount =
-      PRESS_CONTAINER_PAGE_END * PRESS_CONTAINER_ITEM_COUNT;
-    return pickRandomData(articleData, totalItemCount);
-  }
-
   async setInitState({
-    articlesPromise,
+    randomArticlesPromise,
     page,
     handleToPrev,
     handleToNext,
   }: {
-    articlesPromise: Promise<Article[]>;
+    randomArticlesPromise: Promise<Article[]>;
     page: number;
     handleToPrev: (e: Event, state: State) => void;
     handleToNext: (e: Event, state: State) => void;
   }) {
-    const articles = await articlesPromise;
+    const articles = await randomArticlesPromise;
     this.setState({ articles, page, handleToPrev, handleToNext });
   }
 
@@ -89,5 +77,12 @@ export class NsPressContainerComponent implements Component {
         : +this.state.page + PRESS_CONTAINER_PAGE_UNIT;
     if (page === PRESS_CONTAINER_PAGE_END) return;
     this.setState({ page });
+  }
+
+  async getRandomArticles(articlesPromise: Promise<Article[]>) {
+    const articleData = await articlesPromise;
+    const totalItemCount =
+      PRESS_CONTAINER_PAGE_END * PRESS_CONTAINER_ITEM_COUNT;
+    return pickRandomData(articleData, totalItemCount);
   }
 }

@@ -1,10 +1,12 @@
-import { Props, State, ViewState } from '@custom-types/types';
+import { Article, Props, State, ViewState } from '@custom-types/types';
 import { Component } from '@custom-types/interfaces';
 import { NsContainerModel } from '@components/main/main__left/ns__container/NsContainerModel.js';
 import { NsContainerView } from '@components/main/main__left/ns__container/NsContainerView.js';
 import { NsNavbarComponent } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarComponent.js';
 import { NsPressContainerComponent } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerComponent.js';
 import { NsCategoryContainerObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/NsCategoryContainerObserverViewComponent.js';
+import { customGet } from '@utils/customFetch.js';
+import { BASIC_URL } from '@src/constants/constants.js';
 
 export class NsContainerComponent implements Component {
   private _model: NsContainerModel;
@@ -12,11 +14,13 @@ export class NsContainerComponent implements Component {
   constructor(props?: Props) {
     this._model = new NsContainerModel();
     this._view = new NsContainerView();
-    this.attachChildComponents();
-
+    // props 전달부터 하기
+    const articlesPromise = this.getArticles();
     const view: ViewState = 'GRID';
     const handleToView = this.handleToView.bind(this);
-    this.setState({ view, handleToView });
+    this.attachChildComponents({ articlesPromise, handleToView });
+    // props 전달 후에 setState
+    this.setState({ view });
   }
 
   get element() {
@@ -37,9 +41,11 @@ export class NsContainerComponent implements Component {
   }
 
   attachChildComponents(props?: Props) {
-    const nsNavbar = new NsNavbarComponent();
-    const nsPressContainer = new NsPressContainerComponent();
-    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent();
+    const nsNavbar = new NsNavbarComponent(props);
+    const nsPressContainer = new NsPressContainerComponent(props);
+    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent(
+      props,
+    );
 
     nsNavbar.attachTo(this);
     nsPressContainer.attachTo(this);
@@ -49,5 +55,12 @@ export class NsContainerComponent implements Component {
   handleToView(state: State) {
     const { view } = state;
     this.setState({ view });
+  }
+
+  async getArticles(): Promise<Article[]> {
+    const articleData = await customGet(`${BASIC_URL}/articles`).then((res) =>
+      res.json(),
+    );
+    return articleData;
   }
 }
