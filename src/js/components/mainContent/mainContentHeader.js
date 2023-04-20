@@ -1,5 +1,5 @@
-import PressTab from './pressTab.js';
-import ShowTab from './showTab.js';
+import PressTab from './tab/pressTab.js';
+import ShowTab from './tab/showTab.js';
 
 export default class MainContentHeader {
   constructor($parent) {

@@ -1,5 +1,5 @@
-import { domUtils } from '../../utils/index.js';
-import { subscriptionListStore } from '../../store/index.js';
+import { domUtils } from '../../../utils/index.js';
+import { subscriptionListStore } from '../../../store/index.js';
 
 const { $ } = domUtils;
 

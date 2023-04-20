@@ -1,6 +1,6 @@
 import { domUtils, dataUtils, validatorUtils } from '../../utils/index.js';
 import { tabStore, gridPageStore, subscriptionListStore } from '../../store/index.js';
-import PressGrid from './pressGrid.js';
+import PressGrid from './grid/pressGrid.js';
 
 const { $ } = domUtils;
 const { isActiveTab, isFirstPage, isLastPage } = validatorUtils;
@@ -45,14 +45,24 @@ export default class MainContentGrid {
 
     const subscribedPressData = allPressData.filter(({ pressName }) => subscriptionList.has(pressName));
     const pressData = pressTabType === 'all' ? allPressData : subscribedPressData;
-    const pressDataSlices = getDataSlices({ dataArr: pressData, count: this.#gridItemCount });
-    const $gridWrapper = $({ selector: '.main-content__grid-wrapper', parent: this.$ele });
+    const pressDataSlices = getDataSlices({
+      dataArr: pressData,
+      count: this.#gridItemCount
+    });
+    const $gridWrapper = $({
+      selector: '.main-content__grid-wrapper',
+      parent: this.$ele
+    });
 
     const pagesCount = pressDataSlices.length === 0 ? 1 : pressDataSlices.length;
 
     for (let page = 0; page < pagesCount; page += 1) {
       const data = pressDataSlices[page];
-      new PressGrid($gridWrapper, { pressTabType, page, gridItemsData: data ?? [] }).render();
+      new PressGrid($gridWrapper, {
+        pressTabType,
+        page,
+        gridItemsData: data ?? []
+      }).render();
     }
 
     gridPageStore.dispatch({
@@ -69,7 +79,14 @@ export default class MainContentGrid {
     const { pressTabType } = this.props;
     const { activePressTab, activeShowTab } = tabStore.getState();
 
-    if (!isActiveTab({ pressTabType, showTabType: 'grid', activePressTab, activeShowTab }))
+    if (
+      !isActiveTab({
+        pressTabType,
+        showTabType: 'grid',
+        activePressTab,
+        activeShowTab
+      })
+    )
       this.$ele.classList.add('display-none');
     else this.$ele.classList.remove('display-none');
   }
@@ -78,8 +95,14 @@ export default class MainContentGrid {
     const { pressTabType } = this.props;
     const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
 
-    const $beforeBtn = $({ selector: '.main-content__grid-before-btn', parent: this.$ele });
-    const $nextBtn = $({ selector: '.main-content__grid-next-btn', parent: this.$ele });
+    const $beforeBtn = $({
+      selector: '.main-content__grid-before-btn',
+      parent: this.$ele
+    });
+    const $nextBtn = $({
+      selector: '.main-content__grid-next-btn',
+      parent: this.$ele
+    });
 
     if (isFirstPage(currentPage)) $beforeBtn.classList.add('hidden');
     else $beforeBtn.classList.remove('hidden');
@@ -109,10 +132,16 @@ export default class MainContentGrid {
       const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
 
       if (target.id === 'grid-before-btn') {
-        gridPageStore.dispatch({ type: 'beforePage', payload: { pressTabType, currentPage, totalPages } });
+        gridPageStore.dispatch({
+          type: 'beforePage',
+          payload: { pressTabType, currentPage, totalPages }
+        });
       }
       if (target.id === 'grid-next-btn') {
-        gridPageStore.dispatch({ type: 'nextPage', payload: { pressTabType, currentPage, totalPages } });
+        gridPageStore.dispatch({
+          type: 'nextPage',
+          payload: { pressTabType, currentPage, totalPages }
+        });
       }
     });
   }

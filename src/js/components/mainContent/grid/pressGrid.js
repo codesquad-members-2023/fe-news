@@ -1,4 +1,4 @@
-import { gridPageStore } from '../../store/index.js';
+import { gridPageStore } from '../../../store/index.js';
 import PressGridItem from './pressGridItem.js';
 
 export default class PressGrid {
