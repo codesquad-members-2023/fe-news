@@ -27,3 +27,4 @@ export const changeNewsDetailDisplay = () => {
     detailDisplay.classList.add("none");
   });
 };
+;

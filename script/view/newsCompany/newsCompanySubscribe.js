@@ -11,12 +11,13 @@ export const updateNewsLogo = (allNewsSelector, myNewsSelector, registerData) =>
 };
 
 const showMyNewsSourcesLogo = (myMediaLogos, allMediaLogos, gridBox, myGridBox, registerData) => {
+  const { CANCEL } = SUBSCRIBE;
   myMediaLogos.addEventListener("click", () => {
     gridBox.classList.add("none");
     myGridBox.classList.remove("none");
     allMediaLogos.classList.add("change_gray");
     myMediaLogos.classList.add("change_black");
-    insertMyNewsData(SUBSCRIBE.CANCEL, registerData.showPublishData());
+    insertMyNewsData(CANCEL, registerData.showPublishData());
   });
 };
 
@@ -30,6 +31,7 @@ const showAllNewsSourcesLogo = (myMediaLogos, allMediaLogos, gridBox, myGridBox)
 };
 
 export const insertMyNewsData = (subscribe, newsData) => {
+  const { PAGES_PER } = COMPANY;
   const gridBox = $(".grid_subscribe");
   gridBox.innerHTML = "";
   gridBox.innerHTML = newsData.reduce((acc, data) => {
@@ -41,8 +43,8 @@ export const insertMyNewsData = (subscribe, newsData) => {
     </div>
     `);
   }, "");
-  if (newsData.length !== COMPANY.PAGES_PER) {
-    for (let i = 0; i < COMPANY.PAGES_PER - newsData.length; i++) {
+  if (newsData.length !== PAGES_PER) {
+    for (let i = 0; i < PAGES_PER - newsData.length; i++) {
       gridBox.innerHTML += `<div class="grid_list"></div>`;
     }
   }
