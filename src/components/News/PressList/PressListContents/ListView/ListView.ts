@@ -33,7 +33,11 @@ class ListView extends HTMLElement {
       name: 'section-data',
     });
 
-    const currentCategory = sectionData && JSON.parse(sectionData)?.category;
+    const isCustom = this.closest('section')?.classList.contains('custom');
+    const currentCategory =
+      sectionData && JSON.parse(sectionData)?.section.category;
+    const currentPressId =
+      sectionData && JSON.parse(sectionData)?.section.pressId;
 
     const categoryCounts = sectionData
       ? JSON.parse(sectionData).categoryCounts
@@ -41,9 +45,9 @@ class ListView extends HTMLElement {
 
     const template = `
     <div class="listview-container">
-      <list-view-tab-element category-counts='${JSON.stringify(
-        categoryCounts
-      )}' current-category='${currentCategory}'></list-view-tab-element>
+      <list-view-tab-element is-custom=${isCustom} category-counts='${JSON.stringify(
+      categoryCounts
+    )}' current-category='${currentCategory}' current-press-id='${currentPressId}'></list-view-tab-element>
       <list-view-item-element section-data='${JSON.stringify(
         sectionData
       )}' image="headline"></list-view-item-element>
