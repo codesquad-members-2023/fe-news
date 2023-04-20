@@ -28,7 +28,7 @@ nextButton.addEventListener('click', () => {
       mainTitle: mainTitle.textContent,
     },
     subContent: {
-      subNewsList: subNewsList,
+      subNewsList: subNewsList.splice(0, 6),
       noticeMessage: noticeMessage,
     },
   };
