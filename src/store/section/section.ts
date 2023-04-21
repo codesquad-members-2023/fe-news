@@ -21,6 +21,7 @@ const initialState: SectionInfoType = {
     },
   },
   totalNumber: 0,
+  currentCategoryIndex: 0,
 };
 
 interface props {

@@ -52,6 +52,16 @@ interface setTotalPageProps extends props {
   payload: setTotlaPagePayload;
 }
 
+interface setCategoryIndexPayload {
+  view: 'grid' | 'view';
+  tab: 'general' | 'custom';
+  index: number;
+}
+
+interface setCategoryIndexProps extends props {
+  payload: setCategoryIndexPayload;
+}
+
 interface setCurrentPagePayload {
   view: 'grid' | 'view';
   tab: 'general' | 'custom';
@@ -78,12 +88,21 @@ const changeView = ({ state, payload }: changeViewProps) => {
 const changePageNumber = ({ state, type }: changePageNumberProps) => {
   const currentView = state.currentView;
   const currentTab = state.currentTab;
+  const isListLastPage =
+    'list' &&
+    state.page[currentView][currentTab].currentPage ===
+      state.page[currentView][currentTab].totalPage;
   const isListFirstPage =
     state.currentView === 'list' &&
     state.page[currentView][currentTab].currentPage === 0;
   if (type === 'NEXT_PAGE') {
-    state.page[currentView][currentTab].currentPage++;
-    state.category[currentView][currentTab].index++;
+    if (isListLastPage) {
+      state.page[currentView][currentTab].currentPage = 0;
+      state.category[currentView][currentTab].index = 0;
+    } else {
+      state.page[currentView][currentTab].currentPage++;
+      state.category[currentView][currentTab].index++;
+    }
   } else if (type === 'PREV_PAGE') {
     if (isListFirstPage) {
       state.page[currentView][currentTab].currentPage =
@@ -111,6 +130,11 @@ const setTotalPage = ({ state, payload }: setTotalPageProps) => {
   return state;
 };
 
+const setCategoryIndex = ({ state, payload }: setCategoryIndexProps) => {
+  state.category[payload.view][payload.tab].index = payload.index;
+  return state;
+};
+
 const reducer: ReducerType<DisplayType> = (
   state = initialState,
   action: ActionType
@@ -130,6 +154,8 @@ const reducer: ReducerType<DisplayType> = (
       return setCurrentPage({ state, payload: action.payload });
     case 'SET_TOTAL_PAGE':
       return setTotalPage({ state, payload: action.payload });
+    case 'SET_CATEGORY_INDEX':
+      return setCategoryIndex({ state, payload: action.payload });
     default:
       return state;
   }

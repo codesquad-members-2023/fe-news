@@ -100,7 +100,7 @@ class PressListContents extends HTMLElement {
           payload: {
             view: 'grid',
             tab: 'general',
-            totalPage: Math.ceil(pressList.length / 24),
+            totalPage: Math.ceil(pressList.length / 24) - 1,
           },
         });
         this.pressStore.dispatch({
@@ -126,7 +126,7 @@ class PressListContents extends HTMLElement {
           payload: {
             view: 'grid',
             tab: 'custom',
-            totalPage: Math.ceil(customPressList.length / 24),
+            totalPage: Math.ceil(customPressList.length / 24) - 1,
           },
         });
         this.pressStore.dispatch({
@@ -183,6 +183,14 @@ class PressListContents extends HTMLElement {
             view: 'list',
             tab: 'general',
             totalPage: this.sectionStore.getState().totalNumber - 1,
+          },
+        });
+        this.displayStore.dispatch({
+          type: 'SET_CATEGORY_INDEX',
+          payload: {
+            view: 'list',
+            tab: 'general',
+            index: this.sectionStore.getState().currentCategoryIndex,
           },
         });
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
@@ -333,7 +341,7 @@ class PressListContents extends HTMLElement {
         const totalPage =
           this.displayStore.getState().page[view][tab].totalPage;
 
-        const isLastPage = currentPage === totalPage - 1;
+        const isLastPage = currentPage === totalPage;
         const isFirstPage = currentPage === 0;
         const isOnePage = totalPage === 1;
         const isGirdView = view === 'grid';
@@ -344,7 +352,7 @@ class PressListContents extends HTMLElement {
             name: 'hide',
             value: 'all',
           });
-        } else if (isLastPage) {
+        } else if (isLastPage && isGirdView) {
           setProperty({
             target: controllerElement,
             name: 'hide',

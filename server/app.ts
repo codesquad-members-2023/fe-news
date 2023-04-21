@@ -212,7 +212,12 @@ app.get('/section', async (req, res) => {
     ]);
 
     let totalNumber = 0;
+    let currentCategoryIndex = page;
+    const category = sectionsWithPress[0].category;
     const categoryCountsObj = categoryCounts.reduce((acc, curr) => {
+      if (Number(category) > Number(curr._id)) {
+        currentCategoryIndex -= curr.count;
+      }
       acc[curr._id] = curr.count;
       totalNumber += curr.count;
       return acc;
@@ -226,6 +231,7 @@ app.get('/section', async (req, res) => {
       section: sectionsWithPress[0],
       categoryCounts: categoryCountsObj,
       totalNumber,
+      currentCategoryIndex,
     });
   } catch (error) {
     res.status(400).json({ message: error });

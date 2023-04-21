@@ -7,6 +7,7 @@ export interface SectionInfoType {
   categoryCounts: CategoryCountsType;
   section: SectionType;
   totalNumber: number;
+  currentCategoryIndex: number;
 }
 export interface SectionType {
   id: string;

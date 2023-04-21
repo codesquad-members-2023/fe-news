@@ -83,6 +83,8 @@ class ListViewTab extends HTMLElement {
   renderTabForGeneralTab(sectionData: SectionInfoType) {
     const currentCategory = sectionData.section.category;
     const categoryCounts = sectionData.categoryCounts;
+    const categoryIndex = sectionData.currentCategoryIndex;
+
     const currentNumber =
       this.displayStore.getState().category['list']['general'].index;
     const isActive = (categoryId: string) =>
@@ -123,7 +125,7 @@ class ListViewTab extends HTMLElement {
             isActive(categoryId) ? 'true' : 'false'
           } ${
             isActive(categoryId)
-              ? `progress="50" current-number='${getCurrentCategoryIndex()}'`
+              ? `progress="50" current-number='${categoryIndex}'`
               : ''
           }></list-view-tab-item-element>`;
         })
