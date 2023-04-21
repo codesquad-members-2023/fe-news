@@ -23,7 +23,8 @@
   }
 }
 
-.main-content__grid {
+.main-content__grid,
+.main-content__list {
   position: relative;
   &.display-none {
     display: none;
@@ -66,5 +67,12 @@
   }
   &:hover .subscribe-toggle-btn-container {
     @include flex-row($justify-content: center, $align-items: center);
+  }
+}
+
+.press-list__category {
+  @include flex-row($align-items: center);
+  li {
+    padding: 0 16px;
   }
 }

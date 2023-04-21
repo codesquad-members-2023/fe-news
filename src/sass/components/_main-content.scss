@@ -21,3 +21,17 @@
     }
   }
 }
+
+.main-content__list {
+  height: 388px;
+}
+
+.press-list__category {
+  background-color: $off-white;
+  border: 1px solid $gray100;
+  li {
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+  }
+}

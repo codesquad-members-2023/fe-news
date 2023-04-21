@@ -42,3 +42,10 @@ body {
   @include fontType($body-XS);
   color: $gray200;
 }
+
+.press-list__category {
+  li {
+    @include fontType($body-SM);
+    color: $gray300;
+  }
+}
