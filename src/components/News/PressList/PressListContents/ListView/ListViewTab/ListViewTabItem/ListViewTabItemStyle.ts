@@ -14,6 +14,13 @@ export default function style(target: HTMLElement) {
       color: var(--gray300);
       border: 0;
       background-color: transparent;
+      
+    }
+
+    .tab-container span {
+      display: inline-block;
+      width: max-content;
+      
     }
 
     .is-active {

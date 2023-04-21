@@ -37,6 +37,12 @@ class ListViewTab extends HTMLElement {
     }
   }
 
+  handleDrag() {
+    this.shadowRoot
+      ?.querySelector('.tab-wrap')
+      ?.addEventListener('drag', () => {});
+  }
+
   renderTabForCustomTab(
     sectionData: SectionInfoType,
     subscribingPress: PressListType['customPressList']
@@ -44,9 +50,11 @@ class ListViewTab extends HTMLElement {
     const currentPressId = sectionData.section.pressId;
     const isActive = (pressId: string) =>
       currentPressId === pressId ? true : false;
+    const currentPage =
+      this.displayStore.getState().page['list']['custom'].currentPage;
 
     const template = `
-      <div class="tab-wrap">
+      <div class="tab-wrap" draggable="true">
       ${subscribingPress
         .map(
           (press) =>
@@ -68,7 +76,7 @@ class ListViewTab extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: style(),
+      style: style(currentPage),
     });
   }
 
@@ -100,7 +108,6 @@ class ListViewTab extends HTMLElement {
         },
         0
       );
-      console.log(currentNumber - accumulatedNum);
       return currentNumber - accumulatedNum;
     };
 
@@ -153,6 +160,7 @@ class ListViewTab extends HTMLElement {
         this.renderTabForCustomTab(sectionData, subscribingPress);
       });
     }
+    this.handleDrag();
   }
 }
 
