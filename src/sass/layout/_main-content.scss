@@ -1,6 +1,6 @@
 .main-content {
   &__header {
-    @include flex-row($justify-content: space-between, $align-items: center);
+    @include flex($justify-content: space-between, $align-items: center);
     border: 1px solid #000;
   }
 }
@@ -9,7 +9,7 @@
   padding: 10px 0;
   .press-tab,
   .show-tab {
-    @include flex-row($justify-content: space-between, $align-items: center);
+    @include flex($justify-content: space-between, $align-items: center);
   }
   .press-tab-btn,
   .show-tab img {
@@ -58,7 +58,7 @@
   }
 }
 .press-grid__item {
-  @include flex-row($justify-content: center, $align-items: center);
+  @include flex($justify-content: center, $align-items: center);
   position: relative;
 
   .subscribe-toggle-btn-container {
@@ -66,12 +66,12 @@
     position: absolute;
   }
   &:hover .subscribe-toggle-btn-container {
-    @include flex-row($justify-content: center, $align-items: center);
+    @include flex($justify-content: center, $align-items: center);
   }
 }
 
 .press-list__category {
-  @include flex-row($align-items: center);
+  @include flex($align-items: center);
 
   li {
     padding: 0 16px;
@@ -82,7 +82,7 @@
   padding: 24px;
 }
 .press-list__info {
-  @include flex-row($align-items: center);
+  @include flex($align-items: center);
 
   a {
     display: inline-block;
