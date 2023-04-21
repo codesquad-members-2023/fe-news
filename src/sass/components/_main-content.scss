@@ -24,14 +24,34 @@
 
 .main-content__list {
   height: 388px;
+
+  &-wrapper {
+    height: 100%;
+  }
 }
 
 .press-list__category {
-  background-color: $off-white;
   border: 1px solid $gray100;
+  background-color: $off-white;
   li {
     height: 40px;
     line-height: 40px;
     cursor: pointer;
+  }
+}
+
+.press-list__info {
+  height: 24px;
+
+  a .press-logo {
+    height: 20px;
+  }
+
+  .subscribe-toggle-btn {
+    width: 74px;
+    height: 24px;
+    border: 1px solid $gray100;
+    border-radius: 50px;
+    background-color: $off-white;
   }
 }

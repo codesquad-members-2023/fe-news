@@ -72,7 +72,23 @@
 
 .press-list__category {
   @include flex-row($align-items: center);
+
   li {
+    padding: 0 16px;
+  }
+}
+
+.press-list__content {
+  padding: 24px;
+}
+.press-list__info {
+  @include flex-row($align-items: center);
+
+  a {
+    display: inline-block;
+  }
+
+  .update-time {
     padding: 0 16px;
   }
 }

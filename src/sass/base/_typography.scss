@@ -49,3 +49,8 @@ body {
     color: $gray300;
   }
 }
+
+.update-time {
+  @include fontType($body-XS);
+  color: $gray400;
+}
