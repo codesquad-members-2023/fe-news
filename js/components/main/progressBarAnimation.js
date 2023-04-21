@@ -1,14 +1,15 @@
 import { dispatch, getStoreState } from '../../store/store.js';
-import { displayActionCreator } from '../../actions/actions.js';
+import { displayActionCreator } from '../../actions/ActionCreator.js';
 
 const ANIMATION = {
-  DURATION: 20000,
+  DURATION: 5000,
   MAKE_PERCENT: 100,
 };
 
 export const animationStart = ($progressBar) => {
   const viewOption = getStoreState('viewOptionData').viewOption;
   let startTime = null;
+
   const progressBarAnimation = (timestamp) => {
     if (startTime === null) startTime = timestamp;
     const duration = timestamp - startTime;
@@ -23,10 +24,11 @@ export const animationStart = ($progressBar) => {
         ),
       );
     } else {
-      if (viewOption.allOrMine === 'all')
+      if (viewOption.allOrMine === 'all') {
         dispatch(displayActionCreator.listRightBtnClick());
-      else if (viewOption.allOrMine === 'mine')
+      } else if (viewOption.allOrMine === 'mine') {
         dispatch(displayActionCreator.mineListRightBtnClick());
+      }
     }
   };
   dispatch(

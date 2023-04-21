@@ -1,6 +1,6 @@
 import { createElement } from '../../utils/dom.js';
 import { subscribe } from '../../store/store.js';
-import { fetchActionCreator } from '../../actions/actions.js';
+import { fetchActionCreator } from '../../actions/ActionCreator.js';
 import { autoRollingFrame } from './autoRollingAnimaiton.js';
 // 전역변수 한번에 관리해야지.... 빼기 너무 귀찮고..
 const MEDIA_NAME = '연합뉴스';

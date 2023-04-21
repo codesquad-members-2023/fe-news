@@ -1,5 +1,5 @@
 import { dispatch } from '../../../store/store.js';
-import { displayActionCreator } from '../../../actions/actions.js';
+import { displayActionCreator } from '../../../actions/ActionCreator.js';
 import { MEDIA_CATEGORIES } from './mainAllList.js';
 
 export const tabClickEventHandler = ({ target }) => {

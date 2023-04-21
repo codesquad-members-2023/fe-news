@@ -14,6 +14,9 @@ const defaultAutoRollingData = {
 
 const defaultMediaData = {
   data: [],
+  loading: null,
+  gridData: [],
+  error: null,
 };
 
 export const defaultSubscribeData = {

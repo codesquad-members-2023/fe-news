@@ -1,5 +1,5 @@
 import { dispatch } from '../../../store/store.js';
-import { displayActionCreator } from '../../../actions/actions.js';
+import { displayActionCreator } from '../../../actions/ActionCreator.js';
 
 export const mineListHeaderEventHandler = (
   subscribeNameArr,

@@ -1,5 +1,5 @@
 import { dispatch, getStoreState } from '../../../store/store.js';
-import { displayActionCreator } from '../../../actions/actions.js';
+import { displayActionCreator } from '../../../actions/ActionCreator.js';
 
 const VIEW_BTN_CLASS = {
   ALL: 'main-header__all-media',

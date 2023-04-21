@@ -1,4 +1,4 @@
-import { displayActionCreator } from '../../../actions/actions.js';
+import { displayActionCreator } from '../../../actions/ActionCreator.js';
 import { dispatch } from '../../../store/store.js';
 
 const SUBSCRIBE = 'subscribe';
