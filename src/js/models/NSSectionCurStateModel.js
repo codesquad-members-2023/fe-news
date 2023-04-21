@@ -1,4 +1,4 @@
-import { NS_SECTION_INFO, VIEW_STATE } from '../constant/dom.js';
+import { NS_SECTION_INFO, VIEW_STATE, RENDER_STATE } from '../constant/dom.js';
 import { API_PATH } from '../constant/api.js';
 import { isEquivalent } from '../utils/objectUtils.js';
 import Observer from './observer.js';
@@ -7,14 +7,21 @@ export default class NSSectionCurViewStateModel extends Observer {
   constructor(dataFetcher) {
     super();
     this._curViewState = {
+      render: RENDER_STATE.NOT_READY,
       gridOrList: VIEW_STATE.GRID,
       allOrSub: VIEW_STATE.ALL,
-      index: 1,
+      index: 1, // 전체 갯수
+      // grid index , list index
     };
     this._dataFetcher = dataFetcher;
     this._allPressData = [];
     this._gridPressData = [];
     this._subPressData = [];
+  }
+
+  changeRenderState() {
+    this._state_render = RENDER_STATE.READY;
+    this.notify(this._curViewState);
   }
 
   getCurViewState() {
@@ -94,13 +101,13 @@ export default class NSSectionCurViewStateModel extends Observer {
     this.notify(this._curViewState);
   }
 
-  increaseIndex(changedIndex) {
-    this._curViewState.index = changedIndex;
+  increaseIndex() {
+    this._curViewState.index += 1;
     this.notify(this._curViewState);
   }
 
-  decreaseIndex(changedIndex) {
-    this._curViewState.index = changedIndex;
+  decreaseIndex() {
+    this._curViewState.index -= 1;
     this.notify(this._curViewState);
   }
 }
