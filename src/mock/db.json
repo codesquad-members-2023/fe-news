@@ -23,7 +23,7 @@
   },
   "mainContentData": [
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "독서신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/955.png",
       "pressSrc": "http://newsstand.naver.com/955",
@@ -62,7 +62,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "미디어스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/0211/nsd01153196.png",
       "pressSrc": "http://newsstand.naver.com/829",
@@ -101,7 +101,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "이웃집과학자",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/988.png",
       "pressSrc": "http://newsstand.naver.com/988",
@@ -140,7 +140,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "한경비즈니스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0928/nsd125033437.png",
       "pressSrc": "http://newsstand.naver.com/050",
@@ -179,7 +179,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "베리타스알파",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/958.png",
       "pressSrc": "http://newsstand.naver.com/958",
@@ -219,7 +219,7 @@
     },
 
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "조선비즈",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/366.png",
       "pressSrc": "http://newsstand.naver.com/366",
@@ -258,7 +258,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "한국금융신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/968.png",
       "pressSrc": "http://newsstand.naver.com/968",
@@ -297,7 +297,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "CNB뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/954.png",
       "pressSrc": "http://newsstand.naver.com/954",
@@ -336,7 +336,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "세계일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/022.png",
       "pressSrc": "http://newsstand.naver.com/022",
@@ -375,7 +375,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "데일리임팩트",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/0819/nsd151219656.png",
       "pressSrc": "http://newsstand.naver.com/812",
@@ -414,7 +414,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "연합인포맥스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/013.png",
       "pressSrc": "http://newsstand.naver.com/013",
@@ -453,7 +453,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "여성경제신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1018/nsd132851977.png",
       "pressSrc": "http://newsstand.naver.com/682",
@@ -492,7 +492,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "이데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/018.png",
       "pressSrc": "http://newsstand.naver.com/018",
@@ -531,7 +531,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "조선일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0903/nsd185255316.png",
       "pressSrc": "http://newsstand.naver.com/023",
@@ -570,7 +570,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "일요신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/925.png",
       "pressSrc": "http://newsstand.naver.com/925",
@@ -609,7 +609,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "국민일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/005.png",
       "pressSrc": "http://newsstand.naver.com/005",
@@ -648,7 +648,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "문화일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/021.png",
       "pressSrc": "http://newsstand.naver.com/021",
@@ -687,7 +687,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "데일리한국",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/042.png",
       "pressSrc": "http://newsstand.naver.com/042",
@@ -726,7 +726,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "CEO스코어데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/932.png",
       "pressSrc": "http://newsstand.naver.com/932",
@@ -765,7 +765,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "이로운넷",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/825.png",
       "pressSrc": "http://newsstand.naver.com/825",
@@ -804,7 +804,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "한겨레",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/028.png",
       "pressSrc": "http://newsstand.naver.com/028",
@@ -843,7 +843,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "더팩트",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/536.png",
       "pressSrc": "http://newsstand.naver.com/536",
@@ -883,7 +883,7 @@
     },
 
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "아리랑TV",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/934.png",
       "pressSrc": "http://newsstand.naver.com/934",
@@ -922,7 +922,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "머니투데이방송",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/0420/nsd105139164.png",
       "pressSrc": "http://newsstand.naver.com/916",
@@ -961,7 +961,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "연합뉴스TV",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/422.png",
       "pressSrc": "http://newsstand.naver.com/422",
@@ -1000,7 +1000,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "OBS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/340.png",
       "pressSrc": "http://newsstand.naver.com/340",
@@ -1039,7 +1039,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "TJB대전방송",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2023/0103/nsd95227559.png",
       "pressSrc": "http://newsstand.naver.com/684",
@@ -1078,7 +1078,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "KBS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/056.png",
       "pressSrc": "http://newsstand.naver.com/056",
@@ -1117,7 +1117,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "EBS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0803/nsd20247547.png",
       "pressSrc": "http://newsstand.naver.com/344",
@@ -1156,7 +1156,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "채널에이",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/903.png",
       "pressSrc": "http://newsstand.naver.com/903",
@@ -1195,7 +1195,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "YTN사이언스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0922/nsd152336602.png",
       "pressSrc": "http://newsstand.naver.com/945",
@@ -1234,7 +1234,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "KBC광주방송",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/980.png",
       "pressSrc": "http://newsstand.naver.com/980",
@@ -1273,7 +1273,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "뉴시스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/003.png",
       "pressSrc": "http://newsstand.naver.com/003",
@@ -1312,7 +1312,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "SBS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/055.png",
       "pressSrc": "http://newsstand.naver.com/055",
@@ -1351,7 +1351,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "한국경제TV",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/215.png",
       "pressSrc": "http://newsstand.naver.com/215",
@@ -1390,7 +1390,7 @@
       ]
     },
     {
-      "newsCategory": 2,
+      "newsCategory": 1,
       "pressName": "MBC",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/214.png",
       "pressSrc": "http://newsstand.naver.com/214",
@@ -1429,7 +1429,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "디지털데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/138.png",
       "pressSrc": "http://newsstand.naver.com/138",
@@ -1468,7 +1468,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "디지털투데이",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/953.png",
       "pressSrc": "http://newsstand.naver.com/953",
@@ -1507,7 +1507,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "전자신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/030.png",
       "pressSrc": "http://newsstand.naver.com/030",
@@ -1546,7 +1546,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "보안뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/952.png",
       "pressSrc": "http://newsstand.naver.com/952",
@@ -1585,7 +1585,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "IT동아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/818.png",
       "pressSrc": "http://newsstand.naver.com/818",
@@ -1624,7 +1624,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "디지털타임스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/029.png",
       "pressSrc": "http://newsstand.naver.com/029",
@@ -1663,7 +1663,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "넥스트데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/910.png",
       "pressSrc": "http://newsstand.naver.com/910",
@@ -1702,7 +1702,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "지디넷코리아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0905/nsd131925414.png",
       "pressSrc": "http://newsstand.naver.com/092",
@@ -1741,7 +1741,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "블로터",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/293.png",
       "pressSrc": "http://newsstand.naver.com/293",
@@ -1780,7 +1780,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "AI타임스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/1112/nsd102040597.png",
       "pressSrc": "http://newsstand.naver.com/994",
@@ -1819,7 +1819,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "헬로디디",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/977.png",
       "pressSrc": "http://newsstand.naver.com/977",
@@ -1858,7 +1858,7 @@
       ]
     },
     {
-      "newsCategory": 3,
+      "newsCategory": 2,
       "pressName": "IT조선",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/917.png",
       "pressSrc": "http://newsstand.naver.com/917",
@@ -1898,7 +1898,7 @@
     },
 
     {
-      "newsCategory": 4,
+      "newsCategory": 3,
       "pressName": "이코노타임즈",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0615/nsd7251644.png",
       "pressSrc": "http://newsstand.naver.com/681",
@@ -1937,7 +1937,7 @@
       ]
     },
     {
-      "newsCategory": 4,
+      "newsCategory": 3,
       "pressName": "중앙데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/330.png",
       "pressSrc": "http://newsstand.naver.com/330",
@@ -1976,7 +1976,7 @@
       ]
     },
     {
-      "newsCategory": 4,
+      "newsCategory": 3,
       "pressName": "코리아타임스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/040.png",
       "pressSrc": "http://newsstand.naver.com/040",
@@ -2015,7 +2015,7 @@
       ]
     },
     {
-      "newsCategory": 4,
+      "newsCategory": 3,
       "pressName": "YONHAPNEWS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/946.png",
       "pressSrc": "http://newsstand.naver.com/946",
@@ -2054,7 +2054,7 @@
       ]
     },
     {
-      "newsCategory": 4,
+      "newsCategory": 3,
       "pressName": "코리아헤럴드",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/044.png",
       "pressSrc": "http://newsstand.naver.com/044",
@@ -2093,7 +2093,7 @@
       ]
     },
     {
-      "newsCategory": 4,
+      "newsCategory": 3,
       "pressName": "KBS World",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/326.png",
       "pressSrc": "http://newsstand.naver.com/326",
@@ -2133,7 +2133,7 @@
     },
 
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "스포탈코리아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/139.png",
       "pressSrc": "http://newsstand.naver.com/139",
@@ -2172,7 +2172,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "스포츠월드",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/396.png",
       "pressSrc": "http://newsstand.naver.com/396",
@@ -2211,7 +2211,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "스포츠서울",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0708/nsd94830278.png",
       "pressSrc": "http://newsstand.naver.com/073",
@@ -2250,7 +2250,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "스타뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/108.png",
       "pressSrc": "http://newsstand.naver.com/108",
@@ -2289,7 +2289,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "조이뉴스24",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/947.png",
       "pressSrc": "http://newsstand.naver.com/947",
@@ -2328,7 +2328,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "스포츠동아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/314.png",
       "pressSrc": "http://newsstand.naver.com/314",
@@ -2367,7 +2367,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "텐아시아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/312.png",
       "pressSrc": "http://newsstand.naver.com/312",
@@ -2406,7 +2406,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "스포츠한국",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/962.png",
       "pressSrc": "http://newsstand.naver.com/962",
@@ -2445,7 +2445,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "마이데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/117.png",
       "pressSrc": "http://newsstand.naver.com/117",
@@ -2484,7 +2484,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "OSEN",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0610/nsd151458769.png",
       "pressSrc": "http://newsstand.naver.com/109",
@@ -2523,7 +2523,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "스포티비뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/1130/nsd10159718.png",
       "pressSrc": "http://newsstand.naver.com/477",
@@ -2562,7 +2562,7 @@
       ]
     },
     {
-      "newsCategory": 5,
+      "newsCategory": 4,
       "pressName": "뉴스엔",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/447.png",
       "pressSrc": "http://newsstand.naver.com/447",
@@ -2602,7 +2602,7 @@
     },
 
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "농민신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/911.png",
       "pressSrc": "http://newsstand.naver.com/911",
@@ -2641,7 +2641,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "매경이코노미",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/024.png",
       "pressSrc": "http://newsstand.naver.com/024",
@@ -2680,7 +2680,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "낚시춘추",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/984.png",
       "pressSrc": "http://newsstand.naver.com/984",
@@ -2719,7 +2719,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "월간노동법률",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0817/nsd14480190.png",
       "pressSrc": "http://newsstand.naver.com/820",
@@ -2758,7 +2758,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "데일리NK",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/991.png",
       "pressSrc": "http://newsstand.naver.com/991",
@@ -2797,7 +2797,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "주간조선",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/990.png",
       "pressSrc": "http://newsstand.naver.com/990",
@@ -2836,7 +2836,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "법률신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1103/nsd124326426.png",
       "pressSrc": "http://newsstand.naver.com/122",
@@ -2875,7 +2875,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "바이라인네트워크",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/819.png",
       "pressSrc": "http://newsstand.naver.com/819",
@@ -2914,7 +2914,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "코메디닷컴",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/296.png",
       "pressSrc": "http://newsstand.naver.com/296",
@@ -2953,7 +2953,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "주간경향",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1007/nsd161849944.png",
       "pressSrc": "http://newsstand.naver.com/686",
@@ -2992,7 +2992,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "한국농어촌방송",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0315/nsd181452869.png",
       "pressSrc": "http://newsstand.naver.com/811",
@@ -3031,7 +3031,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "뉴스포스트",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/1112/nsd10248812.png",
       "pressSrc": "http://newsstand.naver.com/995",
@@ -3070,7 +3070,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "경상일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/935.png",
       "pressSrc": "http://newsstand.naver.com/935",
@@ -3109,7 +3109,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "매일신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/088.png",
       "pressSrc": "http://newsstand.naver.com/088",
@@ -3148,7 +3148,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "MS투데이",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1017/nsd202940832.png",
       "pressSrc": "http://newsstand.naver.com/683",
@@ -3187,7 +3187,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "경기일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/339.png",
       "pressSrc": "http://newsstand.naver.com/339",
@@ -3226,7 +3226,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "충청일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/391.png",
       "pressSrc": "http://newsstand.naver.com/391",
@@ -3265,7 +3265,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "경기신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1017/nsd202616515.png",
       "pressSrc": "http://newsstand.naver.com/688",
@@ -3304,7 +3304,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "중부일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0704/nsd231551300.png",
       "pressSrc": "http://newsstand.naver.com/926",
@@ -3343,7 +3343,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "전남일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/388.png",
       "pressSrc": "http://newsstand.naver.com/388",
@@ -3382,7 +3382,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "강원일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/087.png",
       "pressSrc": "http://newsstand.naver.com/087",
@@ -3421,7 +3421,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "영남일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/385.png",
       "pressSrc": "http://newsstand.naver.com/385",
@@ -3460,7 +3460,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "경남신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/333.png",
       "pressSrc": "http://newsstand.naver.com/333",
@@ -3499,7 +3499,7 @@
       ]
     },
     {
-      "newsCategory": 7,
+      "newsCategory": 6,
       "pressName": "경남도민일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/821.png",
       "pressSrc": "http://newsstand.naver.com/821",
@@ -3538,7 +3538,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "경향신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/032.png",
       "pressSrc": "http://newsstand.naver.com/032",
@@ -3577,7 +3577,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "서울와이어",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1024/nsd174430433.png",
       "pressSrc": "http://newsstand.naver.com/685",
@@ -3616,7 +3616,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "오마이뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/047.png",
       "pressSrc": "http://newsstand.naver.com/047",
@@ -3655,7 +3655,7 @@
       ]
     },
     {
-      "newsCategory": 1,
+      "newsCategory": 0,
       "pressName": "이코노미스트",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/243.png",
       "pressSrc": "http://newsstand.naver.com/243",
@@ -3694,7 +3694,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "게임메카",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/356.png",
       "pressSrc": "http://newsstand.naver.com/356",
@@ -3733,7 +3733,7 @@
       ]
     },
     {
-      "newsCategory": 6,
+      "newsCategory": 5,
       "pressName": "철강금속신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/956.png",
       "pressSrc": "http://newsstand.naver.com/956",
