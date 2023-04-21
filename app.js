@@ -9,6 +9,7 @@ import NSSectionCurViewStateModel from './src/js/models/NSSectionCurStateModel.j
 import GridAllView from './src/js/view/gridAllView.js';
 import GridSubView from './src/js/view/gridSubView.js';
 import gridAllButtonView from './src/js/view/NSSectionGridAllbuttonView.js';
+import gridSubButtonView from './src/js/view/NSSectionGridSubButtonView.js';
 
 const dataFetcher = fetcher(API_BASE_URL);
 new NSHeaderView({ NS_HEADER_INFO }, REFERENCE);
@@ -16,6 +17,7 @@ const sectionHeaderModel = new NSSectionHeaderModel();
 new NSHeadlineView({ NS_HEADLINE_INFO }, REFERENCE, dataFetcher, API_PATH, sectionHeaderModel);
 const NSSectionCurViewModel = new NSSectionCurViewStateModel(dataFetcher);
 new gridAllButtonView(NSSectionCurViewModel);
+new gridSubButtonView(NSSectionCurViewModel);
 new NSSectionHeaderView(sectionHeaderModel, NSSectionCurViewModel);
 new GridSubView(NSSectionCurViewModel);
 new GridAllView(NSSectionCurViewModel);
