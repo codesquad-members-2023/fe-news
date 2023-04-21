@@ -92,3 +92,16 @@
     padding: 0 16px;
   }
 }
+.press-list__news {
+  @include flex();
+  margin-top: 16px;
+
+  .press-list__main-news {
+    @include flex($flex-direction: column);
+    margin-right: 32px;
+  }
+}
+.main-news__thumbnail {
+  display: inline-block;
+  margin-bottom: 16px;
+}

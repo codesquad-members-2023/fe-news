@@ -54,3 +54,17 @@ body {
   @include fontType($body-XS);
   color: $gray400;
 }
+
+.main-news__content {
+  @include fontType($body-MD);
+}
+
+.press-list__sub-news {
+  @include fontType($body-MD);
+  color: $gray500;
+
+  .sub-news__press-edit-info {
+    @include fontType($body-SM);
+    color: $gray200;
+  }
+}
