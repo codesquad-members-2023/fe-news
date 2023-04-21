@@ -4,7 +4,7 @@ import { tabStore } from '../../store/index.js';
 const { isActiveTab } = validatorUtils;
 
 export default class MainContentList {
-  #allCategories = ['종합/경제', '방송/통신', 'IT', '영자지', '스포츠/연예', '매거진/전문지', '지역'];
+  #categoryOrder = ['종합/경제', '방송/통신', 'IT', '영자지', '스포츠/연예', '매거진/전문지', '지역'];
 
   #imgSrc = {
     beforeBtn: 'src/images/before_btn.svg',
@@ -69,8 +69,8 @@ export default class MainContentList {
 
     if (pressTabType !== 'all') return;
 
-    const allCategoriesTemplate = this.#allCategories
-      .map((category, idx) => `<li data-category="${idx}">${category}</li>`, '')
+    const allCategoriesTemplate = this.#categoryOrder
+      .map((category, idx) => `<li data-news-category="${idx}">${category}</li>`, '')
       .join('');
 
     return /* html */ `

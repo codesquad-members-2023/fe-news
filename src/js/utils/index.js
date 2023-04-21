@@ -13,7 +13,11 @@ export const dataUtils = {
     }
 
     return dataSlices;
-  }
+  },
+  sortData: (dataArr, categoryOrderArr) =>
+    dataArr.sort(
+      (a, b) => categoryOrderArr.indexOf(a.newsCategory) - categoryOrderArr.indexOf(b.newsCategory)
+    )
 };
 
 export const getObjectType = (obj) => {
