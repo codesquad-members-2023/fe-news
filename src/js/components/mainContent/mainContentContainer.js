@@ -1,4 +1,5 @@
 import MainContentGrid from './mainContentGrid.js';
+import MainContentList from './mainContentList.js';
 
 export default class MainContentContainer {
   constructor($parent, props) {
@@ -16,5 +17,6 @@ export default class MainContentContainer {
 
     new MainContentGrid(this.$mainEle, { pressTabType: 'all', allPressData }).render();
     new MainContentGrid(this.$mainEle, { pressTabType: 'subscribed', allPressData }).render();
+    new MainContentList(this.$mainEle, { pressTabType: 'all', allPressData }).render();
   }
 }
