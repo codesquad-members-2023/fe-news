@@ -1,7 +1,8 @@
-import { validatorUtils } from '../../utils/index.js';
-import { tabStore } from '../../store/index.js';
+import { validatorUtils, dataUtils } from '../../utils/index.js';
+import { tabStore, subscriptionListStore } from '../../store/index.js';
 
-const { isActiveTab } = validatorUtils;
+const { hasValue, isActiveTab } = validatorUtils;
+const { getListItemData } = dataUtils;
 
 export default class MainContentList {
   #categoryOrder = ['종합/경제', '방송/통신', 'IT', '영자지', '스포츠/연예', '매거진/전문지', '지역'];
@@ -26,7 +27,14 @@ export default class MainContentList {
   }
 
   render() {
-    this.$mainEle.innerHTML = this.template();
+    const { allPressData } = this.props;
+    const listItemData = getListItemData({
+      dataArr: allPressData,
+      category: this.#categoryOrder[0],
+      listItemIdx: 0
+    });
+
+    this.$mainEle.innerHTML = this.template(listItemData);
 
     this.displayElement();
   }
@@ -47,7 +55,7 @@ export default class MainContentList {
     else this.$mainEle.classList.remove('display-none');
   }
 
-  template() {
+  template(listItemData) {
     const { pressTabType } = this.props;
     const { beforeBtn, nextBtn } = this.#imgSrc;
 
@@ -60,6 +68,7 @@ export default class MainContentList {
       </div>
       <div class="main-content__list-wrapper">
         ${pressTabType === 'all' ? this.allCategoriesTemplate() : ''}
+        ${this.listItemContentTemplate(listItemData)}
       </div>
     `;
   }
@@ -77,6 +86,35 @@ export default class MainContentList {
       <ul class="press-list__category">
         ${allCategoriesTemplate}
       </ul>    
+    `;
+  }
+
+  listItemContentTemplate(listItemData) {
+    return /* html */ `
+      <div class="press-list__content">
+        ${this.listItemInfoTemplate(listItemData)}
+      </div>
+    `;
+  }
+
+  subscribeToggleBtnTemplate(pressName) {
+    const subscriptionList = subscriptionListStore.getState();
+    const isSubscribed = hasValue(subscriptionList, pressName);
+
+    return /* html */ `<button class="subscribe-toggle-btn ${
+      isSubscribed ? 'unsubscribe-btn' : 'subscribe-btn'
+    }">+ ${isSubscribed ? '해지하기' : '구독하기'}</button>`;
+  }
+
+  listItemInfoTemplate({ pressName, pressLogo, pressHref, updateTime }) {
+    return /* html */ `
+      <header class="press-list__info">
+        <a href="${pressHref}"><img src="${pressLogo}" alt="go to ${pressName} site"/></a>
+        <span class="update-time">${updateTime}</span>
+        <div class="subscribe-toggle-btn-container">
+          ${this.subscribeToggleBtnTemplate(pressName)}
+        </div>
+      </header>
     `;
   }
 }
