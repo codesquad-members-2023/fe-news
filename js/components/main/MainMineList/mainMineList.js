@@ -1,8 +1,12 @@
 import { createElement } from '../../../utils/dom.js';
-import { subscribe, getStoreState } from '../../../store/store.js';
+import { subscribe, getStoreState, dispatch } from '../../../store/store.js';
 import { createMainListNewsElement } from '../MainAllLIst/mainAllList.js';
-import { mineListHeaderEventHandler } from './mainMineListEventHandler.js';
+import {
+  mineListHeaderEventHandler,
+  mineListUnsubscribeBtnEventHandler,
+} from './mainMineListEventHandler.js';
 import { animationStart } from '../progressBarAnimation.js';
+import { displayActionCreator } from '../../../actions/ActionCreator.js';
 
 const createMainListElement = (subscribeData, index) => {
   if (subscribeData.length === 0) {
@@ -65,15 +69,32 @@ const render = ($main, index, content) => {
     content.viewOption.allOrMine === 'mine';
 
   if (!breakCondition) return;
+  dispatch(displayActionCreator.progressBarAnimationEnd());
 
   const subscribeData = getStoreState('subscribeData').subscribe;
+
   const $list = createMainListElement(subscribeData, index);
+  $main.replaceChild($list, $main.lastChild);
+
+  if (subscribeData.length === 0) return;
+
   const subscribeNameArr = subscribeData.map((data) => data.mediaInfo.name);
+
   $list.firstElementChild.addEventListener(
     'click',
     mineListHeaderEventHandler.bind(null, subscribeNameArr),
   );
-  $main.replaceChild($list, $main.lastChild);
+
+  $list
+    .querySelector('.list__subscribe-button')
+    .addEventListener(
+      'click',
+      mineListUnsubscribeBtnEventHandler.bind(
+        null,
+        subscribeData[index].mediaId,
+      ),
+    );
+
   scrollMove();
   animationStart($main.querySelector('#current-category'));
 };

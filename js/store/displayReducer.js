@@ -3,7 +3,10 @@ import { getStoreState } from './store.js';
 
 export const subscribeReducer = (state, action) => {
   const subscribeList = getStoreState('subscribeData').subscribe;
+  let mineListCurPage = getStoreState('subscribeData').mineListCurPage;
   const mediaWholeData = getStoreState('mediaData').data;
+  const viewOptionData = getStoreState('viewOptionData').viewOption;
+
   switch (action.type) {
     case displayActions.GRID_SUBSCRIBE_BUTTON_CLICK:
       let curIndex;
@@ -17,13 +20,23 @@ export const subscribeReducer = (state, action) => {
       return { ...state, subscribe: subscribeList };
 
     case displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK:
+      if (
+        viewOptionData.allOrMine === 'mine' &&
+        viewOptionData.gridOrList === 'list' &&
+        mineListCurPage === subscribeList.length - 1
+      ) {
+        mineListCurPage -= 1;
+      }
       subscribeList.some((subscribeMedia, index) => {
-        if (String(subscribeMedia.mediaId) === action.payload) {
+        if (Number(subscribeMedia.mediaId) === Number(action.payload)) {
           subscribeList.splice(index, 1);
           return true;
         }
       });
-      return { ...state, subscribe: subscribeList };
+      return {
+        mineListCurPage: mineListCurPage,
+        subscribe: subscribeList,
+      };
 
     case displayActions.MINE_LIST_TAB_BUTTON_CLICK:
       return { ...state, mineListCurPage: action.payload };
@@ -122,7 +135,7 @@ export const animationReducer = (state, action) => {
     case displayActions.PROGRESS_BAR_ANIMATION_END:
       if (!animationData) return state;
       cancelAnimationFrame(animationData.animaionId);
-      console.log(1);
+
       return {
         ...state,
         animaionId: null,

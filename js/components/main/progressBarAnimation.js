@@ -7,6 +7,7 @@ const ANIMATION = {
 };
 
 export const animationStart = ($progressBar) => {
+  if (!$progressBar) return;
   const viewOption = getStoreState('viewOptionData').viewOption;
   let startTime = null;
 

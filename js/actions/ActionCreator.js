@@ -84,6 +84,7 @@ export const displayActionCreator = {
   headerListBtnClick() {
     return function (dispatch) {
       dispatch(displayActionCreator.listPageReset());
+      dispatch(displayActionCreator.mineListReset());
       dispatch(displayActionCreator.progressBarAnimationEnd());
       dispatch({
         type: actionTypes.displayActions.HEADER_LIST_BUTTON_CLICK,
@@ -94,6 +95,7 @@ export const displayActionCreator = {
   headerGridBtnClick() {
     return function (dispatch) {
       dispatch(displayActionCreator.listPageReset());
+      dispatch(displayActionCreator.mineListReset());
       dispatch(displayActionCreator.progressBarAnimationEnd());
       dispatch({
         type: actionTypes.displayActions.HEADER_GRID_BUTTON_CLICK,
@@ -104,6 +106,7 @@ export const displayActionCreator = {
   headerAllBtnClick() {
     return function (dispatch) {
       dispatch(displayActionCreator.listPageReset());
+      dispatch(displayActionCreator.mineListReset());
       dispatch(displayActionCreator.progressBarAnimationEnd());
       dispatch({
         type: actionTypes.displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK,
@@ -114,6 +117,7 @@ export const displayActionCreator = {
   headerMineBtnClick() {
     return function (dispatch) {
       dispatch(displayActionCreator.listPageReset());
+      dispatch(displayActionCreator.mineListReset());
       dispatch(displayActionCreator.progressBarAnimationEnd());
       dispatch({
         type: actionTypes.displayActions.HEADER_MY_MEDIA_BUTTON_CLICK,
