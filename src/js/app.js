@@ -2,12 +2,13 @@ import { CONSTANTS, rollingPositionClassName, autoAnimationInfo } from './core/c
 import systemTimeOption from './utils/systemTime.js';
 import Header from './components/header.js';
 import RollingBar from './components/rollingBar.js';
-import mainView from './components/main/main.js';
-import fetchData from './utils/fetch.js'
+import mainView from './components/main/newsMainView.js';
+import fetchData from './utils/fetch.js';
 
 const app = async () => {
   const [rollingData, mediaData] = await fetchData;
   const root = document.querySelector('#root');
+
   const header = Header(CONSTANTS['NEWS_STAND'], systemTimeOption);
   const section = new RollingBar(
     CONSTANTS['ROLLING_LINK_PRESS'],

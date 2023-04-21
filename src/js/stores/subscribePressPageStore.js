@@ -1,6 +1,6 @@
 import Store from '../core/store.js';
 import { PageStore } from './pressPageStore.js';
-import { SubscribeStore } from './subscribeStore.js';
+import { SubscribeStore } from './subscribeListStore.js';
 
 const initialState = {
   subscribedPressInfo: [],
@@ -14,10 +14,13 @@ const subscribedPressPageReducer = (state = initialState, action) => {
   const pressData = page.pressData;
   switch (action.type) {
     case 'GET_SUBSCRIBED_PRESS':
-      state.subscribedPressInfo = filterSubscribedPressData(currentSubscribedPressLogo, pressData);
+      state.subscribedPressInfo = filterSubscribedPressData(
+        currentSubscribedPressLogo,
+        pressData,
+      );
       return {
         ...state,
-      };
+      }
     // case 'PREV_PRESS':
     //   state.pressIndex = movePrevPress(state.pressIndex);
     //   return {
@@ -34,21 +37,26 @@ const subscribedPressPageReducer = (state = initialState, action) => {
 };
 
 const filterSubscribedPressData = (list, pressData) => {
-  return pressData.filter(press => [...list].includes(press.pressLogo));
-}
+  return [...list].map(subscribedPressLogo => {
+    return pressData.find(data => data.pressLogo === subscribedPressLogo);
+  });
+};
 
 const movePrevPress = (pressIndex, subscribedPressInfo) => {
   const LAST_PAGE = subscribedPressInfo.length;
   pressIndex--;
 
   return pressIndex;
-}
+};
 
 const moveNextPress = (pressIndex, subscribedPressInfo) => {
   const LAST_PAGE = subscribedPressInfo.length;
   pressIndex++;
 
   return pressIndex;
-}
+};
 
-export const SubscribedPressPageStore = new Store(initialState, subscribedPressPageReducer);
+export const SubscribedPressPageStore = new Store(
+  initialState,
+  subscribedPressPageReducer,
+);

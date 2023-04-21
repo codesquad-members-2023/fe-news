@@ -1,7 +1,7 @@
 import createEl from '../../utils/util.js';
 import { PRESS_BUTTON } from '../../core/constants.js';
 import { ViewTypeStore } from '../../stores/viewTypeStore.js';
-import { SubscribeStore } from '../../stores/subscribeStore.js';
+import { SubscribeStore } from '../../stores/subscribeListStore.js';
 import { PageStore } from '../../stores/pressPageStore.js';
 import { autoAnimationInfo } from '../../core/constants.js';
 import { SubscribedPressPageStore } from '../../stores/subscribePressPageStore.js';
@@ -37,13 +37,13 @@ class ListView {
     this.listContainer.addEventListener('click', ({ target }) => {
       this.moveToPage(target);
       this.clickCategory(target);
+      this.clickSubscribeBtn(target);
     });
   }
 
   render() {
     this.setTemplate();
     this.autoMovePages();
-    this.#viewStore.subscribe(this.#reRender.bind(this));
     this.#pageStore.subscribe(this.#reRender.bind(this));
     return this.listContainer;
   }
@@ -51,27 +51,29 @@ class ListView {
   #reRender() {
     const { press, view } = this.#viewStore.getState();
     const { subscribedList } = this.#subscribeStore.getState();
-    if(press['all'] && view['list']) {
+    if (press['all'] && view['list']) {
       this.listContainer.classList.remove('hidden');
       this.listContainer.querySelector('.category-area').outerHTML =
         this.getCategory();
       this.listContainer.querySelector('.content-area').outerHTML =
         this.getPressBox.bind(this)();
     }
-    if(press['all'] && view['grid'])
+    if (press['all'] && view['grid'])
       this.listContainer.classList.add('hidden');
-    if(press['subscribed'] && view['list']) {
-      if(!subscribedList.size) {
+    if (press['subscribed'] && view['list']) {
+      this.rafState = false;
+      if (!subscribedList.size) {
         this.listContainer.classList.add('hidden');
       } else {
         this.listContainer.classList.remove('hidden');
         this.listContainer.querySelector('.category-area').outerHTML =
           this.getSubscribedCategory();
         this.listContainer.querySelector('.content-area').outerHTML =
-        this.getSubscribedPress.bind(this)();
+          this.getSubscribedPress.bind(this)();
       }
     }
-    if(press['subscribed'] && view['grid']) this.listContainer.classList.add('hidden');
+    if (press['subscribed'] && view['grid'])
+      this.listContainer.classList.add('hidden');
   }
 
   getCategory({ page } = this.#pageStore.getState()) {
@@ -101,12 +103,12 @@ class ListView {
     const press = [...pressMap][page.categoryIndex][page.pageIndex];
     const isSubscribe = this.#subscribeStore
       .getState()
-      .subscribedList.has(press.pressLogo.src);
+      .subscribedList.has(press.pressLogo);
     const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
 
     return `<div class="content-area">
     <div class="press-box">
-      <a src="" class="">
+      <a>
         <img src="${press.pressLogo}">
       </a>
       <span>${press.editedDate}</span>
@@ -140,14 +142,15 @@ class ListView {
 
   getSubscribedCategory() {
     this.#subscribedPressPageStore.dispatch({ type: 'GET_SUBSCRIBED_PRESS' });
-    const { subscribedPressInfo, pressIndex } = this.#subscribedPressPageStore.getState();
+    const { subscribedPressInfo, pressIndex } =
+      this.#subscribedPressPageStore.getState();
     return `<div class="category-area">
     <ul class="list-category">
     ${subscribedPressInfo.reduce((template, press, index) => {
       const isCurrent = pressIndex === index;
-      template += `<li${
-        isCurrent ? ' class="current-subscribed"' : ``
-      }><span>${press.press}</span><img src="/src/assets/icons/nextCategory.svg"></li>`;
+      template += `<li${isCurrent ? ' class="current-subscribed"' : ``}><span>${
+        press.press
+      }</span><img src="/src/assets/icons/nextCategory.svg"></li>`;
       return template;
     }, ``)}
     </ul>
@@ -156,9 +159,9 @@ class ListView {
 
   //getPress()랑 중복. 중복제거필요해보임
   getSubscribedPress() {
-    const { subscribedPressInfo, pressIndex } = this.#subscribedPressPageStore.getState();
+    const { subscribedPressInfo, pressIndex } =
+      this.#subscribedPressPageStore.getState();
     const subscribedPress = subscribedPressInfo[pressIndex];
-
     return `<div class="content-area">
     <div class="press-box">
       <a src="" class="">
@@ -221,6 +224,26 @@ class ListView {
     if (isCurrent) return true;
   }
 
+  clickSubscribeBtn(target) {
+    const subscribeBtn = target.closest('.subscribe');
+    const unsubscribeBtn = target.closest('.unsubscribe');
+    const closeBtn = target.closest('.close');
+    if(!subscribeBtn && !unsubscribeBtn && !closeBtn) return;
+    const subscribedPressInfo = target.closest('.press-box').querySelector('img').src;
+    const isSubscribe =
+      subscribeBtn ? 'SUBSCRIBE' : 'UNSUBSCRIBE';
+
+    this.#subscribeStore.subscribe(this.#reRender.bind(this));
+  //   subscribeBtn.outerHTML = `<button type="button" class="${buttonType} press-button">
+  //   <img src="/src/assets/icons/${buttonType}.svg">
+  //   <span>${PRESS_BUTTON[buttonType]}</span>
+  // </button>`;
+    this.#subscribeStore.dispatch({
+      type: `${isSubscribe}`,
+      payload: subscribedPressInfo,
+    });
+  }
+
   autoMovePages() {
     let lastTime = 0;
     this.movePages = (currentTime) => {
@@ -230,7 +253,7 @@ class ListView {
         lastTime = currentTime;
       }
       if (this.rafState) requestAnimationFrame(this.movePages);
-    }
+    };
     requestAnimationFrame(this.movePages);
   }
 }

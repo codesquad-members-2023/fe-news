@@ -1,6 +1,6 @@
 import createEl from '../../utils/util.js';
 import { ViewTypeStore } from '../../stores/viewTypeStore.js';
-import { SubscribeStore } from '../../stores/subscribeStore.js';
+import { SubscribeStore } from '../../stores/subscribeListStore.js';
 import { PRESS_BUTTON } from '../../core/constants.js';
 
 class GridView {
@@ -39,12 +39,15 @@ class GridView {
     if (press['all'] && view['grid'])
       gridContainer.outerHTML = this.renderAllGridView();
     if (press['subscribed'] && view['grid']) {
-      gridContainer.outerHTML = this.renderSubscribedGridView.bind(this)();
+      if (!subscribedList.size) gridContainer.outerHTML = this.isNoSubscription();
+      else gridContainer.outerHTML = this.getSubscribedPress(subscribedList);
     }
-    if(press['subscribed'] && view['list']) {
-      if(!subscribedList.size) gridContainer.classList.remove('hidden');
+    if (press['subscribed'] && view['list']) {
+      if (!subscribedList.size) {
+        gridContainer.classList.remove('hidden');
+        gridContainer.outerHTML = this.isNoSubscription();
+      }
       else gridContainer.classList.add('hidden');
-      console.log(gridContainer);
     }
     this.onMouseGridCell();
   }
@@ -79,8 +82,7 @@ class GridView {
   }
 
   isNoSubscription() {
-    const isGrid = this.#viewStore.getState().view['grid'];
-    return `<div class="grid-container${isGrid ? `` : ' hidden'}">
+    return `<div class="grid-container">
     <div class="grid-area">
       <div class="no-subscription">
         <h3>구독한 언론사가 없습니다.</h3>
@@ -113,20 +115,15 @@ class GridView {
       }"></a>
       <a class='next-button' style="visibility:${
         this.page === LAST_PAGE_SUBSCRIBE ? 'hidden' : 'visible'
-      }"></a>
-    </div>
-    `;
+      }"></a></div>`;
   }
 
   moveToPage() {
     this.viewContainer.addEventListener('click', ({ target }) => {
+      if (this.isMovable(target)) return;
       const isPrevBtn = target.classList.contains('prev-button');
       const isNextBtn = target.classList.contains('next-button');
-      if (
-        !target.parentElement.classList.contains('grid-container') ||
-        !(isPrevBtn || isNextBtn)
-      )
-        return;
+      if (!(isPrevBtn || isNextBtn)) return;
 
       if (isPrevBtn && this.page > this.FIRST_PAGE) this.page--;
       if (isNextBtn && this.page < this.LAST_PAGE) this.page++;
@@ -134,6 +131,12 @@ class GridView {
         this.renderAllGridView();
       this.onMouseGridCell();
     });
+  }
+
+  isMovable(target) {
+    const isTargetInGridContainer =
+      target.parentElement.classList.contains('grid-container');
+    if (!isTargetInGridContainer) return true;
   }
 
   onMouseGridCell() {
@@ -176,6 +179,7 @@ class GridView {
       .querySelector('span').textContent;
     const isSubscribe =
       targetBtnText === PRESS_BUTTON['subscribe'] ? 'SUBSCRIBE' : 'UNSUBSCRIBE';
+    this.#subscribeStore.subscribe(this.#reRender.bind(this));
     this.#subscribeStore.dispatch({
       type: `${isSubscribe}`,
       payload: subscribedPressInfo,
