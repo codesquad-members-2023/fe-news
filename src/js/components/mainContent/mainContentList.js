@@ -92,7 +92,8 @@ export default class MainContentList {
   listItemContentTemplate(listItemData) {
     return /* html */ `
       <div class="press-list__content">
-        ${this.listItemInfoTemplate(listItemData)}
+        ${this.infoTemplate(listItemData)}
+        ${this.newsTemplate(listItemData)}
       </div>
     `;
   }
@@ -106,15 +107,42 @@ export default class MainContentList {
     }">+ ${isSubscribed ? '해지하기' : '구독하기'}</button>`;
   }
 
-  listItemInfoTemplate({ pressName, pressLogo, pressHref, updateTime }) {
+  infoTemplate({ pressName, pressLogo, pressHref, updateTime }) {
     return /* html */ `
       <header class="press-list__info">
-        <a href="${pressHref}"><img src="${pressLogo}" alt="go to ${pressName} site"/></a>
+        <a href="${pressHref}"><img class="press-logo" src="${pressLogo}" alt="go to ${pressName} site"/></a>
         <span class="update-time">${updateTime}</span>
         <div class="subscribe-toggle-btn-container">
           ${this.subscribeToggleBtnTemplate(pressName)}
         </div>
       </header>
+    `;
+  }
+
+  mainNewsTemplate({ img, href, content }) {
+    return /* html */ `
+      <div class="press-list__main-news">
+        <a class="main-news__thumbnail" href="${href}"><img class="main-news__img" src="${img}" alt="main news"/></a>
+        <a class="main-news__content" href="${href}">${content}</a>
+      </div>
+    `;
+  }
+
+  subNewsTemplate({ pressName, subNews }) {
+    return /* html */ `
+      <ul class="press-list__sub-news">
+        ${subNews.map(({ content, href }) => `<li><a href="${href}">${content}</a></li>`).join('')}
+        <span class="sub-news__press-edit-info">${pressName} 언론사에서 직접 편집한 뉴스입니다.</span>
+      </ul>
+    `;
+  }
+
+  newsTemplate({ pressName, mainNews, subNews }) {
+    return /* html */ `
+      <div class="press-list__news">
+        ${this.mainNewsTemplate(mainNews)}
+        ${this.subNewsTemplate({ pressName, subNews })}
+      </div>
     `;
   }
 }
