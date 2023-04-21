@@ -46,37 +46,6 @@ app.post('/section', async (req, res) => {
   }
 });
 
-app.patch('/test-section', async (req, res) => {
-  try {
-    const sections = await SectionModel.find({});
-    const categoryOrder = [
-      '종합/경제',
-      '방송/통신',
-      'IT',
-      '영자지',
-      '스포츠/연예',
-      '매거진/전문지',
-      '지역',
-    ];
-    const result: any = [];
-    for (const section of sections) {
-      const pressId = section.pressId;
-      const category = section.category;
-      const categoryIndex = categoryOrder.findIndex((v) => v === category);
-      result.push(categoryIndex);
-      await SectionModel.updateOne(
-        { pressId },
-        { $set: { category: categoryIndex } } // Use $set instead of $push
-      );
-    }
-
-    res.status(200).json(result);
-  } catch (error) {
-    console.log(error);
-    res.status(400).json({ message: error });
-  }
-});
-
 app.get('/press', async (req, res) => {
   try {
     const press = await PressModel.find({});
@@ -239,13 +208,9 @@ app.get('/section', async (req, res) => {
 });
 
 app.get('/custom-section', async (req, res) => {
-  const page = Number(req.query.page) || 0;
+  const pressId = req.query.pressId;
 
   try {
-    const user = await UserModel.findOne({ id: TEMP_ID }).limit(1);
-    const subscribingPressIds = user?.subscribingPressIds;
-    const pressId = subscribingPressIds?.[page];
-
     const sectionWithPress = await SectionModel.aggregate([
       {
         $match: {
@@ -275,28 +240,8 @@ app.get('/custom-section', async (req, res) => {
       return res.status(204).json({ message: 'No section' });
     }
 
-    const categoryCounts = await SectionModel.aggregate([
-      {
-        $match: {
-          pressId: { $in: subscribingPressIds },
-        },
-      },
-      {
-        $group: {
-          _id: '$category',
-          count: { $sum: 1 },
-        },
-      },
-    ]);
-
-    const categoryCountsFormatted = categoryCounts.reduce((acc, cur) => {
-      acc[cur._id] = cur.count;
-      return acc;
-    }, {});
-
     res.status(200).json({
       section: sectionWithPress[0],
-      categoryCounts: categoryCountsFormatted,
     });
   } catch (error) {
     res.status(400).json({ message: error });

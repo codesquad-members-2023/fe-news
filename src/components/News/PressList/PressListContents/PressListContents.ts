@@ -197,7 +197,8 @@ class PressListContents extends HTMLElement {
       },
       getCustomSection: async (page: number = 0) => {
         if (this.userStore.getState().subscribingPress.length === page) {
-          const section = await getCustomSection({ page: 0 });
+          const pressId = this.userStore.getState().subscribingPress[page];
+          const section = await getCustomSection({ pressId });
           this.displayStore.dispatch({
             type: 'SET_CURRENT_PAGE',
             payload: {
@@ -211,7 +212,8 @@ class PressListContents extends HTMLElement {
             payload: section,
           });
         } else {
-          const section = await getCustomSection({ page });
+          const pressId = this.userStore.getState().subscribingPress[page];
+          const section = await getCustomSection({ pressId });
           this.sectionStore.dispatch({
             type: 'SET_SECTION',
             payload: section,
@@ -249,6 +251,14 @@ class PressListContents extends HTMLElement {
           ?.setAttribute('section-data', JSON.stringify(section));
         this.handleSubscribe().addClickEvnetToListView('custom');
       },
+      handleTabClick() {
+        // const tab = document
+        //   .querySelector('news-element')
+        //   ?.shadowRoot?.querySelector('press-list-element')
+        //   ?.shadowRoot?.querySelector('presslist-contents-element')?.shadowRoot?.querySelector(`section.${}`)
+        // console.log(tab);
+        return {};
+      },
       append: async (tab: 'general' | 'custom', page: number = 0) => {
         let section;
         if (tab === 'general') {
@@ -278,6 +288,7 @@ class PressListContents extends HTMLElement {
         this.handlePageController().appendController(tab, 'list');
         this.handlePageController().movePage(tab, 'list');
         this.handleSubscribe().addClickEvnetToListView(tab);
+        this.handleListView().handleTabClick();
       },
     };
   }

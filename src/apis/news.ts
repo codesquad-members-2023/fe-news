@@ -16,6 +16,10 @@ interface getSectionProps {
   page: number;
 }
 
+interface getCustomSectionProps {
+  pressId: string;
+}
+
 export const getPress = async () => {
   const path = `/press`;
   const method = 'GET';
@@ -30,8 +34,8 @@ export const getSection = async ({ page }: getSectionProps) => {
   return section;
 };
 
-export const getCustomSection = async ({ page }: getSectionProps) => {
-  const path = `/custom-section?page=${page}`;
+export const getCustomSection = async ({ pressId }: getCustomSectionProps) => {
+  const path = `/custom-section?pressId=${pressId}`;
   const method = 'GET';
   const section = await customFetch({ path, method });
   return section;
