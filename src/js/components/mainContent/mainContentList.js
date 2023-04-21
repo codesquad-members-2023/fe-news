@@ -1,6 +1,7 @@
-import { validatorUtils, dataUtils } from '../../utils/index.js';
-import { tabStore, subscriptionListStore } from '../../store/index.js';
+import { domUtils, validatorUtils, dataUtils } from '../../utils/index.js';
+import { tabStore, subscriptionListStore, gridPageStore } from '../../store/index.js';
 
+const { $ } = domUtils;
 const { hasValue, isActiveTab } = validatorUtils;
 const { getListItemData } = dataUtils;
 
@@ -34,9 +35,11 @@ export default class MainContentList {
       listItemIdx: 0
     });
 
-    this.$mainEle.innerHTML = this.template(listItemData);
+    this.$mainEle.innerHTML = this.template();
 
     this.displayElement();
+    this.renderListWrapper(listItemData);
+    this.renderSubscribeToggleBtn(listItemData);
   }
 
   displayElement() {
@@ -55,8 +58,7 @@ export default class MainContentList {
     else this.$mainEle.classList.remove('display-none');
   }
 
-  template(listItemData) {
-    const { pressTabType } = this.props;
+  template() {
     const { beforeBtn, nextBtn } = this.#imgSrc;
 
     return `
@@ -67,10 +69,22 @@ export default class MainContentList {
         <img id="grid-next-btn" src="${nextBtn}" alt="next grid page" />
       </div>
       <div class="main-content__list-wrapper">
-        ${pressTabType === 'all' ? this.allCategoriesTemplate() : ''}
-        ${this.listItemContentTemplate(listItemData)}
       </div>
     `;
+  }
+
+  listWrapperTemplate(listItemData) {
+    const { pressTabType } = this.props;
+
+    return /* html */ `
+      ${pressTabType === 'all' ? this.allCategoriesTemplate() : ''}
+      ${this.listItemContentTemplate(listItemData)}
+    `;
+  }
+
+  renderListWrapper(listItemData) {
+    const $listWrapper = $({ selector: '.main-content__list-wrapper', parent: this.$mainEle });
+    $listWrapper.innerHTML = this.listWrapperTemplate(listItemData);
   }
 
   allCategoriesTemplate() {
@@ -107,13 +121,20 @@ export default class MainContentList {
     }">+ ${isSubscribed ? '해지하기' : '구독하기'}</button>`;
   }
 
+  renderSubscribeToggleBtn({ pressName }) {
+    const $subscribeToggleBtnContainer = $({
+      selector: '.subscribe-toggle-btn-container',
+      parent: this.$mainEle
+    });
+    $subscribeToggleBtnContainer.innerHTML = this.subscribeToggleBtnTemplate(pressName);
+  }
+
   infoTemplate({ pressName, pressLogo, pressHref, updateTime }) {
     return /* html */ `
       <header class="press-list__info">
         <a href="${pressHref}"><img class="press-logo" src="${pressLogo}" alt="go to ${pressName} site"/></a>
         <span class="update-time">${updateTime}</span>
         <div class="subscribe-toggle-btn-container">
-          ${this.subscribeToggleBtnTemplate(pressName)}
         </div>
       </header>
     `;
