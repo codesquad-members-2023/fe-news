@@ -19,8 +19,8 @@ export default class gridAllButtonView {
     parentElem.innerHTML = '';
     parentElem.insertAdjacentHTML('afterbegin', markup);
     this._buttonContainer = parentElem.querySelector('.newssection_slide_buttons');
-    this.showOrHiddenGridMoveButton();
     this.setEvent();
+    this.showOrHiddenGridMoveButton();
   }
 
   getMarkup() {
@@ -60,8 +60,6 @@ export default class gridAllButtonView {
   }
 
   setEvent() {
-    this._buttonContainer.addEventListener('click', (e) =>
-      this.NSSectionGridAllButtonHandler.bind(this)
-    );
+    this._buttonContainer.addEventListener('click', this.NSSectionGridAllButtonHandler.bind(this));
   }
 }
