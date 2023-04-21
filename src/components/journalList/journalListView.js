@@ -137,7 +137,6 @@ const createJournalList = () => {
     const journalItems = await fetchJournalData(journalURL);
 
     journalDetailStore.setDetailListAll(journalItems);
-    journalDetailStore.setDetailByType();
   };
 
   // 언론사 디테일 스토어 생성

@@ -12,32 +12,39 @@ export class Journal {
   }
 
   getGridHTML() {
-    const showDiv = document.createElement("div");
-    showDiv.classList.add("journal-item_show");
-    this.gridElement.appendChild(showDiv);
-    showDiv.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
+    const btnLabels = [
+      ["구독", "subscribe-btn"],
+      ["해지", "unsubscribe-btn"],
+    ];
+    const journalCell = document.createElement("div");
+    journalCell.classList.add("journal-item_show");
+    this.gridElement.appendChild(journalCell);
+    journalCell.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
                          alt="${this.journalData.mediaInfo.name}">`;
-    showDiv.style.display = "flex";
+    journalCell.style.display = "flex";
 
-    const hoverDiv = document.createElement("div");
-    hoverDiv.classList.add("journal-item_hover");
+    const subCell = document.createElement("div");
+    subCell.classList.add("journal-item_hover");
 
-    const subscribeBtn = document.createElement("button");
-    subscribeBtn.classList.add("subscribe-btn");
-    subscribeBtn.textContent = "구독";
+    const btns = [];
+    btnLabels.forEach((btnLabel) => {
+      const btn = document.createElement("button");
+      btn.classList.add(btnLabel[1]);
+      btn.textContent = btnLabel[0];
+      btns.push(btn);
+      subCell.appendChild(btn);
+    });
 
-    const unSubscribeBtn = document.createElement("button");
-    unSubscribeBtn.classList.add("unsubscribe-btn");
-    unSubscribeBtn.textContent = "해지";
+    subCell.style.display = "none";
 
-    hoverDiv.appendChild(subscribeBtn);
-    hoverDiv.appendChild(unSubscribeBtn);
+    this.gridElement.appendChild(subCell);
 
-    hoverDiv.style.display = "none";
-
-    this.gridElement.appendChild(hoverDiv);
-
-    return { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn };
+    return {
+      showDiv: journalCell,
+      hoverDiv: subCell,
+      subscribeBtn: btns[0],
+      unSubscribeBtn: btns[1],
+    };
   }
 
   addHoverEventToGrid(showDiv, hoverDiv) {
