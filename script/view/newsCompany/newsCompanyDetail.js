@@ -27,4 +27,6 @@ const changeNewsDetailDisplay = () => {
     allDisplay.classList.remove("none");
     detailDisplay.classList.add("none");
   });
+}
+const insertMediaDetailData = (MediaDetailData)=>{
 };

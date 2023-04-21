@@ -1,16 +1,9 @@
 import { runRollingBar } from "./view/newsRollingBar.js";
 import { preprocessData } from "./controller/viewController.js";
-import { renderMaker } from "./utils/dom.js";
-import { TEMPLATE } from "./constants/dom.js";
+import { render } from "./view/dom.js";
 export const app = () => {
-  const { header, rollingBar, newsCompanyBar, newsCompanyGrid, newsCompanyDetail, newsDetailSubscribe } = TEMPLATE;
-  renderMaker(".root", "header", header);
-  renderMaker(".root", "article", rollingBar);
+  render();
   runRollingBar();
-  renderMaker(".root", "section", newsCompanyBar);
-  renderMaker(".news-company", "div", newsCompanyGrid, ["news-company__grid"]);
-  renderMaker(".news-company", "div", newsCompanyDetail, ["news-company__detail", "none"]);
   preprocessData();
-  renderMaker(".news_detail_container", "div", newsDetailSubscribe);
 };
 app();
