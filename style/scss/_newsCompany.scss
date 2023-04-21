@@ -91,7 +91,16 @@
 .grid_list:hover .grid_btn {
   display: flex;
 }
-
+@mixin button() {
+  @include font(12px, 500);
+  line-height: 14px;
+  color: var(--color-gray-200);
+  background: var(--color-white);
+  width: 74px;
+  height: 24px;
+  border-radius: 50px;
+  border: 1px solid var(--color-gray-100);
+}
 .grid_btn {
   position: absolute;
   align-items: center;
@@ -101,14 +110,7 @@
   width: 100%;
   height: 100%;
   button {
-    @include font(12px, 500);
-    line-height: 14px;
-    color: var(--color-gray-200);
-    background: var(--color-white);
-    width: 74px;
-    height: 24px;
-    border-radius: 50px;
-    border: 1px solid var(--color-gray-100);
+    @include button();
   }
 }
 .news_detail_container {
@@ -155,7 +157,25 @@
 .news-company__detail {
   @include align();
 }
-
+.display_header_logo {
+  height: 20px;
+}
+.category-display_header {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  justify-content: space-around;
+  margin-top: 30px;
+  margin-left: 25px;
+}
+.display_header_date {
+  @include font(12px, 500);
+  line-height: 14px;
+  color: var(--color-gray-400);
+}
+.display_header_btn {
+  @include button();
+}
 .hidden {
   visibility: hidden;
 }

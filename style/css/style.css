@@ -413,6 +413,38 @@ table {
   justify-content: space-between;
 }
 
+.display_header_logo {
+  height: 20px;
+}
+
+.category-display_header {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  justify-content: space-around;
+  margin-top: 30px;
+  margin-left: 25px;
+}
+
+.display_header_date {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+  color: var(--color-gray-400);
+}
+
+.display_header_btn {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+  color: var(--color-gray-200);
+  background: var(--color-white);
+  width: 74px;
+  height: 24px;
+  border-radius: 50px;
+  border: 1px solid var(--color-gray-100);
+}
+
 .hidden {
   visibility: hidden;
 }

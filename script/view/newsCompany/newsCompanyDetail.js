@@ -27,6 +27,13 @@ const changeNewsDetailDisplay = () => {
     allDisplay.classList.remove("none");
     detailDisplay.classList.add("none");
   });
-}
-const insertMediaDetailData = (MediaDetailData)=>{
+};
+export const insertMediaDetailData = (selector, MediaDetailData) => {
+  const gridBox = $(selector);
+  gridBox.innerHTML = `<div class="category-display_header">
+  <img class="display_header_logo" src="${MediaDetailData[0].mediaInfo.imgSrc}"></img>
+  <div class="display_header_date">${MediaDetailData[0].mediaInfo.modifiedTime}</div>
+  <button class="display_header_btn">+구독하기</button>
+</div>
+`;
 };
