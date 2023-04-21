@@ -27,7 +27,10 @@ export default class NewsContent extends Component {
 
       const actionCreator = isSubscribing ? removeSubscribing : addSubscribing;
       store.dispatch(actionCreator(name));
-      setLocalData(SUBSCRIBING_PRESSES_KEY, subscribingPresses);
+      setLocalData(
+        SUBSCRIBING_PRESSES_KEY,
+        store.getState().contents.subscribingPresses
+      );
     };
 
     this.addEvent("click", ".list-button", toggleSubscribing);
@@ -39,7 +42,8 @@ export default class NewsContent extends Component {
     } = store.getState();
 
     const { selectedPress } = this.props;
-    if (!selectedPress && subscriptionOption === "sub")
+
+    if (!subscribingPresses.length && subscriptionOption === "sub")
       return `<span>구독한 언론사가 없습니다.</span>`;
     if (!selectedPress) return `<span>loading...</span>`;
 

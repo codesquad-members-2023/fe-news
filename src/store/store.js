@@ -194,7 +194,6 @@ export const store = createStore((state = initState, action = {}) => {
 });
 
 // ACTION CREATOR
-
 // thunk들 에러처리 구현..
 export const fetchHeadNewses = () => {
   return (dispatch) => {

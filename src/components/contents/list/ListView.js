@@ -9,9 +9,7 @@ import { setListIdx, store } from "../../../store/store.js";
 const LEFT = -1;
 const RIGHT = 1;
 
-// 컨테이너 컴포넌트
 export default class ListView extends Component {
-  // Press 결정하고 idx 증가
   setEvent() {
     const handleButtonClick = ({ target }) => {
       if (!target.closest(".button")) return;
@@ -50,7 +48,6 @@ export default class ListView extends Component {
     `;
   }
 
-  // press 결정 및 타겟 presses가 뭔지 결정할것
   renderChildComponents() {
     const leftButton = this.parentElement.querySelector(".button--left");
     new LeftButton(leftButton);
@@ -76,8 +73,6 @@ export default class ListView extends Component {
         : subscribingPresses?.map((subscribingPressName) =>
             presses.find((press) => press.name === subscribingPressName)
           );
-
-    if (!selectedPresses) return;
 
     const selectedPress = selectedPresses[index];
 
