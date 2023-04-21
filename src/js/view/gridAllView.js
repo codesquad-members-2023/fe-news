@@ -15,7 +15,6 @@ export default class GridAllView {
       allOrSub: VIEW_STATE.ALL,
       index: 1,
     };
-    this.render();
   }
 
   async render(selectedState) {
