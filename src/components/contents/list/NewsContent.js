@@ -39,7 +39,6 @@ export default class NewsContent extends Component {
     } = store.getState();
 
     const { selectedPress } = this.props;
-
     if (!selectedPress && subscriptionOption === "sub")
       return `<span>구독한 언론사가 없습니다.</span>`;
     if (!selectedPress) return `<span>loading...</span>`;

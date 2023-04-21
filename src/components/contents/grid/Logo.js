@@ -22,7 +22,6 @@ export default class Logo extends Component {
   }
 
   setEvent() {
-    // DOM 만지지말고 STATE로 바꾸기
     const toggleHidden = ({ target }) => {
       const subscribe = target
         .closest(".news-list__item")
@@ -34,7 +33,6 @@ export default class Logo extends Component {
     this.addEvent("mouseenter", ".news-list__item", toggleHidden);
     this.addEvent("mouseleave", ".news-list__item", toggleHidden);
 
-    // 뜬금 돔조작 바꾸기
     const toggleSubscribing = ({ target }) => {
       if (!target.closest(".subscribe__button")) return;
       const {

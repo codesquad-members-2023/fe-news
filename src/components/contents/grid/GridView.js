@@ -59,7 +59,12 @@ export default class GridView extends Component {
 
     if (!selectedPresses) return;
     const isFirstPage = pageNum === INITIAL_PAGE_NUM;
-    const isLastPage = pageNum === MAX_PAGE_NUM - 1;
+    const isLastPage =
+      subscriptionOption === "all"
+        ? pageNum === MAX_PAGE_NUM - 1
+        : pageNum ===
+            Math.ceil(subscribingPresses.length / LOGOS_NUM_PER_PAGE) ||
+          subscribingPresses.length <= LOGOS_NUM_PER_PAGE;
 
     const leftButton = this.parentElement.querySelector(".button--left");
     const rightButton = this.parentElement.querySelector(".button--right");

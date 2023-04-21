@@ -83,6 +83,12 @@ export const store = createStore((state = initState, action = {}) => {
             ...state.contents.subscribingPresses,
             action.payload,
           ],
+          viewOption: "list",
+          subscriptionOption: "sub",
+        },
+        listView: {
+          ...state.listView,
+          index: state.contents.subscribingPresses.length,
         },
       };
 
@@ -94,6 +100,14 @@ export const store = createStore((state = initState, action = {}) => {
           subscribingPresses: state.contents.subscribingPresses.filter(
             (subscribingPress) => subscribingPress !== action.payload
           ),
+        },
+        listView: {
+          ...state.listView,
+          index:
+            state.listView.index ===
+            state.contents.subscribingPresses.length - 1
+              ? state.listView.index - 1
+              : state.listView.index,
         },
       };
 

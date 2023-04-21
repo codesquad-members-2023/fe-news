@@ -7,7 +7,6 @@ export default class Component {
   constructor(parentElement, props) {
     this.parentElement = parentElement;
     this.props = props;
-
     this.setup();
     this.setEvent();
     this.componentDidMount();
