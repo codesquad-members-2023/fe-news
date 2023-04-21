@@ -131,10 +131,6 @@ class MainHandler {
           this.#currentTypeData = this.#getSubscriptionData(this.#allData)
           this.#renderView()
         }
-
-        if (this.#currentViewType === 'list') {
-          // TODO: 스낵바 띄우기
-        }
       }
 
       if (viewType) {
