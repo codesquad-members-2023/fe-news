@@ -164,18 +164,20 @@ ns-unsubscribe-modal {
 .modal-main .title-md {
   color: var(--black);
 }
+
 .modal-main .body-md {
   color: var(--gray500);
 }
+
 .modal-action {
   display: flex;
   justify-content: space-between;
-  width: 100%;
   align-items: baseline;
+  width: 100%;
   height: 48px;
+  background-color: var(--off-white);
   border: 1px solid var(--gray100);
   border-bottom: none;
-  background-color: var(--off-white);
 }
 
 .modal-action button {
@@ -186,6 +188,25 @@ ns-unsubscribe-modal {
 
 .confirm-btn {
   border-right: 1px solid var(--gray100);
+}
+
+.subscribe-snb {
+  height: 54px;
+  width: 286px;
+  padding: 16px 24px 16px 24px;
+  background-color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 323px;
+  top: 245px;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.subscribe-snb span {
+  color: #fff;
 }
 
 .none {

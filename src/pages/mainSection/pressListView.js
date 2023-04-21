@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+import { BUTTONS, CATEGORIES } from '../../script/contents.js'
 class PressListView {
   #mainListView
   #pressesData
@@ -39,15 +40,7 @@ class PressListView {
 
   #createProgressBar() {
     // TODO: 내가구독한언론사를 클릭하면 내가구독한언론사로 내용이 바뀐다.
-    const categories = [
-      '종합/경제',
-      '방송/통신',
-      'IT',
-      '영자지',
-      '스포츠/연애',
-      '매거진/전문지',
-      '지역'
-    ]
+    const categories = Object.values(CATEGORIES)
 
     const categoryHTML = categories
       .map(category => `<div class="category body-sm">${category}</div>`)
@@ -58,8 +51,8 @@ class PressListView {
 
   #createPressTitle(data) {
     const subscriptionImage = data.isSubscription
-      ? './asset/unsubscribeButton.svg'
-      : './asset/SubscribeButton.svg'
+      ? BUTTONS.UNSUBSCRIPTION
+      : BUTTONS.SUBSCRIPTION
     const subscriptionText = data.isSubscription
       ? 'subscription'
       : 'cancellation'
