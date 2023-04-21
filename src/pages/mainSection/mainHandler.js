@@ -80,7 +80,9 @@ class MainHandler {
     }
 
     if (this.#currentViewType === 'list') {
+      if (currentViewData.length === 0) return
       const currentListViewData = currentViewData[this.#currentPage]
+
       const isSubscription = this.#subscriptionList.has(
         currentListViewData.name
       )
