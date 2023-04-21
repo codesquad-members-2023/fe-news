@@ -172,7 +172,6 @@ class PressListContents extends HTMLElement {
           type: 'SET_SECTION',
           payload: section,
         });
-
         this.sectionStore
           .getState()
           .section.articles.forEach((article: ArticleInterface) => {
@@ -183,6 +182,7 @@ class PressListContents extends HTMLElement {
           payload: {
             view: 'list',
             tab: 'general',
+            totalPage: this.sectionStore.getState().totalNumber - 1,
           },
         });
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
@@ -220,6 +220,7 @@ class PressListContents extends HTMLElement {
           payload: {
             view: 'list',
             tab: 'custom',
+            totalPage: this.userStore.getState().subscribingPress.length - 1,
           },
         });
         this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
@@ -335,6 +336,7 @@ class PressListContents extends HTMLElement {
         const isLastPage = currentPage === totalPage - 1;
         const isFirstPage = currentPage === 0;
         const isOnePage = totalPage === 1;
+        const isGirdView = view === 'grid';
 
         if (isOnePage) {
           setProperty({
@@ -348,7 +350,7 @@ class PressListContents extends HTMLElement {
             name: 'hide',
             value: 'right',
           });
-        } else if (isFirstPage) {
+        } else if (isFirstPage && isGirdView) {
           setProperty({
             target: controllerElement,
             name: 'hide',
@@ -403,7 +405,8 @@ class PressListContents extends HTMLElement {
       appendController: (tab: 'general' | 'custom', view: 'grid' | 'list') => {
         const isOnePage =
           this.displayStore.getState().page[view][tab].totalPage === 1;
-        const hide = isOnePage ? 'all' : 'left';
+        const isList = view === 'list';
+        const hide = isOnePage ? 'all' : isList ? 'none' : 'left';
         const controller = create({
           tagName: 'controller-element',
           attributeList: [['hide', hide]],

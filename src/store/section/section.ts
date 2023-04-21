@@ -20,6 +20,7 @@ const initialState: SectionInfoType = {
       isSubscribed: false,
     },
   },
+  totalNumber: 0,
 };
 
 interface props {

@@ -78,12 +78,22 @@ const changeView = ({ state, payload }: changeViewProps) => {
 const changePageNumber = ({ state, type }: changePageNumberProps) => {
   const currentView = state.currentView;
   const currentTab = state.currentTab;
+  const isListFirstPage =
+    state.currentView === 'list' &&
+    state.page[currentView][currentTab].currentPage === 0;
   if (type === 'NEXT_PAGE') {
     state.page[currentView][currentTab].currentPage++;
     state.category[currentView][currentTab].index++;
   } else if (type === 'PREV_PAGE') {
-    state.page[currentView][currentTab].currentPage--;
-    state.category[currentView][currentTab].index--;
+    if (isListFirstPage) {
+      state.page[currentView][currentTab].currentPage =
+        state.page[currentView][currentTab].totalPage;
+      state.category[currentView][currentTab].index =
+        state.page[currentView][currentTab].totalPage;
+    } else {
+      state.page[currentView][currentTab].currentPage--;
+      state.category[currentView][currentTab].index--;
+    }
   } else {
     state.page[currentView][currentTab].currentPage = 0;
     state.category[currentView][currentTab].index = 0;

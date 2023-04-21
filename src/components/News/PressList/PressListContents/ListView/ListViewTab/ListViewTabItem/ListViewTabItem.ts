@@ -24,12 +24,6 @@ class ListViewTabItem extends HTMLElement {
       this.render();
     }
     if (name === 'current-number') {
-      console.log(
-        getProperty({
-          target: this,
-          name: 'current-number',
-        })
-      );
       this.render();
     }
   }

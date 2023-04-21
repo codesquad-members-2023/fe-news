@@ -194,7 +194,6 @@ app.get('/section', async (req, res) => {
           path: '$press',
         },
       },
-
       {
         $skip: page * 1,
       },
@@ -212,8 +211,10 @@ app.get('/section', async (req, res) => {
       },
     ]);
 
+    let totalNumber = 0;
     const categoryCountsObj = categoryCounts.reduce((acc, curr) => {
       acc[curr._id] = curr.count;
+      totalNumber += curr.count;
       return acc;
     }, {});
 
@@ -224,6 +225,7 @@ app.get('/section', async (req, res) => {
     res.status(200).json({
       section: sectionsWithPress[0],
       categoryCounts: categoryCountsObj,
+      totalNumber,
     });
   } catch (error) {
     res.status(400).json({ message: error });

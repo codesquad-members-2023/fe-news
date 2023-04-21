@@ -6,6 +6,7 @@ type CategoryCountsType = {
 export interface SectionInfoType {
   categoryCounts: CategoryCountsType;
   section: SectionType;
+  totalNumber: number;
 }
 export interface SectionType {
   id: string;
