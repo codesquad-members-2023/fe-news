@@ -14,6 +14,8 @@ export const dataUtils = {
 
     return dataSlices;
   },
+  getListItemData: ({ dataArr, category, listItemIdx }) =>
+    dataArr.filter(({ newsCategory }) => newsCategory === category)[listItemIdx],
   sortData: (dataArr, categoryOrderArr) =>
     dataArr.sort(
       (a, b) => categoryOrderArr.indexOf(a.newsCategory) - categoryOrderArr.indexOf(b.newsCategory)
