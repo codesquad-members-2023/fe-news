@@ -371,11 +371,38 @@ table {
 }
 
 .news_category-bar {
+  display: flex;
+  color: var(--color-gray-300);
+  font-size: 14px;
+  font-weight: 500;
   width: 928px;
   height: 40px;
   margin: 0 auto;
+  align-items: center;
   background: var(--color-off-white);
   border-bottom: 1px solid var(--color-gray-100);
+}
+
+.category-economy {
+  margin: 10px;
+}
+.category-broadcast {
+  margin: 10px;
+}
+.category-it {
+  margin: 10px;
+}
+.category-engilsh {
+  margin: 10px;
+}
+.category-sports {
+  margin: 10px;
+}
+.category-magazine {
+  margin: 10px;
+}
+.category-area {
+  margin: 10px;
 }
 
 .news-company__detail {

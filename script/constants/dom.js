@@ -57,7 +57,17 @@ export const TEMPLATE = {
 `,
   newsCompanyDetail: `
 <div class="detail_btn-left"><img src="assets/leftButton.svg" /></div>
-<div class="news_detail_container"><div class="news_category-bar"></div></div>
+<div class="news_detail_container"></div>
 <div class="detail_btn-right"><img src="assets/rightButton.svg" /></div>
+</div>`,
+  newsDetailSubscribe: `
+<div class="news_category-bar">
+<div class="category-economy">종합/경제</div>
+<div class="category-broadcast">방송/통신</div>
+<div class="category-it">IT</div>
+<div class="category-engilsh">영자지</div>
+<div class="category-sports">스포츠/연예</div>
+<div class="category-magazine">매거진/전문지</div>
+<div class="category-area">지역</div>
 </div>`,
 };

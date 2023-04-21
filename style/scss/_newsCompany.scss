@@ -119,11 +119,38 @@
   border: 1px solid var(--color-gray-100);
 }
 .news_category-bar {
+  display: flex;
+  color: var(--color-gray-300);
+  @include font(14px, 500);
   width: 928px;
   height: 40px;
   margin: 0 auto;
+  align-items: center;
   background: var(--color-off-white);
   border-bottom: 1px solid var(--color-gray-100);
+}
+.category {
+  &-economy {
+    margin: 10px;
+  }
+  &-broadcast {
+    margin: 10px;
+  }
+  &-it {
+    margin: 10px;
+  }
+  &-engilsh {
+    margin: 10px;
+  }
+  &-sports {
+    margin: 10px;
+  }
+  &-magazine {
+    margin: 10px;
+  }
+  &-area {
+    margin: 10px;
+  }
 }
 .news-company__detail {
   @include align();

@@ -1,5 +1,5 @@
 import { insertNewsHeadlineData } from "../view/newsRollingBar.js";
-import { insertMediaLogosGrid } from "../view/newsCompany/newsCompany.js";
+import { showMediaLogosGrid } from "../view/newsCompany/newsCompany.js";
 import { API_PATH } from "../constants/api.js";
 import { COMPANY, ROLLING } from "../constants/dom.js";
 
@@ -43,5 +43,5 @@ const deliverGridData = (spreadGridData, size) => {
   for (let i = 0; i < spreadGridData.length; i += size) {
     gridDataPage.push(spreadGridData.slice(i, i + size));
   }
-  insertMediaLogosGrid(gridDataPage);
+  showMediaLogosGrid(gridDataPage);
 };

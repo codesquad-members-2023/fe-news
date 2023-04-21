@@ -11,9 +11,10 @@ export const changeNewsDetailColor = () => {
     detailCircle.setAttribute("fill", "#d2dae0");
     logoCircle.setAttribute("fill", "#4362d0");
   });
+  changeNewsDetailDisplay();
 };
 
-export const changeNewsDetailDisplay = () => {
+const changeNewsDetailDisplay = () => {
   const detailCircle = document.getElementById("company__view_detail").contentDocument.querySelector("path");
   const logoCircle = document.getElementById("company__view_logo").contentDocument.querySelector("path");
   const allDisplay = $(".news-company__grid");
@@ -27,4 +28,3 @@ export const changeNewsDetailDisplay = () => {
     detailDisplay.classList.add("none");
   });
 };
-;

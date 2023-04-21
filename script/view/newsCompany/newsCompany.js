@@ -2,9 +2,9 @@ import { $ } from "../../utils/dom.js";
 import { COMPANY, SUBSCRIBE } from "../../constants/dom.js";
 import { SubscribeController } from "../../controller/subscribeController.js";
 import { updateNewsLogo } from "./newsCompanySubscribe.js";
-import { changeNewsDetailColor, changeNewsDetailDisplay } from "./newsCompanyDetail.js";
+import { changeNewsDetailColor } from "./newsCompanyDetail.js";
 
-export const insertMediaLogosGrid = (mediaDataSet) => {
+export const showMediaLogosGrid = (mediaDataSet) => {
   const gridFirstPage = $(".all_first-page");
   const gridSecondPage = $(".all_second-page");
   const gridThirdPage = $(".all_third-page");
@@ -12,8 +12,8 @@ export const insertMediaLogosGrid = (mediaDataSet) => {
   const rightButton = $(".grid_btn-right");
   const leftButton = $(".grid_btn-left");
   const mediaData = mediaDataSet;
-
-  const insertMediaLogosGrid = (subscribe, gridBox, mediaLogoData, page) => {
+  
+  const insertMediaData = (subscribe, gridBox, mediaLogoData, page) => {
     gridBox.innerHTML = mediaLogoData.reduce((acc, data) => {
       return (acc += `<div class="grid_list" id="${data.mediaId}" index="${page}">
       <img src=${data.mediaInfo.imgSrc} alt=${data.mediaInfo.name}/>
@@ -24,14 +24,13 @@ export const insertMediaLogosGrid = (mediaDataSet) => {
       `);
     }, "");
   };
-
   const insertPagesData = () => {
     const { FIRST_PAGE, SECOND_PAGE, THIRD_PAGE, LAST_PAGE } = COMPANY;
     const { REGISTER } = SUBSCRIBE;
-    insertMediaLogosGrid(REGISTER, gridFirstPage, mediaData[FIRST_PAGE], FIRST_PAGE);
-    insertMediaLogosGrid(REGISTER, gridSecondPage, mediaData[SECOND_PAGE], SECOND_PAGE);
-    insertMediaLogosGrid(REGISTER, gridThirdPage, mediaData[THIRD_PAGE], THIRD_PAGE);
-    insertMediaLogosGrid(REGISTER, gridFourthPage, mediaData[LAST_PAGE], LAST_PAGE);
+    insertMediaData(REGISTER, gridFirstPage, mediaData[FIRST_PAGE], FIRST_PAGE);
+    insertMediaData(REGISTER, gridSecondPage, mediaData[SECOND_PAGE], SECOND_PAGE);
+    insertMediaData(REGISTER, gridThirdPage, mediaData[THIRD_PAGE], THIRD_PAGE);
+    insertMediaData(REGISTER, gridFourthPage, mediaData[LAST_PAGE], LAST_PAGE);
   };
   insertPagesData();
 
@@ -100,7 +99,6 @@ export const insertMediaLogosGrid = (mediaDataSet) => {
     });
     register(mediaData);
     changeNewsDetailColor();
-    changeNewsDetailDisplay();
   };
   onEvents(COMPANY.FIRST_PAGE);
 };
