@@ -15,46 +15,55 @@ const createJournalList = () => {
   // 전체 언론사 <-> 내가 구독한 언론사
   const updateJournalData = (state) => {
     const currentFrame = journalHeaderStore.getFrame();
+
     if (currentFrame === "FRAME_DETAIL") {
-      const journalHeaderState = journalHeaderStore.getState();
-      updateJournalDetail(journalHeaderState);
+      updateJournalDetail(currentFrame);
       return;
     }
+
     journalTrack.render();
+
     const journalContainer = document.querySelector(".journal-container");
     journalContainer.innerHTML = "";
+
     const journalList =
       state === "STATE_ALL"
         ? journalHeaderStore.getJournalListAll()
         : journalHeaderStore.getJournalSubscribe();
 
-    if (journalList.size === 0) {
-      const batchContainer = createBatchContainer();
-      const nullSubscribeHTML = `<div class="journal-empty Font_display">
-      <span>구독한 언론사가 없습니다...</span></br>
-      <img src="./src/assets/icons/크롱.png">
-      </div>`;
-      batchContainer.innerHTML = nullSubscribeHTML;
-      journalContainer.appendChild(batchContainer);
-      const batchElments = document.querySelectorAll(".journal-batch");
-      journalTrackStore.setBatchSize(batchElments);
-    } else {
-      batchJournalList(journalList);
-      const batchElments = document.querySelectorAll(".journal-batch");
-      journalTrackStore.setBatchSize(batchElments);
-      journalTrack.addButton();
-      journalTrack.addEvent();
-    }
+    journalList.size === 0
+      ? showEmptySubscribePage(journalContainer)
+      : showSubscribePage(journalList);
+  };
+
+  const showEmptySubscribePage = (journalContainer) => {
+    const batchContainer = createBatchContainer();
+    const nullSubscribeHTML = `
+    <div class="journal-empty Font_display">
+    <span>구독한 언론사가 없습니다...</span></br>
+    <img src="./src/assets/icons/크롱.png">
+    </div>
+    `;
+
+    batchContainer.innerHTML = nullSubscribeHTML;
+    journalContainer.appendChild(batchContainer);
+  };
+
+  const showSubscribePage = (journalList) => {
+    batchJournalList(journalList);
+
+    resetTrackButton();
   };
 
   // 디테일 <-> 그리드
   const updateJournalDetail = (frame) => {
     const journalContainer = document.querySelector(".journal-container");
-    journalContainer.innerHTML = "";
     const currentState = journalHeaderStore.getState();
+
+    journalContainer.innerHTML = "";
     frame === "FRAME_GRID"
       ? journalHeaderStore.setState(currentState)
-      : renderJournalDetail();
+      : renderJournalDetail(currentState);
   };
 
   // DB DATA에 있는 언론사 인스턴스 생성
@@ -86,27 +95,47 @@ const createJournalList = () => {
   journalListEl.appendChild(journalTrack.element);
 
   // batch 페이지에 언론사 디테일 삽입
-  const renderJournalDetail = () => {
+  const renderJournalDetail = (currentState) => {
     journalTrack.render();
-    journalTrack.getDetailNavHTML();
     const journalContainer = document.querySelector(".journal-container");
     journalContainer.innerHTML = "";
-    const journalDetailItems = journalDetailStore.detailListAll;
-    journalDetailItems.forEach((journalItem) => {
+
+    currentState === "STATE_ALL"
+      ? showJournalDetailAll(journalContainer)
+      : showJournalDetailSub(journalContainer);
+
+    resetTrackButton();
+  };
+
+  const showJournalDetailAll = (journalContainer) => {
+    journalTrack.getDetailNavHTML();
+
+    const journalDetailAllItems = journalDetailStore.detailListAll;
+
+    createJournalDetailItems(journalContainer, journalDetailAllItems);
+  };
+
+  const showJournalDetailSub = (journalContainer) => {
+    const journalDetailSubItems = journalHeaderStore.journalSubscribe;
+
+    journalDetailSubItems.size === 0
+      ? showEmptySubscribePage(journalContainer)
+      : createJournalDetailItems(journalContainer, journalDetailSubItems);
+  };
+
+  const createJournalDetailItems = (journalContainer, journalDetailItmes) => {
+    journalDetailItmes.forEach((journalItem) => {
       const batchContainer = createBatchContainer();
       batchContainer.appendChild(journalItem.detailElement);
       journalContainer.appendChild(batchContainer);
     });
-    const batchElments = document.querySelectorAll(".journal-batch");
-    journalTrackStore.setBatchSize(batchElments);
-    journalTrack.addButton();
-    journalTrack.addEvent();
   };
 
   // 언론사 디테일 영역 구성
   const loadJournalDetail = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
+
     journalDetailStore.setDetailListAll(journalItems);
     journalDetailStore.setDetailByType();
   };
@@ -119,20 +148,22 @@ const createJournalList = () => {
   const loadJournalItems = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
+
     const dividedJournalItems = journalItems.splice(0, 96);
     journalHeaderStore.setJournalListAll(dividedJournalItems);
+
     const journalList = journalHeaderStore.journalListAll;
     batchJournalList(journalList);
-    const batchElments = document.querySelectorAll(".journal-batch");
-    journalTrackStore.setBatchSize(batchElments);
-    journalTrack.addButton();
-    journalTrack.addEvent();
+
+    resetTrackButton();
   };
 
   // Track에 들어갈 batch 페이지 생성
   const createBatchContainer = () => {
     const batchContainer = document.createElement("div");
+
     batchContainer.className = "journal-batch";
+
     return batchContainer;
   };
 
@@ -142,15 +173,24 @@ const createJournalList = () => {
     const batchSize = 24;
     let batchCount = 0;
     let batchContainer = createBatchContainer();
+
     jounalList.forEach((item) => {
       journalContainer.appendChild(batchContainer);
       batchContainer.appendChild(item.gridElement);
       batchCount++;
+
       if (batchCount === batchSize) {
         batchContainer = createBatchContainer();
         batchCount = 0;
       }
     });
+  };
+
+  const resetTrackButton = () => {
+    const batchElments = document.querySelectorAll(".journal-batch");
+    journalTrackStore.setBatchSize(batchElments);
+    journalTrack.addButton();
+    journalTrack.addEvent();
   };
 
   loadJournalItems().catch((error) => console.error(error));
