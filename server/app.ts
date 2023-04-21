@@ -177,6 +177,11 @@ app.get('/section', async (req, res) => {
   try {
     const sectionsWithPress = await SectionModel.aggregate([
       {
+        $sort: {
+          category: 1,
+        },
+      },
+      {
         $lookup: {
           from: 'presses',
           localField: 'pressId',
@@ -187,14 +192,9 @@ app.get('/section', async (req, res) => {
       {
         $unwind: {
           path: '$press',
-          preserveNullAndEmptyArrays: true,
         },
       },
-      {
-        $sort: {
-          category: 1,
-        },
-      },
+
       {
         $skip: page * 1,
       },
