@@ -5,6 +5,8 @@ export default class SubscriptionTab extends Component {
   template() {
     const { subscribingPresses } = store.getState().contents;
     const { selectedPress } = this.props;
+
+    if (!selectedPress) return `구독한 언론사가 없습니다.`;
     const name = selectedPress.name;
     const subscribingPressesHtml = subscribingPresses.reduce(
       (subscribingPressesString, subscribingPress) => {

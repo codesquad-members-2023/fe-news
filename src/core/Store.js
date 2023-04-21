@@ -1,5 +1,9 @@
 import { observable } from "./observer.js";
 
+const thunk = (next) => (action) => {
+  typeof action === "function" ? action(next) : next(action);
+};
+
 export const createStore = (reducer) => {
   const state = observable(reducer());
 
@@ -15,11 +19,6 @@ export const createStore = (reducer) => {
   const getState = () => frozenState;
 
   const dispatch = (action) => {
-    if (typeof action === "function") {
-      action(dispatch, getState);
-      return;
-    }
-
     const newState = reducer(state, action);
 
     for (const [key, value] of Object.entries(newState)) {
@@ -28,5 +27,7 @@ export const createStore = (reducer) => {
     }
   };
 
-  return { getState, dispatch };
+  const thunkDispatch = thunk(dispatch);
+
+  return { getState, dispatch: thunkDispatch };
 };

@@ -76,14 +76,14 @@ export default class ListView extends Component {
 
     const selectedPress = selectedPresses[index];
 
-    if (!selectedPress) return;
+    // if (!selectedPress) return;
     const selectedCategories = presses.filter(
-      (press) => press.category_id === selectedPress.category_id
+      (press) => press.category_id === selectedPress?.category_id
     );
 
     const categoryLength = selectedCategories.length;
     const categoryIndex = selectedCategories.findIndex(
-      (press) => press.name === selectedPress.name
+      (press) => press.name === selectedPress?.name
     );
 
     const tabContainer = this.parentElement.querySelector(".tab-container");

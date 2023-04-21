@@ -1,5 +1,4 @@
 import Component from "../../core/Component.js";
-import { store } from "../../store/store.js";
 
 export default class LatestNewsBar extends Component {
   initState() {

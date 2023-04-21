@@ -1,6 +1,8 @@
 import Component from "../../../core/Component.js";
 
 export default class AllTab extends Component {
+  setEvent() {}
+
   template() {
     const { selectedPress, categoryIndex, categoryLength, categories } =
       this.props;

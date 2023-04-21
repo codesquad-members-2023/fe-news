@@ -9,8 +9,8 @@ const initState = {
   contents: {
     subscribingPresses: [],
     presses: [],
-    viewOption: "grid",
-    subscriptionOption: "all",
+    viewOption: "list",
+    subscriptionOption: "sub",
   },
   listView: {
     index: 0,
