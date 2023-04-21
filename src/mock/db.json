@@ -26,7 +26,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "독서신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/955.png",
-      "pressSrc": "http://newsstand.naver.com/955",
+      "pressHref": "http://newsstand.naver.com/955",
 
       "updateTime": "2023.04.14. 16:40\n편집",
       "mainNews": {
@@ -65,7 +65,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "미디어스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/0211/nsd01153196.png",
-      "pressSrc": "http://newsstand.naver.com/829",
+      "pressHref": "http://newsstand.naver.com/829",
 
       "updateTime": "2023.04.14. 16:40\n편집",
       "mainNews": {
@@ -104,7 +104,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "이웃집과학자",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/988.png",
-      "pressSrc": "http://newsstand.naver.com/988",
+      "pressHref": "http://newsstand.naver.com/988",
 
       "updateTime": "2023.03.31. 21:18\n편집",
       "mainNews": {
@@ -143,7 +143,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "한경비즈니스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0928/nsd125033437.png",
-      "pressSrc": "http://newsstand.naver.com/050",
+      "pressHref": "http://newsstand.naver.com/050",
 
       "updateTime": "2023.04.14. 14:43\n편집",
       "mainNews": {
@@ -182,7 +182,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "베리타스알파",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/958.png",
-      "pressSrc": "http://newsstand.naver.com/958",
+      "pressHref": "http://newsstand.naver.com/958",
 
       "updateTime": "2023.04.14. 14:33\n편집",
       "mainNews": {
@@ -217,43 +217,42 @@
         }
       ]
     },
-
     {
       "newsCategory": "종합/경제",
-      "pressName": "조선비즈",
-      "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/366.png",
-      "pressSrc": "http://newsstand.naver.com/366",
-
-      "updateTime": "2023.04.14. 15:09\n편집",
+      "pressName": "아주경제",
+      "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/921.png",
+      "pressSrc": "http://newsstand.naver.com/921",
+      "isSubscribed": false,
+      "updateTime": "2023.04.21. 15:10\n편집",
       "mainNews": {
-        "img": "https://s.pstatic.net/static/newsstand/2023/0414/article_img/new_main/9088/151354_001.jpg",
-        "href": "https://biz.chosun.com/industry/company/2023/04/14/E3TTEHWVLNG73CC2P6OCJ6UXTM/",
-        "content": ""
+        "img": "https://s.pstatic.net/static/newsstand/2023/0421/article_img/new_main/9124/151036_001.jpg",
+        "href": "https://www.ajunews.com/view/20230421085237310?l=N",
+        "content": "[단독] MS가 주목한 국내 AI 스타트업은 어디?"
       },
       "subNews": [
         {
-          "content": "[단독] 백의종군 한다던 SM 이성수·탁영준, C레벨 복귀",
-          "href": "https://biz.chosun.com/industry/company/2023/04/14/TBJ546QVLZEUPC6EY5ENBHBUQY/"
+          "content": "돌려받지 못한 전세금 '역대 최대'...'깡통전세' 우려지역만 25곳",
+          "href": "https://www.ajunews.com/view/20230421111039424?l=N"
         },
         {
-          "content": "[단독] 김포골드라인 운행구간에 전세버스 투입된다",
-          "href": "https://biz.chosun.com/topics/topics_social/2023/04/14/YKYVLWT2KBGMPEYJAYHKY4PLDA/"
+          "content": "尹, 수단 무력 충돌에 '재외국민 철수용 軍 수송기 급파' 지시",
+          "href": "https://www.ajunews.com/view/20230421114237453?l=N"
         },
         {
-          "content": "이용자 감소에 부담?… 요기요, 네고왕 당일 취소 논란",
-          "href": "https://biz.chosun.com/distribution/channel/2023/04/14/A62VXSOT2REGHCKMZRL74VPBQE/"
+          "content": "법원, '이재명 최측근' 정진상 보석 허가…구속 5개월만",
+          "href": "https://www.ajunews.com/view/20230421115044458?l=N"
         },
         {
-          "content": "권도형, 테라루나 폭락 전후 김앤장에 거액 송금 정황",
-          "href": "https://biz.chosun.com/topics/topics_social/2023/04/14/CCTKE3NOUVCRHBBIBYVGVTVCEA/"
+          "content": "타임스스퀘어 전광판에 '한미 참전용사 10대 영웅' 영상 송출된다",
+          "href": "https://www.ajunews.com/view/20230421072243248?l=N"
         },
         {
-          "content": "\"우리 좀 살려달라\" 공개 호소도… 카카오의 최대 약점",
-          "href": "https://biz.chosun.com/it-science/ict/2023/04/14/HQ5B27ISRFCSPNGXHQXMBAQPA4/"
+          "content": "'이승기 사태 방지법'·'매크로 골프예약 금지법' 국회 문체위 통과",
+          "href": "https://www.ajunews.com/view/20230421135249540?l=N"
         },
         {
-          "content": "모더나 창업자 \"mRNA백신 이후 다음 목표는 암 정복\"",
-          "href": "https://biz.chosun.com/science-chosun/science/2023/04/14/APEF76WCWFCV3CMPZMEF5VUE4M/"
+          "content": "[특파원스페셜] 中 전기차 배터리 '거품론' 속 활로 찾는 기업들",
+          "href": "https://www.ajunews.com/view/20230419085307618?l=N"
         }
       ]
     },
@@ -261,7 +260,7 @@
       "newsCategory": "종합/경제",
       "pressName": "한국금융신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/968.png",
-      "pressSrc": "http://newsstand.naver.com/968",
+      "pressHref": "http://newsstand.naver.com/968",
 
       "updateTime": "2023.04.14. 16:41\n편집",
       "mainNews": {
@@ -300,7 +299,7 @@
       "newsCategory": "종합/경제",
       "pressName": "CNB뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/954.png",
-      "pressSrc": "http://newsstand.naver.com/954",
+      "pressHref": "http://newsstand.naver.com/954",
 
       "updateTime": "2023.04.14. 16:30\n편집",
       "mainNews": {
@@ -337,40 +336,40 @@
     },
     {
       "newsCategory": "종합/경제",
-      "pressName": "세계일보",
-      "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/022.png",
-      "pressSrc": "http://newsstand.naver.com/022",
-
-      "updateTime": "2023.04.14. 16:05\n편집",
+      "pressName": "정책브리핑",
+      "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1116/nsd113848865.png",
+      "pressSrc": "http://newsstand.naver.com/690",
+      "isSubscribed": false,
+      "updateTime": "2023.04.21. 14:42\n편집",
       "mainNews": {
-        "img": "https://s.pstatic.net/static/newsstand/2023/0414/article_img/new_main/9006/161141_001.jpg",
-        "href": "https://www.segye.com/newsView/20230414512962",
-        "content": ""
+        "img": "https://s.pstatic.net/static/newsstand/2023/0421/article_img/new_main/9367/145007_001.jpg",
+        "href": "https://www.korea.kr/news/policyNewsView.do?newsId=148914099&call_from=NaverNewsStand",
+        "content": "윤 대통령 “이차전지는 반도체와 함께 우리의 안보·전략 자산의 핵심”"
       },
       "subNews": [
         {
-          "content": "정순신 청문회서 野 \"권력형 학폭세탁\" 불참한 與 \"망신주기\"",
-          "href": "https://www.segye.com/newsView/20230414511649"
+          "content": "24일부터 전세사기 피해자에 저금리 대환대출",
+          "href": "https://www.korea.kr/news/policyNewsView.do?newsId=148914116&call_from=NaverNewsStand"
         },
         {
-          "content": "군, 북 '화성-18형' 발사에 \"킬체인 무력화 우려는 기우\"",
-          "href": "https://www.segye.com/newsView/20230414510570"
+          "content": "추 부총리 “중소기업, 올해 투자하면 최대 28% 세액공제”",
+          "href": "https://www.korea.kr/news/policyNewsView.do?newsId=148914118&call_from=NaverNewsStand"
         },
         {
-          "content": "김포골드라인에 ‘커팅맨’ 배치… 수륙양용버스도 검토",
-          "href": "https://www.segye.com/newsView/20230414515529"
+          "content": "5월 ‘동행축제’, 30개 지역축제와 연계…대전서 개막식",
+          "href": "https://www.korea.kr/news/policyNewsView.do?newsId=148914122&call_from=NaverNewsStand"
         },
         {
-          "content": "'백현동 77억 의혹' 김인섭 구속심사…\"지분 받은 것\"",
-          "href": "https://www.segye.com/newsView/20230414514810"
+          "content": "‘원스톱 수출지원단’ 수출 애로 320건 해소…현장점검 가동",
+          "href": "https://www.korea.kr/news/policyNewsView.do?newsId=148914117&call_from=NaverNewsStand"
         },
         {
-          "content": "뇌병변장애인 수개월 성폭행한 활동지원사 징역 10년",
-          "href": "https://www.segye.com/newsView/20230414507811"
+          "content": "‘서비스형 소프트웨어 기업’ 1만개 이상 육성…“5630억 원 투입”",
+          "href": "https://www.korea.kr/news/policyNewsView.do?newsId=148914124&call_from=NaverNewsStand"
         },
         {
-          "content": "코스피, 2570대 마감…코스닥 11개월여만 900선 돌파",
-          "href": "https://www.segye.com/newsView/20230414515526"
+          "content": "주한 외국인, 한국 문화유산 탐방…‘오징어 게임’ 배우도 줄다리기를",
+          "href": "https://www.korea.kr/news/policyNewsView.do?newsId=148914125&call_from=NaverNewsStand"
         }
       ]
     },
@@ -378,7 +377,7 @@
       "newsCategory": "종합/경제",
       "pressName": "데일리임팩트",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/0819/nsd151219656.png",
-      "pressSrc": "http://newsstand.naver.com/812",
+      "pressHref": "http://newsstand.naver.com/812",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -417,7 +416,7 @@
       "newsCategory": "종합/경제",
       "pressName": "연합인포맥스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/013.png",
-      "pressSrc": "http://newsstand.naver.com/013",
+      "pressHref": "http://newsstand.naver.com/013",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -456,7 +455,7 @@
       "newsCategory": "종합/경제",
       "pressName": "여성경제신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1018/nsd132851977.png",
-      "pressSrc": "http://newsstand.naver.com/682",
+      "pressHref": "http://newsstand.naver.com/682",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -495,7 +494,7 @@
       "newsCategory": "종합/경제",
       "pressName": "이데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/018.png",
-      "pressSrc": "http://newsstand.naver.com/018",
+      "pressHref": "http://newsstand.naver.com/018",
 
       "updateTime": "2023.04.14. 16:07\n편집",
       "mainNews": {
@@ -534,7 +533,7 @@
       "newsCategory": "종합/경제",
       "pressName": "조선일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0903/nsd185255316.png",
-      "pressSrc": "http://newsstand.naver.com/023",
+      "pressHref": "http://newsstand.naver.com/023",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -573,7 +572,7 @@
       "newsCategory": "종합/경제",
       "pressName": "일요신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/925.png",
-      "pressSrc": "http://newsstand.naver.com/925",
+      "pressHref": "http://newsstand.naver.com/925",
 
       "updateTime": "2023.04.14. 09:45\n편집",
       "mainNews": {
@@ -612,7 +611,7 @@
       "newsCategory": "종합/경제",
       "pressName": "국민일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/005.png",
-      "pressSrc": "http://newsstand.naver.com/005",
+      "pressHref": "http://newsstand.naver.com/005",
 
       "updateTime": "2023.04.14. 16:06\n편집",
       "mainNews": {
@@ -651,7 +650,7 @@
       "newsCategory": "종합/경제",
       "pressName": "문화일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/021.png",
-      "pressSrc": "http://newsstand.naver.com/021",
+      "pressHref": "http://newsstand.naver.com/021",
 
       "updateTime": "2023.04.14. 16:03\n편집",
       "mainNews": {
@@ -690,7 +689,7 @@
       "newsCategory": "종합/경제",
       "pressName": "데일리한국",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/042.png",
-      "pressSrc": "http://newsstand.naver.com/042",
+      "pressHref": "http://newsstand.naver.com/042",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -729,7 +728,7 @@
       "newsCategory": "종합/경제",
       "pressName": "CEO스코어데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/932.png",
-      "pressSrc": "http://newsstand.naver.com/932",
+      "pressHref": "http://newsstand.naver.com/932",
 
       "updateTime": "2023.04.14. 07:06\n편집",
       "mainNews": {
@@ -768,7 +767,7 @@
       "newsCategory": "종합/경제",
       "pressName": "이로운넷",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/825.png",
-      "pressSrc": "http://newsstand.naver.com/825",
+      "pressHref": "http://newsstand.naver.com/825",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -807,7 +806,7 @@
       "newsCategory": "종합/경제",
       "pressName": "한겨레",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/028.png",
-      "pressSrc": "http://newsstand.naver.com/028",
+      "pressHref": "http://newsstand.naver.com/028",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -846,7 +845,7 @@
       "newsCategory": "종합/경제",
       "pressName": "더팩트",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/536.png",
-      "pressSrc": "http://newsstand.naver.com/536",
+      "pressHref": "http://newsstand.naver.com/536",
 
       "updateTime": "2023.04.14. 15:41\n편집",
       "mainNews": {
@@ -886,7 +885,7 @@
       "newsCategory": "방송/통신",
       "pressName": "아리랑TV",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/934.png",
-      "pressSrc": "http://newsstand.naver.com/934",
+      "pressHref": "http://newsstand.naver.com/934",
 
       "updateTime": "2023.04.14. 15:05\n편집",
       "mainNews": {
@@ -925,7 +924,7 @@
       "newsCategory": "방송/통신",
       "pressName": "머니투데이방송",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/0420/nsd105139164.png",
-      "pressSrc": "http://newsstand.naver.com/916",
+      "pressHref": "http://newsstand.naver.com/916",
 
       "updateTime": "2023.04.14. 16:09\n편집",
       "mainNews": {
@@ -964,7 +963,7 @@
       "newsCategory": "방송/통신",
       "pressName": "연합뉴스TV",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/422.png",
-      "pressSrc": "http://newsstand.naver.com/422",
+      "pressHref": "http://newsstand.naver.com/422",
 
       "updateTime": "2023.04.14. 16:11\n편집",
       "mainNews": {
@@ -1001,40 +1000,40 @@
     },
     {
       "newsCategory": "방송/통신",
-      "pressName": "OBS",
-      "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/340.png",
-      "pressSrc": "http://newsstand.naver.com/340",
-
-      "updateTime": "2023.04.14. 11:59\n편집",
+      "pressName": "지지통신",
+      "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/376.png",
+      "pressSrc": "http://newsstand.naver.com/376",
+      "isSubscribed": false,
+      "updateTime": "2023.04.21. 15:10\n편집",
       "mainNews": {
-        "img": "https://s.pstatic.net/static/newsstand/2023/0414/article_img/new_main/9070/120409_001.jpg",
-        "href": "http://www.obsnews.co.kr/news/articleView.html?idxno=1394298",
-        "content": ""
+        "img": "https://s.pstatic.net/static/newsstand/2023/0421/article_img/new_main/9092/151646_001.jpg",
+        "href": "https://www.jiji.com/jc/article?k=2023042100681&g=int",
+        "content": "米グーグル、ＡＩ研究部門を統合　傘下の英ディープマインドと"
       },
       "subNews": [
         {
-          "content": "김포골드라인 직영화 전환 검토…6월 판가름",
-          "href": "http://www.obsnews.co.kr/news/articleView.html?idxno=1394324"
+          "content": "自衛隊輸送機、ジブチへ出発　スーダン邦人退避に備え―防衛省",
+          "href": "https://www.jiji.com/jc/article?k=2023042100716&g=soc"
         },
         {
-          "content": "포천 양돈농장서 ASF 발생…올해 8번째 사례",
-          "href": "http://www.obsnews.co.kr/news/articleView.html?idxno=1394308"
+          "content": "米フロリダ州知事が訪日へ　大統領有力候補、岸田首相とも会談",
+          "href": "https://www.jiji.com/jc/article?k=2023042100668&g=int"
         },
         {
-          "content": "인천시, 노동안전보건정책 기본계획 수립",
-          "href": "http://www.obsnews.co.kr/news/articleView.html?idxno=1394302"
+          "content": "聴衆前方に関係者も事件防げず　警護計画の検証進める―首相襲撃・和歌山県警",
+          "href": "https://www.jiji.com/jc/article?k=2023042100156&g=soc"
         },
         {
-          "content": "미 \"FBI 기밀 문건 유출자 체포…주방위군 소속\"",
-          "href": "http://www.obsnews.co.kr/news/articleView.html?idxno=1394297"
+          "content": "衆院に岸田首相殺害予告メール",
+          "href": "https://www.jiji.com/jc/article?k=2023042100607&g=pol"
         },
         {
-          "content": "검찰 \"송영길 캠프 9명, 의원 등에게 9천400만 원 전달\"",
-          "href": "http://www.obsnews.co.kr/news/articleView.html?idxno=1394309"
+          "content": "五輪汚職１０人法廷で認める　「口利きお礼」「悪巧み」証言―元理事公判めど立たず",
+          "href": "https://www.jiji.com/jc/article?k=2023042100151&g=soc"
         },
         {
-          "content": "이재명, 유동규 다시 대면…백현동 의혹 김인섭 구속 기로",
-          "href": "http://www.obsnews.co.kr/news/articleView.html?idxno=1394337"
+          "content": "空自輸送機、きょう午後に出発　スーダン邦人退避",
+          "href": "https://www.jiji.com/jc/article?k=2023042100273&g=pol"
         }
       ]
     },
@@ -1042,7 +1041,7 @@
       "newsCategory": "방송/통신",
       "pressName": "TJB대전방송",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2023/0103/nsd95227559.png",
-      "pressSrc": "http://newsstand.naver.com/684",
+      "pressHref": "http://newsstand.naver.com/684",
 
       "updateTime": "2023.04.14. 08:00\n편집",
       "mainNews": {
@@ -1081,7 +1080,7 @@
       "newsCategory": "방송/통신",
       "pressName": "KBS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/056.png",
-      "pressSrc": "http://newsstand.naver.com/056",
+      "pressHref": "http://newsstand.naver.com/056",
 
       "updateTime": "2023.04.14. 16:18\n편집",
       "mainNews": {
@@ -1120,7 +1119,7 @@
       "newsCategory": "방송/통신",
       "pressName": "EBS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0803/nsd20247547.png",
-      "pressSrc": "http://newsstand.naver.com/344",
+      "pressHref": "http://newsstand.naver.com/344",
 
       "updateTime": "2023.04.14. 16:12\n편집",
       "mainNews": {
@@ -1159,7 +1158,7 @@
       "newsCategory": "방송/통신",
       "pressName": "채널에이",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/903.png",
-      "pressSrc": "http://newsstand.naver.com/903",
+      "pressHref": "http://newsstand.naver.com/903",
 
       "updateTime": "2023.04.14. 15:27\n편집",
       "mainNews": {
@@ -1198,7 +1197,7 @@
       "newsCategory": "방송/통신",
       "pressName": "YTN사이언스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0922/nsd152336602.png",
-      "pressSrc": "http://newsstand.naver.com/945",
+      "pressHref": "http://newsstand.naver.com/945",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -1237,7 +1236,7 @@
       "newsCategory": "방송/통신",
       "pressName": "KBC광주방송",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/980.png",
-      "pressSrc": "http://newsstand.naver.com/980",
+      "pressHref": "http://newsstand.naver.com/980",
 
       "updateTime": "2023.04.14. 14:25\n편집",
       "mainNews": {
@@ -1276,7 +1275,7 @@
       "newsCategory": "방송/통신",
       "pressName": "뉴시스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/003.png",
-      "pressSrc": "http://newsstand.naver.com/003",
+      "pressHref": "http://newsstand.naver.com/003",
 
       "updateTime": "2023.04.14. 15:45\n편집",
       "mainNews": {
@@ -1315,7 +1314,7 @@
       "newsCategory": "방송/통신",
       "pressName": "SBS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/055.png",
-      "pressSrc": "http://newsstand.naver.com/055",
+      "pressHref": "http://newsstand.naver.com/055",
 
       "updateTime": "2023.04.14. 16:18\n편집",
       "mainNews": {
@@ -1354,7 +1353,7 @@
       "newsCategory": "방송/통신",
       "pressName": "한국경제TV",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/215.png",
-      "pressSrc": "http://newsstand.naver.com/215",
+      "pressHref": "http://newsstand.naver.com/215",
 
       "updateTime": "2023.04.14. 16:00\n편집",
       "mainNews": {
@@ -1393,7 +1392,7 @@
       "newsCategory": "방송/통신",
       "pressName": "MBC",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/214.png",
-      "pressSrc": "http://newsstand.naver.com/214",
+      "pressHref": "http://newsstand.naver.com/214",
 
       "updateTime": "2023.04.14. 16:00\n편집",
       "mainNews": {
@@ -1432,7 +1431,7 @@
       "newsCategory": "IT",
       "pressName": "디지털데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/138.png",
-      "pressSrc": "http://newsstand.naver.com/138",
+      "pressHref": "http://newsstand.naver.com/138",
 
       "updateTime": "2023.04.14. 13:04\n편집",
       "mainNews": {
@@ -1471,7 +1470,7 @@
       "newsCategory": "IT",
       "pressName": "디지털투데이",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/953.png",
-      "pressSrc": "http://newsstand.naver.com/953",
+      "pressHref": "http://newsstand.naver.com/953",
 
       "updateTime": "2023.04.14. 16:00\n편집",
       "mainNews": {
@@ -1510,7 +1509,7 @@
       "newsCategory": "IT",
       "pressName": "전자신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/030.png",
-      "pressSrc": "http://newsstand.naver.com/030",
+      "pressHref": "http://newsstand.naver.com/030",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -1549,7 +1548,7 @@
       "newsCategory": "IT",
       "pressName": "보안뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/952.png",
-      "pressSrc": "http://newsstand.naver.com/952",
+      "pressHref": "http://newsstand.naver.com/952",
 
       "updateTime": "2023.04.14. 12:19\n편집",
       "mainNews": {
@@ -1588,7 +1587,7 @@
       "newsCategory": "IT",
       "pressName": "IT동아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/818.png",
-      "pressSrc": "http://newsstand.naver.com/818",
+      "pressHref": "http://newsstand.naver.com/818",
 
       "updateTime": "2023.04.14. 11:47\n편집",
       "mainNews": {
@@ -1627,7 +1626,7 @@
       "newsCategory": "IT",
       "pressName": "디지털타임스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/029.png",
-      "pressSrc": "http://newsstand.naver.com/029",
+      "pressHref": "http://newsstand.naver.com/029",
 
       "updateTime": "2023.04.14. 16:03\n편집",
       "mainNews": {
@@ -1666,7 +1665,7 @@
       "newsCategory": "IT",
       "pressName": "넥스트데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/910.png",
-      "pressSrc": "http://newsstand.naver.com/910",
+      "pressHref": "http://newsstand.naver.com/910",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -1705,7 +1704,7 @@
       "newsCategory": "IT",
       "pressName": "지디넷코리아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0905/nsd131925414.png",
-      "pressSrc": "http://newsstand.naver.com/092",
+      "pressHref": "http://newsstand.naver.com/092",
 
       "updateTime": "2023.04.14. 15:59\n편집",
       "mainNews": {
@@ -1745,37 +1744,37 @@
       "pressName": "블로터",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/293.png",
       "pressSrc": "http://newsstand.naver.com/293",
-
-      "updateTime": "2023.04.14. 16:10\n편집",
+      "isSubscribed": false,
+      "updateTime": "2023.04.21. 15:10\n편집",
       "mainNews": {
-        "img": "https://s.pstatic.net/static/newsstand/2023/0414/article_img/new_main/9054/161423_001.jpg",
-        "href": "https://www.bloter.net/news/articleView.html?idxno=600563",
-        "content": ""
+        "img": "https://s.pstatic.net/static/newsstand/2023/0421/article_img/new_main/9054/151646_001.jpg",
+        "href": "https://www.bloter.net/news/articleView.html?idxno=600869",
+        "content": "KT 주가와 대표 임기의 상관관계…통신사는 성장주가 될 수 없을까?"
       },
       "subNews": [
         {
-          "content": "조찬식 펀블 대표 \"부동산 갭투자보다 더 안전한 STO 조각투자\"",
-          "href": "https://www.bloter.net/news/articleView.html?idxno=600647"
+          "content": "'이익률 0.7%' 배민 자회사 우아한청년들…수익성 개선 '묘연'",
+          "href": "https://www.bloter.net/news/articleView.html?idxno=600876"
         },
         {
-          "content": "제너시스, 비비큐 완전 모회사로…0.15%까지 '영끌'",
-          "href": "https://www.bloter.net/news/articleView.html?idxno=600641"
+          "content": "현대엘리베이터, 1640억원 규모 공모채 발행",
+          "href": "https://www.bloter.net/news/articleView.html?idxno=600871"
         },
         {
-          "content": "현대차그룹, 전기차 투자 금액 3조원 늘려...생산 목표량도 상항조정",
-          "href": "https://www.bloter.net/news/articleView.html?idxno=600640"
+          "content": "2023 상하이오토쇼 현장 둘러보니...색 변하는 BMW 눈길 [카미경]",
+          "href": "https://www.bloter.net/news/articleView.html?idxno=600868"
         },
         {
-          "content": "LCK 첫 '더블 엘리미네이션' 토너먼트, 젠지·T1의 평가는?",
-          "href": "https://www.bloter.net/news/articleView.html?idxno=600561"
+          "content": "경제에 민감한 美운송주·소형주 하락세…\"경기 침체 우려 반영\"",
+          "href": "https://www.bloter.net/news/articleView.html?idxno=600867"
         },
         {
-          "content": "명품 수요 확대에 '세계 최고 부호' 자리 굳히는 LVMH 아르노 회장",
-          "href": "https://www.bloter.net/news/articleView.html?idxno=600637"
+          "content": "몬테네그로 검찰, '테라·루나' 권도형 기소…송환 더 늦어지나",
+          "href": "https://www.bloter.net/news/articleView.html?idxno=600863"
         },
         {
-          "content": "램시마보다 효능 향상된 램시마SC, 미국 진출 잰걸음",
-          "href": "https://www.bloter.net/news/articleView.html?idxno=600635"
+          "content": "애플의 혁신적인 제품, 알고 보니 타사 기술? \"중소기업 협력 제안 후 기술 훔쳐\"",
+          "href": "https://www.bloter.net/news/articleView.html?idxno=600860"
         }
       ]
     },
@@ -1783,7 +1782,7 @@
       "newsCategory": "IT",
       "pressName": "AI타임스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/1112/nsd102040597.png",
-      "pressSrc": "http://newsstand.naver.com/994",
+      "pressHref": "http://newsstand.naver.com/994",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -1822,7 +1821,7 @@
       "newsCategory": "IT",
       "pressName": "헬로디디",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/977.png",
-      "pressSrc": "http://newsstand.naver.com/977",
+      "pressHref": "http://newsstand.naver.com/977",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -1861,7 +1860,7 @@
       "newsCategory": "IT",
       "pressName": "IT조선",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/917.png",
-      "pressSrc": "http://newsstand.naver.com/917",
+      "pressHref": "http://newsstand.naver.com/917",
 
       "updateTime": "2023.04.14. 14:57\n편집",
       "mainNews": {
@@ -1901,7 +1900,7 @@
       "newsCategory": "영자지",
       "pressName": "이코노타임즈",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0615/nsd7251644.png",
-      "pressSrc": "http://newsstand.naver.com/681",
+      "pressHref": "http://newsstand.naver.com/681",
 
       "updateTime": "2023.04.14. 00:36\n편집",
       "mainNews": {
@@ -1940,7 +1939,7 @@
       "newsCategory": "영자지",
       "pressName": "중앙데일리",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/330.png",
-      "pressSrc": "http://newsstand.naver.com/330",
+      "pressHref": "http://newsstand.naver.com/330",
 
       "updateTime": "2023.04.14. 15:46\n편집",
       "mainNews": {
@@ -1979,7 +1978,7 @@
       "newsCategory": "영자지",
       "pressName": "코리아타임스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/040.png",
-      "pressSrc": "http://newsstand.naver.com/040",
+      "pressHref": "http://newsstand.naver.com/040",
 
       "updateTime": "2023.04.14. 16:05\n편집",
       "mainNews": {
@@ -2018,7 +2017,7 @@
       "newsCategory": "영자지",
       "pressName": "YONHAPNEWS",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/946.png",
-      "pressSrc": "http://newsstand.naver.com/946",
+      "pressHref": "http://newsstand.naver.com/946",
 
       "updateTime": "2023.04.14. 16:14\n편집",
       "mainNews": {
@@ -2057,7 +2056,7 @@
       "newsCategory": "영자지",
       "pressName": "코리아헤럴드",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/044.png",
-      "pressSrc": "http://newsstand.naver.com/044",
+      "pressHref": "http://newsstand.naver.com/044",
 
       "updateTime": "2023.04.14. 16:06\n편집",
       "mainNews": {
@@ -2096,7 +2095,7 @@
       "newsCategory": "영자지",
       "pressName": "KBS World",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/326.png",
-      "pressSrc": "http://newsstand.naver.com/326",
+      "pressHref": "http://newsstand.naver.com/326",
 
       "updateTime": "2023.03.24. 15:03\n편집",
       "mainNews": {
@@ -2136,7 +2135,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "스포탈코리아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/139.png",
-      "pressSrc": "http://newsstand.naver.com/139",
+      "pressHref": "http://newsstand.naver.com/139",
 
       "updateTime": "2023.04.14. 09:33\n편집",
       "mainNews": {
@@ -2175,7 +2174,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "스포츠월드",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/396.png",
-      "pressSrc": "http://newsstand.naver.com/396",
+      "pressHref": "http://newsstand.naver.com/396",
 
       "updateTime": "2023.04.14. 16:05\n편집",
       "mainNews": {
@@ -2212,40 +2211,40 @@
     },
     {
       "newsCategory": "스포츠/연예",
-      "pressName": "스포츠서울",
-      "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0708/nsd94830278.png",
-      "pressSrc": "http://newsstand.naver.com/073",
-
-      "updateTime": "2023.04.14. 16:13\n편집",
+      "pressName": "게임동아",
+      "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/0211/nsd02321523.png",
+      "pressSrc": "http://newsstand.naver.com/830",
+      "isSubscribed": false,
+      "updateTime": "2023.04.21. 15:03\n편집",
       "mainNews": {
-        "img": "https://s.pstatic.net/static/newsstand/2023/0414/article_img/new_main/9032/161423_001.png",
-        "href": "https://www.sportsseoul.com/news/read/1304756",
-        "content": ""
+        "img": "https://s.pstatic.net/static/newsstand/2023/0421/article_img/new_main/9249/151036_001.jpg",
+        "href": "https://game.donga.com/107080/",
+        "content": "투바이트, 신작 RTS ‘스페이스 기어즈’는 어떤 게임?"
       },
       "subNews": [
         {
-          "content": "‘홍대 여신’ 레이디제인, 10세 연하 예비신랑 누구?",
-          "href": "https://www.sportsseoul.com/news/read/1304804"
+          "content": "e스포츠 협회, '2023 광저우 아시안 게임' e스포츠 종목 예비 엔트리 공개",
+          "href": "https://game.donga.com/107078/"
         },
         {
-          "content": "박준금, 한강뷰 집에 명품 가득 옷방만 무려...",
-          "href": "https://www.sportsseoul.com/news/read/1304795"
+          "content": "‘바람: 연’ 신규 지역 ‘지옥’ 업데이트",
+          "href": "https://game.donga.com/107077/"
         },
         {
-          "content": "암흑기 이어 망신살 ‘엘롯기 동맹’, 해체해야",
-          "href": "https://www.sportsseoul.com/news/read/1304808"
+          "content": "넷마블문화재단, 29일 진행하는 게임 콘서트 참가자 모집",
+          "href": "https://game.donga.com/107079/"
         },
         {
-          "content": "몇 등신이야? 서하얀, 모델 기죽이는 비율",
-          "href": "https://www.sportsseoul.com/news/read/1304796"
+          "content": "‘3on3 프리스타일’, 봄단장 업데이트",
+          "href": "https://game.donga.com/107076/"
         },
         {
-          "content": "가수 남진과 나훈아는 왜 제명당했나",
-          "href": "https://www.sportsseoul.com/news/read/1304261"
+          "content": "‘메이플’ 20주년 기념 이벤트 '전국 용사 파티 퀘스트' 실시",
+          "href": "https://game.donga.com/107075/"
         },
         {
-          "content": "\"엉덩이가 예뻐서\" 추성훈, ♥야노 시호 노출증 폭로에...",
-          "href": "https://www.sportsseoul.com/news/read/1304401"
+          "content": "[동영상] 4월 3주차 신작 게임 소식",
+          "href": "https://game.donga.com/107074/"
         }
       ]
     },
@@ -2253,7 +2252,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "스타뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/108.png",
-      "pressSrc": "http://newsstand.naver.com/108",
+      "pressHref": "http://newsstand.naver.com/108",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -2292,7 +2291,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "조이뉴스24",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/947.png",
-      "pressSrc": "http://newsstand.naver.com/947",
+      "pressHref": "http://newsstand.naver.com/947",
 
       "updateTime": "2023.04.14. 16:11\n편집",
       "mainNews": {
@@ -2331,7 +2330,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "스포츠동아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/314.png",
-      "pressSrc": "http://newsstand.naver.com/314",
+      "pressHref": "http://newsstand.naver.com/314",
 
       "updateTime": "2023.04.14. 15:09\n편집",
       "mainNews": {
@@ -2370,7 +2369,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "텐아시아",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/312.png",
-      "pressSrc": "http://newsstand.naver.com/312",
+      "pressHref": "http://newsstand.naver.com/312",
 
       "updateTime": "2023.04.14. 14:58\n편집",
       "mainNews": {
@@ -2409,7 +2408,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "스포츠한국",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/962.png",
-      "pressSrc": "http://newsstand.naver.com/962",
+      "pressHref": "http://newsstand.naver.com/962",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -2446,40 +2445,40 @@
     },
     {
       "newsCategory": "스포츠/연예",
-      "pressName": "마이데일리",
-      "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/117.png",
-      "pressSrc": "http://newsstand.naver.com/117",
-
-      "updateTime": "2023.04.14. 16:02\n편집",
+      "pressName": "TV리포트",
+      "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/213.png",
+      "pressSrc": "http://newsstand.naver.com/213",
+      "isSubscribed": false,
+      "updateTime": "2023.04.21. 12:39\n편집",
       "mainNews": {
-        "img": "https://s.pstatic.net/static/newsstand/2023/0414/article_img/new_main/9045/160822_001.jpg",
-        "href": "http://www.mydaily.co.kr/new_yk/html/read.php?newsid=202304132247799371&nv=stand",
-        "content": ""
+        "img": "https://s.pstatic.net/static/newsstand/2023/0421/article_img/new_main/9122/124254_001.jpg",
+        "href": "http://www.tvreport.co.kr/https://tvreport.co.kr/breaking/article/720791/",
+        "content": "'세금' 잘 낸 김수현, 송지효...지금껏 '모법납세자'로 뽑힌 스타는 누구? [종합]"
       },
       "subNews": [
         {
-          "content": "KBS,'병역면탈' 라비 흔적 삭제…다시보기 중단",
-          "href": "http://www.mydaily.co.kr/new_yk/html/read.php?newsid=202304141459357598&nv=stand"
+          "content": "故 문빈, 우리는 또 빛나는 청춘을 잃었다 [리폿@VIEW]",
+          "href": "http://www.tvreport.co.kr/https://tvreport.co.kr/breaking/article/720845/"
         },
         {
-          "content": "지민 빌보드 1위…\"무대 멋있고 노래도 잘해\"",
-          "href": "http://www.mydaily.co.kr/new_yk/html/read.php?newsid=202304141540421760&nv=stand"
+          "content": "티모시 샬라메, 촬영 중 카메라 충돌 사고 당했다 [할리웃통신]",
+          "href": "http://www.tvreport.co.kr/https://tvreport.co.kr/world/article/720823/"
         },
         {
-          "content": "이효리, SNS 탈퇴 3년만 재개설…\"웰컴 백\"",
-          "href": "http://www.mydaily.co.kr/new_yk/html/read.php?newsid=202304141459984593&nv=stand"
+          "content": "서경석, 7년 9개월 만 '여성시대' 떠난다",
+          "href": "http://www.tvreport.co.kr/https://tvreport.co.kr/hot-issue/article/720770/"
         },
         {
-          "content": "-20kg 강재준,라면 먹고 글썽 \"XX 맛있다\"",
-          "href": "http://www.mydaily.co.kr/new_yk/html/read.php?newsid=202304141503455925&nv=stand"
+          "content": "\"오윤아, 장애 있는 내 아이 도와줬다\"...미담 글 확산",
+          "href": "http://www.tvreport.co.kr/https://tvreport.co.kr/breaking/article/720786/"
         },
         {
-          "content": "끝까지 혐의 부인, 그래서 더 괘씸한 LG 이천웅",
-          "href": "http://www.mydaily.co.kr/new_yk/html/read.php?newsid=202304141447386573&nv=stand"
+          "content": "[T포토] 임지연 '가녀린 몸매'",
+          "href": "http://www.tvreport.co.kr/https://tvreport.co.kr/star/article/720841/"
         },
         {
-          "content": "원슈타인, 학폭 피해+자해 진단…박나래도 급고백",
-          "href": "http://www.mydaily.co.kr/new_yk/html/read.php?newsid=202304141334499844&nv=stand"
+          "content": "태양, 무료 공연 연다...5월 2일",
+          "href": "http://www.tvreport.co.kr/https://tvreport.co.kr/hot-issue/article/720793/"
         }
       ]
     },
@@ -2487,7 +2486,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "OSEN",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2020/0610/nsd151458769.png",
-      "pressSrc": "http://newsstand.naver.com/109",
+      "pressHref": "http://newsstand.naver.com/109",
 
       "updateTime": "2023.04.13. 19:07\n편집",
       "mainNews": {
@@ -2526,7 +2525,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "스포티비뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/1130/nsd10159718.png",
-      "pressSrc": "http://newsstand.naver.com/477",
+      "pressHref": "http://newsstand.naver.com/477",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -2565,7 +2564,7 @@
       "newsCategory": "스포츠/연예",
       "pressName": "뉴스엔",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/447.png",
-      "pressSrc": "http://newsstand.naver.com/447",
+      "pressHref": "http://newsstand.naver.com/447",
 
       "updateTime": "2023.04.14. 14:48\n편집",
       "mainNews": {
@@ -2605,7 +2604,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "농민신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/911.png",
-      "pressSrc": "http://newsstand.naver.com/911",
+      "pressHref": "http://newsstand.naver.com/911",
 
       "updateTime": "2023.04.14. 07:00\n편집",
       "mainNews": {
@@ -2644,7 +2643,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "매경이코노미",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/024.png",
-      "pressSrc": "http://newsstand.naver.com/024",
+      "pressHref": "http://newsstand.naver.com/024",
 
       "updateTime": "2023.04.14. 16:18\n편집",
       "mainNews": {
@@ -2683,7 +2682,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "낚시춘추",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/984.png",
-      "pressSrc": "http://newsstand.naver.com/984",
+      "pressHref": "http://newsstand.naver.com/984",
 
       "updateTime": "2023.04.07. 13:50\n편집",
       "mainNews": {
@@ -2722,7 +2721,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "월간노동법률",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0817/nsd14480190.png",
-      "pressSrc": "http://newsstand.naver.com/820",
+      "pressHref": "http://newsstand.naver.com/820",
 
       "updateTime": "2023.04.13. 09:58\n편집",
       "mainNews": {
@@ -2761,7 +2760,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "데일리NK",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/991.png",
-      "pressSrc": "http://newsstand.naver.com/991",
+      "pressHref": "http://newsstand.naver.com/991",
 
       "updateTime": "2023.04.14. 05:09\n편집",
       "mainNews": {
@@ -2800,7 +2799,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "주간조선",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/990.png",
-      "pressSrc": "http://newsstand.naver.com/990",
+      "pressHref": "http://newsstand.naver.com/990",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -2839,7 +2838,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "법률신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1103/nsd124326426.png",
-      "pressSrc": "http://newsstand.naver.com/122",
+      "pressHref": "http://newsstand.naver.com/122",
 
       "updateTime": "2023.04.14. 13:22\n편집",
       "mainNews": {
@@ -2878,7 +2877,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "바이라인네트워크",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/819.png",
-      "pressSrc": "http://newsstand.naver.com/819",
+      "pressHref": "http://newsstand.naver.com/819",
 
       "updateTime": "2023.04.14. 15:48\n편집",
       "mainNews": {
@@ -2917,7 +2916,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "코메디닷컴",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/296.png",
-      "pressSrc": "http://newsstand.naver.com/296",
+      "pressHref": "http://newsstand.naver.com/296",
 
       "updateTime": "2023.04.14. 14:33\n편집",
       "mainNews": {
@@ -2956,7 +2955,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "주간경향",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1007/nsd161849944.png",
-      "pressSrc": "http://newsstand.naver.com/686",
+      "pressHref": "http://newsstand.naver.com/686",
 
       "updateTime": "2023.04.14. 09:17\n편집",
       "mainNews": {
@@ -2995,7 +2994,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "한국농어촌방송",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0315/nsd181452869.png",
-      "pressSrc": "http://newsstand.naver.com/811",
+      "pressHref": "http://newsstand.naver.com/811",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -3034,7 +3033,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "뉴스포스트",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/1112/nsd10248812.png",
-      "pressSrc": "http://newsstand.naver.com/995",
+      "pressHref": "http://newsstand.naver.com/995",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -3073,7 +3072,7 @@
       "newsCategory": "지역",
       "pressName": "경상일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/935.png",
-      "pressSrc": "http://newsstand.naver.com/935",
+      "pressHref": "http://newsstand.naver.com/935",
 
       "updateTime": "2023.04.14. 00:31\n편집",
       "mainNews": {
@@ -3112,7 +3111,7 @@
       "newsCategory": "지역",
       "pressName": "매일신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/088.png",
-      "pressSrc": "http://newsstand.naver.com/088",
+      "pressHref": "http://newsstand.naver.com/088",
 
       "updateTime": "2023.04.14. 15:42\n편집",
       "mainNews": {
@@ -3151,7 +3150,7 @@
       "newsCategory": "지역",
       "pressName": "MS투데이",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1017/nsd202940832.png",
-      "pressSrc": "http://newsstand.naver.com/683",
+      "pressHref": "http://newsstand.naver.com/683",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -3190,7 +3189,7 @@
       "newsCategory": "지역",
       "pressName": "경기일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/339.png",
-      "pressSrc": "http://newsstand.naver.com/339",
+      "pressHref": "http://newsstand.naver.com/339",
 
       "updateTime": "2023.04.14. 13:45\n편집",
       "mainNews": {
@@ -3229,7 +3228,7 @@
       "newsCategory": "지역",
       "pressName": "충청일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/391.png",
-      "pressSrc": "http://newsstand.naver.com/391",
+      "pressHref": "http://newsstand.naver.com/391",
 
       "updateTime": "2023.04.13. 22:31\n편집",
       "mainNews": {
@@ -3268,7 +3267,7 @@
       "newsCategory": "지역",
       "pressName": "경기신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1017/nsd202616515.png",
-      "pressSrc": "http://newsstand.naver.com/688",
+      "pressHref": "http://newsstand.naver.com/688",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -3307,7 +3306,7 @@
       "newsCategory": "지역",
       "pressName": "중부일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0704/nsd231551300.png",
-      "pressSrc": "http://newsstand.naver.com/926",
+      "pressHref": "http://newsstand.naver.com/926",
 
       "updateTime": "2023.04.14. 15:05\n편집",
       "mainNews": {
@@ -3346,7 +3345,7 @@
       "newsCategory": "지역",
       "pressName": "전남일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/388.png",
-      "pressSrc": "http://newsstand.naver.com/388",
+      "pressHref": "http://newsstand.naver.com/388",
 
       "updateTime": "2023.04.14. 16:20\n편집",
       "mainNews": {
@@ -3385,7 +3384,7 @@
       "newsCategory": "지역",
       "pressName": "강원일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/087.png",
-      "pressSrc": "http://newsstand.naver.com/087",
+      "pressHref": "http://newsstand.naver.com/087",
 
       "updateTime": "2023.04.14. 15:13\n편집",
       "mainNews": {
@@ -3424,7 +3423,7 @@
       "newsCategory": "지역",
       "pressName": "영남일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/385.png",
-      "pressSrc": "http://newsstand.naver.com/385",
+      "pressHref": "http://newsstand.naver.com/385",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -3463,7 +3462,7 @@
       "newsCategory": "지역",
       "pressName": "경남신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/333.png",
-      "pressSrc": "http://newsstand.naver.com/333",
+      "pressHref": "http://newsstand.naver.com/333",
 
       "updateTime": "2023.04.14. 16:01\n편집",
       "mainNews": {
@@ -3502,7 +3501,7 @@
       "newsCategory": "지역",
       "pressName": "경남도민일보",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/821.png",
-      "pressSrc": "http://newsstand.naver.com/821",
+      "pressHref": "http://newsstand.naver.com/821",
 
       "updateTime": "2023.04.14. 16:10\n편집",
       "mainNews": {
@@ -3541,7 +3540,7 @@
       "newsCategory": "종합/경제",
       "pressName": "경향신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/032.png",
-      "pressSrc": "http://newsstand.naver.com/032",
+      "pressHref": "http://newsstand.naver.com/032",
 
       "updateTime": "2023.04.14. 16:12\n편집",
       "mainNews": {
@@ -3580,7 +3579,7 @@
       "newsCategory": "종합/경제",
       "pressName": "서울와이어",
       "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/1024/nsd174430433.png",
-      "pressSrc": "http://newsstand.naver.com/685",
+      "pressHref": "http://newsstand.naver.com/685",
 
       "updateTime": "2023.04.14. 16:20\n편집",
       "mainNews": {
@@ -3619,7 +3618,7 @@
       "newsCategory": "종합/경제",
       "pressName": "오마이뉴스",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/047.png",
-      "pressSrc": "http://newsstand.naver.com/047",
+      "pressHref": "http://newsstand.naver.com/047",
 
       "updateTime": "2023.04.14. 16:20\n편집",
       "mainNews": {
@@ -3658,7 +3657,7 @@
       "newsCategory": "종합/경제",
       "pressName": "이코노미스트",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/243.png",
-      "pressSrc": "http://newsstand.naver.com/243",
+      "pressHref": "http://newsstand.naver.com/243",
 
       "updateTime": "2023.04.14. 15:22\n편집",
       "mainNews": {
@@ -3697,7 +3696,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "게임메카",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/356.png",
-      "pressSrc": "http://newsstand.naver.com/356",
+      "pressHref": "http://newsstand.naver.com/356",
 
       "updateTime": "2023.04.14. 15:34\n편집",
       "mainNews": {
@@ -3736,7 +3735,7 @@
       "newsCategory": "매거진/전문지",
       "pressName": "철강금속신문",
       "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/956.png",
-      "pressSrc": "http://newsstand.naver.com/956",
+      "pressHref": "http://newsstand.naver.com/956",
 
       "updateTime": "2023.04.14. 16:40\n편집",
       "mainNews": {
