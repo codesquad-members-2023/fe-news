@@ -1,13 +1,11 @@
-import { domUtils, validatorUtils, dataUtils } from '../../utils/index.js';
-import { tabStore, subscriptionListStore, gridPageStore } from '../../store/index.js';
+import { CATEGORY_ORDER } from '../../constants/index.js';
+import { domUtils, validatorUtils } from '../../utils/index.js';
+import { tabStore, subscriptionListStore, listPageStore } from '../../store/index.js';
 
 const { $ } = domUtils;
 const { hasValue, isActiveTab } = validatorUtils;
-const { getListItemData } = dataUtils;
 
 export default class MainContentList {
-  #categoryOrder = ['종합/경제', '방송/통신', 'IT', '영자지', '스포츠/연예', '매거진/전문지', '지역'];
-
   #imgSrc = {
     beforeBtn: 'src/images/before_btn.svg',
     nextBtn: 'src/images/next_btn.svg'
@@ -28,18 +26,25 @@ export default class MainContentList {
   }
 
   render() {
-    const { allPressData } = this.props;
-    const listItemData = getListItemData({
-      dataArr: allPressData,
-      category: this.#categoryOrder[0],
-      listItemIdx: 0
-    });
+    const listItemData = this.getListItemData();
 
     this.$mainEle.innerHTML = this.template();
 
     this.displayElement();
     this.renderListWrapper(listItemData);
     this.renderSubscribeToggleBtn(listItemData);
+  }
+
+  getListItemData() {
+    const { pressTabType, allPressData } = this.props;
+
+    if (!(pressTabType === 'all' || pressTabType === 'subscribed')) return;
+
+    if (pressTabType === 'all') {
+      const { currentCategory, currentItemIdx } = listPageStore.getState()[pressTabType];
+
+      return allPressData[currentCategory][currentItemIdx];
+    }
   }
 
   displayElement() {
@@ -92,9 +97,10 @@ export default class MainContentList {
 
     if (pressTabType !== 'all') return;
 
-    const allCategoriesTemplate = this.#categoryOrder
-      .map((category, idx) => `<li data-news-category="${idx}">${category}</li>`, '')
-      .join('');
+    const allCategoriesTemplate = CATEGORY_ORDER.map(
+      (category, idx) => `<li data-news-category="${idx}">${category}</li>`,
+      ''
+    ).join('');
 
     return /* html */ `
       <ul class="press-list__category">

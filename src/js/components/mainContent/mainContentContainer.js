@@ -1,5 +1,9 @@
+import { CATEGORY_ORDER } from '../../constants/index.js';
+import { dataUtils } from '../../utils/index.js';
 import MainContentGrid from './mainContentGrid.js';
 import MainContentList from './mainContentList.js';
+
+const { getDataByCategory, getDataCountByCategory } = dataUtils;
 
 export default class MainContentContainer {
   constructor($parent, props) {
@@ -17,6 +21,17 @@ export default class MainContentContainer {
 
     new MainContentGrid(this.$mainEle, { pressTabType: 'all', allPressData }).render();
     new MainContentGrid(this.$mainEle, { pressTabType: 'subscribed', allPressData }).render();
-    new MainContentList(this.$mainEle, { pressTabType: 'all', allPressData }).render();
+
+    const dataByCategory = getDataByCategory({
+      dataArr: allPressData,
+      categoryOrder: CATEGORY_ORDER
+    });
+    const dataCountByCategory = getDataCountByCategory(dataByCategory);
+
+    new MainContentList(this.$mainEle, {
+      pressTabType: 'all',
+      allPressData: dataByCategory,
+      dataCountByCategory
+    }).render();
   }
 }

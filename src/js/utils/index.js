@@ -14,8 +14,24 @@ export const dataUtils = {
 
     return dataSlices;
   },
-  getListItemData: ({ dataArr, category, listItemIdx }) =>
-    dataArr.filter(({ newsCategory }) => newsCategory === category)[listItemIdx],
+  getDataByCategory: ({ dataArr, categoryOrder }) => {
+    const dataByCategoryOrder = {};
+
+    categoryOrder.forEach((category) => {
+      dataByCategoryOrder[category] = dataArr.filter(({ newsCategory }) => newsCategory === category);
+    });
+
+    return dataByCategoryOrder;
+  },
+  getDataCountByCategory: (dataByCategory) => {
+    const dataCountByCategory = {};
+
+    for (const [category, dataArr] of Object.entries(dataByCategory)) {
+      dataCountByCategory[category] = dataArr.length;
+    }
+
+    return dataCountByCategory;
+  },
   sortData: (dataArr, categoryOrderArr) =>
     dataArr.sort(
       (a, b) => categoryOrderArr.indexOf(a.newsCategory) - categoryOrderArr.indexOf(b.newsCategory)
