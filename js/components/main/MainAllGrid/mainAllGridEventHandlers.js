@@ -32,6 +32,10 @@ const subscribeBtnClickHandler = (target, mediaName) => {
   const $mainHeader = document.querySelector('.main-header__media');
   $mainHeader.firstElementChild.classList.remove('bold');
   $mainHeader.lastElementChild.classList.add('bold');
+  const $listBtn = document.querySelector('.list-icon');
+  const $gridBtn = document.querySelector('.grid-icon');
+  $listBtn.classList.add('list-icon__enable');
+  $gridBtn.classList.remove('grid-icon__enable');
   dispatch(displayActionCreator.gridSubscribeBtnClick(mediaName));
 };
 

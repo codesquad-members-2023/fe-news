@@ -19,6 +19,7 @@ export const subscribeBtnClickEventHandler = (mediaId, event) => {
     const $mainHeader = document.querySelector('.main-header__media');
     $mainHeader.firstElementChild.classList.remove('bold');
     $mainHeader.lastElementChild.classList.add('bold');
+
     dispatch(displayActionCreator.gridSubscribeBtnClick(mediaId));
   } else {
     $img.alt = 'subscribe';

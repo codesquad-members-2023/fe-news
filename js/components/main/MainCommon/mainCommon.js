@@ -69,6 +69,7 @@ const MainCommon = () => {
   });
 
   $mainHeader.addEventListener('click', headerViewChangeBtnClickEventHandler);
+
   subscribe('viewOptionData', listViewButtonRender.bind(null, $mainButtons));
 
   return [$mainHeader, $mainButtons];
