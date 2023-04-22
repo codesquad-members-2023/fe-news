@@ -68,10 +68,10 @@ export default class MainContentList {
 
     return `
       <div class="main-content__list-before-btn">
-        <img id="grid-before-btn" src="${beforeBtn}" alt="before grid page" />
+        <img id="list-before-btn" src="${beforeBtn}" alt="before list page" />
       </div>
       <div class="main-content__list-next-btn">
-        <img id="grid-next-btn" src="${nextBtn}" alt="next grid page" />
+        <img id="list-next-btn" src="${nextBtn}" alt="next list page" />
       </div>
       <div class="main-content__list-wrapper">
       </div>
