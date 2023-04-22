@@ -10,14 +10,9 @@ const app = async () => {
   const root = document.querySelector('#root');
 
   const header = Header(CONSTANTS['NEWS_STAND'], systemTimeOption);
-  const section = new RollingBar(
-    CONSTANTS['ROLLING_LINK_PRESS'],
-    rollingData,
-    rollingPositionClassName,
-    { autoAnimationInfo },
-  ).render();
+  const rollingBar = RollingBar.init(rollingData).getAutoRollingBar();
   const main = mainView(mediaData);
-  root.append(header, section, main);
+  root.append(header, rollingBar, main);
 };
 
 app();

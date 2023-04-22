@@ -148,9 +148,7 @@ class ListView {
     <ul class="list-category">
     ${subscribedPressInfo.reduce((template, press, index) => {
       const isCurrent = pressIndex === index;
-      template += `<li${isCurrent ? ' class="current-subscribed"' : ``}><span>${
-        press.press
-      }</span><img src="/src/assets/icons/nextCategory.svg"></li>`;
+      template += `<li${isCurrent ? ' class="current-subscribed"' : ``}>${isCurrent? `<span>${press.press}</span>` : `${press.press}`}${isCurrent? '<img src="/src/assets/icons/nextCategory.svg">' : ``}</li>`;
       return template;
     }, ``)}
     </ul>

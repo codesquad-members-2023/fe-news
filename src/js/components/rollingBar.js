@@ -1,37 +1,36 @@
 import createEl from '../utils/util.js';
+import { CONSTANTS, rollingPositionClassName, autoAnimationInfo } from '../core/constants.js';
 
 class RollingBar {
   LEFT = 'left';
   RIGHT = 'right';
-  #titles;
+  rollingBar;
   movePanel;
   constructor(
     rollingPressName,
-    rollingData,
     rollingPosition,
     { autoAnimationInfo },
   ) {
     this.ROLLING_LINK_PRESS = rollingPressName;
-    this.#titles = rollingData;
     this.classNames = rollingPosition;
     this.TRANSLATE_TIME = autoAnimationInfo.transitionDuration;
     this.LEFT_DELAY_TIME = autoAnimationInfo.leftDelayTime;
     this.TIME_DIFF = autoAnimationInfo.timeDiff;
-    this.rollingBar = createEl('section', 'rolling-container');
     this.rafState = true;
   }
 
-  render() {
-    this.rollingBar.innerHTML = this.template();
+  init(rollingData) {
+    this.setTemplate(rollingData);
     this.autoMovePanel();
     this.addEventRollingBar();
-    return this.rollingBar;
+    return this;
   }
 
-  template() {
-    return this.classNames.reduce((template, className) => {
+  setTemplate(rollingData) {
+    this.rollingBar = createEl('section', 'rolling-container');
+    this.rollingBar.innerHTML = this.classNames.reduce((template, className) => {
       const titleData = className === this.LEFT ?
-      this.#titles.titleLeft : this.#titles.titleRight;
+      rollingData.titleLeft : rollingData.titleRight;
       template += `<div class="rolling-box">
       <a class="link-press">${this.ROLLING_LINK_PRESS}</a>
       <div class="flick-container">
@@ -95,5 +94,12 @@ class RollingBar {
       requestAnimationFrame(() => this.movePanel());
     });
   }
+
+  getAutoRollingBar() {
+    return this.rollingBar;
+  }
 }
-export default RollingBar;
+export default RollingBar = new RollingBar(CONSTANTS['ROLLING_LINK_PRESS'],
+rollingPositionClassName,
+{ autoAnimationInfo },
+);

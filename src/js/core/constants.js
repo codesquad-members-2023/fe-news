@@ -1,8 +1,11 @@
 export const CONSTANTS = {
   'NEWS_STAND' : '뉴스스탠드',
   'ROLLING_LINK_PRESS' : '연합뉴스',
-  'all' : '전체 언론사',
-  'subscribed' : '내가 구독한 언론사',
+}
+
+export const VIEWTYPE = {
+  'ALL' : '전체 언론사',
+  'SUBSCRIBE' : '내가 구독한 언론사',
 }
 
 export const rollingPositionClassName = ['left', 'right'];

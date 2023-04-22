@@ -1,27 +1,34 @@
 import createEl from "../../utils/util.js";
-import { CONSTANTS } from '../../core/constants.js';
+import { VIEWTYPE } from '../../core/constants.js';
 import { ViewTypeStore } from "../../stores/viewTypeStore.js";
 import { PageStore } from "../../stores/pressPageStore.js";
 
 class SortButton {
   #viewTypeStore;
   #pageStore;
+  sortButtons;
   constructor() {
     this.#viewTypeStore = ViewTypeStore;
     this.#pageStore = PageStore;
-    this.sortButtons = createEl('div', 'sort-buttons');
   }
 
-  render() {
+  init() {
+    this.setTemplate();
+    this.clickPress();
+    this.clickView();
+    return this;
+  }
+
+  setTemplate() {
     const { press, view } = this.#viewTypeStore.getState();
     const pressType = Object.keys(press);
     const viewType = Object.keys(view);
 
-    const template = `
-      <div class="press-buttons">
+    this.sortButtons = createEl('div', 'sort-buttons');
+    this.sortButtons.innerHTML = `<div class="press-buttons">
         ${pressType.reduce((template, cur) => {
           const isActive = press[cur] ? 'class="active"' : ``;
-          template += `<a ${isActive}>${CONSTANTS[cur]}</a>`;
+          template += `<a ${isActive}>${VIEWTYPE[cur]}</a>`;
           return template;
         }, ``)}
       </div>
@@ -31,13 +38,7 @@ class SortButton {
           template += `<a class="${cur}${isActive}"></a>`;
           return template;
         }, ``)}
-      </div>
-      `;
-
-    this.sortButtons.innerHTML = template;
-    this.clickPress();
-    this.clickView();
-    return this.sortButtons;
+      </div>`;
   }
 
   clickPress() {
@@ -52,8 +53,8 @@ class SortButton {
           });
         }
         this.#viewTypeStore.subscribe(reRender);
-        const isAll = currentTarget.textContent === CONSTANTS['all'];
-        const clickTargetName = isAll? 'all' : 'subscribed';
+        const isAll = currentTarget.textContent === VIEWTYPE['ALL'];
+        const clickTargetName = isAll? 'ALL' : 'SUBSCRIBE';
         this.#viewTypeStore.dispatch({
           type: 'CHANGE_PRESS',
           payload: clickTargetName,
@@ -78,7 +79,7 @@ class SortButton {
         }
         this.#viewTypeStore.subscribe(reRender);
         const isGrid = currentTarget.className.includes('grid');
-        const clickTargetName = isGrid? 'grid' : 'list';
+        const clickTargetName = isGrid? 'GRID' : 'LIST';
         this.#viewTypeStore.dispatch({
           type: 'CHANGE_VIEW',
           payload: clickTargetName,
@@ -89,6 +90,10 @@ class SortButton {
       });
     })
   }
+
+  getSortButtons() {
+    return this.sortButtons;
+  }
 }
 
-export default SortButton;
+export const SortButtons = new SortButton();
