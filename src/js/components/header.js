@@ -1,10 +1,8 @@
 import createEl from '../utils/util.js';
 
-const Header = (TITLENAME, systemTime) => {
+export const createHeader = (newsHeaderInfo) => {
   const header = createEl('header', 'title-area');
-  header.innerHTML = `<a href="" class="link-newsstand">${TITLENAME}</a>
-  <span class="system-time">${systemTime}</span>`;
+  header.innerHTML = `<a href="" class="link-newsstand">${newsHeaderInfo.headerTitle}</a>
+  <span class="system-time">${newsHeaderInfo.timeOption}</span>`;
   return header;
 };
-
-export default Header;

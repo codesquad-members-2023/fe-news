@@ -2,12 +2,12 @@ import Store from '../core/store.js';
 
 const initialState = {
   press: {
-    ALL: true,
-    SUBSCRIBE: false,
+    all: true,
+    subscribe: false,
   },
   view: {
-    LIST: false,
-    GRID: true,
+    list: false,
+    grid: true,
   },
 };
 
@@ -15,13 +15,13 @@ const viewTypeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CHANGE_PRESS':
       state.press[action.payload] = true;
-      state.press[action.payload === 'ALL' ? 'SUBSCRIBE' : 'ALL'] = false;
+      state.press[action.payload === 'all' ? 'subscribe' : 'all'] = false;
       return {
         ...state,
       };
     case 'CHANGE_VIEW':
       state.view[action.payload] = true;
-      state.view[action.payload === 'GRID' ? 'LIST' : 'GRID'] = false;
+      state.view[action.payload === 'grid' ? 'list' : 'grid'] = false;
       return {
         ...state,
       };

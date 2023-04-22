@@ -1,21 +1,17 @@
 import createEl from '../utils/util.js';
-import { CONSTANTS, rollingPositionClassName, autoAnimationInfo } from '../core/constants.js';
+// import { CONSTANTS, rollingPositionClassName, autoAnimationInfo } from '../core/constants.js';
 
 class RollingBar {
   LEFT = 'left';
   RIGHT = 'right';
   rollingBar;
   movePanel;
-  constructor(
-    rollingPressName,
-    rollingPosition,
-    { autoAnimationInfo },
-  ) {
-    this.ROLLING_LINK_PRESS = rollingPressName;
-    this.classNames = rollingPosition;
-    this.TRANSLATE_TIME = autoAnimationInfo.transitionDuration;
-    this.LEFT_DELAY_TIME = autoAnimationInfo.leftDelayTime;
-    this.TIME_DIFF = autoAnimationInfo.timeDiff;
+  constructor(rollingBarInfo) {
+    this.ROLLING_LINK_PRESS = rollingBarInfo.newsTitle;
+    this.classNames = rollingBarInfo.postionClassName;
+    this.TRANSLATE_TIME = rollingBarInfo.autoAnimationInfo.transitionDuration;
+    this.LEFT_DELAY_TIME = rollingBarInfo.autoAnimationInfo.leftDelayTime;
+    this.TIME_DIFF = rollingBarInfo.autoAnimationInfo.timeDiff;
     this.rafState = true;
   }
 
@@ -99,7 +95,5 @@ class RollingBar {
     return this.rollingBar;
   }
 }
-export default RollingBar = new RollingBar(CONSTANTS['ROLLING_LINK_PRESS'],
-rollingPositionClassName,
-{ autoAnimationInfo },
-);
+
+export default RollingBar;

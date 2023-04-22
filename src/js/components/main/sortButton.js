@@ -6,10 +6,10 @@ import { PageStore } from "../../stores/pressPageStore.js";
 class SortButton {
   #viewTypeStore;
   #pageStore;
-  sortButtons;
   constructor() {
     this.#viewTypeStore = ViewTypeStore;
     this.#pageStore = PageStore;
+    this.sortButtons = createEl('div', 'sort-buttons');
   }
 
   init() {
@@ -19,13 +19,10 @@ class SortButton {
     return this;
   }
 
-  setTemplate() {
-    const { press, view } = this.#viewTypeStore.getState();
+  setTemplate({ press, view } = this.#viewTypeStore.getState()) {
     const pressType = Object.keys(press);
     const viewType = Object.keys(view);
-
-    this.sortButtons = createEl('div', 'sort-buttons');
-    this.sortButtons.innerHTML = `<div class="press-buttons">
+    const template = `<div class="press-buttons">
         ${pressType.reduce((template, cur) => {
           const isActive = press[cur] ? 'class="active"' : ``;
           template += `<a ${isActive}>${VIEWTYPE[cur]}</a>`;
@@ -38,7 +35,9 @@ class SortButton {
           template += `<a class="${cur}${isActive}"></a>`;
           return template;
         }, ``)}
-      </div>`;
+      </div>
+      `;
+    this.sortButtons.innerHTML = template;
   }
 
   clickPress() {
@@ -47,14 +46,14 @@ class SortButton {
       pressButton.addEventListener('click', ({ currentTarget }) => {
         const reRender = () => {
           const state = this.#viewTypeStore.getState();
-          this.render({
+          this.init({
             ...state,
             press: this.#viewTypeStore.getState().press,
           });
         }
         this.#viewTypeStore.subscribe(reRender);
-        const isAll = currentTarget.textContent === VIEWTYPE['ALL'];
-        const clickTargetName = isAll? 'ALL' : 'SUBSCRIBE';
+        const isAll = currentTarget.textContent === VIEWTYPE['all'];
+        const clickTargetName = isAll? 'all' : 'subscribe';
         this.#viewTypeStore.dispatch({
           type: 'CHANGE_PRESS',
           payload: clickTargetName,
@@ -63,7 +62,8 @@ class SortButton {
           type: 'RESET_PAGE',
         });
       });
-    })
+    });
+    return this;
   }
 
   clickView() {
@@ -72,14 +72,14 @@ class SortButton {
       pressButton.addEventListener('click', ({ currentTarget }) => {
         const reRender = () => {
           const state = this.#viewTypeStore.getState();
-          this.render({
+          this.init({
             ...state,
             press: this.#viewTypeStore.getState().press,
           });
         }
         this.#viewTypeStore.subscribe(reRender);
         const isGrid = currentTarget.className.includes('grid');
-        const clickTargetName = isGrid? 'GRID' : 'LIST';
+        const clickTargetName = isGrid? 'grid' : 'list';
         this.#viewTypeStore.dispatch({
           type: 'CHANGE_VIEW',
           payload: clickTargetName,
@@ -88,7 +88,8 @@ class SortButton {
           type: 'RESET_PAGE',
         });
       });
-    })
+    });
+    return this;
   }
 
   getSortButtons() {
@@ -96,4 +97,4 @@ class SortButton {
   }
 }
 
-export const SortButtons = new SortButton();
+export default SortButton;
