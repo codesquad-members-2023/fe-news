@@ -16,6 +16,9 @@ export const subscribeBtnClickEventHandler = (mediaId, event) => {
   if ($img.alt === 'subscribe') {
     $img.alt = 'unsubscribe';
     $img.src = './asset/listUnsubscribeBtn.svg';
+    const $mainHeader = document.querySelector('.main-header__media');
+    $mainHeader.firstElementChild.classList.remove('bold');
+    $mainHeader.lastElementChild.classList.add('bold');
     dispatch(displayActionCreator.gridSubscribeBtnClick(mediaId));
   } else {
     $img.alt = 'subscribe';

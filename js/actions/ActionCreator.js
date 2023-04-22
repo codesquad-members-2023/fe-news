@@ -68,6 +68,7 @@ export const displayActionCreator = {
   },
 
   gridSubscribeBtnClick: (payload) => {
+    dispatch(displayActionCreator.headerMineBtnClick());
     return {
       type: actionTypes.displayActions.GRID_SUBSCRIBE_BUTTON_CLICK,
       payload,

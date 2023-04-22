@@ -17,7 +17,11 @@ export const subscribeReducer = (state, action) => {
         }
       });
       subscribeList.push(mediaWholeData[curIndex]);
-      return { ...state, subscribe: subscribeList };
+
+      return {
+        mineListCurPage: subscribeList.length - 1,
+        subscribe: subscribeList,
+      };
 
     case displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK:
       if (

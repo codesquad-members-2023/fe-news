@@ -2,7 +2,7 @@ import { dispatch, getStoreState } from '../../store/store.js';
 import { displayActionCreator } from '../../actions/ActionCreator.js';
 
 const ANIMATION = {
-  DURATION: 5000,
+  DURATION: 20000,
   MAKE_PERCENT: 100,
 };
 

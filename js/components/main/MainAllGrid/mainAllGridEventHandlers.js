@@ -29,7 +29,9 @@ const subscribeBtnClickHandler = (target, mediaName) => {
   target.alt = 'unsubscribe';
   target.src = './asset/unsubscribeButton.svg';
   // 구독 List에 추가하기 -> how?
-
+  const $mainHeader = document.querySelector('.main-header__media');
+  $mainHeader.firstElementChild.classList.remove('bold');
+  $mainHeader.lastElementChild.classList.add('bold');
   dispatch(displayActionCreator.gridSubscribeBtnClick(mediaName));
 };
 
