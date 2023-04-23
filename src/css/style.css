@@ -339,9 +339,20 @@ body {
   background-color: #f5f7f9;
 }
 
+.press-list__main-news:hover .main-news__img {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in;
+}
+.press-list__main-news:hover .main-news__content {
+  text-decoration: underline;
+}
+
 .main-news__thumbnail, .main-news__img {
   width: 320px;
   height: 200px;
+}
+.main-news__thumbnail {
+  overflow: hidden;
 }
 
 /*# sourceMappingURL=style.css.map */

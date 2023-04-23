@@ -62,10 +62,24 @@
     background-color: $off-white;
   }
 }
+
+.press-list__main-news:hover {
+  .main-news__img {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in;
+  }
+  .main-news__content {
+    text-decoration: underline;
+  }
+}
 .main-news {
   &__thumbnail,
   &__img {
     width: 320px;
     height: 200px;
+  }
+
+  &__thumbnail {
+    overflow: hidden;
   }
 }
