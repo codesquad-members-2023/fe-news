@@ -40,18 +40,16 @@ class SortButton {
     this.sortButtons.innerHTML = template;
   }
 
+  #reRender() {
+    const state = this.#viewTypeStore.getState();
+    return this.init({ ...state });
+  }
+
   clickPress() {
     const pressType = this.sortButtons.querySelectorAll('.press-buttons > a');
     pressType.forEach(pressButton => {
       pressButton.addEventListener('click', ({ currentTarget }) => {
-        const reRender = () => {
-          const state = this.#viewTypeStore.getState();
-          this.init({
-            ...state,
-            press: this.#viewTypeStore.getState().press,
-          });
-        }
-        this.#viewTypeStore.subscribe(reRender);
+        this.#viewTypeStore.subscribe(this.#reRender.bind(this));
         const isAll = currentTarget.textContent === VIEWTYPE['all'];
         const clickTargetName = isAll? 'all' : 'subscribe';
         this.#viewTypeStore.dispatch({
@@ -63,20 +61,14 @@ class SortButton {
         });
       });
     });
+    return this;
   }
 
   clickView() {
     const viewType = this.sortButtons.querySelectorAll('.view-buttons > a');
     viewType.forEach(pressButton => {
       pressButton.addEventListener('click', ({ currentTarget }) => {
-        const reRender = () => {
-          const state = this.#viewTypeStore.getState();
-          this.init({
-            ...state,
-            press: this.#viewTypeStore.getState().press,
-          });
-        }
-        this.#viewTypeStore.subscribe(reRender);
+        this.#viewTypeStore.subscribe(this.#reRender.bind(this));
         const isGrid = currentTarget.className.includes('grid');
         const clickTargetName = isGrid? 'grid' : 'list';
         this.#viewTypeStore.dispatch({
@@ -88,6 +80,7 @@ class SortButton {
         });
       });
     });
+    return this;
   }
 
   getSortButtons() {

@@ -5,6 +5,7 @@ import { SubscribeStore } from './subscribeListStore.js';
 const initialState = {
   subscribedPressInfo: [],
   pressIndex: 0,
+  currentPress: [],
 };
 
 const subscribedPressPageReducer = (state = initialState, action) => {
@@ -18,19 +19,34 @@ const subscribedPressPageReducer = (state = initialState, action) => {
         currentSubscribedPressLogo,
         pressData,
       );
+      if(state.pressIndex < 0) state.pressIndex = 0;
+      state.currentPress = state.subscribedPressInfo[state.pressIndex];
       return {
         ...state,
       }
-    // case 'PREV_PRESS':
-    //   state.pressIndex = movePrevPress(state.pressIndex);
-    //   return {
-    //     ...state,
-    //   };
-    // case 'NEXT_PRESS':
-    //   state.pressIndex = moveNextPress(state.pressIndex);
-    //   return {
-    //     ...state,
-    //   };
+    case 'CLICK_PRESS':
+      state.pressIndex = state.subscribedPressInfo.findIndex(press => press.press === action.payload);
+      state.currentPress = state.subscribedPressInfo[state.pressIndex];
+      return {
+        ...state,
+      };
+    case 'REMOVE_PRESS':
+      const targetIndex = state.subscribedPressInfo.findIndex(press => press.pressLogo === action.payload);
+      if(targetIndex === state.subscribedPressInfo.length - 1) state.pressIndex = state.subscribedPressInfo.length - 2;
+      else return;
+      return {
+        ...state,
+      };
+    case 'PREV_PRESS':
+      state.pressIndex = movePrevPress({ state });
+      return {
+        ...state,
+      };
+    case 'NEXT_PRESS':
+      state.pressIndex = moveNextPress({ state });
+      return {
+        ...state,
+      };
     default:
       return state;
   }
@@ -42,18 +58,16 @@ const filterSubscribedPressData = (list, pressData) => {
   });
 };
 
-const movePrevPress = (pressIndex, subscribedPressInfo) => {
-  const LAST_PAGE = subscribedPressInfo.length;
-  pressIndex--;
-
-  return pressIndex;
+const movePrevPress = ({ state }) => {
+  state.pressIndex--;
+  if(state.pressIndex < 0 ) state.pressIndex = state.subscribedPressInfo.length - 1;
+  return state.pressIndex;
 };
 
-const moveNextPress = (pressIndex, subscribedPressInfo) => {
-  const LAST_PAGE = subscribedPressInfo.length;
-  pressIndex++;
-
-  return pressIndex;
+const moveNextPress = ({ state }) => {
+  state.pressIndex++;
+  if(state.pressIndex > state.subscribedPressInfo.length - 1) state.pressIndex = 0;
+  return state.pressIndex;
 };
 
 export const SubscribedPressPageStore = new Store(

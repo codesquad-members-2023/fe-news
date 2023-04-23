@@ -1,17 +1,16 @@
 import createEl from '../../utils/util.js';
-import { PRESS_BUTTON } from '../../core/constants.js';
 import { ViewTypeStore } from '../../stores/viewTypeStore.js';
 import { SubscribeStore } from '../../stores/subscribeListStore.js';
 import { PageStore } from '../../stores/pressPageStore.js';
 import { autoAnimationInfo } from '../../core/constants.js';
 import { SubscribedPressPageStore } from '../../stores/subscribePressPageStore.js';
+import { createBtn } from './subscribeBtn.js';
 
 class ListView {
   #viewStore;
   #subscribeStore;
   #subscribedPressPageStore;
   #pageStore;
-  listContainer;
   movePages;
   constructor(pressData) {
     this.DELAY_TIME = autoAnimationInfo.pageDelayTime;
@@ -24,98 +23,60 @@ class ListView {
       payload: pressData,
     });
     this.rafState = true;
+    this.listContainer = createEl('div', 'list-container');
   }
 
-  setTemplate() {
-    this.listContainer = createEl('div', 'list-container');
+  init() {
+    this.setTemplate();
+    this.autoMovePages();
+    this.#pageStore.subscribe(this.#reRender.bind(this));
+    this.#subscribeStore.subscribe(this.#reRender.bind(this)); //버튼만 리렌더하는 방법으로 변경필요
+    return this;
+  }
+
+  setTemplate({ page } = this.#pageStore.getState()) {
     this.listContainer.classList.add('hidden');
-    this.listContainer.insertAdjacentHTML('afterbegin', this.getCategory());
-    this.listContainer.insertAdjacentHTML(
-      'beforeend',
-      this.getPressBox.bind(this)(),
-    );
+    this.listContainer.insertAdjacentHTML('afterbegin', this.getCategory.bind(this)(page));
+    this.listContainer.insertAdjacentHTML('beforeend', this.getPressBox.bind(this)(page));
     this.listContainer.addEventListener('click', ({ target }) => {
       this.moveToPage(target);
       this.clickCategory(target);
       this.clickSubscribeBtn(target);
+      this.clickSubscribedPress(target);
     });
   }
 
-  render() {
-    this.setTemplate();
-    this.autoMovePages();
-    this.#pageStore.subscribe(this.#reRender.bind(this));
-    return this.listContainer;
-  }
-
-  #reRender() {
-    const { press, view } = this.#viewStore.getState();
-    const { subscribedList } = this.#subscribeStore.getState();
-    if (press['all'] && view['list']) {
-      this.listContainer.classList.remove('hidden');
-      this.listContainer.querySelector('.category-area').outerHTML =
-        this.getCategory();
-      this.listContainer.querySelector('.content-area').outerHTML =
-        this.getPressBox.bind(this)();
-    }
-    if (press['all'] && view['grid'])
-      this.listContainer.classList.add('hidden');
-    if (press['subscribed'] && view['list']) {
-      this.rafState = false;
-      if (!subscribedList.size) {
-        this.listContainer.classList.add('hidden');
-      } else {
-        this.listContainer.classList.remove('hidden');
-        this.listContainer.querySelector('.category-area').outerHTML =
-          this.getSubscribedCategory();
-        this.listContainer.querySelector('.content-area').outerHTML =
-          this.getSubscribedPress.bind(this)();
-      }
-    }
-    if (press['subscribed'] && view['grid'])
-      this.listContainer.classList.add('hidden');
-  }
-
-  getCategory({ page } = this.#pageStore.getState()) {
+  getCategory(page) {
     const categories = page.pressMap.keys();
     const pressMap = page.pressMap.values();
+    const categoryIndex = page.categoryIndex;
     return `<div class="category-area">
       <ul class="list-category">
-        ${[...categories].reduce((list, category, index) => {
-          const isCurrent = page.categoryIndex === index;
-          list += `<li${
-            isCurrent ? ' class="current"' : ``
-          }><span href="#">${category}</span>${
-            isCurrent
-              ? `<div><span>${page.pageIndex + 1}</span>
-          <span>/${[...pressMap][page.categoryIndex].length}</span></div>`
-              : ``
-          }</li>`;
-          return list;
-        }, ``)}
+      ${[...categories].reduce((list, category, index) => {
+        const isCurrent = categoryIndex === index;
+        list += `<li${isCurrent ? ` class="current"><span>${category}</span><div><span>${page.pageIndex + 1}</span><span>/${[...pressMap][page.categoryIndex].length}</span></div>` : `>${category}`}</li>`;
+        return list;
+      }, ``)}
       </ul>
     </div>`;
   }
 
-  getPressBox() {
-    const { page } = this.#pageStore.getState();
+  getPressBox(page) {
     const pressMap = page.pressMap.values();
     const press = [...pressMap][page.categoryIndex][page.pageIndex];
-    const isSubscribe = this.#subscribeStore
-      .getState()
+    const isSubscribe = this.#subscribeStore.getState()
       .subscribedList.has(press.pressLogo);
     const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
+    return this.pressBoxTemplate(press, buttonType);
+  }
 
+  pressBoxTemplate(press, buttonType) {
     return `<div class="content-area">
     <div class="press-box">
       <a>
         <img src="${press.pressLogo}">
       </a>
-      <span>${press.editedDate}</span>
-      <button type="button" class="${buttonType} press-button">
-        <img src="/src/assets/icons/${buttonType}.svg">
-        <span>${PRESS_BUTTON[buttonType]}</span>
-      </button>
+      <span>${press.editedDate}</span>${createBtn(buttonType)}
     </div>
     <div class="news-box">
       <div class="main-news">
@@ -131,62 +92,7 @@ class ListView {
             return list;
           }, ``)}
         </ul>
-        <p class="notice-msg">${
-          press.press
-        } 언론사에서 직접 편집한 뉴스입니다.</p>
-      </div>
-    </div>
-    <a class='prev-button'></a>
-    <a class='next-button'></a>`;
-  }
-
-  getSubscribedCategory() {
-    this.#subscribedPressPageStore.dispatch({ type: 'GET_SUBSCRIBED_PRESS' });
-    const { subscribedPressInfo, pressIndex } =
-      this.#subscribedPressPageStore.getState();
-    return `<div class="category-area">
-    <ul class="list-category">
-    ${subscribedPressInfo.reduce((template, press, index) => {
-      const isCurrent = pressIndex === index;
-      template += `<li${isCurrent ? ' class="current-subscribed"' : ``}>${isCurrent? `<span>${press.press}</span>` : `${press.press}`}${isCurrent? '<img src="/src/assets/icons/nextCategory.svg">' : ``}</li>`;
-      return template;
-    }, ``)}
-    </ul>
-    </div>`;
-  }
-
-  //getPress()랑 중복. 중복제거필요해보임
-  getSubscribedPress() {
-    const { subscribedPressInfo, pressIndex } =
-      this.#subscribedPressPageStore.getState();
-    const subscribedPress = subscribedPressInfo[pressIndex];
-    return `<div class="content-area">
-    <div class="press-box">
-      <a src="" class="">
-        <img src="${subscribedPress.pressLogo}">
-      </a>
-      <span>${subscribedPress.editedDate}</span>
-      <button type="button" class="close press-button">
-        <img src="/src/assets/icons/unsubscribe.svg">
-      </button>
-    </div>
-    <div class="news-box">
-      <div class="main-news">
-        <a class="main-thumbnail">
-          <img src="${subscribedPress.main.thumbnail}">
-        </a>
-        <div class="main-title">${subscribedPress.main.title}</div>
-      </div>
-      <div class="sub-news">
-        <ul class="list-news">
-          ${subscribedPress.sub.newsLists.reduce((list, subNews) => {
-            list += `<li>${subNews}</li>`;
-            return list;
-          }, ``)}
-        </ul>
-        <p class="notice-msg">${
-          subscribedPress.press
-        } 언론사에서 직접 편집한 뉴스입니다.</p>
+        <p class="notice-msg">${press.press} 언론사에서 직접 편집한 뉴스입니다.</p>
       </div>
     </div>
     <a class='prev-button'></a>
@@ -194,13 +100,17 @@ class ListView {
   }
 
   moveToPage(target) {
-    const isContentArea = target.closest('.content-area');
     const isPrevBtn = target.classList.contains('prev-button');
     const isNextBtn = target.classList.contains('next-button');
-    if (!isContentArea || !(isPrevBtn || isNextBtn)) return;
+    if (!(isPrevBtn || isNextBtn)) return;
 
-    if (isPrevBtn) this.#pageStore.dispatch({ type: 'CLICK_PREV' });
-    if (isNextBtn) this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
+    const isSubscribedPress = target.closest('.list-container').querySelector('.list-category-subscribed')
+    if(!isSubscribedPress) {
+      isPrevBtn ? this.#pageStore.dispatch({ type: 'CLICK_PREV' }) : this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
+    } else {
+      isPrevBtn ? this.#subscribedPressPageStore.dispatch({ type: 'PREV_PRESS' }) : this.#subscribedPressPageStore.dispatch({ type: 'NEXT_PRESS' });
+      this.excuteRerender('PRESS_SUBSCRIBE_LIST_VIEW');
+    }
   }
 
   clickCategory(target, { page } = this.#pageStore.getState()) {
@@ -224,22 +134,39 @@ class ListView {
 
   clickSubscribeBtn(target) {
     const subscribeBtn = target.closest('.subscribe');
-    const unsubscribeBtn = target.closest('.unsubscribe');
-    const closeBtn = target.closest('.close');
-    if(!subscribeBtn && !unsubscribeBtn && !closeBtn) return;
+    if (this.isValidTargetBtn.bind(this)(target)) return;
+    const isSubscribe = subscribeBtn ? 'SUBSCRIBE' : 'UNSUBSCRIBE';
     const subscribedPressInfo = target.closest('.press-box').querySelector('img').src;
-    const isSubscribe =
-      subscribeBtn ? 'SUBSCRIBE' : 'UNSUBSCRIBE';
-
-    this.#subscribeStore.subscribe(this.#reRender.bind(this));
-  //   subscribeBtn.outerHTML = `<button type="button" class="${buttonType} press-button">
-  //   <img src="/src/assets/icons/${buttonType}.svg">
-  //   <span>${PRESS_BUTTON[buttonType]}</span>
-  // </button>`;
+    // 버튼만 리렌더하게 변경
     this.#subscribeStore.dispatch({
       type: `${isSubscribe}`,
       payload: subscribedPressInfo,
     });
+    if(!subscribeBtn) {
+      this.#subscribedPressPageStore.dispatch({
+      type: 'REMOVE_PRESS',
+      payload: subscribedPressInfo,
+    });
+    }
+  }
+
+  isValidTargetBtn(target) {
+    const subscribeBtn = target.closest('.subscribe');
+    const unsubscribeBtn = target.closest('.unsubscribe');
+    const closeBtn = target.closest('.close');
+    if(!subscribeBtn && !unsubscribeBtn && !closeBtn) return true;
+  }
+
+  clickSubscribedPress(target) {
+    const subscribeList = target.closest('.list-category-subscribed');
+    const current = target.closest('.current-subscribed');
+    if(!subscribeList || current) return;
+    const targetPress = target.textContent;
+    this.#subscribedPressPageStore.dispatch({
+      type: 'CLICK_PRESS',
+      payload: targetPress,
+    });
+    this.excuteRerender('PRESS_SUBSCRIBE_LIST_VIEW');
   }
 
   autoMovePages() {
@@ -253,6 +180,68 @@ class ListView {
       if (this.rafState) requestAnimationFrame(this.movePages);
     };
     requestAnimationFrame(this.movePages);
+  }
+
+  #reRender() {
+    const { press, view } = this.#viewStore.getState();
+    if (press['all'] && view['grid']) this.excuteRerender('PRESS_ALL_GRID_VIEW');
+    else if (press['all'] && view['list']) this.excuteRerender('PRESS_ALL_LIST_VIEW');
+    else if (press['subscribe'] && view['grid']) this.excuteRerender('PRESS_SUBSCRIBE_GRID_VIEW');
+    else if (press['subscribe'] && view['list']) this.excuteRerender('PRESS_SUBSCRIBE_LIST_VIEW');
+  }
+
+  excuteRerender(type) {
+    const { subscribedList } = this.#subscribeStore.getState();
+    const { page } = this.#pageStore.getState();
+    const listContainerClass = this.listContainer.classList;
+    const categoryArea = this.listContainer.querySelector('.category-area');
+    const contentArea = this.listContainer.querySelector('.content-area');
+    const viewType = {
+      PRESS_ALL_GRID_VIEW() {
+        listContainerClass.add('hidden');
+      },
+      PRESS_ALL_LIST_VIEW() {
+        listContainerClass.remove('hidden');
+        categoryArea.outerHTML = this.getCategory.bind(this)(page);
+        contentArea.outerHTML = this.getPressBox.bind(this)(page);
+      },
+      PRESS_SUBSCRIBE_GRID_VIEW() {
+        listContainerClass.add('hidden');
+      },
+      PRESS_SUBSCRIBE_LIST_VIEW() {
+        this.rafState = false;
+        this.#subscribedPressPageStore.dispatch({ type: 'GET_SUBSCRIBED_PRESS' });
+        if (!subscribedList.size) {
+          listContainerClass.add('hidden');
+        } else {
+          listContainerClass.remove('hidden');
+          categoryArea.outerHTML = this.getSubscribedCategory();
+          contentArea.outerHTML = this.getSubscribedPress.bind(this)();
+        }
+      }
+    }
+    return viewType[type].bind(this)();
+  }
+
+  getSubscribedCategory({ subscribedPressInfo, pressIndex } = this.#subscribedPressPageStore.getState()) {
+    return `<div class="category-area">
+    <ul class="list-category-subscribed">
+    ${subscribedPressInfo.reduce((template, press, index) => {
+      const isCurrent = pressIndex === index;
+      template += `<li${isCurrent ? ` class="current-subscribed"><span>${press.press}</span><img src="/src/assets/icons/nextCategory.svg">` : `>${press.press}`}</li>`;
+      return template;
+    }, ``)}
+    </ul>
+    </div>`;
+  }
+
+  getSubscribedPress({ currentPress } = this.#subscribedPressPageStore.getState()) {
+    const buttonType = 'close';
+    return this.pressBoxTemplate(currentPress, buttonType);
+  }
+
+  getListView() {
+    return this.listContainer;
   }
 }
 

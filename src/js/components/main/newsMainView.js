@@ -10,7 +10,7 @@ const mainView = ({ media }) => {
   const mainView = createEl("main");
   const sortButtons = new SortButton().init().getSortButtons();
   const viewContainer = new GridView(gridData, { GRID_INFO }).init().getViewContainer();
-  const list = new ListView(media).render();
+  const list = new ListView(media).init().getListView();
   viewContainer.append(list);
   mainView.append(sortButtons, viewContainer);
   return mainView;

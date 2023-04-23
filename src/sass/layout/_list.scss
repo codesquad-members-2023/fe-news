@@ -1,15 +1,30 @@
 .category-area {
   height: 40px;
+  line-height: 40px;
   background-color: $offwhite;
   border-bottom: 1px solid $gray100;
-  line-height: 40px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 
   .list-category {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+
+    &-subscribed {
+      @extend .list-category;
+      width: max-content;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      white-space: nowrap;
+      // scroll-snap-type: x mandatory;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
 
     li:not(.current, .current-subscribed) {
+      display: inline-block;
+      height: 40px;
+      width: auto;
       padding: 0 16px;
       @include font($bodySM, $medium);
       color: $gray300;
@@ -117,6 +132,7 @@
 
 .current {
   width: 166px;
+  height: 40px;
   padding: 0 16px;
   @include font($bodySM, $bold);
   background-color: $primary;
@@ -125,18 +141,17 @@
   justify-content: space-between;
   cursor: default;
 
+  &-subscribed {
+    @extend .current;
+    height: 40px;
+    background-color: $lighterColor;
+
+    img {
+      width: 7px;
+    }
+  }
+
   div > span:nth-child(2) {
     color: rgba(255, 255, 255, 0.7);
   }
-}
-
-.current-subscribed {
-  width: 166px;
-  padding: 0 16px;
-  @include font($bodySM, $bold);
-  background-color: $lighterColor;
-  color: $white;
-  display: flex;
-  justify-content: space-between;
-  cursor: default;
 }
