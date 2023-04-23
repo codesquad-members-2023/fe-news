@@ -1,6 +1,7 @@
 export class Track {
-  constructor(journalTrackStore) {
+  constructor(journalTrackStore, journalDetailStore) {
     this.store = journalTrackStore;
+    this.detailStore = journalDetailStore;
     this.element = document.createElement("div");
     this.element.classList.add("journal-track");
     this.prevBtn;
@@ -102,7 +103,7 @@ export class Track {
       <span>1 / 81</span>
     </div>
     <div>
-      <span>메거진/전문지</span>
+      <span>매거진/전문지</span>
       <span>1 / 81</span>
     </div>
     <div>
@@ -114,6 +115,20 @@ export class Track {
     const journaContainer = document.querySelector(".journal-container");
 
     this.element.insertBefore(detailNavDiv, journaContainer);
+  }
+
+  addDetailNavEvent() {
+    const detailNav = document.querySelector(".detail-type-bar");
+
+    detailNav.addEventListener("click", (event) => {
+      const eventTarget = event.target.closest("span:first-child");
+
+      if (!eventTarget) return;
+
+      const chosenJournalType = eventTarget.innerText;
+
+      this.detailStore.setCurrentJournalType(chosenJournalType);
+    });
   }
 
   render() {

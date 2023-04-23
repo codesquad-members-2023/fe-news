@@ -89,51 +89,6 @@ const createJournalList = () => {
   const journalHeader = new JournalHeader(journalHeaderStore);
   journalListEl.appendChild(journalHeader.element);
 
-  // 언론사 트렉, 트렉 스토어 생성
-  const journalTrackStore = new JournalTrackStore();
-  const journalTrack = new Track(journalTrackStore);
-  journalListEl.appendChild(journalTrack.element);
-
-  // batch 페이지에 언론사 디테일 삽입
-  const renderJournalDetail = (currentState) => {
-    journalTrack.render();
-    const journalContainer = document.querySelector(".journal-container");
-    journalContainer.innerHTML = "";
-
-    currentState === "STATE_ALL"
-      ? showJournalDetailAll(journalContainer)
-      : showJournalDetailSub(journalContainer);
-
-    resetTrackButton();
-  };
-
-  const showJournalDetailAll = (journalContainer) => {
-    journalTrack.getDetailNavHTML();
-
-    const journalDetailAllItems = journalDetailStore.detailListAll;
-
-    createJournalDetailItems(journalContainer, journalDetailAllItems);
-  };
-
-  const showJournalDetailSub = (journalContainer) => {
-    const journalDetailSubItems = journalHeaderStore.journalSubscribe;
-
-    journalDetailSubItems.size === 0
-      ? showEmptySubscribePage(journalContainer)
-      : createJournalDetailItems(journalContainer, journalDetailSubItems);
-  };
-
-  const createJournalDetailItems = (
-    journalContainer,
-    journalDetailAllItems
-  ) => {
-    journalDetailAllItems.forEach((journalItem) => {
-      const batchContainer = createBatchContainer();
-      batchContainer.appendChild(journalItem.detailElement);
-      journalContainer.appendChild(batchContainer);
-    });
-  };
-
   // 언론사 디테일 리스트 뽑기
   const loadJournalDetail = async () => {
     const journalURL = "http://localhost:3000/journal";
@@ -150,9 +105,59 @@ const createJournalList = () => {
     journalDetailStore.setDetailListAll(chosenJounralList);
   };
 
+  // batch 페이지에 언론사 디테일 삽입
+  const renderJournalDetail = (currentState) => {
+    journalTrack.render();
+    const journalContainer = document.querySelector(".journal-container");
+    journalContainer.innerHTML = "";
+
+    currentState === "STATE_ALL"
+      ? showJournalDetailAll(journalContainer)
+      : showJournalDetailSub(journalContainer);
+
+    resetTrackButton();
+  };
+
+  // 언론사 디테일 구속 리스트 전체 보여주기
+  const showJournalDetailAll = (journalContainer) => {
+    journalTrack.getDetailNavHTML();
+    journalTrack.addDetailNavEvent();
+
+    const journalDetailAllItems = journalDetailStore.getDetailListAll();
+
+    createJournalDetailItems(journalContainer, journalDetailAllItems);
+  };
+
+  // 언론사 디테일 구독 리스트 보여주기
+  const showJournalDetailSub = (journalContainer) => {
+    const journalDetailSubItems = journalHeaderStore.journalSubscribe;
+
+    journalDetailSubItems.size === 0
+      ? showEmptySubscribePage(journalContainer)
+      : createJournalDetailItems(journalContainer, journalDetailSubItems);
+  };
+
   // 언론사 디테일 스토어 생성
-  const journalDetailStore = new JournalDetailStore();
-  loadJournalDetail().catch((error) => console.error(error));
+  const journalDetailStore = new JournalDetailStore(
+    loadJournalDetail,
+    renderJournalDetail
+  );
+
+  // 언론사 트렉, 트렉 스토어 생성
+  const journalTrackStore = new JournalTrackStore();
+  const journalTrack = new Track(journalTrackStore, journalDetailStore);
+  journalListEl.appendChild(journalTrack.element);
+
+  const createJournalDetailItems = (
+    journalContainer,
+    journalDetailAllItems
+  ) => {
+    journalDetailAllItems.forEach((journalItem) => {
+      const batchContainer = createBatchContainer();
+      batchContainer.appendChild(journalItem.detailElement);
+      journalContainer.appendChild(batchContainer);
+    });
+  };
 
   // 최초 언론사 Grid 영역 구성
   const loadJournalItems = async () => {
@@ -204,6 +209,7 @@ const createJournalList = () => {
   };
 
   loadJournalItems().catch((error) => console.error(error));
+  loadJournalDetail().catch((error) => console.error(error));
 
   return journalListEl;
 };
