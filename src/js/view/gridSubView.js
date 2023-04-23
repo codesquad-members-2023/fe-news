@@ -11,7 +11,6 @@ export default class GridSubView {
     this._state = {
       gridOrList: VIEW_STATE.GRID,
       allOrSub: VIEW_STATE.SUB,
-      index: 1,
     };
   }
 

@@ -13,7 +13,6 @@ export default class GridAllView {
     this._state = {
       gridOrList: VIEW_STATE.GRID,
       allOrSub: VIEW_STATE.ALL,
-      index: 1,
     };
   }
 
