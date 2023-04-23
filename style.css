@@ -35,8 +35,7 @@ body {
   justify-content: space-between;
   width: 970px;
   height: 630px;
-  padding: 20px;
-  border: 1px solid #4b5966; }
+  padding: 20px; }
 
 @font-face {
   font-family: 'Pretendard';
@@ -83,12 +82,14 @@ body {
       .newsstand_header .newsstand_header_title a .header_title_text {
         margin-left: 6px;
         font-size: 2.4rem;
-        font-weight: 700; }
+        font-weight: 700;
+        font-family: 'Pretendard', sans-serif; }
   .newsstand_header .newsstand_header_date {
     margin-top: 3px;
     color: #4b5966;
     font-size: 1.6rem;
     font-weight: 500;
+    font-family: 'Pretendard', sans-serif;
     line-height: 3.2rem; }
 
 .newsstand_headline_container {
@@ -103,7 +104,8 @@ body {
       width: 49px;
       margin-right: 10px;
       font-size: 1.4rem;
-      font-weight: 700; }
+      font-weight: 700;
+      font-family: 'Pretendard', sans-serif; }
     .newsstand_headline_container .newsstand_headline .headline_rolling_container {
       overflow: hidden;
       height: 17px; }
@@ -117,6 +119,7 @@ body {
           height: 17px;
           font-size: 1.4rem;
           font-weight: 500;
+          font-family: 'Pretendard', sans-serif;
           line-height: 1.8rem; }
   .newsstand_headline_container .left {
     margin-right: 5px; }
@@ -135,7 +138,8 @@ body {
       display: flex;
       gap: 10px;
       font-size: 1.6rem;
-      font-weight: 700; }
+      font-weight: 700;
+      font-family: 'Pretendard', sans-serif; }
       .newsstand_newssection .newsstand_newssection_header .header_sort_buttons .all_press_show_button {
         color: #14212b; }
       .newsstand_newssection .newsstand_newssection_header .header_sort_buttons .subscribe_press_show_button {
@@ -152,3 +156,121 @@ body {
     width: 1030px; }
     .newsstand_newssection .newssection_slide_buttons .hidden {
       visibility: hidden; }
+
+.newssection_view .newssection_view_list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+  width: 930px;
+  height: 388px; }
+  .newssection_view .newssection_view_list .list_header {
+    display: flex;
+    align-items: center;
+    width: 930px;
+    height: 40px;
+    padding: 16px 0px;
+    border: 1px solid #d2dae0; }
+    .newssection_view .newssection_view_list .list_header .list_header_category {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 40px;
+      padding: 0px 14px;
+      gap: 8px;
+      cursor: pointer; }
+    .newssection_view .newssection_view_list .list_header .show {
+      display: flex;
+      align-items: center;
+      padding: 0px 16px;
+      gap: 8px;
+      width: 166px;
+      height: 40px;
+      background: linear-gradient(90deg, #4362d0 0%, #4362d0 29.02%, #7890e7 29.03%, #7890e7 100%);
+      color: #ffffff;
+      cursor: inherit; }
+  .newssection_view .newssection_view_list .list_view {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 930px;
+    height: 348px;
+    padding: 24px;
+    gap: 16px;
+    border: 1px solid #d2dae0; }
+    .newssection_view .newssection_view_list .list_view .list_view_top {
+      display: flex;
+      align-items: center;
+      width: 882px;
+      height: 24px;
+      gap: 16px; }
+      .newssection_view .newssection_view_list .list_view .list_view_top .press_logo {
+        width: 60px;
+        height: 20px; }
+      .newssection_view .newssection_view_list .list_view .list_view_top .updatetime {
+        text-align: center;
+        width: 125px;
+        height: 14px;
+        font-size: 1.2rem;
+        font-weight: 500;
+        font-family: 'Pretendard', sans-serif;
+        line-height: 14px;
+        color: #5f6e76; }
+      .newssection_view .newssection_view_list .list_view .list_view_top .subbutton {
+        width: 74px;
+        height: 24px; }
+      .newssection_view .newssection_view_list .list_view .list_view_top .nosubbutton {
+        width: 24px;
+        height: 24px; }
+    .newssection_view .newssection_view_list .list_view .list_view_bottom {
+      display: flex; }
+      .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_main {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 320px;
+        height: 260px;
+        padding: 0px;
+        gap: 16px; }
+        .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_main .main_news_img {
+          box-sizing: border-box;
+          width: 320px;
+          height: 200px;
+          border: 1px solid #d2dae0; }
+        .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_main .main_news_text {
+          width: 320px;
+          height: 44px;
+          font-size: 1.6rem;
+          font-weight: 500;
+          font-family: 'Pretendard', sans-serif; }
+      .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_sub {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 530px;
+        height: 245px;
+        padding: 0px;
+        gap: 16px; }
+        .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_sub .sub_list {
+          display: flex;
+          flex-direction: column;
+          gap: 16px; }
+          .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_sub .sub_list li {
+            width: 530px;
+            height: 22px;
+            padding-left: 40px;
+            font-size: 1.6rem;
+            font-weight: 500;
+            font-family: 'Pretendard', sans-serif;
+            line-height: 22px; }
+        .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_sub .sub_instruction {
+          width: 530px;
+          height: 17px;
+          padding-left: 40px;
+          font-size: 1.4rem;
+          font-weight: 500;
+          font-family: 'Pretendard', sans-serif;
+          line-height: 17px;
+          color: #879298; }
+  .newssection_view .newssection_view_list a {
+    cursor: pointer; }
