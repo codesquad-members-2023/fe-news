@@ -1,3 +1,5 @@
+import { CATEGORY_ORDER } from '../constants/index.js';
+
 export const tabReducer = (state, action) => {
   switch (action.type) {
     case 'togglePressTab': {
@@ -48,5 +50,35 @@ export const subscriptionListReducer = (state, action) => {
     }
     default:
       return state;
+  }
+};
+
+export const listPageReducer = (state, action) => {
+  switch (action.type) {
+    case 'nextPage': {
+      const { pressTabType } = action.payload;
+
+      if (pressTabType === 'all') {
+        const { dataCountByCategory } = action.payload;
+        const { currentCategory, currentItemIdx } = state[pressTabType];
+        const categoryCount = CATEGORY_ORDER.length;
+
+        const isSameCategory = currentItemIdx < dataCountByCategory[currentCategory] - 1;
+
+        const currentCategoryIdx = CATEGORY_ORDER.indexOf(currentCategory);
+        const nextCategoryIdx = (currentCategoryIdx + 1) % categoryCount;
+        const nextCategory = CATEGORY_ORDER[nextCategoryIdx];
+
+        return {
+          ...state,
+          [pressTabType]: {
+            currentCategory: isSameCategory ? currentCategory : nextCategory,
+            currentItemIdx: isSameCategory ? currentItemIdx + 1 : 0
+          }
+        };
+      }
+    }
+    default:
+      break;
   }
 };
