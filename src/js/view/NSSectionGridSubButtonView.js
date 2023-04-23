@@ -19,7 +19,7 @@ export default class gridSubButtonView {
     parentElem.innerHTML = '';
     parentElem.insertAdjacentHTML('afterbegin', markup);
     this._buttonContainer = parentElem.querySelector('.newssection_slide_buttons');
-    this.showOrHiddenGridMoveButton();
+    this.showOrHiddenSlideButton();
     this.setEvent();
   }
 
@@ -34,7 +34,7 @@ export default class gridSubButtonView {
     </div>`;
   }
 
-  NSSectionGridAllButtonHandler({ target }) {
+  slideButtonHandler({ target }) {
     if (target.closest('.slide_button_left')) {
       this._curViewStateModel.decreaseIndex();
     }
@@ -44,7 +44,7 @@ export default class gridSubButtonView {
     }
   }
 
-  showOrHiddenGridMoveButton() {
+  showOrHiddenSlideButton() {
     const { index } = this._curViewStateModel.getCurViewState();
     const leftGridMoveButton = this._buttonContainer.querySelector('.slide_button_left');
     const rightGridMoveButton = this._buttonContainer.querySelector('.slide_button_right');
@@ -61,6 +61,6 @@ export default class gridSubButtonView {
   }
 
   setEvent() {
-    this._buttonContainer.addEventListener('click', this.NSSectionGridAllButtonHandler.bind(this));
+    this._buttonContainer.addEventListener('click', this.slideButtonHandler.bind(this));
   }
 }
