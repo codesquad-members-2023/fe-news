@@ -51,7 +51,7 @@ export default class gridSubButtonView {
     const gridSubDataLength = this._curViewStateModel.getGridSubData().length;
     const { PAGE_SIZE } = NS_SECTION_INFO.GRID_ALL;
 
-    gridSubDataLength >= PAGE_SIZE
+    gridSubDataLength > PAGE_SIZE
       ? rightGridMoveButton.classList.remove('hidden')
       : rightGridMoveButton.classList.add('hidden');
 
