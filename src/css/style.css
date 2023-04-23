@@ -183,10 +183,6 @@ body {
   right: -47px;
   transform: translate3d(0, -50%, 0);
 }
-.main-content__grid-wrapper,
-.main-content__list-wrapper {
-  overflow-x: hidden;
-}
 
 .press-grid {
   display: grid;
@@ -282,6 +278,11 @@ body {
 .nav-bar__headLine-wrapper.rolling {
   transform: translate3d(0, -100%, 0);
   transition: transform 1s linear;
+}
+
+.main-content__grid-wrapper,
+.main-content__list-wrapper {
+  overflow-x: hidden;
 }
 
 .press-grid {
