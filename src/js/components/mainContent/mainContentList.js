@@ -99,7 +99,7 @@ export default class MainContentList {
     if (pressTabType !== 'all') return;
 
     const allCategoriesTemplate = CATEGORY_ORDER.map(
-      (category, idx) => `<li data-news-category="${idx}">${category}</li>`,
+      (category, idx) => `<li data-news-category-idx="${idx}">${category}</li>`,
       ''
     ).join('');
 
@@ -186,6 +186,10 @@ export default class MainContentList {
       if (pressTabType === 'all' && target.id === 'list-before-btn') {
         const { dataCountByCategory } = this.props;
         listPageStore.dispatch({ type: 'beforePage', payload: { pressTabType, dataCountByCategory } });
+      }
+      if (target.tagName === 'LI') {
+        const targetCategoryIdx = target.dataset.newsCategoryIdx;
+        listPageStore.dispatch({ type: 'changeCategory', payload: { pressTabType, targetCategoryIdx } });
       }
     });
   }

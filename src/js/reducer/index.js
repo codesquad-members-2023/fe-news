@@ -104,6 +104,16 @@ export const listPageReducer = (state, action) => {
       }
       break;
     }
+    case 'changeCategory': {
+      const { pressTabType, targetCategoryIdx } = action.payload;
+
+      if (pressTabType === 'all') {
+        return {
+          ...state,
+          [pressTabType]: { currentCategory: CATEGORY_ORDER[targetCategoryIdx], currentItemIdx: 0 }
+        };
+      }
+    }
     default:
       break;
   }
