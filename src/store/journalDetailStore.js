@@ -9,16 +9,16 @@ export class JournalDetailStore {
 
   setDetailListAll(journalItems) {
     this.detailListAll = journalItems;
-    this.renderJournalDetail("STATE_ALL");
   }
 
   getDetailListAll() {
     return this.detailListAll;
   }
 
-  setCurrentJournalType(journalType) {
+  async setCurrentJournalType(journalType) {
     this.currentJournalType = journalType;
-    this.loadJournalDetail();
+    await this.loadJournalDetail();
+    this.renderJournalDetail("STATE_ALL");
   }
 
   getCurrentJournalType() {
