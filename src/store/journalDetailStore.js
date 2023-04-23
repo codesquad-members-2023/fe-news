@@ -1,8 +1,8 @@
 export class JournalDetailStore {
-  constructor(renderJournalDetail) {
+  constructor() {
+    // journalType에 따라 리스트가 바뀌게 한다.
     this.detailListAll = [];
-    this.currentType = "종합/경제";
-    this.renderJournalDetail = renderJournalDetail;
+    this.currentJournalType = "종합/경제";
   }
 
   setDetailListAll(journalItems) {
@@ -13,12 +13,11 @@ export class JournalDetailStore {
     return this.detailListAll;
   }
 
-  setCurrentType(selectedType) {
-    this.currentType = selectedType;
-    this.renderJournalDetail();
+  setCurrentJournalType(journalType) {
+    this.currentJournalType = journalType;
   }
 
-  getCurrentType() {
-    return this.currentType;
+  getCurrentJournalType() {
+    return this.currentJournalType;
   }
 }

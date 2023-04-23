@@ -123,25 +123,36 @@ const createJournalList = () => {
       : createJournalDetailItems(journalContainer, journalDetailSubItems);
   };
 
-  const createJournalDetailItems = (journalContainer, journalDetailItmes) => {
-    journalDetailItmes.forEach((journalItem) => {
+  const createJournalDetailItems = (
+    journalContainer,
+    journalDetailAllItems
+  ) => {
+    journalDetailAllItems.forEach((journalItem) => {
       const batchContainer = createBatchContainer();
       batchContainer.appendChild(journalItem.detailElement);
       journalContainer.appendChild(batchContainer);
     });
   };
 
-  // 언론사 디테일 영역 구성
+  // 언론사 디테일 리스트 뽑기
   const loadJournalDetail = async () => {
     const journalURL = "http://localhost:3000/journal";
     const journalItems = await fetchJournalData(journalURL);
 
-    journalDetailStore.setDetailListAll(journalItems);
+    const currentJournalType = journalDetailStore.getCurrentJournalType();
+    const chosenJounralList = journalItems.filter((journal) => {
+      if (journal.journalData.mediaInfo.type === currentJournalType) {
+        return true;
+      }
+      return false;
+    });
+
+    journalDetailStore.setDetailListAll(chosenJounralList);
   };
 
   // 언론사 디테일 스토어 생성
-  const journalDetailStore = new JournalDetailStore(renderJournalDetail);
-  loadJournalDetail();
+  const journalDetailStore = new JournalDetailStore();
+  loadJournalDetail().catch((error) => console.error(error));
 
   // 최초 언론사 Grid 영역 구성
   const loadJournalItems = async () => {
