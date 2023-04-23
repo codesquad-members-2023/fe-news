@@ -183,6 +183,10 @@ export default class MainContentList {
         const { dataCountByCategory } = this.props;
         listPageStore.dispatch({ type: 'nextPage', payload: { pressTabType, dataCountByCategory } });
       }
+      if (pressTabType === 'all' && target.id === 'list-before-btn') {
+        const { dataCountByCategory } = this.props;
+        listPageStore.dispatch({ type: 'beforePage', payload: { pressTabType, dataCountByCategory } });
+      }
     });
   }
 }

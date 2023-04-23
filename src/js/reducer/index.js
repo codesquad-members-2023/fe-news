@@ -77,6 +77,32 @@ export const listPageReducer = (state, action) => {
           }
         };
       }
+      break;
+    }
+    case 'beforePage': {
+      const { pressTabType } = action.payload;
+
+      if (pressTabType === 'all') {
+        const { dataCountByCategory } = action.payload;
+        const { currentCategory, currentItemIdx } = state[pressTabType];
+        const categoryCount = CATEGORY_ORDER.length;
+
+        const isSameCategory = currentItemIdx > 0;
+
+        const currentCategoryIdx = CATEGORY_ORDER.indexOf(currentCategory);
+        const nextCategoryIdx =
+          ((currentCategoryIdx === 0 ? CATEGORY_ORDER.length : currentCategoryIdx) - 1) % categoryCount;
+        const nextCategory = CATEGORY_ORDER[nextCategoryIdx];
+
+        return {
+          ...state,
+          [pressTabType]: {
+            currentCategory: isSameCategory ? currentCategory : nextCategory,
+            currentItemIdx: (isSameCategory ? currentItemIdx : dataCountByCategory[nextCategory]) - 1
+          }
+        };
+      }
+      break;
     }
     default:
       break;
