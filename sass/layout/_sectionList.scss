@@ -16,6 +16,7 @@
       padding: 16px 0px;
 
       border: 1px solid $gray100;
+      background-color: $off-white;
 
       .list_header_category {
         display: flex;
@@ -26,6 +27,7 @@
         padding: 0px 14px;
         gap: 8px;
 
+        color: $gray300;
         cursor: pointer;
       }
 
