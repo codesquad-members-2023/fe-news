@@ -23,16 +23,16 @@ export default class MainContentList {
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
 
     tabStore.register(this.displayElement.bind(this));
+    listPageStore.register(this.renderListWrapper.bind(this));
   }
 
   render() {
-    const listItemData = this.getListItemData();
-
     this.$mainEle.innerHTML = this.template();
 
     this.displayElement();
-    this.renderListWrapper(listItemData);
-    this.renderSubscribeToggleBtn(listItemData);
+    this.renderListWrapper();
+    this.renderSubscribeToggleBtn();
+    this.setEvent();
   }
 
   getListItemData() {
@@ -87,7 +87,8 @@ export default class MainContentList {
     `;
   }
 
-  renderListWrapper(listItemData) {
+  renderListWrapper() {
+    const listItemData = this.getListItemData();
     const $listWrapper = $({ selector: '.main-content__list-wrapper', parent: this.$mainEle });
     $listWrapper.innerHTML = this.listWrapperTemplate(listItemData);
   }
@@ -127,7 +128,8 @@ export default class MainContentList {
     }">+ ${isSubscribed ? '해지하기' : '구독하기'}</button>`;
   }
 
-  renderSubscribeToggleBtn({ pressName }) {
+  renderSubscribeToggleBtn() {
+    const { pressName } = this.getListItemData();
     const $subscribeToggleBtnContainer = $({
       selector: '.subscribe-toggle-btn-container',
       parent: this.$mainEle
@@ -171,5 +173,16 @@ export default class MainContentList {
         ${this.subNewsTemplate({ pressName, subNews })}
       </div>
     `;
+  }
+
+  setEvent() {
+    this.$mainEle.addEventListener('click', ({ target }) => {
+      const { pressTabType } = this.props;
+
+      if (pressTabType === 'all' && target.id === 'list-next-btn') {
+        const { dataCountByCategory } = this.props;
+        listPageStore.dispatch({ type: 'nextPage', payload: { pressTabType, dataCountByCategory } });
+      }
+    });
   }
 }
