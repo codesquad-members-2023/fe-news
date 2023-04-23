@@ -82,31 +82,31 @@ export class Track {
     detailNavDiv.classList.add("detail-type-bar");
 
     const detailNavHTML = `
-    <div class="hover-color">
+    <div class="navType">
       <span>종합/경제</span>
       <span>1 / 81</span>
     </div>
-    <div>
+    <div class="navType">
       <span>방송/통신</span>
       <span>1 / 81</span>
     </div>
-    <div>
+    <div class="navType">
       <span>IT</span>
       <span>1 / 81</span>
     </div>
-    <div>
+    <div class="navType">
       <span>영자지</span>
       <span>1 / 81</span>
     </div>
-    <div>
+    <div class="navType">
       <span>스포츠/연예</span>
       <span>1 / 81</span>
     </div>
-    <div>
+    <div class="navType">
       <span>매거진/전문지</span>
       <span>1 / 81</span>
     </div>
-    <div>
+    <div class="navType">
       <span>지역</span>
       <span>1 / 81</span>
     </div>`;
@@ -115,6 +115,14 @@ export class Track {
     const journaContainer = document.querySelector(".journal-container");
 
     this.element.insertBefore(detailNavDiv, journaContainer);
+
+    const divList = [...document.querySelectorAll(".navType span:first-child")];
+
+    divList.filter((div) => {
+      if (div.innerText === this.detailStore.currentJournalType) {
+        div.parentNode.classList.add("hover-color");
+      }
+    });
   }
 
   addDetailNavEvent() {

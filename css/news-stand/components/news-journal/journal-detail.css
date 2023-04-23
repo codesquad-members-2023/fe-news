@@ -16,16 +16,23 @@
   color: var(--gray300);
   background-color: var(--gray100);
   border-bottom: 1px solid var(--gray100);
+  justify-content: space-between;
 }
 
 .hover-color {
   color: white;
   background-color: #4362d0;
+  transition: cubic-bezier(0, 0, 0.2, 1) 0.3s;
 }
 
 .detail-type-bar div {
   display: flex;
-  padding: 10px;
+  padding: 3px;
+}
+
+.detail-type-bar span {
+  display: flex;
+  padding: 5px;
 }
 
 .detail-type-bar div span:first-child {
@@ -81,4 +88,8 @@
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
+}
+
+.navType {
+  cursor: pointer;
 }
