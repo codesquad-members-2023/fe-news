@@ -10,6 +10,7 @@ import GridAllView from './src/js/view/gridAllView.js';
 import GridSubView from './src/js/view/gridSubView.js';
 import gridAllButtonView from './src/js/view/NSSectionGridAllbuttonView.js';
 import gridSubButtonView from './src/js/view/NSSectionGridSubButtonView.js';
+import ListAllView from './src/js/view/listAllView.js';
 
 const dataFetcher = fetcher(API_BASE_URL);
 new NSHeaderView({ NS_HEADER_INFO }, REFERENCE);
@@ -21,6 +22,7 @@ new gridSubButtonView(NSSectionCurViewModel);
 new NSSectionHeaderView(sectionHeaderModel, NSSectionCurViewModel);
 new GridSubView(NSSectionCurViewModel);
 new GridAllView(NSSectionCurViewModel);
+new ListAllView(NSSectionCurViewModel);
 // subscribe 로직을 entry에 넣어서 전체 로직을 보이게?
 // 선언을 해서 export하면 굳이 const 변수의 이름과 class 이름이 겹치는 걸 걱정할
 // 필요가 없을 것 같습니다

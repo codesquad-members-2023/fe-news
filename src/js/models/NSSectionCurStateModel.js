@@ -10,13 +10,15 @@ export default class NSSectionCurViewStateModel extends Observer {
       render: RENDER_STATE.NOT_READY,
       gridOrList: VIEW_STATE.GRID,
       allOrSub: VIEW_STATE.ALL,
-      index: 1, // 전체 갯수
-      // grid index , list index
+
+      index: 1, // grid와 list 따로?
+      curListCategory: null, // 하드 코딩을 해서 먼저 선언을 하냐
     };
     this._dataFetcher = dataFetcher;
-    this._allPressData = [];
+    this._allPressData = {};
     this._gridPressData = [];
     this._subPressData = [];
+    this._allCategory = [];
   }
 
   changeRenderState() {
@@ -38,8 +40,9 @@ export default class NSSectionCurViewStateModel extends Observer {
     this._subPressData.push(data);
   }
 
-  async setAllPressData(data) {
-    this._allPressData = await data;
+  async getAllData(data) {
+    const allData = await data;
+    return allData;
   }
 
   setGirdPressData(allData) {
@@ -54,6 +57,22 @@ export default class NSSectionCurViewStateModel extends Observer {
     });
   }
 
+  setAllPressData(allData) {
+    allData.forEach((data) => {
+      !this._allPressData.hasOwnProperty(data.category)
+        ? ((this._allPressData[data.category] = [data]), this._allCategory.push(data.category))
+        : this._allPressData[data.category].push(data);
+    });
+    this._curViewState.curListCategory = this._allCategory[0];
+  }
+
+  isNextSubPage() {
+    const start = this._curViewState.index * NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
+    const end = start + NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
+
+    return [...this._subPressData.slice(start, end)].length !== 0;
+  }
+
   getGridSubData() {
     const start = (this._curViewState.index - 1) * NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
     const end = start + NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
@@ -61,8 +80,14 @@ export default class NSSectionCurViewStateModel extends Observer {
     return [...this._subPressData.slice(start, end)];
   }
 
+  getAllCategory() {
+    return this._allCategory;
+  }
+
   getAllPressData() {
-    return this._allPressData;
+    const { index, curListCategory } = this._curViewState;
+    const pressData = this._allPressData[curListCategory][index - 1];
+    return pressData;
   }
 
   async getGridAllPressData() {
@@ -70,26 +95,38 @@ export default class NSSectionCurViewStateModel extends Observer {
     const end = start + NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
 
     if (this._gridPressData.length === 0) {
-      await this._dataFetcher(API_PATH.NS_SECTION, this.setAllPressData.bind(this));
+      const allData = await this._dataFetcher(API_PATH.NS_SECTION, this.getAllData.bind(this));
+      this.setAllPressData(allData);
+      this.setGirdPressData(allData);
     }
-    this.setGirdPressData(this._allPressData);
     return [...this._gridPressData.slice(start, end)];
   }
 
   getArticleByPublish(pressName) {
     let article;
-    this._allPressData.some((data) => {
-      if (data.pressName === pressName) {
-        article = data;
-        return true;
+    for (const [category, data] of Object.entries(this._allPressData)) {
+      if (
+        data.some((data) => {
+          if (data.pressName === pressName) {
+            article = data;
+            return true;
+          }
+        })
+      ) {
+        break;
       }
-    });
+    }
     return article;
   }
 
   deleteSubData(data) {
     this._subPressData = this._subPressData.filter((subData) => subData.pressName !== data);
-    if (this.getGridSubData().length === 0) {
+    const { gridOrList, allOrSub } = this._curViewState;
+    if (
+      this.getGridSubData().length === 0 &&
+      gridOrList === VIEW_STATE.GRID &&
+      allOrSub === VIEW_STATE.SUB
+    ) {
       this._curViewState.index -= 1;
     }
     this.notify(this._curViewState);
@@ -97,9 +134,14 @@ export default class NSSectionCurViewStateModel extends Observer {
 
   changeCurViewState(selectedState) {
     if (isEquivalent(this._curViewState, selectedState)) return;
+
+    const selectedKeys = Object.keys(selectedState);
     for (const prop in this._curViewState) {
-      this._curViewState[prop] = selectedState[prop];
+      if (selectedKeys.includes(prop)) {
+        this._curViewState[prop] = selectedState[prop];
+      }
     }
+    this._curViewState.curListCategory = this._allCategory[0];
     this._curViewState.index = 1;
     this.notify(this._curViewState);
   }
