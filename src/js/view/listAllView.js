@@ -32,8 +32,8 @@ export default class ListAllView {
       `</div>
     <div class="list_view">
       <div class="list_view_top">
-        <img class="press_logo" scr="${data.logoImgSrc}" alt="${data.pressName}"/>
-        <div class="updatetime">${data.updataTime}</div>
+        <img class="press_logo" src="${data.logoImgSrc}" alt="${data.pressName}"/>
+        <div class="updatetime">${data.updateTime}</div>
         <a class="subbutton"><img src="/src/asset/newsSectionListSubButton.svg" alt="subButton"/></a>
         <a class="nosubbutton"><img src="/src/asset/newsSectionListNoSubButton.svg" alt="noSubButton"/></a>
       </div>
