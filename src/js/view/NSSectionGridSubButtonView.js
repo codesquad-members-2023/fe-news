@@ -48,10 +48,8 @@ export default class gridSubButtonView {
     const { index } = this._curViewStateModel.getCurViewState();
     const leftGridMoveButton = this._buttonContainer.querySelector('.slide_button_left');
     const rightGridMoveButton = this._buttonContainer.querySelector('.slide_button_right');
-    const gridSubDataLength = this._curViewStateModel.getGridSubData().length;
-    const { PAGE_SIZE } = NS_SECTION_INFO.GRID_ALL;
 
-    gridSubDataLength > PAGE_SIZE
+    this._curViewStateModel.isNextSubPage()
       ? rightGridMoveButton.classList.remove('hidden')
       : rightGridMoveButton.classList.add('hidden');
 
