@@ -104,7 +104,10 @@ export default class MainContentList {
         return `
           <li class="current-category" data-news-category-idx="${idx}">
             <span>${category}</span>
-            <span>${currentItemIdx + 1}/${dataCountByCategory[currentCategory]}</span>
+            <div class="current-category__count">
+              <span class="current-category__present">${currentItemIdx + 1}</span>
+              <span class="current-category__entire">/${dataCountByCategory[currentCategory]}</span>
+            </div>
           </li>
         `;
       }

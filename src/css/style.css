@@ -70,6 +70,17 @@ body {
   line-height: 1;
   color: #6e8091;
 }
+.press-list__category .current-category {
+  color: #ffffff;
+}
+.press-list__category .current-category__count {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+.press-list__category .current-category__entire {
+  color: rgba(255, 255, 255, 0.4392156863);
+}
 
 .update-time {
   font-size: 12px;
@@ -219,6 +230,12 @@ body {
 .press-list__category li {
   padding: 0 16px;
 }
+.press-list__category li.current-category {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .press-list__content {
   padding: 24px;
@@ -323,6 +340,10 @@ body {
   height: 40px;
   line-height: 40px;
   cursor: pointer;
+}
+.press-list__category li.current-category {
+  width: 166px;
+  background-color: #4362d0;
 }
 
 .press-list__info {

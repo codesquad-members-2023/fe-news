@@ -76,6 +76,10 @@
   li {
     padding: 0 16px;
   }
+
+  li.current-category {
+    @include flex($justify-content: space-between, $align-items: center);
+  }
 }
 
 .press-list__content {
