@@ -1,49 +1,49 @@
 export class Journal {
   constructor(journalData, journalHeaderStore, journalDetailStore) {
+    this.journalData = journalData;
     this.journalHeaderStore = journalHeaderStore;
     this.journalDetailStore = journalDetailStore;
-    this.journalData = journalData;
     this.gridElement = document.createElement("div");
     this.gridElement.classList.add("journal-item");
     this.detailElement = document.createElement("div");
     this.detailElement.classList.add("journal-detail");
-    this.renderGrid();
-    this.renderDetail();
+    this.renderToGridArticle();
+    this.renderToDetailArticle();
   }
 
-  getGridHTML() {
+  getGridArticleHTML() {
     const btnLabels = [
       ["구독", "subscribe-btn"],
       ["해지", "unsubscribe-btn"],
     ];
-    const journalCell = document.createElement("div");
-    journalCell.classList.add("journal-item_show");
-    this.gridElement.appendChild(journalCell);
-    journalCell.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
+    const displayJournalCell = document.createElement("div");
+    displayJournalCell.classList.add("journal-item_show");
+    this.gridElement.appendChild(displayJournalCell);
+    displayJournalCell.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
                          alt="${this.journalData.mediaInfo.name}">`;
-    journalCell.style.display = "flex";
+    displayJournalCell.style.display = "flex";
 
-    const subCell = document.createElement("div");
-    subCell.classList.add("journal-item_hover");
+    const displaySubCell = document.createElement("div");
+    displaySubCell.classList.add("journal-item_hover");
 
-    const btns = [];
+    const subOrNotBtns = [];
     btnLabels.forEach((btnLabel) => {
       const btn = document.createElement("button");
       btn.classList.add(btnLabel[1]);
       btn.textContent = btnLabel[0];
-      btns.push(btn);
-      subCell.appendChild(btn);
+      subOrNotBtns.push(btn);
+      displaySubCell.appendChild(btn);
     });
 
-    subCell.style.display = "none";
+    displaySubCell.style.display = "none";
 
-    this.gridElement.appendChild(subCell);
+    this.gridElement.appendChild(displaySubCell);
 
     return {
-      showDiv: journalCell,
-      hoverDiv: subCell,
-      subscribeBtn: btns[0],
-      unSubscribeBtn: btns[1],
+      showDiv: displayJournalCell,
+      hoverDiv: displaySubCell,
+      subscribeBtn: subOrNotBtns[0],
+      unSubscribeBtn: subOrNotBtns[1],
     };
   }
 
@@ -71,14 +71,14 @@ export class Journal {
     });
   }
 
-  renderGrid() {
+  renderToGridArticle() {
     const { showDiv, hoverDiv, subscribeBtn, unSubscribeBtn } =
-      this.getGridHTML();
+      this.getGridArticleHTML();
     this.addHoverEventToGrid(showDiv, hoverDiv);
     this.addSubEventToGrid(subscribeBtn, unSubscribeBtn, showDiv, hoverDiv);
   }
 
-  getdetailArticleHTML() {
+  getDetailArticleHTML() {
     const subNewsListHTML = this.journalData.subContent.subNewsList
       .map((item) => {
         return `<span>${item.trim()}</span>`;
@@ -121,8 +121,8 @@ export class Journal {
     });
   }
 
-  renderDetail() {
-    this.getdetailArticleHTML();
+  renderToDetailArticle() {
+    this.getDetailArticleHTML();
     this.addSubEventToDetail();
   }
 }

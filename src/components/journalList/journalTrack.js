@@ -1,21 +1,20 @@
 export class Track {
   constructor(journalTrackStore, journalDetailStore) {
-    this.store = journalTrackStore;
-    this.detailStore = journalDetailStore;
+    this.journalTrackStore = journalTrackStore;
+    this.journalDetailStore = journalDetailStore;
     this.element = document.createElement("div");
     this.element.classList.add("journal-track");
-    this.prevBtn;
-    this.nextBtn;
+    this.currentBatchSize = this.journalTrackStore.getBatchSize();
     this.currentPage = 0;
-    this.render();
+    this.renderToJournalTrack();
   }
 
-  beElement() {
+  getTrackContainerHTML() {
     const journalTrack = `<div class="journal-container"></div>`;
     this.element.innerHTML = journalTrack;
   }
 
-  addButton() {
+  addTrackMoveButtons() {
     const leftBtn = document.createElement("button");
     leftBtn.classList.add("track-btn_left");
     const leftImg = document.createElement("img");
@@ -33,22 +32,22 @@ export class Track {
   }
 
   moveTrack(direction) {
-    this.container = this.element.querySelector(".journal-container");
-    this.batchSize = this.store.getBatchSize();
+    const trackContainer = this.element.querySelector(".journal-container");
+
     const WIDTH_PER_PAGE = 900;
     const FIRST_PAGE = 0;
-    const LAST_PAGE = this.store.getBatchSize() - 1;
+    const LAST_PAGE = this.currentBatchSize - 1;
 
     if (direction === "left") {
       this.currentPage--;
-      this.countCurrentPage();
+      this.updateDetailNav();
     } else if (direction === "right") {
       this.currentPage++;
-      this.countCurrentPage();
+      this.updateDetailNav();
     }
 
     const currentPosition = this.currentPage * -WIDTH_PER_PAGE;
-    this.container.style.transform = `translateX(${currentPosition}px)`;
+    trackContainer.style.transform = `translateX(${currentPosition}px)`;
 
     if (LAST_PAGE === FIRST_PAGE) {
       this.prevBtn.classList.add("display-none");
@@ -63,12 +62,12 @@ export class Track {
     }
   }
 
-  addEvent() {
-    this.batchSize = this.store.getBatchSize();
+  addMoveEventToBtns() {
+    this.currentBatchSize = this.journalTrackStore.getBatchSize();
     this.prevBtn = this.element.querySelector(".track-btn_left");
     this.nextBtn = this.element.querySelector(".track-btn_right");
 
-    if (this.batchSize === 1) {
+    if (this.currentBatchSize === 1) {
       this.prevBtn.classList.add("display-none");
       this.nextBtn.classList.add("display-none");
     }
@@ -79,6 +78,7 @@ export class Track {
     this.nextBtn.addEventListener("click", () => this.moveTrack("right"));
   }
 
+  // 언론사 디테일 렌더링시 navBar 추가
   getDetailNavHTML() {
     const detailNavDiv = document.createElement("nav");
     detailNavDiv.classList.add("detail-type-bar");
@@ -110,18 +110,18 @@ export class Track {
     const journalContainer = document.querySelector(".journal-container");
 
     this.element.insertBefore(detailNavDiv, journalContainer);
-    this.countCurrentPage();
+    this.updateDetailNav();
   }
 
-  countCurrentPage() {
+  updateDetailNav() {
     const typeList = [
       ...document.querySelectorAll(".navType span:first-child"),
     ];
 
     typeList.forEach((type) => {
-      if (type.innerText === this.detailStore.currentJournalType) {
+      if (type.innerText === this.journalDetailStore.currentJournalType) {
         const typePage = `<span class="type-page">${this.currentPage + 1} / ${
-          this.detailStore.getDetailListAll().length
+          this.journalDetailStore.getDetailListAll().length
         }</span>`;
 
         const typePageElement = type.parentNode.querySelector(".type-page");
@@ -145,12 +145,12 @@ export class Track {
 
       const chosenJournalType = eventTarget.innerText;
 
-      this.detailStore.setCurrentJournalType(chosenJournalType);
+      this.journalDetailStore.setCurrentJournalType(chosenJournalType);
     });
   }
 
-  render() {
+  renderToJournalTrack() {
     this.currentPage = 0;
-    this.beElement();
+    this.getTrackContainerHTML();
   }
 }
