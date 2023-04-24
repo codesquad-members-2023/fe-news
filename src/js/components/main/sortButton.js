@@ -1,4 +1,4 @@
-import createEl from "../../utils/util.js";
+import createElement from "../../utils/util.js";
 import { VIEWTYPE } from '../../core/constants.js';
 import { ViewTypeStore } from "../../stores/viewTypeStore.js";
 import { PageStore } from "../../stores/pressPageStore.js";
@@ -9,14 +9,19 @@ class SortButton {
   constructor() {
     this.#viewTypeStore = ViewTypeStore;
     this.#pageStore = PageStore;
-    this.sortButtons = createEl('div', 'sort-buttons');
+    this.sortButtons = createElement('div', 'sort-buttons');
   }
 
   init() {
+    this.render();
+    this.#viewTypeStore.subscribe(this.render.bind(this));
+    return this;
+  }
+
+  render() {
     this.setTemplate();
     this.clickPress();
     this.clickView();
-    return this;
   }
 
   setTemplate({ press, view } = this.#viewTypeStore.getState()) {
@@ -40,16 +45,10 @@ class SortButton {
     this.sortButtons.innerHTML = template;
   }
 
-  #reRender() {
-    const state = this.#viewTypeStore.getState();
-    return this.init({ ...state });
-  }
-
   clickPress() {
     const pressType = this.sortButtons.querySelectorAll('.press-buttons > a');
     pressType.forEach(pressButton => {
       pressButton.addEventListener('click', ({ currentTarget }) => {
-        this.#viewTypeStore.subscribe(this.#reRender.bind(this));
         const isAll = currentTarget.textContent === VIEWTYPE['all'];
         const clickTargetName = isAll? 'all' : 'subscribe';
         this.#viewTypeStore.dispatch({
@@ -68,7 +67,6 @@ class SortButton {
     const viewType = this.sortButtons.querySelectorAll('.view-buttons > a');
     viewType.forEach(pressButton => {
       pressButton.addEventListener('click', ({ currentTarget }) => {
-        this.#viewTypeStore.subscribe(this.#reRender.bind(this));
         const isGrid = currentTarget.className.includes('grid');
         const clickTargetName = isGrid? 'grid' : 'list';
         this.#viewTypeStore.dispatch({
