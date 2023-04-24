@@ -36,11 +36,11 @@ export default class gridSubButtonView {
 
   slideButtonHandler({ target }) {
     if (target.closest('.slide_button_left')) {
-      this._curViewStateModel.decreaseIndex();
+      this._curViewStateModel.decreaseIndexOnGridView();
     }
 
     if (target.closest('.slide_button_right')) {
-      this._curViewStateModel.increaseIndex();
+      this._curViewStateModel.increaseIndexOnGridView();
     }
   }
 

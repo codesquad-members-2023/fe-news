@@ -164,12 +164,12 @@ export default class NSSectionCurViewStateModel extends Observer {
     this.notify(this._curViewState);
   }
 
-  increaseIndex() {
+  increaseIndexOnGridView() {
     this._curViewState.index += 1;
     this.notify(this._curViewState);
   }
 
-  decreaseIndex() {
+  decreaseIndexOnGridView() {
     this._curViewState.index -= 1;
     this.notify(this._curViewState);
   }
