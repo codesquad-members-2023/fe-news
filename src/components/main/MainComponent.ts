@@ -13,16 +13,6 @@ export class MainComponent implements TempComponent {
     this.$target = targetElement as HTMLElement;
     this._model = new MainModel();
     this._view = new MainView(this.$target);
-
-    const left = new MainLeftComponent();
-    const right = new MainRightComponent();
-    // 임시로 넣어줌
-    (
-      this.$target.querySelector('#left-main-wrapper') as HTMLElement
-    ).appendChild(left.element);
-    (
-      this.$target.querySelector('#right-main-wrapper') as HTMLElement
-    ).appendChild(right.element);
   }
 
   get state() {

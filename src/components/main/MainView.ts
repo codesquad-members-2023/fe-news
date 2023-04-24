@@ -1,5 +1,7 @@
 import { State } from '@custom-types/types';
 import { TempAbstractView } from '@custom-types/abstracts.js';
+import { MainLeftComponent } from '@components/main/main__left/MainLeftComponent.js';
+import { MainRightComponent } from '@components/main/main__right/MainRightComponent.js';
 
 export class MainView extends TempAbstractView {
   constructor($target: HTMLElement) {
@@ -19,11 +21,20 @@ export class MainView extends TempAbstractView {
     this.setEvents(state);
   }
 
-  setEvents(state: State) {
+  addChildren(state: State) {
+    const left = new MainLeftComponent();
+    const right = new MainRightComponent();
+    // [리펙토링 예정]
+    (
+      this.$target.querySelector('#left-main-wrapper') as HTMLElement
+    ).appendChild(left.element);
+    (
+      this.$target.querySelector('#right-main-wrapper') as HTMLElement
+    ).appendChild(right.element);
     return;
   }
 
-  addChildren(state: State) {
+  setEvents(state: State) {
     return;
   }
 }
