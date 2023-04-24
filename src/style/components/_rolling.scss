@@ -1,0 +1,31 @@
+.newsstand_rolling {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 0 33px;
+  width: 935px;
+}
+
+.rolling-container {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  gap: 16px;
+  width: 461px;
+  height: 49px;
+  background-color: $off-white;
+  border: 1px solid $gray100;
+
+  .media {
+    margin-left: 16px;
+    font-size: map-get($fontSize, 'SM');
+    font-weight: map-get($weight, 'Bold');
+  }
+
+  .issue {
+    line-height: 40px;
+    list-style-type: none;
+    font-size: map-get($fontSize, 'SM');
+    font-weight: map-get($weight, 'Medium');
+    color: $gray500;
+  }
+}

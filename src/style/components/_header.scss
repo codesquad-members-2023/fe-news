@@ -1,0 +1,16 @@
+.newsstand_header {
+  display: flex;
+  justify-content: space-between;
+  width: 935px;
+
+  .title {
+    font-size: map-get($fontSize, 'display');
+    font-weight: map-get($weight, 'Bold');
+  }
+
+  .date {
+    font-size: map-get($fontSize, 'MD');
+    font-weight: map-get($weight, 'Medium');
+    color: $gray500;
+  }
+}
