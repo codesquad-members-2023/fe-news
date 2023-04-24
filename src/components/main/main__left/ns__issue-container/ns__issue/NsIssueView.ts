@@ -7,8 +7,8 @@ export class NsIssueView extends AbstractView {
     super();
   }
 
-  protected setTemplate() {
-    this._templateElement.innerHTML = `<div class="w-1/2 bg-slate-50 border border-gray-100 flex flex-row justify-start items-center">
+  protected setWrapper() {
+    this._wrapperElement.innerHTML = `<div class="w-1/2 bg-slate-50 border border-gray-100 flex flex-row justify-start items-center">
                                          <div class="mx-2 w-14 text-sm font-bold">연합뉴스</div>
                                          <div id="article__title-container" class="w-fit truncate">
                                            <p id="article__title" class="mx-2 w-auto text-sm font-medium text-gray-500 truncate"></p>

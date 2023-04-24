@@ -16,8 +16,8 @@ export class NsCategoryNavbarObserverViewComponent
   }
 
   // setTemplate은 subscriber 처리하면 안된다. 그러면 element가 초기화되어버림.
-  setTemplate() {
-    this._templateElement.innerHTML = `<ul id="category-navbar" class="px-3 w-full h-10 flex flex-row justify-start items-center bg-gray-100 text-sm text-gray-500 border border-gray-200 gap-x-8">
+  setWrapper() {
+    this._wrapperElement.innerHTML = `<ul id="category-navbar" class="px-3 w-full h-10 flex flex-row justify-start items-center bg-gray-100 text-sm text-gray-500 border border-gray-200 gap-x-8">
                                        </ul>`;
   }
 

@@ -7,8 +7,8 @@ export class NsDateView extends AbstractView {
     super();
   }
 
-  protected setTemplate() {
-    this._templateElement.innerHTML = `<p class="w-1/2 h-full text-right text-base/[3rem] font-medium text-gray-500"></p>`;
+  protected setWrapper() {
+    this._wrapperElement.innerHTML = `<p class="w-1/2 h-full text-right text-base/[3rem] font-medium text-gray-500"></p>`;
   }
 
   render(state: State) {

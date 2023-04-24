@@ -6,8 +6,8 @@ export class FooterView extends AbstractView {
     super();
   }
 
-  protected setTemplate() {
-    this._templateElement.innerHTML = `<footer class="h-1/6 bg-green-100 border border-green-500 text-3xl text-gray-500 grid place-content-center">Footer</footer>`;
+  protected setWrapper() {
+    this._wrapperElement.innerHTML = `<footer class="h-1/6 bg-green-100 border border-green-500 text-3xl text-gray-500 grid place-content-center">Footer</footer>`;
   }
 
   render(state: State) {

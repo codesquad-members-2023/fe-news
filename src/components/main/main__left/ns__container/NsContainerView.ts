@@ -7,8 +7,8 @@ export class NsContainerView extends AbstractView {
     super();
   }
 
-  protected setTemplate() {
-    this._templateElement.innerHTML = `<section class="px-2 h-full border border-blue-500 flex flex-col justify-start"></section>`;
+  protected setWrapper() {
+    this._wrapperElement.innerHTML = `<section class="px-2 h-full border border-blue-500 flex flex-col justify-start"></section>`;
   }
 
   render(state: State) {
