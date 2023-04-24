@@ -12,7 +12,7 @@ export const showMediaLogosGrid = (mediaDataSet) => {
   const rightButton = $(".grid_btn-right");
   const leftButton = $(".grid_btn-left");
   const mediaData = mediaDataSet;
-  
+
   const insertMediaData = (subscribe, gridBox, mediaLogoData, page) => {
     gridBox.innerHTML = mediaLogoData.reduce((acc, data) => {
       return (acc += `<div class="grid_list" id="${data.mediaId}" index="${page}">
@@ -50,32 +50,29 @@ export const showMediaLogosGrid = (mediaDataSet) => {
   toggle("hidden", COMPANY.FIRST_PAGE);
 
   const togglePage = (page, isDisplayNone) => {
+    [gridFirstPage, gridSecondPage, gridThirdPage, gridFourthPage].forEach((pageDom, idx) => {
+      if (page === idx) pageDom.classList.remove(isDisplayNone);
+      else pageDom.classList.add(isDisplayNone);
+    });
+    
     const { FIRST_PAGE, SECOND_PAGE, THIRD_PAGE, LAST_PAGE } = COMPANY;
     switch (page) {
       case FIRST_PAGE: {
         gridFirstPage.classList.remove(isDisplayNone);
         gridSecondPage.classList.add(isDisplayNone);
-        gridThirdPage.classList.add(isDisplayNone);
-        gridFourthPage.classList.add(isDisplayNone);
         break;
       }
       case SECOND_PAGE: {
         gridFirstPage.classList.add(isDisplayNone);
         gridSecondPage.classList.remove(isDisplayNone);
-        gridThirdPage.classList.add(isDisplayNone);
-        gridFourthPage.classList.add(isDisplayNone);
         break;
       }
       case THIRD_PAGE: {
-        gridFirstPage.classList.add(isDisplayNone);
         gridSecondPage.classList.add(isDisplayNone);
         gridThirdPage.classList.remove(isDisplayNone);
-        gridFourthPage.classList.add(isDisplayNone);
         break;
       }
       case LAST_PAGE: {
-        gridFirstPage.classList.add(isDisplayNone);
-        gridSecondPage.classList.add(isDisplayNone);
         gridThirdPage.classList.add(isDisplayNone);
         gridFourthPage.classList.remove(isDisplayNone);
         break;

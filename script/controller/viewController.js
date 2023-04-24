@@ -1,28 +1,23 @@
 import { insertNewsHeadlineData } from "../view/newsRollingBar.js";
 import { showMediaLogosGrid } from "../view/newsCompany/newsCompany.js";
 import { API_PATH } from "../constants/api.js";
-import { COMPANY, ROLLING, CATEGORY } from "../constants/dom.js";
+import { COMPANY, ROLLING, category } from "../constants/dom.js";
 import { insertMediaDetailData } from "../view/newsCompany/newsCompanyDetail.js";
 //fetch된 데이터를 불러오고, 데이터들을 각 렌더링 해주는 곳에 넣어준다.
 export const preprocessData = async () => {
-  const rollingData = await fetchRollingoData();
-  const gridData = await fetchCompanyData();
+  const rollingData = await fetchData(API_PATH.auto);
+  const gridData = await fetchData(API_PATH.media);
   const rollingRandomDataLeft = fixedRandomData(rollingData.leftRollingData, ROLLING.TOTAL);
   const rollingRandomDataRight = fixedRandomData(rollingData.rightRollingData, ROLLING.TOTAL);
   const gridRandomData = fixedRandomData(gridData, COMPANY.TOTAL_GRID);
   insertNewsHeadlineData(rollingRandomDataLeft, ".data_list_left");
   insertNewsHeadlineData(rollingRandomDataRight, ".data_list_right");
   deliverGridData(gridRandomData, COMPANY.PAGES_PER);
-  findData(".economy_detail_display", CATEGORY.ECONOMY, gridData);
-
+  findData(".economy_detail_display", category.economy, gridData);
 };
 
-export const fetchRollingoData = async () => {
-  return await fetch(API_PATH.auto).then((res) => res.json());
-};
-
-export const fetchCompanyData = async () => {
-  return await fetch(API_PATH.media).then((res) => res.json());
+export const fetchData = async (url) => {
+  return await fetch(url).then((res) => res.json());
 };
 
 //랜덤으로 번호를 뽑아낸다.

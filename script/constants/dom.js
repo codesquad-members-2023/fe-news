@@ -9,6 +9,15 @@ export const COMPANY = Object.freeze({
 });
 export const ROLLING = Object.freeze({ TOTAL: 5 });
 export const SUBSCRIBE = Object.freeze({ REGISTER: "+구독하기", CANCEL: "+해지하기" });
+export const category = {
+  economy: "종합/경제",
+  broadcast: "방송/통신",
+  it: "IT",
+  english: "영자지",
+  sports: "스포츠/연예",
+  magazine: "매거진/전문지",
+  area: "지역",
+};
 export const TEMPLATE = {
   header: `<div class="news__header">
   <div class="heder__logo">
@@ -60,30 +69,6 @@ export const TEMPLATE = {
 <div class="news_detail_container"></div>
 <div class="detail_btn-right"><img src="assets/rightButton.svg" /></div>
 </div>`,
-  newsDetailCategory: `
-<div class="category-economy">종합/경제</div>
-<div class="category-broadcast">방송/통신</div>
-<div class="category-it">IT</div>
-<div class="category-engilsh">영자지</div>
-<div class="category-sports">스포츠/연예</div>
-<div class="category-magazine">매거진/전문지</div>
-<div class="category-area">지역</div>`,
-  categoryDisplay: `
-    <div class="economy_detail_display"></div>
-    <div class="broadcast_detail_display"></div>
-    <div class="it_detail_display"></div>
-    <div class="engilsh_detail_display"></div>
-    <div class="sports_detail_display"></div>
-    <div class="magazine_detail_display"></div>
-    <div class="area_detail_display"></div>`,
-};
-
-export const CATEGORY = {
-  ECONOMY: "종합/경제",
-  BROADCAST: "방송/통신",
-  IT: "IT",
-  ENGILSH: "영자지",
-  SPORTS: "스포츠/연예",
-  MAGAZINE: "매거진/전문지",
-  AREA: "지역",
+  newsDetailCategory: Object.keys(category).reduce((acc, categoryList) => acc + `<div class="category-${categoryList}">${category[categoryList]}</div>`, ""),
+  categoryDisplay: Object.keys(category).reduce((acc, categoryList) => acc + `<div class="${categoryList}_detail_display"></div>`, ""),
 };
