@@ -93,3 +93,7 @@
 .navType {
   cursor: pointer;
 }
+
+.navType span:first-child:hover {
+  text-decoration: underline;
+}

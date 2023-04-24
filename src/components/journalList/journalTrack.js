@@ -123,6 +123,7 @@ export class Track {
         const typePage = `<span class="type-page">${this.currentPage + 1} / ${
           this.detailStore.getDetailListAll().length
         }</span>`;
+
         const typePageElement = type.parentNode.querySelector(".type-page");
         if (!typePageElement) {
           type.parentNode.classList.add("hover-color");
