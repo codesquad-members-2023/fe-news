@@ -2,8 +2,6 @@ import { Props, State } from '@custom-types/types';
 import { TempComponent } from '@custom-types/interfaces';
 import { MainModel } from '@components/main/MainModel.js';
 import { MainView } from '@components/main/MainView.js';
-import { MainRightComponent } from '@components/main/main__right/MainRightComponent.js';
-import { MainLeftComponent } from '@components/main/main__left/MainLeftComponent.js';
 
 export class MainComponent implements TempComponent {
   private _model: MainModel;

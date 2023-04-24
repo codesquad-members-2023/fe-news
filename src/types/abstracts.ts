@@ -71,21 +71,21 @@ export abstract class TempAbstractView {
     this.render({});
   }
 
-  template(state: State) {
-    return ``;
-  }
-
   render(state: State) {
     this.$target.innerHTML = this.template(state);
     this.addChildren(state);
     this.setEvents(state);
   }
 
-  setEvents(state: State) {
-    return;
+  template(state: State) {
+    return ``;
   }
 
   addChildren(state: State) {
+    return;
+  }
+
+  setEvents(state: State) {
     return;
   }
 }
