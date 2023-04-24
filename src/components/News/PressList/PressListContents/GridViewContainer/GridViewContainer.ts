@@ -2,9 +2,10 @@ import { add, addStyle, addShadow, getProperty, setProperty } from '@utils/dom';
 import style from './GridViewContainerStyle';
 import { MAX_ITEM_NUM } from '@constant/index';
 import { sliceByPage } from '@utils/common';
-import { StroeType } from '@utils/redux';
-import { DisplayType } from '@store/display/displayType';
+import { StoreType } from '@utils/redux';
+
 import store from '@store/index';
+import { NewsType } from '@store/news/newsType';
 
 interface GridViewContainer {
   icon?: string | null;
@@ -12,11 +13,11 @@ interface GridViewContainer {
 
 class GridViewContainer extends HTMLElement {
   wrap: HTMLElement | null = null;
-  displayStore: StroeType<DisplayType>;
+  newsStore: StoreType<NewsType>;
 
   constructor() {
     super();
-    this.displayStore = store.display;
+    this.newsStore = store.news;
   }
 
   connectedCallback() {
@@ -31,7 +32,7 @@ class GridViewContainer extends HTMLElement {
       style: style(),
     });
 
-    this.displayStore.subscribe(() => {
+    this.newsStore.subscribe(() => {
       this.changePage();
     });
   }
@@ -49,9 +50,8 @@ class GridViewContainer extends HTMLElement {
   }
 
   changePage() {
-    const currentTab = this.displayStore.getState().currentTab;
-    const currentPage =
-      this.displayStore.getState().page.grid[currentTab].currentPage;
+    const currentTab = this.newsStore.getState().display.currentTab;
+    const currentPage = this.newsStore.getState().display.currentPage;
     this.shadowRoot
       ?.querySelectorAll('grid-view-element')
       .forEach((gridViewElement: any, i: number) => {
@@ -65,7 +65,7 @@ class GridViewContainer extends HTMLElement {
 
   render(pressList: any) {
     const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);
-    // this.displayStore.dispatch({type:'SET_TOTAL_PAGE', payload: {view:'grid', tab:, totalPage:}})
+
     const slicedPressList = Array.from({ length: maxPage }).map(
       (v: any, i: number) =>
         sliceByPage({

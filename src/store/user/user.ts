@@ -4,40 +4,36 @@ import { TEMP_ID } from '@constant/index';
 
 const initialState: UserType = {
   id: TEMP_ID,
-  subscribingPress: [] as string[],
+  subscribingPressId: [] as string[],
 };
 
-interface props {
-  state: UserType;
-}
-
-interface setUserProps extends props {
-  payload: any;
-}
-
-interface subscribeProps extends props {
-  payload: string;
-}
-
-interface unsubscribeProps extends props {
-  payload: string;
-}
-
-const setUser = ({ payload }: setUserProps) => {
+const setUser = ({ payload }: { state: UserType; payload: any }) => {
   return { ...payload, subscribingPress: payload.subscribingPressIds };
 };
 
-const subscribe = ({ state, payload }: subscribeProps) => {
-  if (state.subscribingPress.length === 0)
+const subscribe = ({
+  state,
+  payload,
+}: {
+  state: UserType;
+  payload: string;
+}) => {
+  if (state.subscribingPressId.length === 0)
     return { ...state, subscribingPress: [payload] };
   return {
     ...state,
-    subscribingPress: [...state.subscribingPress, payload],
+    subscribingPress: [...state.subscribingPressId, payload],
   };
 };
 
-const unsubscribe = ({ state, payload }: unsubscribeProps) => {
-  const newSubscribingPress = state.subscribingPress.filter(
+const unsubscribe = ({
+  state,
+  payload,
+}: {
+  state: UserType;
+  payload: string;
+}) => {
+  const newSubscribingPress = state.subscribingPressId.filter(
     (pressId: string) => pressId !== payload
   );
   return { ...state, subscribingPress: newSubscribingPress };

@@ -1,8 +1,8 @@
 import { add, addStyle, addShadow, getProperty, create } from '@utils/dom';
 import style from './ListViewItemStyle';
-import { ArticleInterface } from '@store/section/sectionType';
+
 import store from '@store/index';
-import { StroeType } from '@utils/redux';
+import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
 
 interface ListViewItem {
@@ -10,7 +10,7 @@ interface ListViewItem {
 }
 
 class ListViewItem extends HTMLElement {
-  userStore: StroeType<UserType>;
+  userStore: StoreType<UserType>;
   isSubscribed: boolean;
   pid: string;
   constructor() {
@@ -49,7 +49,7 @@ class ListViewItem extends HTMLElement {
     const id = sectionData?.press.pid;
     const btnContainer = this.shadowRoot?.querySelector('.btn-container');
     const subscribingPress: string[] =
-      this.userStore.getState().subscribingPress;
+      this.userStore.getState().subscribingPressId;
     const isSubscribed = id ? subscribingPress.includes(id) : '';
     const template = `
       <button-element icon="${isSubscribed ? 'close' : 'plus'}" id='${id}'>
@@ -87,7 +87,7 @@ class ListViewItem extends HTMLElement {
     const otherArticles = articles?.slice(1);
     this.isSubscribed = this.userStore
       .getState()
-      .subscribingPress.includes(this.pid);
+      .subscribingPressId.includes(this.pid);
 
     const template = `
     <div class="header">
@@ -99,7 +99,7 @@ class ListViewItem extends HTMLElement {
     </div>
     <div class="contents">
       ${[mainArticle].map(
-        (article: ArticleInterface) =>
+        (article: any) =>
           `<div class="headliner">
             <button class="image" ${`style="background-image: url('${article.img}')"`}></button>
             <div class="title">
@@ -112,7 +112,7 @@ class ListViewItem extends HTMLElement {
         ${otherArticles
           .slice(1)
           .map(
-            (article: ArticleInterface, i: number) =>
+            (article: any, i: number) =>
               `<li class="typo-body-md" id='${article.id}'><a href='${article.link}'>${article.title}</a></li>`
           )
           .join('')}

@@ -1,25 +1,22 @@
 import { add, addStyle, addShadow, getProperty, setProperty } from '@utils/dom';
 import style from './ListViewTabStyle';
 import store from '@store/index';
-import { StroeType } from '@utils/redux';
+import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
-import { PressListType } from '@store/press/pressType';
-import { SectionInfoType } from '@store/section/sectionType';
-import { DisplayType } from '@store/display/displayType';
+import { NewsType } from '@store/news/newsType';
+import News from 'src/App';
 
 interface ListViewTab {
   icon?: string | null;
 }
 
 class ListViewTab extends HTMLElement {
-  userStore: StroeType<UserType>;
-  pressStore: StroeType<PressListType>;
-  displayStore: StroeType<DisplayType>;
+  userStore: StoreType<UserType>;
+  newStore: StoreType<NewsType>;
   constructor() {
     super();
     this.userStore = store.user;
-    this.pressStore = store.press;
-    this.displayStore = store.display;
+    this.newStore = store.news;
   }
 
   connectedCallback() {
@@ -44,20 +41,19 @@ class ListViewTab extends HTMLElement {
   }
 
   renderTabForCustomTab(
-    sectionData: SectionInfoType,
-    subscribingPress: PressListType['customPressList']
+    sectionData: any,
+    subscribingPress: any['customPressList']
   ) {
     const currentPressId = sectionData.section.pressId;
     const isActive = (pressId: string) =>
       currentPressId === pressId ? true : false;
-    const currentPage =
-      this.displayStore.getState().page['list']['custom'].currentPage;
+    const currentPage = this.newStore.getState().display.currentPage;
 
     const template = `
       <div class="tab-wrap" draggable="true">
       ${subscribingPress
         .map(
-          (press) =>
+          (press: any) =>
             `<list-view-tab-item-element is-active=${
               isActive(press.pid) ? 'true' : 'false'
             } ${isActive(press.pid) ? `progress="50"` : ''} id='${
@@ -80,7 +76,7 @@ class ListViewTab extends HTMLElement {
     });
   }
 
-  renderTabForGeneralTab(sectionData: SectionInfoType) {
+  renderTabForGeneralTab(sectionData: any) {
     const currentCategory = sectionData.section.category;
     const categoryCounts = sectionData.categoryCounts;
     const categoryIndex = sectionData.currentCategoryIndex;
@@ -141,10 +137,10 @@ class ListViewTab extends HTMLElement {
     if (isCustom !== 'true') {
       this.renderTabForGeneralTab(sectionData);
     } else {
-      const subscribingPress = this.pressStore.getState().customPressList;
+      const subscribingPress = this.newStore.getState().press.customPressList;
       this.renderTabForCustomTab(sectionData, subscribingPress);
-      this.pressStore.subscribe(() => {
-        const subscribingPress = this.pressStore.getState().customPressList;
+      this.newStore.subscribe(() => {
+        const subscribingPress = this.newStore.getState().press.customPressList;
         this.renderTabForCustomTab(sectionData, subscribingPress);
       });
     }

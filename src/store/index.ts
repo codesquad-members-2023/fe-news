@@ -1,13 +1,7 @@
 import userStore from './user/user';
-import displayStore from './display/display';
-import sectionStore from './section/section';
-import pressStore from './press/press';
-import rollingNewsStore from './rollingNews/rollingNews';
+import newsStore from './news/news';
 
 export default {
   user: userStore,
-  display: displayStore,
-  section: sectionStore,
-  press: pressStore,
-  rollingNews: rollingNewsStore,
+  news: newsStore,
 };

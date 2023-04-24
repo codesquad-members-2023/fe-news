@@ -1,4 +1,4 @@
 export interface UserType {
   id: string;
-  subscribingPress: string[];
+  subscribingPressId: string[];
 }

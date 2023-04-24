@@ -8,8 +8,8 @@ import {
 } from '@utils/dom';
 import style from './GridViewItemStyle';
 import store from '@store/index';
-import { PressType } from '@store/press/pressType';
-import { StroeType } from '@utils/redux';
+
+import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
 
 interface GridViewItem {
@@ -18,8 +18,8 @@ interface GridViewItem {
 
 class GridViewItem extends HTMLElement {
   wrap: HTMLElement | null = null;
-  press: PressType | null = null;
-  userStore: StroeType<UserType>;
+  press: any | null = null;
+  userStore: StoreType<UserType>;
 
   constructor() {
     super();
@@ -50,7 +50,7 @@ class GridViewItem extends HTMLElement {
       return;
     }
     const subscribingPress: string[] =
-      this.userStore.getState().subscribingPress;
+      this.userStore.getState().subscribingPressId;
     const isSubscribed = id ? subscribingPress.includes(id) : false;
     const btnContainer = this.querySelector('.press-subscribe-btn-container');
     const template = `${

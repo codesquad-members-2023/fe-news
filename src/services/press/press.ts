@@ -1,27 +1,14 @@
 import { MAX_ITEM_NUM, TEMP_ID } from '@constant/index';
 import { getPressAPI } from '@apis/news';
 import { getUser } from '@apis/user';
-import { StroeType } from '@utils/redux';
-import { DisplayType } from '@store/display/displayType';
-import { PressListType } from '@store/press/pressType';
-
-interface getPressListProps {
-  displayStore: StroeType<DisplayType>;
-  pressStore: StroeType<PressListType>;
-}
-
-interface getCustomPressListProps {
-  displayStore: StroeType<DisplayType>;
-  pressStore: StroeType<PressListType>;
-}
+import { pressListContentsPropsType } from './pressType';
 
 export const getPressList = async ({
-  displayStore,
-  pressStore,
-}: getPressListProps) => {
+  newsStore,
+}: pressListContentsPropsType) => {
   let pressList = await getPressAPI();
   pressList = pressList.slice(0, MAX_ITEM_NUM * 4);
-  displayStore.dispatch({
+  newsStore.dispatch({
     type: 'SET_TOTAL_PAGE',
     payload: {
       view: 'grid',
@@ -29,16 +16,15 @@ export const getPressList = async ({
       totalPage: Math.ceil(pressList.length / 24) - 1,
     },
   });
-  pressStore.dispatch({
+  newsStore.dispatch({
     type: 'SET_PRESS_LIST',
     payload: { pressList },
   });
 };
 
 export const getCustomPressList = async ({
-  displayStore,
-  pressStore,
-}: getCustomPressListProps) => {
+  newsStore,
+}: pressListContentsPropsType) => {
   const pressList = await getPressAPI();
   const user = await getUser({ id: TEMP_ID });
   const subscribingPressIds = user[0].subscribingPressIds;
@@ -51,7 +37,7 @@ export const getCustomPressList = async ({
     },
     []
   );
-  displayStore.dispatch({
+  newsStore.dispatch({
     type: 'SET_TOTAL_PAGE',
     payload: {
       view: 'grid',
@@ -59,7 +45,7 @@ export const getCustomPressList = async ({
       totalPage: Math.ceil(customPressList.length / 24) - 1,
     },
   });
-  pressStore.dispatch({
+  newsStore.dispatch({
     type: 'SET_CUSTOM_PRESS_LIST',
     payload: { pressList: customPressList },
   });

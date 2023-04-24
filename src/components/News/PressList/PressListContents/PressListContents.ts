@@ -10,47 +10,27 @@ import {
   getProperty,
 } from '@utils/dom';
 import list from './PressListContentsStyle';
-import { StroeType } from '@utils/redux';
-import { DisplayType } from '@store/display/displayType';
+import { StoreType } from '@utils/redux';
 import store from '@store/index';
-
 import { getUser, subscribeAPI, unsubscribeAPI } from '@apis/user';
-import { parseQuotationMarks } from '@utils/parser';
-import { ArticleInterface, SectionInfoType } from '@store/section/sectionType';
-import { PressListType } from '@store/press/pressType';
 import { TEMP_ID } from '@constant/index';
 import { UserType } from '@store/user/userType';
 import { getPressList, getCustomPressList } from '@services/press/press';
 import { getSection, getCustomSection } from '@services/section/section';
+import { NewsType, TAB, VIEW } from '@store/news/newsType';
 
 interface PressListContents {
   icon?: string | null;
 }
 
-interface getCurrentSectionProps {
-  page: number;
-}
-
-interface appendGridViewProps {
-  tab: 'general' | 'custom';
-}
-
 class PressListContents extends HTMLElement {
   wrap: HTMLElement | null = null;
-  displayStore: StroeType<DisplayType>;
-  sectionStore: StroeType<SectionInfoType>;
-  userStore: StroeType<UserType>;
-  pressStore: StroeType<PressListType>;
-  pressList: any[] = [];
-  section: any;
+  newsStore: StoreType<NewsType>;
+  userStore: StoreType<UserType>;
 
   constructor() {
     super();
-    this.pressList = [];
-    this.section = null;
-    this.displayStore = store.display;
-    this.sectionStore = store.section;
-    this.pressStore = store.press;
+    this.newsStore = store.news;
     this.userStore = store.user;
   }
 
@@ -90,27 +70,26 @@ class PressListContents extends HTMLElement {
     this.userStore.dispatch({ type: 'SET_USER', payload: userData[0] });
 
     this.handleDisplay();
-    this.renderGridView({ tab: 'general' });
-    this.renderGridView({ tab: 'custom' });
-    this.renderListView({ tab: 'general' });
-    this.renderListView({ tab: 'custom' });
+    this.renderGridView({ tab: TAB.GENERAL });
+    this.renderGridView({ tab: TAB.CUSTOM });
+    this.renderListView({ tab: TAB.GENERAL });
+    this.renderListView({ tab: TAB.CUSTOM });
   }
 
-  async renderGridView({ tab }: { tab: 'general' | 'custom' }) {
+  async renderGridView({ tab }: { tab: TAB }) {
     let pressList;
+    const newsStore = this.newsStore;
     if (tab === 'general') {
       await getPressList({
-        displayStore: this.displayStore,
-        pressStore: this.pressStore,
+        newsStore,
       });
-      pressList = this.pressStore.getState().pressList;
+      pressList = this.newsStore.getState().press.pressList;
     }
     if (tab === 'custom') {
       await getCustomPressList({
-        displayStore: this.displayStore,
-        pressStore: this.pressStore,
+        newsStore,
       });
-      pressList = this.pressStore.getState().customPressList;
+      pressList = newsStore.getState().press.customPressList;
     }
     const gridViewContainer = create({
       tagName: 'grid-view-container-element',
@@ -122,35 +101,26 @@ class PressListContents extends HTMLElement {
       ?.querySelector('.view.grid')
       ?.prepend(gridViewContainer);
 
-    this.handlePageController().appendController(tab, 'grid');
-    this.handlePageController().movePage(tab, 'grid');
+    this.handlePageController().appendController(tab, VIEW.GRID);
+    this.handlePageController().movePage(tab, VIEW.GRID);
     this.handleSubscribe().addClickEvnetToGridView(tab);
   }
 
-  async renderListView({
-    tab,
-    page = 0,
-  }: {
-    tab: 'general' | 'custom';
-    page?: number;
-  }) {
+  async renderListView({ tab, page = 0 }: { tab: TAB; page?: number }) {
     let section;
-    const sectionStore = this.sectionStore;
-    const displayStore = this.displayStore;
+    const newsStore = this.newsStore;
     const userStore = this.userStore;
     if (tab === 'general') {
-      await getSection({ sectionStore, displayStore, page: 0 });
-      section = this.sectionStore.getState();
+      await getSection({ newsStore, page: 0 });
     }
     if (tab === 'custom') {
       await getCustomSection({
         userStore,
-        displayStore,
-        sectionStore,
+        newsStore,
         page: 0,
       });
-      section = this.sectionStore.getState();
     }
+    section = this.newsStore.getState().section.section;
     const listViewContainer = create({
       tagName: 'div',
       classList: ['list-view-container'],
@@ -167,29 +137,27 @@ class PressListContents extends HTMLElement {
       ?.querySelector('.view.list')
       ?.prepend(listViewContainer);
 
-    this.handlePageController().appendController(tab, 'list');
-    this.handlePageController().movePage(tab, 'list');
+    this.handlePageController().appendController(tab, VIEW.LIST);
+    this.handlePageController().movePage(tab, VIEW.LIST);
     this.handleSubscribe().addClickEvnetToListView(tab);
     this.handleListView().handleTab(tab);
   }
 
   handleListView() {
     const userStore = this.userStore;
-    const sectionStore = this.sectionStore;
-    const displayStore = this.displayStore;
+    const newsStore = this.newsStore;
+    const section = this.newsStore.getState().section.section;
 
     return {
       updateSection: async (page: number) => {
-        await getSection({ sectionStore, displayStore, page });
-        const section = this.sectionStore.getState();
+        await getSection({ newsStore, page });
         this.shadowRoot
           ?.querySelector('section.general .view.list list-view-element')
           ?.setAttribute('section-data', JSON.stringify(section));
         this.handleSubscribe().addClickEvnetToListView();
       },
       updateCustomSection: async (page: number) => {
-        await getCustomSection({ userStore, displayStore, sectionStore, page });
-        const section = this.sectionStore.getState();
+        await getCustomSection({ userStore, newsStore, page });
         this.shadowRoot
           ?.querySelector('section.custom .view.list list-view-element')
           ?.setAttribute('section-data', JSON.stringify(section));
@@ -219,7 +187,7 @@ class PressListContents extends HTMLElement {
           const id = getProperty({ target, name: 'id' });
           const subscribingPressIndex = userStore
             .getState()
-            .subscribingPress.findIndex((pressId) => pressId === id);
+            .subscribingPressId.findIndex((pressId) => pressId === id);
           this.updateSection(subscribingPressIndex);
         }
       },
@@ -228,11 +196,9 @@ class PressListContents extends HTMLElement {
 
   async handleDisplay() {
     const toggleShowClass = async () => {
-      const displayStates = this.displayStore.getState();
+      const { currentTab, currentView } = this.newsStore.getState().display;
 
-      const displaySection = this.wrap?.querySelector(
-        `section.${displayStates.currentTab}`
-      );
+      const displaySection = this.wrap?.querySelector(`section.${currentTab}`);
       const hideSection =
         displaySection?.nextElementSibling ??
         displaySection?.previousElementSibling;
@@ -243,7 +209,7 @@ class PressListContents extends HTMLElement {
       }
 
       const displayView = this.wrap?.querySelector(
-        `section.${displayStates.currentTab} .view.${displayStates.currentView}`
+        `section.${currentTab} .view.${currentView}`
       );
       const hideView =
         displayView?.nextElementSibling ?? displayView?.previousElementSibling;
@@ -253,37 +219,31 @@ class PressListContents extends HTMLElement {
         toggleClass(hideView, 'hide');
       }
     };
-    this.displayStore.subscribe(toggleShowClass);
+    this.newsStore.subscribe(toggleShowClass);
   }
 
   handlePageController() {
     return {
-      handleClick: (
-        e: any,
-        view: 'grid' | 'list',
-        tab: 'general' | 'custom',
-        controllerElement: any
-      ) => {
+      handleClick: (e: any, view: VIEW, tab: TAB, controllerElement: any) => {
         const target = e.target;
         const position = target.getAttribute('position');
         const isLeft = position === 'left';
 
         if (!isLeft) {
-          this.displayStore.dispatch({
+          this.newsStore.dispatch({
             type: 'NEXT_PAGE',
             payload: { view, tab },
           });
         } else {
-          this.displayStore.dispatch({
+          this.newsStore.dispatch({
             type: 'PREV_PAGE',
             payload: { view, tab },
           });
         }
 
-        const currentPage =
-          this.displayStore.getState().page[view][tab].currentPage;
+        const currentPage = this.newsStore.getState().display.currentPage;
         const totalPage =
-          this.displayStore.getState().page[view][tab].totalPage;
+          this.newsStore.getState().display.totalPage[view][tab];
 
         const isLastPage = currentPage === totalPage;
         const isFirstPage = currentPage === 0;
@@ -336,7 +296,7 @@ class PressListContents extends HTMLElement {
           }
         }
       },
-      movePage: (tab: 'general' | 'custom', view: 'grid' | 'list') => {
+      movePage: (tab: TAB, view: VIEW) => {
         const controllerElement = select({
           selector: 'controller-element',
           parent: document
@@ -354,9 +314,9 @@ class PressListContents extends HTMLElement {
           )
         );
       },
-      appendController: (tab: 'general' | 'custom', view: 'grid' | 'list') => {
+      appendController: (tab: TAB, view: VIEW) => {
         const isOnePage =
-          this.displayStore.getState().page[view][tab].totalPage === 1;
+          this.newsStore.getState().display.totalPage[view][tab] === 1;
         const isList = view === 'list';
         const hide = isOnePage ? 'all' : isList ? 'none' : 'left';
         const controller = create({
@@ -379,12 +339,13 @@ class PressListContents extends HTMLElement {
     }
     return {
       getCustomPressList: () => {
-        const subscribingPressIds = this.userStore.getState().subscribingPress;
-        const pressList = this.pressStore.getState().pressList;
+        const subscribingPressIds =
+          this.userStore.getState().subscribingPressId;
+        const pressList = this.newsStore.getState().press.pressList;
         const customPressList = pressList.filter((press: any) =>
           subscribingPressIds.includes(press.pid)
         );
-        this.pressStore.dispatch({
+        this.newsStore.dispatch({
           type: 'SET_CUSTOM_PRESS_LIST',
           payload: { pressList: customPressList },
         });
@@ -395,7 +356,7 @@ class PressListContents extends HTMLElement {
           type: 'UNSUBSCRIBE',
           payload: id,
         });
-        this.pressStore.dispatch({
+        this.newsStore.dispatch({
           type: 'UNSUBSCRIBE',
           payload: id,
         });
@@ -411,7 +372,7 @@ class PressListContents extends HTMLElement {
           type: 'SUBSCRIBE',
           payload: id,
         });
-        this.pressStore.dispatch({
+        this.newsStore.dispatch({
           type: 'SUBSCRIBE',
           payload: id,
         });
@@ -424,7 +385,7 @@ class PressListContents extends HTMLElement {
 
       updateCustomGridViewData: () => {
         this.handleSubscribe().getCustomPressList();
-        const customPressList = this.pressStore.getState().customPressList;
+        const customPressList = this.newsStore.getState().press.customPressList;
         const gridViewContainerElement = this.shadowRoot
           ?.querySelector(`section.custom`)
           ?.querySelector('.view.grid')
