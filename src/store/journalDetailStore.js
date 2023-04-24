@@ -8,7 +8,7 @@ export class JournalDetailStore {
   }
 
   setDetailListAll(journalItems) {
-    this.detailListAll = journalItems;
+    this.detailListAll = journalItems.sort(() => 0.5 - Math.random());
   }
 
   getDetailListAll() {

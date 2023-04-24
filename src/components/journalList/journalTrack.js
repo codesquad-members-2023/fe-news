@@ -41,8 +41,10 @@ export class Track {
 
     if (direction === "left") {
       this.currentPage--;
+      this.countCurrentPage();
     } else if (direction === "right") {
       this.currentPage++;
+      this.countCurrentPage();
     }
 
     const currentPosition = this.currentPage * -WIDTH_PER_PAGE;
@@ -84,43 +86,50 @@ export class Track {
     const detailNavHTML = `
     <div class="navType">
       <span>종합/경제</span>
-      <span>1 / 81</span>
     </div>
     <div class="navType">
       <span>방송/통신</span>
-      <span>1 / 81</span>
     </div>
     <div class="navType">
       <span>IT</span>
-      <span>1 / 81</span>
     </div>
     <div class="navType">
       <span>영자지</span>
-      <span>1 / 81</span>
     </div>
     <div class="navType">
       <span>스포츠/연예</span>
-      <span>1 / 81</span>
     </div>
     <div class="navType">
       <span>매거진/전문지</span>
-      <span>1 / 81</span>
     </div>
     <div class="navType">
       <span>지역</span>
-      <span>1 / 81</span>
     </div>`;
 
     detailNavDiv.innerHTML = detailNavHTML;
-    const journaContainer = document.querySelector(".journal-container");
+    const journalContainer = document.querySelector(".journal-container");
 
-    this.element.insertBefore(detailNavDiv, journaContainer);
+    this.element.insertBefore(detailNavDiv, journalContainer);
+    this.countCurrentPage();
+  }
 
-    const divList = [...document.querySelectorAll(".navType span:first-child")];
+  countCurrentPage() {
+    const typeList = [
+      ...document.querySelectorAll(".navType span:first-child"),
+    ];
 
-    divList.filter((div) => {
-      if (div.innerText === this.detailStore.currentJournalType) {
-        div.parentNode.classList.add("hover-color");
+    typeList.forEach((type) => {
+      if (type.innerText === this.detailStore.currentJournalType) {
+        const typePage = `<span class="type-page">${this.currentPage + 1} / ${
+          this.detailStore.getDetailListAll().length
+        }</span>`;
+        const typePageElement = type.parentNode.querySelector(".type-page");
+        if (!typePageElement) {
+          type.parentNode.classList.add("hover-color");
+          type.parentNode.insertAdjacentHTML("beforeend", typePage);
+        } else {
+          typePageElement.outerHTML = typePage;
+        }
       }
     });
   }
