@@ -84,9 +84,8 @@ class ListViewTab extends HTMLElement {
     const currentCategory = sectionData.section.category;
     const categoryCounts = sectionData.categoryCounts;
     const categoryIndex = sectionData.currentCategoryIndex;
+    const pressId = sectionData.section.pressId;
 
-    const currentNumber =
-      this.displayStore.getState().category['list']['general'].index;
     const isActive = (categoryId: string) =>
       currentCategory === categoryId ? true : false;
 
@@ -100,24 +99,11 @@ class ListViewTab extends HTMLElement {
       '지역',
     ];
 
-    const getCurrentCategoryIndex = () => {
-      const accumulatedNum = Object.entries(categoryCounts).reduce(
-        (result: number, count: any) => {
-          const key = count[0];
-          const value = count[1];
-          if (Number(key) < Number(currentCategory)) return result + value;
-          return result;
-        },
-        0
-      );
-      return currentNumber - accumulatedNum;
-    };
-
     const template = `
       <div class="tab-wrap">
       ${Object.keys(categoryCounts)
         .map((categoryId) => {
-          return `<list-view-tab-item-element total-number='${
+          return `<list-view-tab-item-element id='${pressId}' total-number='${
             categoryCounts[categoryId]
           }' name='${
             categories[Number(categoryId)]

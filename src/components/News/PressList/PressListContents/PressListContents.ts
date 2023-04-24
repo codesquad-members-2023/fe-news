@@ -7,19 +7,21 @@ import {
   createWrap,
   toggleClass,
   setProperty,
+  getProperty,
 } from '@utils/dom';
 import list from './PressListContentsStyle';
 import { StroeType } from '@utils/redux';
 import { DisplayType } from '@store/display/displayType';
 import store from '@store/index';
-import { getPress, getSection, getCustomSection } from '@apis/news';
-import { getUser, subscribe, unsubscribe } from '@apis/user';
+
+import { getUser, subscribeAPI, unsubscribeAPI } from '@apis/user';
 import { parseQuotationMarks } from '@utils/parser';
 import { ArticleInterface, SectionInfoType } from '@store/section/sectionType';
 import { PressListType } from '@store/press/pressType';
-import { isFirstPage, sliceByPage } from '@utils/common';
-import { MAX_ITEM_NUM, TEMP_ID } from '@constant/index';
+import { TEMP_ID } from '@constant/index';
 import { UserType } from '@store/user/userType';
+import { getPressList, getCustomPressList } from '@services/press/press';
+import { getSection, getCustomSection } from '@services/section/section';
 
 interface PressListContents {
   icon?: string | null;
@@ -27,6 +29,10 @@ interface PressListContents {
 
 interface getCurrentSectionProps {
   page: number;
+}
+
+interface appendGridViewProps {
+  tab: 'general' | 'custom';
 }
 
 class PressListContents extends HTMLElement {
@@ -84,159 +90,97 @@ class PressListContents extends HTMLElement {
     this.userStore.dispatch({ type: 'SET_USER', payload: userData[0] });
 
     this.handleDisplay();
-    this.handleGridView().append('general');
-    this.handleGridView().append('custom');
-    this.handleListView().append('general');
-    this.handleListView().append('custom');
+    this.renderGridView({ tab: 'general' });
+    this.renderGridView({ tab: 'custom' });
+    this.renderListView({ tab: 'general' });
+    this.renderListView({ tab: 'custom' });
   }
 
-  handleGridView() {
-    return {
-      getPressList: async () => {
-        let pressList = await getPress();
-        pressList = pressList.slice(0, MAX_ITEM_NUM * 4);
-        this.displayStore.dispatch({
-          type: 'SET_TOTAL_PAGE',
-          payload: {
-            view: 'grid',
-            tab: 'general',
-            totalPage: Math.ceil(pressList.length / 24) - 1,
-          },
-        });
-        this.pressStore.dispatch({
-          type: 'SET_PRESS_LIST',
-          payload: { pressList },
-        });
-      },
-      getCustomPressList: async () => {
-        const pressList = await getPress();
-        const user = await getUser({ id: TEMP_ID });
-        const subscribingPressIds = user[0].subscribingPressIds;
-        const customPressList = subscribingPressIds.reduce(
-          (result: any, id: string) => {
-            const press = pressList.find((press: any) => {
-              return press.pid === id;
-            });
-            return [...result, press];
-          },
-          []
-        );
-        this.displayStore.dispatch({
-          type: 'SET_TOTAL_PAGE',
-          payload: {
-            view: 'grid',
-            tab: 'custom',
-            totalPage: Math.ceil(customPressList.length / 24) - 1,
-          },
-        });
-        this.pressStore.dispatch({
-          type: 'SET_CUSTOM_PRESS_LIST',
-          payload: { pressList: customPressList },
-        });
-      },
-      append: async (tab: 'general' | 'custom') => {
-        let pressList;
-        if (tab === 'general') {
-          await this.handleGridView().getPressList();
-          pressList = this.pressStore.getState().pressList;
-        }
-        if (tab === 'custom') {
-          await this.handleGridView().getCustomPressList();
-          pressList = this.pressStore.getState().customPressList;
-        }
-        const gridViewContainer = create({
-          tagName: 'grid-view-container-element',
-          attributeList: [['press-list', JSON.stringify(pressList)]],
-        });
-        this.shadowRoot
-          ?.querySelector(`section.${tab}`)
-          ?.querySelector('.view.grid')
-          ?.prepend(gridViewContainer);
+  async renderGridView({ tab }: { tab: 'general' | 'custom' }) {
+    let pressList;
+    if (tab === 'general') {
+      await getPressList({
+        displayStore: this.displayStore,
+        pressStore: this.pressStore,
+      });
+      pressList = this.pressStore.getState().pressList;
+    }
+    if (tab === 'custom') {
+      await getCustomPressList({
+        displayStore: this.displayStore,
+        pressStore: this.pressStore,
+      });
+      pressList = this.pressStore.getState().customPressList;
+    }
+    const gridViewContainer = create({
+      tagName: 'grid-view-container-element',
+      attributeList: [['press-list', JSON.stringify(pressList)]],
+    });
 
-        this.handlePageController().appendController(tab, 'grid');
-        this.handlePageController().movePage(tab, 'grid');
+    this.shadowRoot
+      ?.querySelector(`section.${tab}`)
+      ?.querySelector('.view.grid')
+      ?.prepend(gridViewContainer);
 
-        this.handleSubscribe().addClickEvnetToGridView(tab);
-      },
-      updateCustomTabGridData: () => {
-        this.displayStore.subscribe(() => {});
-      },
-    };
+    this.handlePageController().appendController(tab, 'grid');
+    this.handlePageController().movePage(tab, 'grid');
+    this.handleSubscribe().addClickEvnetToGridView(tab);
+  }
+
+  async renderListView({
+    tab,
+    page = 0,
+  }: {
+    tab: 'general' | 'custom';
+    page?: number;
+  }) {
+    let section;
+    const sectionStore = this.sectionStore;
+    const displayStore = this.displayStore;
+    const userStore = this.userStore;
+    if (tab === 'general') {
+      await getSection({ sectionStore, displayStore, page: 0 });
+      section = this.sectionStore.getState();
+    }
+    if (tab === 'custom') {
+      await getCustomSection({
+        userStore,
+        displayStore,
+        sectionStore,
+        page: 0,
+      });
+      section = this.sectionStore.getState();
+    }
+    const listViewContainer = create({
+      tagName: 'div',
+      classList: ['list-view-container'],
+      attributeList: [['page', `${page}`]],
+    });
+    const listViewElement = create({
+      tagName: 'list-view-element',
+      classList: ['list-view-container'],
+      attributeList: [['section-data', JSON.stringify(section)]],
+    });
+    listViewContainer?.prepend(listViewElement);
+    this.shadowRoot
+      ?.querySelector(`section.${tab}`)
+      ?.querySelector('.view.list')
+      ?.prepend(listViewContainer);
+
+    this.handlePageController().appendController(tab, 'list');
+    this.handlePageController().movePage(tab, 'list');
+    this.handleSubscribe().addClickEvnetToListView(tab);
+    this.handleListView().handleTab(tab);
   }
 
   handleListView() {
+    const userStore = this.userStore;
+    const sectionStore = this.sectionStore;
+    const displayStore = this.displayStore;
+
     return {
-      getSection: async (page: number = 0) => {
-        const section = await getSection({ page });
-        this.sectionStore.dispatch({
-          type: 'SET_SECTION',
-          payload: section,
-        });
-        this.sectionStore
-          .getState()
-          .section.articles.forEach((article: ArticleInterface) => {
-            article.title = parseQuotationMarks(article.title);
-          });
-        this.displayStore.dispatch({
-          type: 'SET_TOTAL_PAGE',
-          payload: {
-            view: 'list',
-            tab: 'general',
-            totalPage: this.sectionStore.getState().totalNumber - 1,
-          },
-        });
-        this.displayStore.dispatch({
-          type: 'SET_CATEGORY_INDEX',
-          payload: {
-            view: 'list',
-            tab: 'general',
-            index: this.sectionStore.getState().currentCategoryIndex,
-          },
-        });
-        this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
-      },
-      getCustomSection: async (page: number = 0) => {
-        if (this.userStore.getState().subscribingPress.length === page) {
-          const pressId = this.userStore.getState().subscribingPress[page];
-          const section = await getCustomSection({ pressId });
-          this.displayStore.dispatch({
-            type: 'SET_CURRENT_PAGE',
-            payload: {
-              view: 'list',
-              tab: 'custom',
-              currentPage: 0,
-            },
-          });
-          this.sectionStore.dispatch({
-            type: 'SET_SECTION',
-            payload: section,
-          });
-        } else {
-          const pressId = this.userStore.getState().subscribingPress[page];
-          const section = await getCustomSection({ pressId });
-          this.sectionStore.dispatch({
-            type: 'SET_SECTION',
-            payload: section,
-          });
-        }
-
-        const section = this.sectionStore.getState();
-
-        section.section.articles.forEach((article: ArticleInterface) => {
-          article.title = parseQuotationMarks(article.title);
-        });
-        this.displayStore.dispatch({
-          type: 'SET_TOTAL_PAGE',
-          payload: {
-            view: 'list',
-            tab: 'custom',
-            totalPage: this.userStore.getState().subscribingPress.length - 1,
-          },
-        });
-        this.sectionStore.dispatch({ type: 'SET_SECTION', payload: section });
-      },
       updateSection: async (page: number) => {
-        await this.handleListView().getSection(page);
+        await getSection({ sectionStore, displayStore, page });
         const section = this.sectionStore.getState();
         this.shadowRoot
           ?.querySelector('section.general .view.list list-view-element')
@@ -244,51 +188,40 @@ class PressListContents extends HTMLElement {
         this.handleSubscribe().addClickEvnetToListView();
       },
       updateCustomSection: async (page: number) => {
-        await this.handleListView().getCustomSection(page);
+        await getCustomSection({ userStore, displayStore, sectionStore, page });
         const section = this.sectionStore.getState();
         this.shadowRoot
           ?.querySelector('section.custom .view.list list-view-element')
           ?.setAttribute('section-data', JSON.stringify(section));
         this.handleSubscribe().addClickEvnetToListView('custom');
       },
-      handleTabClick() {
-        // const tab = document
-        //   .querySelector('news-element')
-        //   ?.shadowRoot?.querySelector('press-list-element')
-        //   ?.shadowRoot?.querySelector('presslist-contents-element')?.shadowRoot?.querySelector(`section.${}`)
-        // console.log(tab);
+
+      handleTab(tab: 'general' | 'custom') {
+        const tabElements = document
+          .querySelector('news-element')
+          ?.shadowRoot?.querySelector('press-list-element')
+          ?.shadowRoot?.querySelector('presslist-contents-element')
+          ?.shadowRoot?.querySelector(`section.${tab} .view.list`)
+          ?.querySelector('list-view-element')
+          ?.shadowRoot?.querySelector('list-view-tab-element')?.shadowRoot;
+
+        tabElements?.addEventListener('click', (e) => {
+          this.handleTabClick.bind(this, e, tab);
+        });
+
         return {};
       },
-      append: async (tab: 'general' | 'custom', page: number = 0) => {
-        let section;
-        if (tab === 'general') {
-          await this.handleListView().getSection(0);
-          section = this.sectionStore.getState();
+      handleTabClick(e: Event, tab: 'general' | 'custom') {
+        const target = e.target as HTMLElement;
+        const isCustom = tab === 'custom';
+        console.log(target);
+        if (isCustom) {
+          const id = getProperty({ target, name: 'id' });
+          const subscribingPressIndex = userStore
+            .getState()
+            .subscribingPress.findIndex((pressId) => pressId === id);
+          this.updateSection(subscribingPressIndex);
         }
-        if (tab === 'custom') {
-          await this.handleListView().getCustomSection(0);
-          section = this.sectionStore.getState();
-        }
-        const listViewContainer = create({
-          tagName: 'div',
-          classList: ['list-view-container'],
-          attributeList: [['page', `${page}`]],
-        });
-        const listViewElement = create({
-          tagName: 'list-view-element',
-          classList: ['list-view-container'],
-          attributeList: [['section-data', JSON.stringify(section)]],
-        });
-        listViewContainer?.prepend(listViewElement);
-        this.shadowRoot
-          ?.querySelector(`section.${tab}`)
-          ?.querySelector('.view.list')
-          ?.prepend(listViewContainer);
-
-        this.handlePageController().appendController(tab, 'list');
-        this.handlePageController().movePage(tab, 'list');
-        this.handleSubscribe().addClickEvnetToListView(tab);
-        this.handleListView().handleTabClick();
       },
     };
   }
@@ -457,7 +390,7 @@ class PressListContents extends HTMLElement {
         });
       },
       unsubscribe: ({ id, target }: runSubscribeProps) => {
-        unsubscribe({ id: TEMP_ID, pressId: id });
+        unsubscribeAPI({ id: TEMP_ID, pressId: id });
         storeUser.dispatch({
           type: 'UNSUBSCRIBE',
           payload: id,
@@ -473,7 +406,7 @@ class PressListContents extends HTMLElement {
         });
       },
       subscribe: ({ id, target }: runSubscribeProps) => {
-        subscribe({ id, pressId: id });
+        subscribeAPI({ id, pressId: id });
         storeUser.dispatch({
           type: 'SUBSCRIBE',
           payload: id,

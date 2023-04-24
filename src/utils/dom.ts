@@ -12,7 +12,7 @@ interface selectProps {
 }
 
 interface getPropertyProps {
-  target: HTMLElement | null;
+  target: HTMLElement | Element | null;
   name: string;
   isStringfied?: boolean;
 }

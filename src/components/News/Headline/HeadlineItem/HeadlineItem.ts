@@ -1,6 +1,6 @@
 import { add, addStyle, addShadow, getProperty, create } from '@utils/dom';
 import style from './HeadlineItemStyle';
-import { getRollingNews } from '@apis/rollingNews';
+import { getRollingNewsAPI } from '@apis/rollingNews';
 
 interface HeadlineItem {
   icon?: string | null;
@@ -28,7 +28,7 @@ class HeadlineItem extends HTMLElement {
   }
 
   async getData() {
-    const news = await getRollingNews();
+    const news = await getRollingNewsAPI();
     const newsLeft = news.slice(0, news.length / 2);
     const newsRight = news.slice(news.length / 2);
 
