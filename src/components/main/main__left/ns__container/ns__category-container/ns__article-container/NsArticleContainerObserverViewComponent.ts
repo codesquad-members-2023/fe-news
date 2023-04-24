@@ -16,8 +16,8 @@ export class NsArticleContainerObserverViewComponent
   }
 
   // setTemplate은 subscriber 처리하면 안된다. 그러면 element가 초기화되어버림.
-  setTemplate() {
-    this._templateElement.innerHTML = `<section id="article-container" class="p-3 w-full h-full flex flex-col justify-start items-start text-sm border border-blue-500">
+  setWrapper() {
+    this._wrapperElement.innerHTML = `<section id="article-container" class="p-3 w-full h-full flex flex-col justify-start items-start text-sm border border-blue-500">
                                          <div id="article-header" class="flex flex-row justify-start items-center gap-x-4">
                                          </div>
                                          <div id="articles" class="p-3 w-full h-full flex flex-row">

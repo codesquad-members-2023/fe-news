@@ -7,8 +7,8 @@ export class NavbarRightView extends AbstractView {
     super();
   }
 
-  protected setTemplate() {
-    this._templateElement.innerHTML = `<div class="w-1/2 flex flex-row justify-end items-center gap-x-4">
+  protected setWrapper() {
+    this._wrapperElement.innerHTML = `<div class="w-1/2 flex flex-row justify-end items-center gap-x-4">
                                          <button id="list-btn" class="w-4 h-4 bg-list-off"></button>
                                          <button id="grid-btn" class="w-4 h-4 bg-grid-on"></button>
                                        </div>`;

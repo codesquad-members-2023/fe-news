@@ -18,32 +18,38 @@ export abstract class AbstractModel implements Model {
 }
 
 export abstract class AbstractView implements View {
-  protected _templateElement: HTMLTemplateElement;
+  protected _wrapperElement: HTMLDivElement;
   protected _element: HTMLElement;
   protected constructor() {
-    this._templateElement = document.createElement('template');
-    this._element = this._templateElement.content
-      .firstElementChild as HTMLElement;
+    this._wrapperElement = document.createElement('div');
+    this._element = this._wrapperElement.firstElementChild as HTMLElement;
 
-    this.setTemplate();
+    this.setWrapper();
     this.setElement();
   }
 
-  protected setTemplate() {
-    this._templateElement.innerHTML = ``;
+  template(state: State) {
+    return '';
+  }
+
+  protected setWrapper() {
+    this._wrapperElement.innerHTML = this.template({});
   }
 
   protected setElement() {
-    this._element = this._templateElement.content
-      .firstElementChild as HTMLElement;
+    this._element = this._wrapperElement.firstElementChild as HTMLElement;
   }
 
   render(state: State) {
-    this.element.innerHTML = ``;
+    this.addEvents();
   }
 
   get element() {
     return this._element;
+  }
+
+  addEvents() {
+    return;
   }
 
   setEvent(
