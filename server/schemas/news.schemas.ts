@@ -29,11 +29,6 @@ export interface ArticleInterface {
   link: string;
 }
 
-export interface UserInterface {
-  id: string;
-  subscribingPressIds: string[];
-}
-
 const SectionSchema = new Schema<SectionInterface>({
   id: { type: String, required: true },
   pressId: { type: String, required: true },
@@ -49,11 +44,6 @@ const SectionSchema = new Schema<SectionInterface>({
   ],
 });
 
-const UserSchema = new Schema<UserInterface>({
-  id: { type: String, required: true },
-  subscribingPressIds: [{ type: String, required: true }],
-});
-
 const PressSchema = new Schema<PressInfoInterface>({
   pid: { type: String, required: true },
   pname: { type: String, required: true },
@@ -66,25 +56,4 @@ const PressSchema = new Schema<PressInfoInterface>({
 });
 
 export const SectionModel = model<SectionInterface>('Sections', SectionSchema);
-export const UserModel = model<UserInterface>('Users', UserSchema);
 export const PressModel = model<PressInfoInterface>('Presses', PressSchema);
-
-const TestSectionSchema = new Schema<SectionInterface>({
-  id: { type: String, required: true },
-  pressId: { type: String, required: true },
-  lastEdited: { type: Date, required: true },
-  category: { type: String, required: true },
-  articles: [
-    {
-      id: { type: String, required: true },
-      title: { type: String, required: true },
-      img: { type: String, required: false },
-      link: { type: String, required: false },
-    },
-  ],
-});
-
-export const TestSectionModel = model<SectionInterface>(
-  'TestSections',
-  TestSectionSchema
-);

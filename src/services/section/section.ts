@@ -1,5 +1,4 @@
 import { getCustomSectionAPI, getSectionAPI } from '@apis/news';
-import { ArticleInterface } from 'server/schemas';
 import { parseQuotationMarks } from '@utils/parser';
 import { getCustomSectionPropsType, getSectionPropsType } from './sectionType';
 
@@ -9,11 +8,9 @@ export const getSection = async ({ newsStore, page }: getSectionPropsType) => {
     type: 'SET_SECTION',
     payload: section,
   });
-  newsStore
-    .getState()
-    .section.section.articles.forEach((article: ArticleInterface) => {
-      article.title = parseQuotationMarks(article.title);
-    });
+  newsStore.getState().section.section.articles.forEach((article: any) => {
+    article.title = parseQuotationMarks(article.title);
+  });
   newsStore.dispatch({
     type: 'SET_TOTAL_PAGE',
     payload: {
@@ -55,7 +52,7 @@ export const getCustomSection = async ({
   }
 
   const section = newsStore.getState().section.section;
-  section.articles.forEach((article: ArticleInterface) => {
+  section.articles.forEach((article: any) => {
     article.title = parseQuotationMarks(article.title);
   });
   newsStore.dispatch({
