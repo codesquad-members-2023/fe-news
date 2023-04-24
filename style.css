@@ -207,8 +207,8 @@ body {
       height: 24px;
       gap: 16px; }
       .newssection_view .newssection_view_list .list_view .list_view_top .press_logo {
-        width: 60px;
-        height: 20px; }
+        width: 70px;
+        height: 30px; }
       .newssection_view .newssection_view_list .list_view .list_view_top .updatetime {
         text-align: center;
         width: 125px;
@@ -224,6 +224,8 @@ body {
       .newssection_view .newssection_view_list .list_view .list_view_top .nosubbutton {
         width: 24px;
         height: 24px; }
+      .newssection_view .newssection_view_list .list_view .list_view_top .hidden {
+        display: none; }
     .newssection_view .newssection_view_list .list_view .list_view_bottom {
       display: flex; }
       .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_main {
