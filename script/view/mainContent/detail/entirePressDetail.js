@@ -1,4 +1,4 @@
-import { $ } from "../../utils/dom.js";
+import { $ } from "../../../utils/dom.js";
 
 export const changeNewsDetailColor = () => {
   const detailCircle = document.getElementById("company__view_detail").contentDocument.querySelector("path");

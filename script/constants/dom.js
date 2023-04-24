@@ -52,7 +52,7 @@ export const TEMPLATE = {
 </div>
 `,
   newsCompanyGrid: `
-  <div class="grid_btn-left"><img src="assets/leftButton.svg" /></div>
+  <div class="grid_btn-left none"><img src="assets/leftButton.svg" /></div>
   <div class="grid_set">
     <div class="grid_all">
       <div class="all_first-page" index="0"></div>

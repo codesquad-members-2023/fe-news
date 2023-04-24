@@ -1,8 +1,8 @@
 import { insertNewsHeadlineData } from "../view/newsRollingBar.js";
-import { showMediaLogosGrid } from "../view/newsCompany/newsCompany.js";
+import { reciveGridData } from "../view/mainContent/grid/entirePressGrid.js";
 import { API_PATH } from "../constants/api.js";
 import { COMPANY, ROLLING, category } from "../constants/dom.js";
-import { insertMediaDetailData } from "../view/newsCompany/newsCompanyDetail.js";
+import { insertMediaDetailData } from "../view/mainContent/detail/entirePressDetail.js";
 //fetch된 데이터를 불러오고, 데이터들을 각 렌더링 해주는 곳에 넣어준다.
 export const preprocessData = async () => {
   const rollingData = await fetchData(API_PATH.auto);
@@ -40,7 +40,7 @@ const deliverGridData = (spreadGridData, size) => {
   for (let i = 0; i < spreadGridData.length; i += size) {
     gridDataPage.push(spreadGridData.slice(i, i + size));
   }
-  showMediaLogosGrid(gridDataPage);
+  reciveGridData(gridDataPage);
 };
 
 const findData = (selector, category, newsData) => {
