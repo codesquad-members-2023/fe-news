@@ -1,0 +1,69 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css");
+
+* {
+  font-family: Pretendard, sans-serif;
+}
+
+.company__choice {
+  &_all {
+    @include font(16px, 700, 19px);
+  }
+  &_subscribe {
+    @include font(16px, 500, 22px);
+    color: $gray200;
+  }
+}
+
+.change_gray {
+  @include font(16px, 500, 0px);
+  color: $gray200;
+}
+
+.change_black {
+  @include font(16px, 700, 0px);
+  color: $black;
+}
+
+.news_category-bar {
+  @include font(14px, 500, 0px);
+  color: $gray300;
+}
+
+.display_header_date {
+  @include font(12px, 500, 14px);
+  color: $gray400;
+}
+.grid_btn {
+  button {
+    @include font(12px, 500, 14px);
+    color: $gray200;
+  }
+}
+.logo_text {
+  @include font(24px, 700, 0px);
+}
+.date_text {
+  @include font(16px, 500, 0px);
+  color: $gray500;
+}
+.data_list {
+  &_left {
+    li {
+      @include font(14px, 500, 17px);
+    }
+  }
+  &_right {
+    li {
+      @include font(14px, 500, 17px);
+      margin: 15px;
+    }
+  }
+}
+
+.display_main-news {
+  div {
+    @include font(15px, 500, 22px);
+    width: 320px;
+    margin:13px 0px 0px 25px
+  }
+}

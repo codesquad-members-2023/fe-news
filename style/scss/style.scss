@@ -1,6 +1,7 @@
-@import "./_newsHeader.scss";
-@import "./_newsRollingBar.scss";
-@import "./_reset.scss";
-@import "./_variable.scss";
-@import "./_font.scss";
-@import "./_newsCompany.scss";
+@import "./abstracts/_mixin.scss";
+@import "./abstracts/_variable.scss";
+@import "./base/_font.scss";
+@import "./base/_reset.scss";
+@import "./layout/_mainContent.scss";
+@import "./layout/_newsHeader.scss";
+@import "./layout/_newsRollingBar.scss";

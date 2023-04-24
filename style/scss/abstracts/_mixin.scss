@@ -1,0 +1,21 @@
+@mixin font($size, $weight, $lineHeight) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lineHeight;
+}
+
+@mixin flex($display,$width,$margin,$align,$justify) {
+  display: $display;
+  width: $width;
+  margin: $margin;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin registerBtn(){
+  background: $white;
+  width: 74px;
+  height: 24px;
+  border-radius: 50px;
+  border: 1px solid $gray100;
+}

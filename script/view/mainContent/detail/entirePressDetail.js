@@ -1,5 +1,6 @@
-import { $ } from "../../../utils/dom.js";
+import { $, renderMaker } from "../../../utils/dom.js";
 
+//버튼 조작
 export const changeNewsDetailColor = () => {
   const detailCircle = document.getElementById("company__view_detail").contentDocument.querySelector("path");
   const logoCircle = document.getElementById("company__view_logo").contentDocument.querySelector("path");
@@ -28,12 +29,38 @@ const changeNewsDetailDisplay = () => {
     detailDisplay.classList.add("none");
   });
 };
-export const insertMediaDetailData = (selector, MediaDetailData) => {
-  const gridBox = $(selector);
-  gridBox.innerHTML = `<div class="category-display_header">
-  <img class="display_header_logo" src="${MediaDetailData[0].mediaInfo.imgSrc}"></img>
-  <div class="display_header_date">${MediaDetailData[0].mediaInfo.modifiedTime}</div>
+
+//돔 조작
+export const reciveDetailData = (mediaDetailData) => {
+  const { mediaInfo, mainContent, subContent } = mediaDetailData[0];
+  insertMediaDetailData(mediaInfo);
+  insertMediaMainData(mainContent);
+};
+
+export const insertMediaDetailData = (mediaInfo) => {
+  const { imgSrc, modifiedTime } = mediaInfo;
+  const template = `
+  <img class="display_header_logo" src="${imgSrc}"></img>
+  <div class="display_header_date">${modifiedTime}</div>
   <button class="display_header_btn">+구독하기</button>
-</div>
 `;
+  renderMaker({ selector: ".economy_detail_display", element: "div", template: template, nameList: ["category-display_header"] });
+};
+
+const insertMediaMainData = (mainContent) => {
+  const { mainImgSrc, mainTitle } = mainContent;
+  const template = `
+  <div class="display_main-news">
+  <img src="${mainImgSrc}"/>
+  <div class ="main-news_headline">${mainTitle}</div>
+  </div>
+  `;
+
+  renderMaker({ selector: ".economy_detail_display", element: "div", template: template, nameList: ["category-display_news"] });
+};
+
+const insertHeadlineData = (subContent) => {
+  const { subNewsList } = subContent;
+  const template = subNewsList.reduce((acc, data) => acc + `<div class= "headline-news">${data}</div>`, "");
+  renderMaker({ selector: ".category-display_news", element: "div", template: template, nameList: [" display_headline-news"] });
 };

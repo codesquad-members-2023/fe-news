@@ -2,7 +2,7 @@ import { insertNewsHeadlineData } from "../view/newsRollingBar.js";
 import { reciveGridData } from "../view/mainContent/grid/entirePressGrid.js";
 import { API_PATH } from "../constants/api.js";
 import { COMPANY, ROLLING, category } from "../constants/dom.js";
-import { insertMediaDetailData } from "../view/mainContent/detail/entirePressDetail.js";
+import { reciveDetailData } from "../view/mainContent/detail/entirePressDetail.js";
 //fetch된 데이터를 불러오고, 데이터들을 각 렌더링 해주는 곳에 넣어준다.
 export const preprocessData = async () => {
   const rollingData = await fetchData(API_PATH.auto);
@@ -13,7 +13,7 @@ export const preprocessData = async () => {
   insertNewsHeadlineData(rollingRandomDataLeft, ".data_list_left");
   insertNewsHeadlineData(rollingRandomDataRight, ".data_list_right");
   deliverGridData(gridRandomData, COMPANY.PAGES_PER);
-  findData(".economy_detail_display", category.economy, gridData);
+  findData(category.economy, gridData);
 };
 
 export const fetchData = async (url) => {
@@ -43,7 +43,7 @@ const deliverGridData = (spreadGridData, size) => {
   reciveGridData(gridDataPage);
 };
 
-const findData = (selector, category, newsData) => {
+const findData = (category, newsData) => {
   const foundObject = newsData.filter((data) => data.mediaInfo.type === category);
-  insertMediaDetailData(selector, foundObject);
+  reciveDetailData(foundObject);
 };

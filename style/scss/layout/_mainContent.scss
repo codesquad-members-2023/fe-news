@@ -1,0 +1,111 @@
+.news-company {
+  &__bar {
+    @include flex(flex, 930px, 0 auto, center, space-between);
+    padding-top: 50px;
+  }
+  &__grid {
+    @include flex(flex, 1100px, 0 auto, center, space-between);
+  }
+}
+.company__choice {
+  &_all {
+    margin-right: 18px;
+  }
+}
+
+.grid_set {
+  @include flex(flex, 930px, 0 auto, center, space-between);
+}
+
+.grid_subscribe,
+.all_fourth-page,
+.all_third-page,
+.all_second-page,
+.all_first-page {
+  display: grid;
+  margin: 0 auto;
+  width: 930px;
+  height: 388px;
+  margin-top: 10px;
+  grid-template-columns: repeat(6, 155px);
+  grid-template-rows: repeat(4, 97px);
+  .grid_list {
+    position: relative;
+    border: 0.5px solid $gray100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 70px;
+    }
+  }
+}
+
+.grid_list:hover .grid_btn {
+  display: flex;
+}
+
+.grid_btn {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  display: none;
+  background: $off-white;
+  width: 100%;
+  height: 100%;
+  button {
+    @include registerBtn();
+  }
+}
+.news_detail_container {
+  width: 930px;
+  height: 388px;
+  margin: 0 auto;
+  margin-top: 10px;
+  border: 1px solid $gray100;
+}
+.news_category-bar {
+  @include flex(flex, 928px, 0 auto, center, "");
+  height: 40px;
+  background: $off-white;
+  border-bottom: 1px solid $gray100;
+}
+$category-list: (economy, broadcast, it, engilsh, sports, magazine, area);
+@each $category in $category-list {
+  .category-#{$category} {
+    margin: 10px;
+  }
+}
+
+.news-company__detail {
+  @include flex(flex, 1100px, 0 auto, center, space-between);
+}
+
+.category-display_header {
+  @include flex(flex, 300px, 0 auto, center, space-around);
+  margin: 30px 0px 0px 25px;
+}
+
+.display_header {
+  &_logo {
+    height: 20px;
+  }
+  &_btn {
+    @include registerBtn();
+  }
+}
+
+.display_main-news {
+  img {
+    width: 320px;
+    height: 200px;
+    margin: 20px 0px 0px 25px;
+  }
+}
+.hidden {
+  visibility: hidden;
+}
+
+.none {
+  display: none;
+}
