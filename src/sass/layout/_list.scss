@@ -3,18 +3,18 @@
   line-height: 40px;
   background-color: $offwhite;
   border-bottom: 1px solid $gray100;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
 
   .list-category {
     display: flex;
 
     &-subscribed {
       @extend .list-category;
-      width: max-content;
       overflow-x: scroll;
       overflow-y: hidden;
       white-space: nowrap;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
       // scroll-snap-type: x mandatory;
       &::-webkit-scrollbar {
         display: none;
@@ -143,6 +143,7 @@
 
   &-subscribed {
     @extend .current;
+    min-width: 166px;
     height: 40px;
     background-color: $lighterColor;
 

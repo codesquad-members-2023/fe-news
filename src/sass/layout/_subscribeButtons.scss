@@ -1,9 +1,9 @@
-.press-button {
+.cell-button {
+  height: 24px;
+  Padding: 0px 8px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 24px;
-  Padding: 0px 8px;
   border: 1px solid $gray100;
   border-radius: 50px;
   cursor: pointer;
@@ -31,8 +31,80 @@
 .close {
   width: 24px;
   background-color: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   img {
     width: 6px;
   }
+}
+
+.popup-confirm {
+  position: absolute;
+  top: 130px;
+  left: 305px;
+  width: $popupWidth;
+  height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background-color: $white;
+
+  p {
+    width: $popupWidth;
+    height: 100%;
+    padding: 28px;
+    color: $gray400;
+    border: 1px solid $gray100;
+
+    strong {
+    color: $black;
+    }
+  }
+
+  & > div {
+    width: $popupWidth;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: $offwhite;
+    border: solid $gray100;
+    border-width: 0px 1px 1px 1px;
+
+    a {
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+
+      &:hover {
+        text-decoration: underline $gray400;
+        cursor: pointer;
+      }
+
+      &:nth-child(1) {
+        border-right: 1px solid $gray100;
+      }
+    }
+  }
+}
+
+.popup-add {
+  position: absolute;
+  top: 130px;
+  left: 300px;
+  width: $popupWidth;
+  height: 55px;
+  line-height: 55px;
+  text-align: center;
+  background-color: $primary;
+  color: $white;
+  cursor: defalt;
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-use-select: all;
+  user-select: all;
 }

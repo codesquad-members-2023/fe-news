@@ -37,11 +37,17 @@
     background-color: $gray100;
     grid-gap: 1px;
 
-    .grid-cell:not(.cell-button) {
+    .grid-cell:not(.cell-item) {
       display: flex;
       justify-content: center;
       align-items: center;
       background-color: $white;
+    }
+
+    .cell-item {
+      width: 100%;
+      height: 100%;
+      background-color: $offwhite;
     }
 
     img {
