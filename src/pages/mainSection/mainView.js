@@ -2,6 +2,7 @@ import { getElement, createNode } from '../../script/utils.js'
 import PressesGridView from './pressesGridView.js'
 import PressListView from './pressListView.js'
 import ViewSelectionBtn from './viewSelectionBtn.js'
+import SubscribeSnackbar from './subscribeSnackbar.js'
 
 class MainView {
   #mainViewContainer
@@ -9,14 +10,15 @@ class MainView {
   #directionButton
   #currentView
 
-  constructor(data) {
+  constructor(currentViewData) {
     this.app = getElement('.app')
     this.#mainViewContainer = createNode('div')
     this.#mainViewContainer.classList.add('main-view')
 
     this.#createMainViewButtons()
+    this.#createGridView(currentViewData)
+    this.#createSubscribeSnackbar()
     this.#createUnsubscribingModal()
-    this.#createGridView(data)
     this.app.appendChild(this.#mainViewContainer)
   }
 
@@ -47,6 +49,13 @@ class MainView {
   #createUnsubscribingModal() {
     const unsubscribingModal = createNode('ns-unsubscribe-modal')
     this.#mainViewContainer.appendChild(unsubscribingModal)
+  }
+
+  #createSubscribeSnackbar() {
+    const snackbar = new SubscribeSnackbar()
+    const snackbarEl = snackbar.createSnackbar()
+
+    this.#mainViewContainer.appendChild(snackbarEl)
   }
 
   setCurrentViewData(data) {

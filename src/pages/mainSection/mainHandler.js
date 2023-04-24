@@ -13,7 +13,7 @@ class MainHandler {
   constructor(url) {
     this.#fetchData(url)
     this.#currentViewType = 'grid'
-    this.#currentPage = 1
+    this.#currentPage = 0
     this.#subscriptionList = new Set()
   }
 
@@ -40,7 +40,7 @@ class MainHandler {
 
     this.#onClickDirectionBtn()
     this.#onMainViewEvent()
-    this.#onViewTypeEvent()
+    this.#renderView()
   }
 
   #onClickDirectionBtn() {
@@ -61,15 +61,14 @@ class MainHandler {
     })
   }
 
-  #getViewData(data) {
+  #getViewData(currentViewData) {
     if (this.#currentViewType === 'grid') {
       const PRESSES_PER_PAGE = 24
 
-      const endPress = PRESSES_PER_PAGE * this.#currentPage
+      const endPress = PRESSES_PER_PAGE * (this.#currentPage + 1)
       const startPress = endPress - PRESSES_PER_PAGE
 
-      const slicedData = data.slice(startPress, endPress)
-
+      const slicedData = currentViewData.slice(startPress, endPress)
       const gridViewData = slicedData.map(press => {
         const isSubscription = this.#subscriptionList.has(press.name)
         press.isSubscription = isSubscription
@@ -81,9 +80,16 @@ class MainHandler {
     }
 
     if (this.#currentViewType === 'list') {
-      const listViewData = data[this.#currentPage]
+      if (currentViewData.length === 0) return
+      const currentListViewData = currentViewData[this.#currentPage]
 
-      return listViewData
+      const isSubscription = this.#subscriptionList.has(
+        currentListViewData.name
+      )
+
+      currentListViewData.isSubscription = isSubscription
+
+      return currentListViewData
     }
   }
 
@@ -98,16 +104,17 @@ class MainHandler {
     })
   }
 
+  #onSubscriptionButton(target, eventType) {
+    target.addEventListener(eventType, ({ target }) => {
+      this.#toggleSubscriptionButton(target, 'none')
+    })
+  }
+
   #onMainViewEvent() {
     const mainView = getElement('.main-view')
 
-    mainView.addEventListener('mouseover', ({ target }) => {
-      this.#toggleSubscriptionButton(target, 'none')
-    })
-
-    mainView.addEventListener('mouseout', ({ target }) => {
-      this.#toggleSubscriptionButton(target, 'none')
-    })
+    this.#onSubscriptionButton(mainView, 'mouseover')
+    this.#onSubscriptionButton(mainView, 'mouseout')
 
     mainView.addEventListener('click', ({ target }) => {
       const cell = target.closest('.press__info')
@@ -150,7 +157,7 @@ class MainHandler {
       ? this.#subscriptionList.delete(pressName)
       : this.#subscriptionList.add(pressName)
 
-    this.#renderView(this.#currentViewType)
+    this.#renderView()
   }
 
   #getSubscriptionData(data) {
@@ -186,15 +193,7 @@ class MainHandler {
     }
 
     // reset page
-    if (this.#currentViewType === 'grid') {
-      this.#currentPage = 1
-    }
-
-    if (this.#currentViewType === 'list') {
-      this.#currentPage = 0
-    }
-
-    // this.#currentPage = 1
+    this.#currentPage = 0
     this.#renderView(this.#currentViewType)
   }
 }

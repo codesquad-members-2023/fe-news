@@ -1,4 +1,5 @@
 import { createNode } from '../../script/utils.js'
+import { BUTTONS } from '../../script/contents.js'
 
 class PressesGridView {
   #mainGridView
@@ -38,8 +39,8 @@ class PressesGridView {
     subscribeBtnCell.classList.add('subscribe-btn', 'subscribe-grid', 'none')
     subscribeBtnCell.pressesData = {
       logoId: data.isSubscription
-        ? './asset/unsubscribeButton.svg'
-        : './asset/SubscribeButton.svg',
+        ? BUTTONS.UNSUBSCRIPTION
+        : BUTTONS.SUBSCRIPTION,
       name: data.isSubscription ? 'subscription' : 'cancellation'
     }
     container.appendChild(subscribeBtnCell)
