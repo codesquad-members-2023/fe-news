@@ -7,7 +7,7 @@ export class NsHeaderView extends AbstractView {
   }
 
   protected setWrapper() {
-    this._wrapperElement.innerHTML = `<section class="px-2 w-full h-12 flex flex-row justify-between"></section>`;
+    this._wrapperElement.innerHTML = `<section class="flex flex-row justify-between"></section>`;
   }
 
   render(state: State) {

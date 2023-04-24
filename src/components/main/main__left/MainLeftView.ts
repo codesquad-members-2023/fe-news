@@ -1,16 +1,46 @@
 import { State } from '@custom-types/types';
-import { AbstractView } from '@custom-types/abstracts.js';
+import { TempAbstractView } from '@custom-types/abstracts.js';
+import { NsHeaderComponent } from '@components/main/main__left/ns__header/NsHeaderComponent.js';
+import { NsIssueContainerComponent } from '@components/main/main__left/ns__issue-container/NsIssueContainerComponent.js';
+import { NsContainerComponent } from '@components/main/main__left/ns__container/NsContainerComponent.js';
 
-export class MainLeftView extends AbstractView {
-  constructor() {
-    super();
+export class MainLeftView extends TempAbstractView {
+  constructor($target: HTMLElement) {
+    super($target);
   }
 
-  protected setWrapper() {
-    this._wrapperElement.innerHTML = `<section class="h-full w-full flex flex-col flex-initial"></section>`;
+  template(state: State) {
+    return `<section class="h-full w-full flex flex-col flex-initial">
+              <div id="ns-header-wrapper" class="px-2 w-full h-12"></div>
+              <div id="ns-navbar-wrapper" class="w-full h-12 "></div>
+              <div id="ns-container-wrapper" class="px-2 h-full border border-blue-500 "></div>
+            </section>`;
   }
 
   render(state: State) {
+    this.$target.innerHTML = this.template(state);
+    this.addChildren(state);
+    this.setEvents(state);
+  }
+
+  setEvents(state: State) {
+    return;
+  }
+
+  addChildren(state: State) {
+    const nsHeader = new NsHeaderComponent();
+    const nsNavbar = new NsIssueContainerComponent();
+    const nsContainer = new NsContainerComponent();
+    // [리팩토링 예정]
+    (
+      this.$target.querySelector('#ns-header-wrapper') as HTMLElement
+    ).appendChild(nsHeader.element);
+    (
+      this.$target.querySelector('#ns-navbar-wrapper') as HTMLElement
+    ).appendChild(nsNavbar.element);
+    (
+      this.$target.querySelector('#ns-container-wrapper') as HTMLElement
+    ).appendChild(nsContainer.element);
     return;
   }
 }

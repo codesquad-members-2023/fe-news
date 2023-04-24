@@ -22,14 +22,12 @@ export class MainView extends TempAbstractView {
   }
 
   addChildren(state: State) {
-    const left = new MainLeftComponent();
+    const left = new MainLeftComponent(
+      this.$target.querySelector('#left-main-wrapper') as HTMLElement,
+    );
     const right = new MainRightComponent(
       this.$target.querySelector('#right-main-wrapper') as HTMLElement,
     );
-    // [리펙토링 예정]
-    (
-      this.$target.querySelector('#left-main-wrapper') as HTMLElement
-    ).appendChild(left.element);
   }
 
   setEvents(state: State) {
