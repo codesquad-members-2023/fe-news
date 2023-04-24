@@ -54,12 +54,12 @@ export class MainView extends Component {
     );
     const viewContainer = this.target.querySelector(".view__container");
     const isSubscribePressExist = targetPressData.length !== 0;
+
     if (viewState === "grid") {
       new GridView(viewContainer, {
         pageLimit,
         itemLimitPerPage,
         allPressData: targetPressData,
-        btnDir: this.btnDir,
         allPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
       });

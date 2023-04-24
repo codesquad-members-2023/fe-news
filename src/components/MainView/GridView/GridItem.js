@@ -1,4 +1,5 @@
 import { Component } from "../../../core/Component.js";
+import subscribeBtn from "../../../images/subscribe_btn.svg";
 
 export class GridItem extends Component {
   setUp() {
@@ -12,14 +13,14 @@ export class GridItem extends Component {
     this._state = {
       currentIcon: pressIcon,
       btnText,
-      btnIcon: "src/images/subscribe_btn.svg",
+      subscribeBtn,
     };
   }
 
   templete() {
-    const { currentIcon, btnText, btnIcon } = this._state;
+    const { currentIcon, btnText, subscribeBtn } = this._state;
     const itemNode =
-      currentIcon === btnIcon
+      currentIcon === subscribeBtn
         ? `<div class="subscribe-btn">
              <div class="subscribe-text">${btnText}</div>
            </div>`
@@ -31,11 +32,11 @@ export class GridItem extends Component {
   }
 
   setEvent() {
-    const { btnIcon } = this._state;
+    const { subscribeBtn } = this._state;
     const { pressIcon, subscribePress } = this.props;
     const showSubscribeBtn = () => {
       this.target.classList.add("hovered");
-      this.setState({ currentIcon: btnIcon });
+      this.setState({ currentIcon: subscribeBtn });
       this.target.removeEventListener("mouseover", showSubscribeBtn);
     };
 
@@ -52,7 +53,7 @@ export class GridItem extends Component {
         const btnTextToChange = this.getBtnTextToChange(btnText);
         subscribePress(pressIcon);
         this.setState({
-          currentIcon: btnIcon,
+          currentIcon: subscribeBtn,
           btnText: btnTextToChange,
         });
       }

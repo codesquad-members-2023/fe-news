@@ -10,11 +10,11 @@ export class GridView extends Component {
 
   templete() {
     const { itemLimitPerPage } = this.props;
-    const { allPressData, btnDir } = this._state;
+    const { allPressData, btnDirState } = this._state;
 
     const btnNodes =
       allPressData.length > itemLimitPerPage
-        ? Object.entries(btnDir).reduce(
+        ? Object.entries(btnDirState).reduce(
             (acc, [btnDir, btnDirSymbol]) =>
               acc +
               `<div class="view-page-btn ${btnDir}">${btnDirSymbol}</div>`,
@@ -66,7 +66,6 @@ export class GridView extends Component {
       currentPageNumber,
       press,
       allPressData,
-      btnDir,
       allPressSubscribeStatus,
     } = pressData;
     const currentPage = currentPageNumber ? currentPageNumber : 1;
@@ -77,7 +76,7 @@ export class GridView extends Component {
     const endIndex = nextPageNumber * itemLimitPerPage;
     const firstIndex = endIndex - itemLimitPerPage;
     const sortedItems = originalData.slice(firstIndex, endIndex);
-    const btnState = this.getBtnState(pageLimit, nextPageNumber, btnDir);
+    const btnDirState = this.getBtnDirState(pageLimit, nextPageNumber);
 
     const targetSubscribeStatus = allPressSubscribeStatus.slice(
       firstIndex,
@@ -89,21 +88,22 @@ export class GridView extends Component {
       currentPageNumber: nextPageNumber,
       press: sortedItems,
       allPressData,
-      btnDir: btnState,
+      btnDirState,
       itemLimitPerPage,
       allPressSubscribeStatus,
       targetSubscribeStatus,
     };
   }
 
-  getBtnState(pageLimit, nextPageNumber, btnDir) {
+  getBtnDirState(pageLimit, nextPageNumber) {
     const FIRST_PAGE = 1;
     const LAST_PAGE = pageLimit;
+    let btnDirState;
 
-    if (nextPageNumber === FIRST_PAGE) btnDir = { right: ">" };
-    else if (nextPageNumber === LAST_PAGE) btnDir = { left: "<" };
-    else btnDir = { left: "<", right: ">" };
+    if (nextPageNumber === FIRST_PAGE) btnDirState = { right: ">" };
+    else if (nextPageNumber === LAST_PAGE) btnDirState = { left: "<" };
+    else btnDirState = { left: "<", right: ">" };
 
-    return btnDir;
+    return btnDirState;
   }
 }
