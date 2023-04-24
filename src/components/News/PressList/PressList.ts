@@ -19,6 +19,7 @@ class PressList extends HTMLElement {
     const template = `
     <presslist-header-element></presslist-header-element>
     <presslist-contents-element></presslist-contents-element>
+
     `;
 
     add({

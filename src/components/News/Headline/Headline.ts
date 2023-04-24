@@ -19,21 +19,7 @@ class HeadlineItem extends HTMLElement {
       target: this.shadowRoot,
       style: style(),
     });
-    // setInterval(() => console.log(this.count++ % 5), 1000);
-    // this.handleHover();
   }
-
-  // handleHover() {
-  //   const rollingNewsList = selectAll({
-  //     selector: ['headline-item-element', '#rolling-news-list'],
-  //     parent: this,
-  //   });
-  //   rollingNewsList.forEach((ul: HTMLElement) => {
-  //     ul.addEventListener('mouseenter', () => {
-  //       console.log('hover');
-  //     });
-  //   });
-  // }
 
   render() {
     const template = `

@@ -14,6 +14,7 @@ import {
   INTERVAL_TIME,
   TIMER_INTERVAL_TIME,
 } from '@constant/index';
+import { customSetInterval } from '@utils/animation';
 
 interface HeadlineItem {
   icon?: string | null;
@@ -22,7 +23,7 @@ interface HeadlineItem {
 class HeadlineItem extends HTMLElement {
   position: string;
   count: number;
-  rollingId: any;
+  rolling: any;
 
   constructor() {
     super();
@@ -39,21 +40,21 @@ class HeadlineItem extends HTMLElement {
     });
 
     await this.getData();
-    const runRolling = () => {
-      this.rollingId = setInterval(() => this.roll(), INTERVAL_TIME);
-    };
 
     const runTimer = () => {
-      setInterval(() => {
-        this.count++;
-      }, TIMER_INTERVAL_TIME);
+      customSetInterval({
+        intervalTime: TIMER_INTERVAL_TIME,
+        callback: () => {
+          this.count++;
+        },
+      });
     };
 
     if (this.position === 'left') {
-      runRolling();
+      this.runRolling.call(this);
       runTimer();
     } else {
-      setTimeout(runRolling, DELAY_TIME);
+      setTimeout(this.runRolling.bind(this), DELAY_TIME);
       setTimeout(runTimer, DELAY_TIME);
     }
     this.handleHover();
@@ -66,12 +67,10 @@ class HeadlineItem extends HTMLElement {
     });
     rollingNewsList.addEventListener('mouseenter', () => {
       const remainUntilNextInterval = this.count % 5;
-      clearInterval(this.rollingId);
+
+      this.rolling.stop();
       rollingNewsList.addEventListener('mouseleave', () => {
-        const runRolling = () => {
-          this.rollingId = setInterval(() => this.roll(), INTERVAL_TIME);
-        };
-        setTimeout(runRolling, remainUntilNextInterval);
+        this.rolling.start();
       });
     });
   }
@@ -105,6 +104,13 @@ class HeadlineItem extends HTMLElement {
       rollingNewsList.removeAttribute('style');
     };
     rollingNewsList.addEventListener('transitionend', handleTransitionEnd);
+  }
+
+  runRolling() {
+    this.rolling = customSetInterval({
+      intervalTime: INTERVAL_TIME,
+      callback: this.roll.bind(this),
+    });
   }
 
   render() {
