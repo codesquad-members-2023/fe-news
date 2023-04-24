@@ -188,7 +188,7 @@ body {
       gap: 8px;
       width: 166px;
       height: 40px;
-      background: linear-gradient(90deg, #4362d0 0%, #4362d0 29.02%, #7890e7 29.03%, #7890e7 100%);
+      background: #4362d0;
       color: #ffffff;
       cursor: inherit; }
   .newssection_view .newssection_view_list .list_view {

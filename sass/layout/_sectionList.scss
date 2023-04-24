@@ -40,13 +40,7 @@
         width: 166px;
         height: 40px;
 
-        background: linear-gradient(
-          90deg,
-          #4362d0 0%,
-          #4362d0 29.02%,
-          #7890e7 29.03%,
-          #7890e7 100%
-        );
+        background: $primary;
         color: $white;
         cursor: inherit;
       }
