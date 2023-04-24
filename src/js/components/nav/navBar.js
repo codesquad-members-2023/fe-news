@@ -1,32 +1,29 @@
 import { domUtils } from '../../utils/index.js';
 import HeadLineWrapper from './headLineWrapper.js';
 
+const { $ } = domUtils;
+
 export default class NavBar {
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('div');
-    this.$ele.className = 'nav-bar';
+    this.$mainEle = document.createElement('div');
+    this.$mainEle.className = 'nav-bar';
 
     this.props = props;
 
-    this.headLineWrapper;
-  }
-
-  mount() {
-    this.render();
-
-    const { $ } = domUtils;
-    const $headLine = $({ selector: '.nav-bar__headLine', parent: this.$ele });
-    const { headLines } = this.props.navBarData;
-
-    this.headLineWrapper = new HeadLineWrapper($headLine, { headLines });
-    this.headLineWrapper.mount();
-
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
   }
 
   render() {
-    this.$ele.innerHTML = this.template();
+    this.$mainEle.innerHTML = this.template();
+    this.renderHeadLineWrapper();
+  }
+
+  renderHeadLineWrapper() {
+    const $headLine = $({ selector: '.nav-bar__headLine', parent: this.$mainEle });
+    const { headLines } = this.props.navBarData;
+
+    new HeadLineWrapper($headLine, { headLines }).render();
   }
 
   template() {

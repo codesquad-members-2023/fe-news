@@ -1,29 +1,37 @@
+import { CATEGORY_ORDER } from '../../constants/index.js';
+import { dataUtils } from '../../utils/index.js';
 import MainContentGrid from './mainContentGrid.js';
+import MainContentList from './mainContentList.js';
+
+const { getDataByCategory, getDataCountByCategory } = dataUtils;
 
 export default class MainContentContainer {
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('div');
-    this.$ele.className = 'main-content__container';
+    this.$mainEle = document.createElement('div');
+    this.$mainEle.className = 'main-content__container';
 
     this.props = props;
 
-    this.allGrid;
-    this.subscribedGrid;
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
   }
 
-  mount() {
+  render() {
     const { allPressData } = this.props;
 
-    this.allGrid = new MainContentGrid(this.$ele, { pressTabType: 'all', allPressData });
-    this.subscribedGrid = new MainContentGrid(this.$ele, {
-      pressTabType: 'subscribed',
-      allPressData
+    new MainContentGrid(this.$mainEle, { pressTabType: 'all', allPressData }).render();
+    new MainContentGrid(this.$mainEle, { pressTabType: 'subscribed', allPressData }).render();
+
+    const dataByCategory = getDataByCategory({
+      dataArr: allPressData,
+      categoryOrder: CATEGORY_ORDER
     });
+    const dataCountByCategory = getDataCountByCategory(dataByCategory);
 
-    this.allGrid.mount();
-    this.subscribedGrid.mount();
-
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    new MainContentList(this.$mainEle, {
+      pressTabType: 'all',
+      allPressData: dataByCategory,
+      dataCountByCategory
+    }).render();
   }
 }

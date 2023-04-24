@@ -5,15 +5,37 @@ export const domUtils = {
 
 export const dataUtils = {
   getData: async (url) => await fetch(url).then((res) => res.json()),
-  getChucks: ({ arr, count = 1 }) => {
-    const chunks = [];
+  getDataSlices: ({ dataArr, count = 1 }) => {
+    const dataSlices = [];
 
-    for (let i = 0; i < arr.length; i += count) {
-      chunks.push(arr.slice(i, i + count));
+    for (let i = 0; i < dataArr.length; i += count) {
+      dataSlices.push(dataArr.slice(i, i + count));
     }
 
-    return chunks;
-  }
+    return dataSlices;
+  },
+  getDataByCategory: ({ dataArr, categoryOrder }) => {
+    const dataByCategoryOrder = {};
+
+    categoryOrder.forEach((category) => {
+      dataByCategoryOrder[category] = dataArr.filter(({ newsCategory }) => newsCategory === category);
+    });
+
+    return dataByCategoryOrder;
+  },
+  getDataCountByCategory: (dataByCategory) => {
+    const dataCountByCategory = {};
+
+    for (const [category, dataArr] of Object.entries(dataByCategory)) {
+      dataCountByCategory[category] = dataArr.length;
+    }
+
+    return dataCountByCategory;
+  },
+  sortData: (dataArr, categoryOrderArr) =>
+    dataArr.sort(
+      (a, b) => categoryOrderArr.indexOf(a.newsCategory) - categoryOrderArr.indexOf(b.newsCategory)
+    )
 };
 
 export const getObjectType = (obj) => {

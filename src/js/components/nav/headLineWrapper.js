@@ -5,33 +5,30 @@ export default class HeadLineWrapper {
 
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('div');
-    this.$ele.className = 'nav-bar__headLine-wrapper';
+    this.$mainEle = document.createElement('div');
+    this.$mainEle.className = 'nav-bar__headLine-wrapper';
 
     this.props = props;
     this.state = {};
     this.initState();
-  }
 
-  mount() {
-    this.render();
     this.setEvent();
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
     this.setAutoRolling();
-  }
-
-  update({ newState }) {
-    this.setState(newState);
-    this.render();
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
   }
 
   render() {
     const { isRolling } = this.state;
 
-    if (isRolling) this.$ele.classList.add('rolling');
-    else this.$ele.classList.remove('rolling');
+    if (isRolling) this.$mainEle.classList.add('rolling');
+    else this.$mainEle.classList.remove('rolling');
 
-    this.$ele.innerHTML = this.template();
+    this.$mainEle.innerHTML = this.template();
+  }
+
+  update({ newState }) {
+    this.setState(newState);
+    this.render();
   }
 
   template() {
@@ -59,7 +56,7 @@ export default class HeadLineWrapper {
   }
 
   setEvent() {
-    this.$ele.addEventListener('transitionend', () => {
+    this.$mainEle.addEventListener('transitionend', () => {
       const { currentIdx, nextIdx, count } = this.state;
       this.update({
         newState: {

@@ -1,32 +1,31 @@
-import { domUtils } from '../../utils/index.js';
-import { subscriptionListStore } from '../../store/index.js';
+import { domUtils } from '../../../utils/index.js';
+import { subscriptionListStore } from '../../../store/index.js';
+
+const { $ } = domUtils;
 
 export default class PressGridItem {
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('div');
-    this.$ele.className = 'press-grid__item';
+    this.$mainEle = document.createElement('div');
+    this.$mainEle.className = 'press-grid__item';
 
     this.props = props;
-  }
 
-  mount() {
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
-    // * 만약 props에 담은 정보가 없다면 아무것도 들어있지 않은 grid item을 만들기 위해 return
-    if (!this.props) return;
-    const { pressName } = this.props;
-    this.render();
-    this.setEvent();
-    subscriptionListStore.register({ listenerType: pressName, listenerCallBack: this.update.bind(this) });
-  }
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
 
-  update() {
-    this.render();
-    this.setEvent();
+    // ! logo 이미지가 없는 grid item도 렌더링 함수 등록해야함
+    if (this.props)
+      subscriptionListStore.register({
+        listenerType: this.props.pressName,
+        listenerCallBack: this.render.bind(this)
+      });
   }
 
   render() {
-    this.$ele.innerHTML = this.template();
+    // * 만약 props에 담은 정보가 없다면 아무것도 들어있지 않은 grid item을 만들기 위해 return
+    if (!this.props) return;
+    this.$mainEle.innerHTML = this.template();
+    this.setEvent();
   }
 
   template() {
@@ -45,8 +44,7 @@ export default class PressGridItem {
   }
 
   setEvent() {
-    const { $ } = domUtils;
-    const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$ele });
+    const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$mainEle });
 
     $subscribeToggleBtn.addEventListener('click', ({ target }) => {
       const { pressName } = this.props;

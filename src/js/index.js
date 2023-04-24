@@ -12,9 +12,9 @@ const app = async ($targetEle) => {
   const nav = new Nav($targetEle, { leftNavBarHeadLines, rightNavBarHeadLines });
   const mainContent = new MainContent($targetEle, { pressData });
 
-  header.mount();
-  nav.mount();
-  mainContent.mount();
+  header.render();
+  nav.render();
+  mainContent.render();
 };
 
 const { $ } = domUtils;

@@ -3,23 +3,18 @@ import NavBar from './navBar.js';
 export default class Nav {
   constructor($parent, props) {
     this.$parent = $parent;
-    this.$ele = document.createElement('nav');
-    this.$ele.id = 'nav';
+    this.$mainEle = document.createElement('nav');
+    this.$mainEle.id = 'nav';
 
     this.props = props;
 
-    this.leftBar;
-    this.rightBar;
+    this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
   }
 
-  mount() {
+  render() {
     const { leftNavBarHeadLines, rightNavBarHeadLines } = this.props;
 
-    this.leftBar = new NavBar(this.$ele, { navBarData: leftNavBarHeadLines });
-    this.rightBar = new NavBar(this.$ele, { navBarData: rightNavBarHeadLines });
-    this.leftBar.mount();
-    this.rightBar.mount();
-
-    this.$parent.insertAdjacentElement('beforeend', this.$ele);
+    new NavBar(this.$mainEle, { navBarData: leftNavBarHeadLines }).render();
+    new NavBar(this.$mainEle, { navBarData: rightNavBarHeadLines }).render();
   }
 }
