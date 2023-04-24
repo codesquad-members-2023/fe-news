@@ -47,6 +47,10 @@
     cursor: pointer;
   }
 
+  li:not(.current-category):hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
   li.current-category {
     width: 166px;
     background-color: $primary;

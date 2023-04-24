@@ -339,6 +339,10 @@ body {
   line-height: 40px;
   cursor: pointer;
 }
+.press-list__category li:not(.current-category):hover {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
 .press-list__category li.current-category {
   width: 166px;
   background-color: #4362d0;
