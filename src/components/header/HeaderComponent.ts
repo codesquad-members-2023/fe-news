@@ -1,18 +1,16 @@
 import { Props, State } from '@custom-types/types';
-import { Component } from '@custom-types/interfaces';
+import { TempComponent } from '@custom-types/interfaces';
 import { HeaderModel } from '@components/header/HeaderModel.js';
 import { HeaderView } from '@components/header/HeaderView.js';
 
-export class HeaderComponent implements Component {
+export class HeaderComponent implements TempComponent {
   private _model: HeaderModel;
   private _view: HeaderView;
-  constructor(props?: Props) {
+  $target: HTMLElement;
+  constructor(targetElement?: HTMLElement, props?: Props) {
+    this.$target = targetElement as HTMLElement;
     this._model = new HeaderModel();
-    this._view = new HeaderView();
-  }
-
-  get element() {
-    return this._view.element;
+    this._view = new HeaderView(this.$target);
   }
 
   get state() {
@@ -22,9 +20,5 @@ export class HeaderComponent implements Component {
   private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
-  }
-
-  attachTo(component: Component, position: InsertPosition = 'beforeend') {
-    component.element.insertAdjacentElement(position, this.element);
   }
 }
