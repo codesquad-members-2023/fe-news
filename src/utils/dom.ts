@@ -8,8 +8,8 @@ interface createProps {
 type attributeType = string[];
 
 interface selectProps {
-  selector: string;
-  parent?: HTMLElement | Element | ShadowRoot | null | undefined;
+  selector: string[];
+  parent?: Element | null;
 }
 
 interface getPropertyProps {
@@ -65,16 +65,45 @@ export function createWrap() {
   return wrap;
 }
 
-export function select({ selector, parent }: selectProps) {
-  return parent
-    ? parent.querySelector(selector)
-    : document.querySelector(selector);
+export function select({ selector, parent = null }: selectProps) {
+  return selector.reduce((pre: any, curr: string, i: number) => {
+    if (i === 0) {
+      const hasShadowRoot = parent?.shadowRoot;
+      return parent
+        ? hasShadowRoot
+          ? parent.shadowRoot.querySelector(curr)
+          : parent.querySelector(curr)
+        : document.querySelector(curr);
+    }
+    const hasShadowRoot = pre?.shadowRoot;
+    return hasShadowRoot
+      ? pre.shadowRoot.querySelector(curr)
+      : pre.querySelector(curr);
+  }, null);
 }
 
 export function selectAll({ selector, parent }: selectProps) {
-  return parent
-    ? parent.querySelectorAll(selector)
-    : document.querySelectorAll(selector);
+  return selector.reduce((pre: any, curr: string, i: number) => {
+    if (i === selector.length - 1) {
+      const target = pre ?? parent ?? document;
+      const hasShadowRoot = target?.shadowRoot;
+      return hasShadowRoot
+        ? target.shadowRoot.querySelectorAll(curr)
+        : target.querySelectorAll(curr);
+    }
+    if (i === 0) {
+      const hasShadowRoot = parent?.shadowRoot;
+      return parent
+        ? hasShadowRoot
+          ? parent.shadowRoot.querySelector(curr)
+          : parent.querySelector(curr)
+        : document.querySelector(curr);
+    }
+    const hasShadowRoot = pre?.shadowRoot;
+    return hasShadowRoot
+      ? pre.shadowRoot.querySelector(curr)
+      : pre.querySelector(curr);
+  }, null);
 }
 
 export function getProperty({ target, name, isStringfied }: getPropertyProps) {

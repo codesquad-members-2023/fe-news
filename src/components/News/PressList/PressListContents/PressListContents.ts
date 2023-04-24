@@ -298,7 +298,7 @@ class PressListContents extends HTMLElement {
       },
       movePage: (tab: TAB, view: VIEW) => {
         const controllerElement = select({
-          selector: 'controller-element',
+          selector: ['controller-element'],
           parent: document
             .querySelector('news-element')
             ?.shadowRoot?.querySelector('press-list-element')

@@ -1,7 +1,19 @@
-import { add, addStyle, addShadow, getProperty, create } from '@utils/dom';
+import {
+  add,
+  addStyle,
+  addShadow,
+  getProperty,
+  create,
+  select,
+} from '@utils/dom';
 import style from './HeadlineItemStyle';
 import { getRollingNewsAPI } from '@apis/rollingNews';
 import { RollingNewsType } from '@store/news/newsType';
+import {
+  DELAY_TIME,
+  INTERVAL_TIME,
+  TIMER_INTERVAL_TIME,
+} from '@constant/index';
 
 interface HeadlineItem {
   icon?: string | null;
@@ -9,10 +21,13 @@ interface HeadlineItem {
 
 class HeadlineItem extends HTMLElement {
   position: string;
+  count: number;
+  rollingId: any;
 
   constructor() {
     super();
     this.position = getProperty({ target: this, name: 'position' }) ?? 'left';
+    this.count = 0;
   }
 
   async connectedCallback() {
@@ -24,8 +39,41 @@ class HeadlineItem extends HTMLElement {
     });
 
     await this.getData();
-    this.roll();
-    setInterval(() => this.roll(), 2000);
+    const runRolling = () => {
+      this.rollingId = setInterval(() => this.roll(), INTERVAL_TIME);
+    };
+
+    const runTimer = () => {
+      setInterval(() => {
+        this.count++;
+      }, TIMER_INTERVAL_TIME);
+    };
+
+    if (this.position === 'left') {
+      runRolling();
+      runTimer();
+    } else {
+      setTimeout(runRolling, DELAY_TIME);
+      setTimeout(runTimer, DELAY_TIME);
+    }
+    this.handleHover();
+  }
+
+  handleHover() {
+    const rollingNewsList = select({
+      selector: ['#rolling-news-list'],
+      parent: this,
+    });
+    rollingNewsList.addEventListener('mouseenter', () => {
+      const remainUntilNextInterval = this.count % 5;
+      clearInterval(this.rollingId);
+      rollingNewsList.addEventListener('mouseleave', () => {
+        const runRolling = () => {
+          this.rollingId = setInterval(() => this.roll(), INTERVAL_TIME);
+        };
+        setTimeout(runRolling, remainUntilNextInterval);
+      });
+    });
   }
 
   async getData() {
@@ -41,21 +89,22 @@ class HeadlineItem extends HTMLElement {
   }
 
   roll() {
-    const rollingNewsList: HTMLElement | null =
-      this.shadowRoot?.querySelector('#rolling-news-list') ?? null;
-
-    if (!rollingNewsList) {
-      return;
-    }
-
+    const rollingNewsList = select({
+      selector: ['#rolling-news-list'],
+      parent: this,
+    });
+    if (!rollingNewsList) return;
     const firstList = rollingNewsList.querySelector('li:first-child');
-    if (!firstList) {
-      return;
-    }
-    const title = firstList.querySelector('a')?.innerText ?? '';
-    const link = firstList.querySelector('a')?.getAttribute('href') ?? '';
-    firstList.remove();
-    this.appendNews({ title, link });
+    if (!firstList) return;
+
+    rollingNewsList.style.transform = 'translateY(calc(-49px - 16px))';
+    rollingNewsList.style.transition = 'all .5s';
+
+    const handleTransitionEnd = () => {
+      rollingNewsList.appendChild(firstList);
+      rollingNewsList.removeAttribute('style');
+    };
+    rollingNewsList.addEventListener('transitionend', handleTransitionEnd);
   }
 
   render() {
