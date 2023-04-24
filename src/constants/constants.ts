@@ -5,3 +5,7 @@ export const PRESS_CONTAINER_PAGE_START = 0;
 export const PRESS_CONTAINER_PAGE_END = 4;
 export const PRESS_CONTAINER_PAGE_UNIT = 1;
 export const CATEGORY_CONTAINER_PAGE_START = 0;
+export const ISSUE_TIME_INTERVAL = 3000;
+export const LEFT_ISSUE_START_TIME = 0;
+export const RIGHT_ISSUE_START_TIME = 1000;
+export const ISSUES_START_INDEX = 0;

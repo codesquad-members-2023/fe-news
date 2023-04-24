@@ -1,7 +1,10 @@
-import { State } from '@custom-types/types';
+import { Issue, State } from '@custom-types/types';
 import { TempAbstractView } from '@custom-types/abstracts.js';
-import { $ } from '@utils/dom.js';
 import { NsIssueComponent } from '@components/main/main__left/ns__issue-container/ns__issue/NsIssueComponent.js';
+import {
+  LEFT_ISSUE_START_TIME,
+  RIGHT_ISSUE_START_TIME,
+} from '@src/constants/constants.js';
 
 export class NsIssueContainerView extends TempAbstractView {
   constructor($target: HTMLElement) {
@@ -27,27 +30,24 @@ export class NsIssueContainerView extends TempAbstractView {
 
   addChildren(state: State) {
     const { issueData } = state;
+
     // 처음 컴포넌트 생성 시, data fetch가 일어나지 않았을 때 early return 처리
     if (!issueData) return;
-    // [리팩토링 예정] 추후 issueData 타입 따로 빼주기
-    const { leftRollingData, rightRollingData } = issueData as {
-      leftRollingData: string[];
-      rightRollingData: string[];
-    };
-    const leftIssue = new NsIssueComponent({
-      issues: leftRollingData,
-      startTime: 0,
-    });
-    const rightIssue = new NsIssueComponent({
-      issues: rightRollingData,
-      startTime: 1000,
-    });
-    // [리펙토링 예정]
-    (
-      this.$target.querySelector('#left-issue-wrapper') as HTMLElement
-    ).appendChild(leftIssue.element);
-    (
-      this.$target.querySelector('#right-issue-wrapper') as HTMLElement
-    ).appendChild(rightIssue.element);
+
+    const { leftRollingData, rightRollingData } = issueData as Issue;
+    const leftIssue = new NsIssueComponent(
+      this.$target.querySelector('#left-issue-wrapper') as HTMLElement,
+      {
+        issues: leftRollingData,
+        startTime: LEFT_ISSUE_START_TIME,
+      },
+    );
+    const rightIssue = new NsIssueComponent(
+      this.$target.querySelector('#right-issue-wrapper') as HTMLElement,
+      {
+        issues: rightRollingData,
+        startTime: RIGHT_ISSUE_START_TIME,
+      },
+    );
   }
 }
