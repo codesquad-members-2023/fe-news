@@ -1,11 +1,9 @@
-import { renderNewsHeader } from "./view/newsHeader.js";
 import { runRollingBar } from "./view/newsRollingBar.js";
-import { renderNewsCompanyBar } from "./view/newsCompany.js";
-import { fetchController } from "./controller/controller.js";
-const main = () => {
-  renderNewsHeader();
+import { preprocessData } from "./controller/viewController.js";
+import { render } from "./view/dom.js";
+export const app = () => {
+  render();
   runRollingBar();
-  renderNewsCompanyBar();
-  fetchController();
+  preprocessData();
 };
-main();
+app();
