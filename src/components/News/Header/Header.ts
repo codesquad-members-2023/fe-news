@@ -1,4 +1,4 @@
-import { add, addStyle, addShadow, getProperty } from '@utils/dom';
+import { add, addStyle, addShadow } from '@utils/dom';
 import style from './HeaderStyle';
 
 interface HeaderItem {
@@ -8,25 +8,44 @@ interface HeaderItem {
 class HeaderItem extends HTMLElement {
   constructor() {
     super();
-    this.render();
   }
 
-  render() {
-    const template = `
-    <p class="title typo-display">
-      <icon-element name="newspaper" fill="var(--primary)" size="24"></icon-element>
-      뉴스스탠드
-    </p>
-    <p class="date typo-body-md">2023. 02. 10. 금요일</p>
-    `;
+  connectedCallback() {
     addShadow({ target: this });
-    add({
-      target: this.shadowRoot,
-      template,
-    });
+    this.render();
     addStyle({
       target: this.shadowRoot,
       style: style(),
+    });
+  }
+
+  render() {
+    const now = new Date();
+    const date = now
+      .toLocaleString('ko-KR', {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+      .replace('년', '.')
+      .replace('월', '.')
+      .replace('일', '.');
+    const day = now.toLocaleString('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      weekday: 'short',
+    });
+
+    const template = `
+    <p class="title">
+      <icon-element name="newspaper" fill="var(--primary)" size="24"></icon-element>
+      뉴스스탠드
+    </p>
+    <p class="date typo-body-md">${`${date} ${day}요일`}</p>
+    `;
+    add({
+      target: this.shadowRoot,
+      template,
     });
   }
 }

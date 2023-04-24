@@ -1,5 +1,6 @@
 export interface PressListType {
   pressList: PressType[];
+  customPressList: PressType[];
 }
 
 export interface PressType {

@@ -2,9 +2,10 @@ export default function style() {
   const style = document.createElement('style');
 
   const content = `
-
     .wrap {
       position: relative;
+      border: 1px solid var(--gray100);
+      height: 387px;
     }
 
     .grid-view-container {

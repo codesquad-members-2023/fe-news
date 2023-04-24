@@ -1,15 +1,14 @@
-export interface ElementType {
-  [key: string]: {
-    isActive: boolean;
-  };
-}
-
 export interface DisplayType {
-  tab: ElementType;
-  view: ElementType;
+  currentTab: 'general' | 'custom';
+  currentView: 'grid' | 'list';
   page: {
     [key: string]: {
       [key: string]: { currentPage: number; totalPage: number };
+    };
+  };
+  category: {
+    [key: string]: {
+      [key: string]: { index: number };
     };
   };
 }

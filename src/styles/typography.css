@@ -1,45 +1,33 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard-dynamic-subset.css');
 
-.typo-display {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
-}
+:root {
+  --typo-display-fontweight: 700;
+  --typo-display-fontsize: 24px;
+  --typo-display-lineheight: 29px;
 
-.typo-title-md {
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-}
+  --typo-title-md-fontweight: 700;
+  --typo-title-md-fontsize: 16px;
+  --typo-title-md-lineheight: 19px;
 
-.typo-title-sm {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 17px;
-}
+  --typo-title-sm-fontweight: 700;
+  --typo-title-sm-fontsize: 14px;
+  --typo-title-sm-lineheight: 17px;
 
-.typo-title-xs {
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 14px;
-}
+  --typo-title-xs-fontweight: 700;
+  --typo-title-xs-fontsize: 12px;
+  --typo-title-xs-lineheight: 14px;
 
-.typo-body-md {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 22px;
-}
+  --typo-body-md-fontweight: 500;
+  --typo-body-md-fontsize: 16px;
+  --typo-body-md-lineheight: 22px;
 
-.typo-body-sm {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-}
+  --typo-body-sm-fontweight: 500;
+  --typo-body-sm-fontsize: 14px;
+  --typo-body-sm-lineheight: 17px;
 
-.typo-body-xs {
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 14px;
+  --typo-body-xs-fontweight: 500;
+  --typo-body-xs-fontsize: 12px;
+  --typo-body-xs-lineheight: 14px;
 }
 
 body {

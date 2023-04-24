@@ -9,6 +9,10 @@ class ListView extends HTMLElement {
   connectedCallback() {
     addShadow({ target: this });
     this.render();
+    addStyle({
+      target: this.shadowRoot,
+      style: style(),
+    });
   }
 
   static get observedAttributes() {
@@ -17,6 +21,9 @@ class ListView extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'section-data') {
+      this.shadowRoot
+        ?.querySelector('list-view-tab-element')
+        ?.setAttribute('section-data', JSON.stringify(newValue));
       this.shadowRoot
         ?.querySelector('list-view-item-element')
         ?.setAttribute('section-data', JSON.stringify(newValue));
@@ -29,9 +36,13 @@ class ListView extends HTMLElement {
       name: 'section-data',
     });
 
+    const isCustom = this.closest('section')?.classList.contains('custom');
+
     const template = `
     <div class="listview-container">
-      <list-view-tab-element></list-view-tab-element>
+      <list-view-tab-element is-custom='${isCustom}' section-data='${JSON.stringify(
+      sectionData
+    )}' ></list-view-tab-element>
       <list-view-item-element section-data='${JSON.stringify(
         sectionData
       )}' image="headline"></list-view-item-element>
@@ -40,10 +51,6 @@ class ListView extends HTMLElement {
     add({
       target: this.shadowRoot,
       template,
-    });
-    addStyle({
-      target: this.shadowRoot,
-      style: style(),
     });
   }
 }

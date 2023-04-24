@@ -1,14 +1,22 @@
 import { add, addStyle, addShadow, getProperty } from '@utils/dom';
 import style from './NewsStyle';
 
-interface PressListHeader {
+interface News {
   icon?: string | null;
 }
 
-class PressListHeader extends HTMLElement {
+class News extends HTMLElement {
   constructor() {
     super();
+  }
+
+  connectedCallback() {
+    addShadow({ target: this });
     this.render();
+    addStyle({
+      target: this.shadowRoot,
+      style: style(),
+    });
   }
 
   render() {
@@ -18,16 +26,11 @@ class PressListHeader extends HTMLElement {
     <press-list-element></press-list-element>
     `;
 
-    addShadow({ target: this });
     add({
       target: this.shadowRoot,
       template,
     });
-    addStyle({
-      target: this.shadowRoot,
-      style: style(),
-    });
   }
 }
 
-export default PressListHeader;
+export default News;

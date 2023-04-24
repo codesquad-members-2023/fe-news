@@ -1,19 +1,31 @@
-import { add, addStyle, addShadow, getProperty } from '@utils/dom';
+import { add, addStyle, addShadow, getProperty, create } from '@utils/dom';
 import style from './ListViewItemStyle';
 import { ArticleInterface } from '@store/section/sectionType';
+import store from '@store/index';
+import { StroeType } from '@utils/redux';
+import { UserType } from '@store/user/userType';
 
 interface ListViewItem {
   icon?: string | null;
 }
 
 class ListViewItem extends HTMLElement {
+  userStore: StroeType<UserType>;
+  isSubscribed: boolean;
+  pid: string;
   constructor() {
     super();
+    this.userStore = store.user;
+    this.isSubscribed = false;
+    this.pid = '';
   }
 
   connectedCallback() {
     addShadow({ target: this });
     this.render();
+    this.userStore.subscribe(() => {
+      this.renderSubscribingBtn();
+    });
   }
 
   static get observedAttributes() {
@@ -22,8 +34,28 @@ class ListViewItem extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'section-data') {
-      this.render();
+      return this.render();
     }
+  }
+
+  renderSubscribingBtn() {
+    const sectionDataStr = getProperty({
+      target: this,
+      name: 'section-data',
+    });
+    const sectionData = sectionDataStr
+      ? JSON.parse(JSON.parse(sectionDataStr)).section
+      : null;
+    const id = sectionData?.press.pid;
+    const btnContainer = this.shadowRoot?.querySelector('.btn-container');
+    const subscribingPress: string[] =
+      this.userStore.getState().subscribingPress;
+    const isSubscribed = id ? subscribingPress.includes(id) : '';
+    const template = `
+      <button-element icon="${isSubscribed ? 'close' : 'plus'}" id='${id}'>
+          ${isSubscribed ? '해지하기' : '구독하기'}
+      </button-element>`;
+    add({ target: btnContainer, template });
   }
 
   render() {
@@ -33,38 +65,44 @@ class ListViewItem extends HTMLElement {
     });
 
     const sectionData = sectionDataStr
-      ? JSON.parse(JSON.parse(sectionDataStr))
+      ? JSON.parse(JSON.parse(sectionDataStr)).section
       : null;
 
-    const lastEdited = sectionData?.lastEdited;
+    const now = new Date(sectionData?.lastEdited);
+
+    const lastEdited = now.toLocaleString('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+
     const press = sectionData?.press;
+    this.pid = press.pid;
     const articles = sectionData?.articles;
     const mainArticle = articles?.[0];
     const otherArticles = articles?.slice(1);
+    this.isSubscribed = this.userStore
+      .getState()
+      .subscribingPress.includes(this.pid);
 
     const template = `
     <div class="header">
       <img ${
         press ? `src="${press.newMainLogo}"` : ''
       } height="20px" width="auto">
-      <p class="typo-body-xs">${lastEdited ?? ''} 편집</p>
-      ${
-        press.isSubscribed
-          ? `<button-element icon="close" id='${
-              press ? press.pid : ''
-            }'>해지하기</button-element>`
-          : `<button-element icon="plus" id='${
-              press ? press.pid : ''
-            }'>구독하기</button-element>`
-      }
-      
+      <p class="edit-time">${lastEdited ?? ''} 편집</p>
+      <div class="btn-container"></div>
     </div>
     <div class="contents">
       ${[mainArticle].map(
         (article: ArticleInterface) =>
           `<div class="headliner">
             <button class="image" ${`style="background-image: url('${article.img}')"`}></button>
-            <div class="title typo-body-md">
+            <div class="title">
             <a href='${article.link}'>${article.title}</a>
           </div>`
       )}
@@ -93,6 +131,7 @@ class ListViewItem extends HTMLElement {
       target: this.shadowRoot,
       style: style(),
     });
+    this.renderSubscribingBtn();
   }
 }
 

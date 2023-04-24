@@ -8,33 +8,61 @@ interface ListViewTabItem {
 class ListViewTabItem extends HTMLElement {
   constructor() {
     super();
+  }
+
+  connectedCallback() {
+    addShadow({ target: this });
     this.render();
   }
 
-  render() {
-    const name = this.innerText;
+  static get observedAttributes() {
+    return ['is-active', 'current-number'];
+  }
 
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'is-active') {
+      this.render();
+    }
+    if (name === 'current-number') {
+      this.render();
+    }
+  }
+
+  render() {
+    const name = getProperty({
+      target: this,
+      name: 'name',
+    });
     const isActive =
       getProperty({
         target: this,
         name: 'is-active',
-      }) ?? '';
+      }) === 'true';
+    const totalNumber = getProperty({
+      target: this,
+      name: 'total-number',
+    });
+    const currentNumber = getProperty({
+      target: this,
+      name: 'current-number',
+    });
 
     const template = `
     <button class="tab-container typo-body-sm${isActive ? ' is-active' : ''}">
       <span>${name}</span>
       ${
-        isActive
+        isActive && totalNumber
           ? `
           <span class="index-indicator typo-title-xs">
-            <span class="current-index">1</span><span>/</span><span class="total-index">81</span>
+            <span class="current-index">${
+              Number(currentNumber) + 1
+            }</span><span>/</span><span class="total-index">${totalNumber}</span>
           </span>`
           : ''
       }
-      
     </button>
     `;
-    addShadow({ target: this });
+
     add({
       target: this.shadowRoot,
       template,

@@ -9,6 +9,10 @@ class PressList extends HTMLElement {
   connectedCallback() {
     addShadow({ target: this });
     this.render();
+    addStyle({
+      target: this.shadowRoot,
+      style: style(),
+    });
   }
 
   render() {
@@ -20,10 +24,6 @@ class PressList extends HTMLElement {
     add({
       target: this.shadowRoot,
       template,
-    });
-    addStyle({
-      target: this.shadowRoot,
-      style: style(),
     });
   }
 }

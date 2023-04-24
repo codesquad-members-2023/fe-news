@@ -3,9 +3,17 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { SectionModel, PressInfoInterface, UserModel } from './schemas/index';
+import {
+  SectionModel,
+  PressInfoInterface,
+  UserModel,
+  PressModel,
+  TestSectionModel,
+} from './schemas/index';
 const uuid = require('uuid');
 import fs from 'fs/promises';
+
+const TEMP_ID = 'realsnoopso';
 
 dotenv.config();
 mongoose.set('strictQuery', false);
@@ -38,13 +46,59 @@ app.post('/section', async (req, res) => {
   }
 });
 
-app.get('/press', async (req, res) => {
-  const page = req.query.page;
-  const TOTAL_ITEM_AMOUNT = 24 * 4;
+app.patch('/test-section', async (req, res) => {
   try {
-    const press = await getPress({ sliceNumber: TOTAL_ITEM_AMOUNT });
+    const sections = await SectionModel.find({});
+    const categoryOrder = [
+      '종합/경제',
+      '방송/통신',
+      'IT',
+      '영자지',
+      '스포츠/연예',
+      '매거진/전문지',
+      '지역',
+    ];
+    const result: any = [];
+    for (const section of sections) {
+      const pressId = section.pressId;
+      const category = section.category;
+      const categoryIndex = categoryOrder.findIndex((v) => v === category);
+      result.push(categoryIndex);
+      await SectionModel.updateOne(
+        { pressId },
+        { $set: { category: categoryIndex } } // Use $set instead of $push
+      );
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: error });
+  }
+});
+
+app.get('/press', async (req, res) => {
+  try {
+    const press = await PressModel.find({});
     res.status(200).json(press);
   } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
+app.post('/press', async (req, res) => {
+  const body = req.body;
+  try {
+    const section = await SectionModel.findOne({ pressId: req.body.pid });
+    if (!section) {
+      return res.status(204).json({ message: 'cannot post' });
+    }
+    const result = await PressModel.create({
+      ...body,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    console.log(error);
     res.status(400).json({ message: error });
   }
 });
@@ -71,6 +125,7 @@ app.patch('/subscribe', async (req, res) => {
       { id },
       { $push: { subscribingPressIds: pressId } }
     );
+    await PressModel.updateOne({ pid: id }, { $push: { isSubscribed: true } });
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -86,6 +141,7 @@ app.patch('/unsubscribe', async (req, res) => {
       { id },
       { $pull: { subscribingPressIds: pressId } }
     );
+    await PressModel.updateOne({ pid: id }, { $push: { isSubscribed: false } });
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
@@ -106,64 +162,6 @@ app.get('/user', async (req, res) => {
   }
 });
 
-const ITEM_AMOUNT_PER_PAGE = 24 * 4;
-const TOTAL_ITEM_AMOUNT = 24 * 4;
-
-interface getPressProps {
-  sliceNumber?: number;
-}
-
-const TEST_USER_ID = 'realsnoopso';
-const getPress = async ({ sliceNumber }: getPressProps) => {
-  try {
-    const data = await fs.readFile('./mock/press.json', 'utf8');
-    let press = JSON.parse(data) as PressInfoInterface[];
-    const result = await UserModel.find({ id: TEST_USER_ID });
-    const subscribingPressIds = result[0].subscribingPressIds;
-    press = press.map((item: any) => {
-      if (subscribingPressIds.includes(item['pid'])) {
-        return {
-          ...item,
-          isSubscribed: true,
-        };
-      }
-      return {
-        ...item,
-        isSubscribed: false,
-      };
-    });
-
-    if (!sliceNumber) {
-      return press;
-    }
-    press = press.slice(0, sliceNumber);
-    // press = press.slice(
-    //   page * ITEM_AMOUNT_PER_PAGE,
-    //   (page + 1) * ITEM_AMOUNT_PER_PAGE
-    // );
-
-    return press;
-  } catch (error) {
-    throw error;
-  }
-};
-
-interface getPressInfoProps {
-  pressId?: string;
-  page?: number;
-}
-const getPressInfo = ({ pressId }: getPressInfoProps) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const press: PressInfoInterface[] = await getPress({ sliceNumber: -1 });
-      const result = press.find((item: any) => item['pid'] === pressId);
-      resolve(result);
-    } catch (error) {
-      reject({ message: error });
-    }
-  });
-};
-
 app.get('/rolling-news', async (req, res) => {
   try {
     const data = await fs.readFile('./mock/rollingnews.json', 'utf8');
@@ -174,29 +172,132 @@ app.get('/rolling-news', async (req, res) => {
   }
 });
 
-interface SectionInfoInterface {
-  id: string;
-  name: string;
-  order: number;
-  pressId: string;
-  updatedAt?: Date;
-  createdAt?: Date;
-  press?: PressInfoInterface;
-}
-
 app.get('/section', async (req, res) => {
-  const { page } = req.query;
+  const page = Number(req.query.page);
   try {
-    const section = await SectionModel.find().skip(Number(page)).limit(1);
-    if (section) {
-      const pressId = section[0].pressId;
-      const press = await getPressInfo({ pressId });
-      const data = section[0].toObject() as unknown extends SectionInfoInterface
-        ? SectionInfoInterface
-        : { press: unknown };
-      data.press = press;
-      res.status(200).json(data);
+    const sectionsWithPress = await SectionModel.aggregate([
+      {
+        $sort: {
+          category: 1,
+        },
+      },
+      {
+        $lookup: {
+          from: 'presses',
+          localField: 'pressId',
+          foreignField: 'pid',
+          as: 'press',
+        },
+      },
+      {
+        $unwind: {
+          path: '$press',
+        },
+      },
+      {
+        $skip: page * 1,
+      },
+      {
+        $limit: 1,
+      },
+    ]);
+
+    const categoryCounts = await SectionModel.aggregate([
+      {
+        $group: {
+          _id: '$category',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    let totalNumber = 0;
+    let currentCategoryIndex = page;
+    const category = sectionsWithPress[0].category;
+    const categoryCountsObj = categoryCounts.reduce((acc, curr) => {
+      if (Number(category) > Number(curr._id)) {
+        currentCategoryIndex -= curr.count;
+      }
+      acc[curr._id] = curr.count;
+      totalNumber += curr.count;
+      return acc;
+    }, {});
+
+    if (sectionsWithPress.length === 0) {
+      return res.status(204).json({ message: 'No sections' });
     }
+
+    res.status(200).json({
+      section: sectionsWithPress[0],
+      categoryCounts: categoryCountsObj,
+      totalNumber,
+      currentCategoryIndex,
+    });
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
+app.get('/custom-section', async (req, res) => {
+  const page = Number(req.query.page) || 0;
+
+  try {
+    const user = await UserModel.findOne({ id: TEMP_ID }).limit(1);
+    const subscribingPressIds = user?.subscribingPressIds;
+    const pressId = subscribingPressIds?.[page];
+
+    const sectionWithPress = await SectionModel.aggregate([
+      {
+        $match: {
+          pressId: pressId,
+        },
+      },
+      {
+        $lookup: {
+          from: 'presses',
+          localField: 'pressId',
+          foreignField: 'pid',
+          as: 'press',
+        },
+      },
+      {
+        $unwind: {
+          path: '$press',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $limit: 1,
+      },
+    ]);
+
+    if (sectionWithPress.length === 0) {
+      return res.status(204).json({ message: 'No section' });
+    }
+
+    const categoryCounts = await SectionModel.aggregate([
+      {
+        $match: {
+          pressId: { $in: subscribingPressIds },
+        },
+      },
+      {
+        $group: {
+          _id: '$category',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const categoryCountsFormatted = categoryCounts.reduce((acc, cur) => {
+      acc[cur._id] = cur.count;
+      return acc;
+    }, {});
+
+    res.status(200).json({
+      section: sectionWithPress[0],
+      categoryCounts: categoryCountsFormatted,
+    });
   } catch (error) {
     res.status(400).json({ message: error });
   }

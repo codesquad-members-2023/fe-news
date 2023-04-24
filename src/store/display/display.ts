@@ -1,15 +1,9 @@
-import { createStore, ReducerType, ActionType } from '@utils/redux';
+import { createStore, ReducerType, ActionType, StroeType } from '@utils/redux';
 import { DisplayType } from './displayType';
 
 const initialState: DisplayType = {
-  tab: {
-    general: { isActive: true },
-    custom: { isActive: false },
-  },
-  view: {
-    list: { isActive: false },
-    grid: { isActive: true },
-  },
+  currentTab: 'general',
+  currentView: 'grid',
   page: {
     grid: {
       general: { currentPage: 0, totalPage: 0 },
@@ -20,6 +14,125 @@ const initialState: DisplayType = {
       custom: { currentPage: 0, totalPage: 0 },
     },
   },
+  category: {
+    grid: {
+      general: { index: 0 },
+      custom: { index: 0 },
+    },
+    list: {
+      general: { index: 0 },
+      custom: { index: 0 },
+    },
+  },
+};
+
+interface props {
+  state: DisplayType;
+}
+
+interface changeTabProps extends props {
+  payload: 'general' | 'custom';
+}
+
+interface changeViewProps extends props {
+  payload: 'grid' | 'list';
+}
+
+interface changePageNumberProps extends props {
+  type: 'NEXT_PAGE' | 'PREV_PAGE' | 'RESET_PAGE';
+}
+
+interface setTotlaPagePayload {
+  view: 'grid' | 'view';
+  tab: 'general' | 'custom';
+  totalPage: number;
+}
+
+interface setTotalPageProps extends props {
+  payload: setTotlaPagePayload;
+}
+
+interface setCategoryIndexPayload {
+  view: 'grid' | 'view';
+  tab: 'general' | 'custom';
+  index: number;
+}
+
+interface setCategoryIndexProps extends props {
+  payload: setCategoryIndexPayload;
+}
+
+interface setCurrentPagePayload {
+  view: 'grid' | 'view';
+  tab: 'general' | 'custom';
+  currentPage: number;
+}
+interface setCurrentPageProps extends props {
+  payload: setCurrentPagePayload;
+}
+
+const changeTab = ({ state, payload }: changeTabProps) => {
+  state.currentTab = payload;
+  return {
+    ...state,
+  };
+};
+
+const changeView = ({ state, payload }: changeViewProps) => {
+  state.currentView = payload;
+  return {
+    ...state,
+  };
+};
+
+const changePageNumber = ({ state, type }: changePageNumberProps) => {
+  const currentView = state.currentView;
+  const currentTab = state.currentTab;
+  const isListLastPage =
+    'list' &&
+    state.page[currentView][currentTab].currentPage ===
+      state.page[currentView][currentTab].totalPage;
+  const isListFirstPage =
+    state.currentView === 'list' &&
+    state.page[currentView][currentTab].currentPage === 0;
+  if (type === 'NEXT_PAGE') {
+    if (isListLastPage) {
+      state.page[currentView][currentTab].currentPage = 0;
+      state.category[currentView][currentTab].index = 0;
+    } else {
+      state.page[currentView][currentTab].currentPage++;
+      state.category[currentView][currentTab].index++;
+    }
+  } else if (type === 'PREV_PAGE') {
+    if (isListFirstPage) {
+      state.page[currentView][currentTab].currentPage =
+        state.page[currentView][currentTab].totalPage;
+      state.category[currentView][currentTab].index =
+        state.page[currentView][currentTab].totalPage;
+    } else {
+      state.page[currentView][currentTab].currentPage--;
+      state.category[currentView][currentTab].index--;
+    }
+  } else {
+    state.page[currentView][currentTab].currentPage = 0;
+    state.category[currentView][currentTab].index = 0;
+  }
+  return state;
+};
+
+const setCurrentPage = ({ state, payload }: setCurrentPageProps) => {
+  state.page[payload.view][payload.tab].currentPage = payload.currentPage;
+  return state;
+};
+
+const setTotalPage = ({ state, payload }: setTotalPageProps) => {
+  state.page[payload.view][payload.tab].totalPage = payload.totalPage;
+  return state;
+};
+
+const setCategoryIndex = ({ state, payload }: setCategoryIndexProps) => {
+  state.category[payload.view][payload.tab].index = payload.index;
+  return state;
 };
 
 const reducer: ReducerType<DisplayType> = (
@@ -28,40 +141,21 @@ const reducer: ReducerType<DisplayType> = (
 ): DisplayType => {
   switch (action.type) {
     case 'CHANGE_TAB':
-      state.tab[action.payload].isActive = true;
-      state.tab[action.payload === 'general' ? 'custom' : 'general'].isActive =
-        false;
-      return {
-        ...state,
-      };
+      return changeTab({ state, payload: action.payload });
     case 'CHANGE_VIEW':
-      state.view[action.payload].isActive = true;
-      state.view[action.payload === 'grid' ? 'list' : 'grid'].isActive = false;
-      return {
-        ...state,
-      };
+      return changeView({ state, payload: action.payload });
     case 'NEXT_PAGE':
-      state.page[action.payload.view][action.payload.tab].currentPage++;
-
-      return {
-        ...state,
-      };
+      return changePageNumber({ state, type: action.type });
     case 'PREV_PAGE':
-      state.page[action.payload.view][action.payload.tab].currentPage--;
-      return {
-        ...state,
-      };
+      return changePageNumber({ state, type: action.type });
     case 'RESET_PAGE':
-      state.page[action.payload.view][action.payload.tab].currentPage = 0;
-      return {
-        ...state,
-      };
+      return changePageNumber({ state, type: action.type });
+    case 'SET_CURRENT_PAGE':
+      return setCurrentPage({ state, payload: action.payload });
     case 'SET_TOTAL_PAGE':
-      state.page[action.payload.view][action.payload.tab].totalPage =
-        action.payload.totalPage;
-      return {
-        ...state,
-      };
+      return setTotalPage({ state, payload: action.payload });
+    case 'SET_CATEGORY_INDEX':
+      return setCategoryIndex({ state, payload: action.payload });
     default:
       return state;
   }

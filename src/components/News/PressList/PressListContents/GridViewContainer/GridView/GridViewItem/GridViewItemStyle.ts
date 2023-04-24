@@ -4,32 +4,33 @@ export default function style(target: HTMLElement) {
   const style = document.createElement('style');
 
   const content = `
-    .wrap.grid-view-item {
+    .grid-view-item {
       width: 100%;
       min-width: 154px;
       height: 100%;
+      max-height: 96px;
       display: inline-block;
       background-color: var(--white);
-      border-color: var(--gray100);
-      border-style: solid;
-      border-right-width: 1px;
-      border-bottom-width: 1px;
+      
     }
 
-    .wrap.grid-view-item.right-item {
-      border-right-width: 0;
+    .grid-view-item button {
+      border-bottom: 1px solid var(--gray100);
+      border-right: 1px solid var(--gray100);
     }
 
-    .wrap.grid-view-item.bottom-item {
-      border-bottom-width: 0;
+    .wrap.grid-view-item.right-item button {
+      border-right: none;
     }
 
+    .wrap.grid-view-item.bottom-item button {
+      border-bottom: none;
+    }
 
     button {
       width: 100%;
       height: 100%;
       background-color: var(--white);
-      
       position: relative;
     }
 
@@ -59,7 +60,11 @@ export default function style(target: HTMLElement) {
 
     .press-subscribe-btn-container:hover {
       background-color: var(--offwhite);
-    }    
+    }
+
+    .wrap.no-hover .press-subscribe-btn-container:hover {
+      background-color: var(--white);
+    }
     `;
 
   style.textContent = content;

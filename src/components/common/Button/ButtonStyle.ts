@@ -26,6 +26,7 @@ export default function style() {
 
     button:hover {
       background: var(--offwhite);
+      cursor: pointer;
     }
 
     `;

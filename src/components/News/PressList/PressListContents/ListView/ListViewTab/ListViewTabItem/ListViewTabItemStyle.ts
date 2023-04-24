@@ -5,7 +5,6 @@ export default function style(target: HTMLElement) {
   const progress = getProperty({ target, name: 'progress' }) ?? '0';
 
   const content = `
-    
     .tab-container {
       display: flex;
       justify-content: space-between;
@@ -13,6 +12,15 @@ export default function style(target: HTMLElement) {
       height: 100%;
       align-items: center;
       color: var(--gray300);
+      border: 0;
+      background-color: transparent;
+      
+    }
+
+    .tab-container span {
+      display: inline-block;
+      width: max-content;
+      
     }
 
     .is-active {
@@ -20,6 +28,7 @@ export default function style(target: HTMLElement) {
       width: 166px;
       color: var(--white);
       font-weight: 700;
+      
     }
 
     .index-indicator {

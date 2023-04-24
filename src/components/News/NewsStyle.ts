@@ -2,8 +2,6 @@ export default function style() {
   const style = document.createElement('style');
 
   const content = `
-
-
     :host {
       width: 930px;
       display: block;

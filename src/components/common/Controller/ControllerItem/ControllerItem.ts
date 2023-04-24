@@ -4,14 +4,31 @@ import style from './ControllerItemStyle';
 interface ControllerItem {}
 
 class ControllerItem extends HTMLElement {
+  hide: string | null;
+
   constructor() {
     super();
+    this.hide = null;
+  }
+
+  connectedCallback() {
+    addShadow({ target: this });
     this.render();
+  }
+
+  static get observedAttributes() {
+    return ['hide'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'hide') {
+      this.hide = getProperty({ target: this, name: 'hide' });
+      this.render();
+    }
   }
 
   render() {
     const template = `
-
     <div class="controller-container">
       <slider-controller-element position="left"></slider-controller-element>
       <slider-controller-element position="right"></slider-controller-element>
@@ -19,7 +36,6 @@ class ControllerItem extends HTMLElement {
     <div class="controller"></div>
     `;
 
-    addShadow({ target: this });
     add({
       target: this.shadowRoot,
       template,

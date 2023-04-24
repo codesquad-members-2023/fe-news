@@ -54,7 +54,7 @@ const postSection = async () => {
     lastEdited: lastEdited,
     articles,
   };
-  console.log(section);
+
   const url = `http://localhost:3001/section`;
   try {
     await customFetch({ url, method: 'POST', body: section });

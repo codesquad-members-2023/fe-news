@@ -1,11 +1,46 @@
 import { createStore, ReducerType, ActionType } from '@utils/redux';
 import { UserType } from './userType';
-
-const TEMP_ID = 'realsnoopso';
+import { TEMP_ID } from '@constant/index';
 
 const initialState: UserType = {
   id: TEMP_ID,
   subscribingPress: [] as string[],
+};
+
+interface props {
+  state: UserType;
+}
+
+interface setUserProps extends props {
+  payload: any;
+}
+
+interface subscribeProps extends props {
+  payload: string;
+}
+
+interface unsubscribeProps extends props {
+  payload: string;
+}
+
+const setUser = ({ payload }: setUserProps) => {
+  return { ...payload, subscribingPress: payload.subscribingPressIds };
+};
+
+const subscribe = ({ state, payload }: subscribeProps) => {
+  if (state.subscribingPress.length === 0)
+    return { ...state, subscribingPress: [payload] };
+  return {
+    ...state,
+    subscribingPress: [...state.subscribingPress, payload],
+  };
+};
+
+const unsubscribe = ({ state, payload }: unsubscribeProps) => {
+  const newSubscribingPress = state.subscribingPress.filter(
+    (pressId: string) => pressId !== payload
+  );
+  return { ...state, subscribingPress: newSubscribingPress };
 };
 
 const reducer: ReducerType<UserType> = (
@@ -13,19 +48,12 @@ const reducer: ReducerType<UserType> = (
   action: ActionType
 ): UserType => {
   switch (action.type) {
+    case 'SET_USER':
+      return setUser({ state, payload: action.payload });
     case 'SUBSCRIBE':
-      if (state.subscribingPress.length === 0)
-        return { ...state, subscribingPress: [action.payload] };
-
-      return {
-        ...state,
-        subscribingPress: [...state.subscribingPress, action.payload],
-      };
+      return subscribe({ state, payload: action.payload });
     case 'UNSUBSCRIBE':
-      const newSubscribingPress = state.subscribingPress.filter(
-        (pressId: string) => pressId !== action.payload
-      );
-      return { ...state, subscribingPress: newSubscribingPress };
+      return unsubscribe({ state, payload: action.payload });
     default:
       return state;
   }

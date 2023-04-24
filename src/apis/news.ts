@@ -16,8 +16,7 @@ interface getSectionProps {
   page: number;
 }
 
-export const getPress = async ({ page }: getPressProps) => {
-  // const path = `/press?page=${page}`;
+export const getPress = async () => {
   const path = `/press`;
   const method = 'GET';
   const data = await customFetch({ path, method });
@@ -27,8 +26,13 @@ export const getPress = async ({ page }: getPressProps) => {
 export const getSection = async ({ page }: getSectionProps) => {
   const path = `/section?page=${page}`;
   const method = 'GET';
-  const data = await customFetch({ path, method });
-  store.section.dispatch({ type: 'CHANGE_SECTION', payload: data });
-  const section = store.section.getState();
+  const section = await customFetch({ path, method });
+  return section;
+};
+
+export const getCustomSection = async ({ page }: getSectionProps) => {
+  const path = `/custom-section?page=${page}`;
+  const method = 'GET';
+  const section = await customFetch({ path, method });
   return section;
 };
