@@ -7,7 +7,7 @@ export class MainLeftView extends AbstractView {
   }
 
   protected setWrapper() {
-    this._wrapperElement.innerHTML = `<section class="h-full w-2/3 flex flex-col flex-initial"></section>`;
+    this._wrapperElement.innerHTML = `<section class="h-full w-full flex flex-col flex-initial"></section>`;
   }
 
   render(state: State) {

@@ -12,10 +12,12 @@ export class App {
     new HeaderComponent(
       appRoot.querySelector('#header-wrapper') as HTMLElement,
     );
-    const main = new MainComponent();
-    (appRoot.querySelector('#main-wrapper') as HTMLElement).appendChild(
-      main.element,
-    );
+    // const main = new MainComponent();
+    // (appRoot.querySelector('#main-wrapper') as HTMLElement).appendChild(
+    //   main.element,
+    // );
+    new MainComponent(appRoot.querySelector('#main-wrapper') as HTMLElement);
+
     new FooterComponent(
       appRoot.querySelector('#footer-wrapper') as HTMLElement,
     );
