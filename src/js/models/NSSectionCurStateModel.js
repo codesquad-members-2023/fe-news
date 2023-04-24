@@ -11,8 +11,8 @@ export default class NSSectionCurViewStateModel extends Observer {
       gridOrList: VIEW_STATE.GRID,
       allOrSub: VIEW_STATE.ALL,
 
-      index: 1, // grid와 list 따로?
-      curListCategory: null, // 하드 코딩을 해서 먼저 선언을 하냐
+      index: 1,
+      curListCategory: null,
     };
     this._dataFetcher = dataFetcher;
     this._allPressData = {};
@@ -84,10 +84,15 @@ export default class NSSectionCurViewStateModel extends Observer {
     return this._allCategory;
   }
 
-  getAllPressData() {
+  getPressData() {
     const { index, curListCategory } = this._curViewState;
     const pressData = this._allPressData[curListCategory][index - 1];
     return pressData;
+  }
+
+  getCurIndexAndCategory() {
+    const { index, curListCategory } = this._curViewState;
+    return [index, this._curViewState.curListCategory, this._allPressData[curListCategory].length];
   }
 
   async getGridAllPressData() {
@@ -143,6 +148,15 @@ export default class NSSectionCurViewStateModel extends Observer {
     }
     this._curViewState.curListCategory = this._allCategory[0];
     this._curViewState.index = 1;
+    this.notify(this._curViewState);
+  }
+
+  changeListCategory(selectedCategory) {
+    if (this._curViewState.curListCategory === selectedCategory) return;
+
+    this._curViewState.curListCategory = selectedCategory;
+    this._curViewState.index = 1;
+
     this.notify(this._curViewState);
   }
 
