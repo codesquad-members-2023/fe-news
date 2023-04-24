@@ -73,6 +73,10 @@ export default class NSSectionCurViewStateModel extends Observer {
     return [...this._subPressData.slice(start, end)].length !== 0;
   }
 
+  isEmptySubData() {
+    return this._subPressData.length === 0;
+  }
+
   getGridSubData() {
     const start = (this._curViewState.index - 1) * NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
     const end = start + NS_SECTION_INFO.GRID_ALL.PAGE_SIZE;
