@@ -24,6 +24,7 @@ export default class MainContentList {
 
     tabStore.register(this.displayElement.bind(this));
     listPageStore.register(this.renderListWrapper.bind(this));
+    listPageStore.register(this.renderSubscribeToggleBtn.bind(this));
   }
 
   render() {
