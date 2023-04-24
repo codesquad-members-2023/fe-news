@@ -62,6 +62,8 @@ export default class GridAllView {
       case false:
         this._subPopupWrap.classList.remove('hidden');
         break;
+      default:
+        break;
     }
   }
 
