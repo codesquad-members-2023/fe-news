@@ -94,14 +94,22 @@ export default class MainContentList {
   }
 
   allCategoriesTemplate() {
-    const { pressTabType } = this.props;
-
+    const { pressTabType, dataCountByCategory } = this.props;
     if (pressTabType !== 'all') return;
 
-    const allCategoriesTemplate = CATEGORY_ORDER.map(
-      (category, idx) => `<li data-news-category-idx="${idx}">${category}</li>`,
-      ''
-    ).join('');
+    const { currentCategory, currentItemIdx } = listPageStore.getState()[pressTabType];
+
+    const allCategoriesTemplate = CATEGORY_ORDER.map((category, idx) => {
+      if (currentCategory === category) {
+        return `
+          <li class="current-category" data-news-category-idx="${idx}">
+            <span>${category}</span>
+            <span>${currentItemIdx + 1}/${dataCountByCategory[currentCategory]}</span>
+          </li>
+        `;
+      }
+      return `<li data-news-category-idx="${idx}">${category}</li>`;
+    }).join('');
 
     return /* html */ `
       <ul class="press-list__category">
