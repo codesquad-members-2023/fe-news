@@ -28,13 +28,12 @@ export class MainLeftView extends TempAbstractView {
   }
 
   addChildren(state: State) {
-    const nsHeader = new NsHeaderComponent();
+    const nsHeader = new NsHeaderComponent(
+      this.$target.querySelector('#ns-header-wrapper') as HTMLElement,
+    );
     const nsNavbar = new NsIssueContainerComponent();
     const nsContainer = new NsContainerComponent();
     // [리팩토링 예정]
-    (
-      this.$target.querySelector('#ns-header-wrapper') as HTMLElement
-    ).appendChild(nsHeader.element);
     (
       this.$target.querySelector('#ns-navbar-wrapper') as HTMLElement
     ).appendChild(nsNavbar.element);
