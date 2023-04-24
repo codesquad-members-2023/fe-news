@@ -4,11 +4,9 @@ export default class Component {
   parentElement;
   state;
   props;
-
   constructor(parentElement, props) {
     this.parentElement = parentElement;
     this.props = props;
-
     this.setup();
     this.setEvent();
     this.componentDidMount();

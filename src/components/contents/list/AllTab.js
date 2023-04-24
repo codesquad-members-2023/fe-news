@@ -1,33 +1,33 @@
 import Component from "../../../core/Component.js";
 
 export default class AllTab extends Component {
+  setEvent() {}
+
   template() {
-    const { press, categories } = this.props;
+    const { selectedPress, categoryIndex, categoryLength, categories } =
+      this.props;
 
-    const selectedCategory = categories.filter(
-      (category) => category.categoryId === press.category_id
-    )[0];
-
-    const idx =
-      selectedCategory?.newses.findIndex((news) => news === press) + 1;
-
-    const categoryLength = selectedCategory?.newses.length;
+    if (!selectedPress) return;
 
     const categoriesHtml = categories.reduce((categoriesString, category) => {
-      const { categoryId } = category;
-      const isSelected = categoryId === press.category_id;
+      const categoryId = category;
+      const isSelected = categoryId === selectedPress.category_id;
 
       return (
         categoriesString +
         `
-        <div>
-          <span class=${
-            isSelected ? "selected-category" : ""
-          } >${categoryId}</span>
+          <div>
+            <span class=${
+              isSelected ? "selected-category" : ""
+            } >${categoryId}</span>
 
-          ${isSelected ? `<span>${idx}/${categoryLength}</span>` : ""}
-        </div>
-        `
+            ${
+              isSelected
+                ? `<span>${categoryIndex + 1}/${categoryLength}</span>`
+                : ""
+            }
+          </div>
+          `
       );
     }, "");
 

@@ -1,15 +1,18 @@
 import Component from "../../../core/Component.js";
+import {
+  setSubscriptionAll,
+  setSubscriptionSubscribing,
+  store,
+} from "../../../store/store.js";
 
 export default class SubscriptionMenu extends Component {
   setEvent() {
-    const { setSubscriptionAll, setSubscriptionSubscribing } = this.props;
-
-    this.addEvent("click", ".view-option__all", setSubscriptionAll);
-    this.addEvent(
-      "click",
-      ".view-option__subscribe",
-      setSubscriptionSubscribing
-    );
+    this.addEvent("click", ".view-option__all", () => {
+      store.dispatch(setSubscriptionAll());
+    });
+    this.addEvent("click", ".view-option__subscribe", () => {
+      store.dispatch(setSubscriptionSubscribing());
+    });
   }
 
   template() {

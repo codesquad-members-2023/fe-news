@@ -20,6 +20,8 @@ export const observable = (obj) => {
         return _value;
       },
       set(value) {
+        if (_value === value) return;
+        if (JSON.stringify(_value) === JSON.stringify(value)) return;
         _value = value;
         observers.forEach((fn) => fn());
       },

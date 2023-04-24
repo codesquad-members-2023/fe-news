@@ -1,35 +1,11 @@
 import Component from "../../core/Component.js";
+import { fetchBreakNewses, fetchHeadNewses, store } from "../../store/store.js";
 import LatestNewsBar from "./LatestNewsBar.js";
 
 export default class LatestNews extends Component {
-  initState() {
-    return {
-      headNewses: [],
-      breakNewses: [],
-    };
-  }
-
-  async componentDidMount() {
-    try {
-      const [headerResult, breakResult] = await Promise.all([
-        fetch("http://localhost:3001/head"),
-        fetch("http://localhost:3001/break"),
-      ]);
-      const [headerData, breakData] = await Promise.all([
-        headerResult.json(),
-        breakResult.json(),
-      ]);
-
-      if (!headerResult.ok || !breakResult.ok)
-        throw new Error("Failed to fetch data");
-
-      this.setState({
-        headNewses: headerData,
-        breakNewses: breakData,
-      });
-    } catch (e) {
-      console.log(e);
-    }
+  componentDidMount() {
+    store.dispatch(fetchHeadNewses());
+    store.dispatch(fetchBreakNewses());
   }
 
   template() {
@@ -42,7 +18,8 @@ export default class LatestNews extends Component {
   renderChildComponents() {
     const latestNewsBars =
       this.parentElement.querySelectorAll(".latest-news__bar");
-    const { headNewses, breakNewses } = this.state;
+
+    const { headNewses, breakNewses } = store.getState().latestNews;
     new LatestNewsBar(latestNewsBars[0], { newses: headNewses });
     new LatestNewsBar(latestNewsBars[1], { newses: breakNewses });
   }

@@ -1,45 +1,55 @@
+import {
+  SUBSCRIBING_PRESSES_KEY,
+  setLocalData,
+} from "../../../../utils/sotrageManager.js";
 import Component from "../../../core/Component.js";
+import {
+  addSubscribing,
+  removeSubscribing,
+  store,
+} from "../../../store/store.js";
 
 export default class NewsContent extends Component {
-  initState() {
-    const { subscribingPresses, press } = this.props;
-
-    const isSubscribing = subscribingPresses.some(
-      (subscribingPress) => subscribingPress === press.name
-    );
-
-    return {
-      isSubscribing,
-    };
-  }
-
   setEvent() {
-    const { addSubscribing, removeSubscribing, press, subscriptionOption } =
-      this.props;
+    const {
+      contents: { subscribingPresses },
+    } = store.getState();
+
+    const { selectedPress } = this.props;
 
     const toggleSubscribing = () => {
-      if (!press) return;
-      const name = press.name;
+      if (!selectedPress) return;
+      const name = selectedPress.name;
 
-      this.state.isSubscribing
-        ? removeSubscribing(name, subscriptionOption !== "all")
-        : addSubscribing(name, subscriptionOption !== "all");
+      const isSubscribing = subscribingPresses.some(
+        (subscribingPressName) => subscribingPressName === selectedPress.name
+      );
 
-      this.setState({
-        isSubscribing: !this.state.isSubscribing,
-      });
+      const actionCreator = isSubscribing ? removeSubscribing : addSubscribing;
+      store.dispatch(actionCreator(name));
+      setLocalData(
+        SUBSCRIBING_PRESSES_KEY,
+        store.getState().contents.subscribingPresses
+      );
     };
 
     this.addEvent("click", ".list-button", toggleSubscribing);
   }
 
   template() {
-    const { press, subscriptionOption } = this.props;
-    const { isSubscribing } = this.state;
+    const {
+      contents: { subscribingPresses, subscriptionOption },
+    } = store.getState();
 
-    if (!press && subscriptionOption === "sub")
+    const { selectedPress } = this.props;
+
+    if (!subscribingPresses.length && subscriptionOption === "sub")
       return `<span>구독한 언론사가 없습니다.</span>`;
-    if (!press) return `<span>loading...</span>`;
+    if (!selectedPress) return `<span>loading...</span>`;
+
+    const isSubscribing = subscribingPresses?.some(
+      (subscribingPress) => subscribingPress === selectedPress.name
+    );
 
     const {
       logo_src,
@@ -48,7 +58,7 @@ export default class NewsContent extends Component {
       main_news_title,
       sub_news_titles,
       name,
-    } = press;
+    } = selectedPress;
 
     const listHtml = sub_news_titles.reduce(
       (listString, title) => listString + `<li>${title}</li>`,
@@ -75,7 +85,7 @@ export default class NewsContent extends Component {
                 <span class="caption">${name} 언론사에서 직접 편집한 뉴스입니다.</span>
             </div>
         </div>
-    
+
     `;
   }
 }

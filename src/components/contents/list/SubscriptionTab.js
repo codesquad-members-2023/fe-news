@@ -1,9 +1,13 @@
 import Component from "../../../core/Component.js";
+import { store } from "../../../store/store.js";
 
 export default class SubscriptionTab extends Component {
   template() {
-    const { press, subscribingPresses } = this.props;
-    const name = press?.name;
+    const { subscribingPresses } = store.getState().contents;
+    const { selectedPress } = this.props;
+
+    if (!selectedPress) return `구독한 언론사가 없습니다.`;
+    const name = selectedPress.name;
     const subscribingPressesHtml = subscribingPresses.reduce(
       (subscribingPressesString, subscribingPress) => {
         const isSelected = name === subscribingPress;

@@ -1,11 +1,14 @@
 import Component from "../../../core/Component.js";
+import { setViewGrid, setViewList, store } from "../../../store/store.js";
 
 export default class StyleMenu extends Component {
   setEvent() {
-    const { setViewGrid, setViewList } = this.props;
-
-    this.addEvent("click", ".list-icon", setViewList);
-    this.addEvent("click", ".grid-icon", setViewGrid);
+    this.addEvent("click", ".list-icon", () => {
+      store.dispatch(setViewList());
+    });
+    this.addEvent("click", ".grid-icon", () => {
+      store.dispatch(setViewGrid());
+    });
   }
 
   template() {
