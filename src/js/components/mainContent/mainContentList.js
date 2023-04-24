@@ -1,4 +1,3 @@
-import { CATEGORY_ORDER } from '../../constants/index.js';
 import { domUtils, validatorUtils } from '../../utils/index.js';
 import { tabStore, subscriptionListStore, listPageStore } from '../../store/index.js';
 
@@ -16,11 +15,13 @@ export default class MainContentList {
     this.$mainEle = document.createElement('section');
 
     this.props = props;
-    const { pressTabType } = this.props;
+    const { pressTabType, categories } = this.props;
 
     this.$mainEle.classList.add('main-content__list', `${pressTabType}-list__section`);
 
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
+
+    listPageStore.dispatch({ type: 'initListPage', payload: { pressTabType, categories } });
 
     tabStore.register(this.displayElement.bind(this));
     listPageStore.register(this.renderListWrapper.bind(this));
@@ -95,14 +96,15 @@ export default class MainContentList {
   }
 
   allCategoriesTemplate() {
-    const { pressTabType, dataCountByCategory } = this.props;
+    const { pressTabType, categories, dataCountByCategory } = this.props;
     if (pressTabType !== 'all') return;
 
     const { currentCategory, currentItemIdx } = listPageStore.getState()[pressTabType];
 
-    const allCategoriesTemplate = CATEGORY_ORDER.map((category, idx) => {
-      if (currentCategory === category) {
-        return `
+    const allCategoriesTemplate = categories
+      .map((category, idx) => {
+        if (currentCategory === category) {
+          return `
           <li class="current-category" data-news-category-idx="${idx}">
             <span>${category}</span>
             <div class="current-category__count">
@@ -111,9 +113,10 @@ export default class MainContentList {
             </div>
           </li>
         `;
-      }
-      return `<li data-news-category-idx="${idx}">${category}</li>`;
-    }).join('');
+        }
+        return `<li data-news-category-idx="${idx}">${category}</li>`;
+      })
+      .join('');
 
     return /* html */ `
       <ul class="press-list__category">
@@ -192,16 +195,26 @@ export default class MainContentList {
       const { pressTabType } = this.props;
 
       if (pressTabType === 'all' && target.id === 'list-next-btn') {
-        const { dataCountByCategory } = this.props;
-        listPageStore.dispatch({ type: 'nextPage', payload: { pressTabType, dataCountByCategory } });
+        const { categories, dataCountByCategory } = this.props;
+        listPageStore.dispatch({
+          type: 'nextPage',
+          payload: { pressTabType, categories, dataCountByCategory }
+        });
       }
       if (pressTabType === 'all' && target.id === 'list-before-btn') {
-        const { dataCountByCategory } = this.props;
-        listPageStore.dispatch({ type: 'beforePage', payload: { pressTabType, dataCountByCategory } });
+        const { categories, dataCountByCategory } = this.props;
+        listPageStore.dispatch({
+          type: 'beforePage',
+          payload: { pressTabType, categories, dataCountByCategory }
+        });
       }
       if (target.tagName === 'LI') {
+        const { categories } = this.props;
         const targetCategoryIdx = target.dataset.newsCategoryIdx;
-        listPageStore.dispatch({ type: 'changeCategory', payload: { pressTabType, targetCategoryIdx } });
+        listPageStore.dispatch({
+          type: 'changeCategory',
+          payload: { pressTabType, categories, targetCategoryIdx }
+        });
       }
     });
   }

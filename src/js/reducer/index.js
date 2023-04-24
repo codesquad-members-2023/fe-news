@@ -1,5 +1,3 @@
-import { CATEGORY_ORDER } from '../constants/index.js';
-
 export const tabReducer = (state, action) => {
   switch (action.type) {
     case 'togglePressTab': {
@@ -55,19 +53,23 @@ export const subscriptionListReducer = (state, action) => {
 
 export const listPageReducer = (state, action) => {
   switch (action.type) {
+    case 'initListPage': {
+      const { pressTabType, categories } = action.payload;
+      return { ...state, [pressTabType]: { currentCategory: categories[0], currentItemIdx: 0 } };
+    }
     case 'nextPage': {
       const { pressTabType } = action.payload;
 
       if (pressTabType === 'all') {
-        const { dataCountByCategory } = action.payload;
+        const { categories, dataCountByCategory } = action.payload;
         const { currentCategory, currentItemIdx } = state[pressTabType];
-        const categoryCount = CATEGORY_ORDER.length;
+        const categoryCount = categories.length;
 
         const isSameCategory = currentItemIdx < dataCountByCategory[currentCategory] - 1;
 
-        const currentCategoryIdx = CATEGORY_ORDER.indexOf(currentCategory);
+        const currentCategoryIdx = categories.indexOf(currentCategory);
         const nextCategoryIdx = (currentCategoryIdx + 1) % categoryCount;
-        const nextCategory = CATEGORY_ORDER[nextCategoryIdx];
+        const nextCategory = categories[nextCategoryIdx];
 
         return {
           ...state,
@@ -80,19 +82,19 @@ export const listPageReducer = (state, action) => {
       break;
     }
     case 'beforePage': {
-      const { pressTabType } = action.payload;
+      const { categories, pressTabType } = action.payload;
 
       if (pressTabType === 'all') {
         const { dataCountByCategory } = action.payload;
         const { currentCategory, currentItemIdx } = state[pressTabType];
-        const categoryCount = CATEGORY_ORDER.length;
+        const categoryCount = categories.length;
 
         const isSameCategory = currentItemIdx > 0;
 
-        const currentCategoryIdx = CATEGORY_ORDER.indexOf(currentCategory);
+        const currentCategoryIdx = categories.indexOf(currentCategory);
         const nextCategoryIdx =
-          ((currentCategoryIdx === 0 ? CATEGORY_ORDER.length : currentCategoryIdx) - 1) % categoryCount;
-        const nextCategory = CATEGORY_ORDER[nextCategoryIdx];
+          ((currentCategoryIdx === 0 ? categories.length : currentCategoryIdx) - 1) % categoryCount;
+        const nextCategory = categories[nextCategoryIdx];
 
         return {
           ...state,
@@ -105,12 +107,12 @@ export const listPageReducer = (state, action) => {
       break;
     }
     case 'changeCategory': {
-      const { pressTabType, targetCategoryIdx } = action.payload;
+      const { pressTabType, categories, targetCategoryIdx } = action.payload;
 
       if (pressTabType === 'all') {
         return {
           ...state,
-          [pressTabType]: { currentCategory: CATEGORY_ORDER[targetCategoryIdx], currentItemIdx: 0 }
+          [pressTabType]: { currentCategory: categories[targetCategoryIdx], currentItemIdx: 0 }
         };
       }
     }

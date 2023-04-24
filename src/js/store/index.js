@@ -1,4 +1,3 @@
-import { CATEGORY_ORDER } from '../constants/index.js';
 import Store from '../core/store.js';
 import MyStore from '../core/myStore.js';
 import { tabReducer, gridPageReducer, subscriptionListReducer, listPageReducer } from '../reducer/index.js';
@@ -22,7 +21,7 @@ const INIT_SUBSCRIPTION_LIST_STATE = new Set();
 export const subscriptionListStore = new MyStore(INIT_SUBSCRIPTION_LIST_STATE, subscriptionListReducer);
 
 export const INIT_LIST_PAGE_STATE = {
-  all: { currentCategory: CATEGORY_ORDER[0], currentItemIdx: 0 }
+  all: { currentCategory: null, currentItemIdx: null }
 };
 
 export const listPageStore = new Store(INIT_LIST_PAGE_STATE, listPageReducer);
