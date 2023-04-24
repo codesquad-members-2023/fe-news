@@ -117,7 +117,6 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 30px 0;
-  border: 1px solid #000;
 }
 
 #nav {
@@ -143,7 +142,6 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #000;
 }
 
 .main-content__header {
@@ -358,6 +356,10 @@ body {
   border: 1px solid #d2dae0;
   border-radius: 50px;
   background-color: #f5f7f9;
+}
+
+.press-list__main-news {
+  width: 320px;
 }
 
 .press-list__main-news:hover .main-news__img {
