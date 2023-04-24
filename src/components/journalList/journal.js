@@ -90,7 +90,7 @@ export class Journal {
         <div class="detail-contents-column">
           <div class="imgSrc"><img style="height: 20px" src="${this.journalData.mediaInfo.imgSrc}"/></div>
           <div class="modifiedTime">${this.journalData.mediaInfo.modifiedTime}</div>
-          <div class="sub-button"><img src="src/assets/icons/SubscribeButton.svg" /></div>
+          <div class="sub-button"><button>+ 구독하기</button></div>
         </div>
         <div class="detail-contents-column">
           <div class="mainContent">
