@@ -18,9 +18,13 @@
   cursor: pointer;
 }
 
+.journal-track {
+  border: 1px solid var(--gray100);
+}
+
 .journal-container {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(900px, 900px));
+  display: flex;
+  height: 100%;
   position: relative;
   transition: transform 0.5s ease-in-out;
 }

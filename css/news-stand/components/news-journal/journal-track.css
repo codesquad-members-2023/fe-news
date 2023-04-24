@@ -2,23 +2,19 @@
   width: 900px;
   overflow-x: hidden;
 }
-
-.journal-track {
-  position: relative;
-}
-
-.track-btn {
+.track-btn_left,
+.track-btn_right {
   position: absolute;
-  z-index: 1;
-  top: 44%;
-  background-color: white;
+  top: 60%;
+  background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
-.track-btn:nth-child(2) {
-  left: 1px;
+.track-btn_left {
+  left: 90px;
 }
 
-.track-btn:nth-child(3) {
-  right: 1px;
+.track-btn_right {
+  right: 90px;
 }
