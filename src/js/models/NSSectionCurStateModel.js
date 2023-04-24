@@ -173,4 +173,66 @@ export default class NSSectionCurViewStateModel extends Observer {
     this._curViewState.index -= 1;
     this.notify(this._curViewState);
   }
+
+  decreaseIndexOnListView() {
+    const { index, curListCategory } = this._curViewState;
+    switch (index) {
+      case 1:
+        const changedCategory = this.getPrevCategory(curListCategory);
+        this._curViewState.curListCategory = changedCategory;
+        this._curViewState.index = this._allPressData[this._curViewState.curListCategory].length;
+        break;
+      default:
+        this._curViewState.index -= 1;
+        break;
+    }
+
+    this.notify(this._curViewState);
+  }
+
+  increaseIndexOnListView() {
+    const { index, curListCategory } = this._curViewState;
+
+    switch (index) {
+      case this._allPressData[this._curViewState.curListCategory].length:
+        const changedCategory = this.getNextCategory(curListCategory);
+        this._curViewState.curListCategory = changedCategory;
+        this._curViewState.index = 1;
+        break;
+      default:
+        this._curViewState.index += 1;
+        break;
+    }
+
+    this.notify(this._curViewState);
+  }
+
+  getPrevCategory(curCategory) {
+    let curCategoryIndex = null;
+    this._allCategory.some((category, index) => {
+      if (category === curCategory) {
+        curCategoryIndex = index;
+        return true;
+      }
+    });
+    const changedCategoryIndex = curCategoryIndex - 1;
+    const changedCategory = this._allCategory.at(changedCategoryIndex);
+
+    return changedCategory;
+  }
+
+  getNextCategory(curCategory) {
+    const categoryCount = this._allCategory.length;
+    let curCategoryIndex = null;
+    this._allCategory.some((category, index) => {
+      if (category === curCategory) {
+        curCategoryIndex = index;
+        return true;
+      }
+    });
+
+    const changedCategoryIndex = curCategoryIndex + 1;
+    const changedCategory = this._allCategory.at(changedCategoryIndex - categoryCount);
+    return changedCategory;
+  }
 }
