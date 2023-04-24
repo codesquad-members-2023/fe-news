@@ -2,6 +2,8 @@ import { REFERENCE, VIEW_STATE } from '../constant/dom.js';
 import { isEquivalent } from '../utils/objectUtils.js';
 
 export default class ListAllView {
+  _categoryButtonContainer;
+  _subOrNoSubButtonContainer;
   _subButton;
   _noSubButton;
 
@@ -25,7 +27,9 @@ export default class ListAllView {
 
     const [index, curListCategory, curListCategoryLength] =
       this._curViewStateModel.getCurIndexAndCategory();
+    this.setListSection();
     this.setCategoryState(index, curListCategory, curListCategoryLength);
+    this.setStateOfSubOrNoSub();
     this.setEvent();
   }
 
@@ -39,10 +43,10 @@ export default class ListAllView {
       `</div>
     <div class="list_view">
       <div class="list_view_top">
-        <img class="press_logo" src="${data.logoImgSrc}" alt="${data.pressName}"/>
+        <img class="press_logo" src="${data.logoImgSrc}" alt="${data.pressName}" data-id="pressname"/>
         <div class="updatetime">${data.updateTime}</div>
-        <a class="subbutton" data-id="subbutton"-><img src="/src/asset/newsSectionListSubButton.svg" alt="subButton"/></a>
-        <a class="nosubbutton hidden" data=id="nosubbutton><img src="/src/asset/newsSectionListNoSubButton.svg" alt="noSubButton"/></a>
+        <a class="subbutton hidden" data-id="subbutton"-><img src="/src/asset/newsSectionListSubButton.svg" alt="subButton"/></a>
+        <a class="nosubbutton hidden" data-id="nosubbutton"><img src="/src/asset/newsSectionListNoSubButton.svg" alt="noSubButton"/></a>
       </div>
       <div class="list_view_bottom">
         <div class="bottom_main">
@@ -63,8 +67,35 @@ export default class ListAllView {
     );
   }
 
+  setListSection() {
+    this._categoryButtonContainer = REFERENCE.NS_CONTAINER.querySelector('.list_header');
+    this._subOrNoSubButtonContainer = REFERENCE.NS_CONTAINER.querySelector('.list_view_top');
+
+    this._subButton = this._subOrNoSubButtonContainer.querySelector('[data-id="subbutton"]');
+    this._noSubButton = this._subOrNoSubButtonContainer.querySelector('[data-id="nosubbutton"]');
+  }
+
+  isSubscribe(pressName) {
+    return this._curViewStateModel.containsSubData(pressName);
+  }
+
+  setStateOfSubOrNoSub() {
+    const pressName = this._subOrNoSubButtonContainer.querySelector('[data-id="pressname"]').alt;
+
+    switch (this.isSubscribe(pressName)) {
+      case true:
+        this._noSubButton.classList.remove('hidden');
+        break;
+      case false:
+        this._subButton.classList.remove('hidden');
+        break;
+      default:
+        break;
+    }
+  }
+
   setCategoryState(index, curListCategory, curListCategoryLength) {
-    const categorySection = REFERENCE.NS_CONTAINER.querySelectorAll('[data-id="category"]');
+    const categorySection = this._categoryButtonContainer.querySelectorAll('[data-id="category"]');
 
     [...categorySection].some((category) => {
       const categoryName = category.querySelector('[data-value="category_name"]').textContent;
@@ -76,7 +107,30 @@ export default class ListAllView {
     });
   }
 
-  subOrNoSubButtonClickHandler() {}
+  subOrNoSubButtonClickHandler({ target }) {
+    const clickedButton = target.closest('[data-id="subbutton"], [data-id="nosubbutton"]');
+    if (!clickedButton) return;
+
+    const pressName = this._subOrNoSubButtonContainer.querySelector('[data-id="pressname"]').alt;
+    const article = this._curViewStateModel.getArticleByPublish(pressName);
+
+    clickedButton.getAttribute('data-id') === 'subbutton'
+      ? this.subButtonClickHandler(article)
+      : this.noSubButtonClickHandler(pressName);
+  }
+
+  subButtonClickHandler(article) {
+    this._curViewStateModel.setSubData(article);
+
+    this._subButton.classList.add('hidden');
+    this._noSubButton.classList.remove('hidden');
+  }
+
+  noSubButtonClickHandler(pressName) {
+    this._curViewStateModel.deleteSubDataOnAllView(pressName);
+    this._subButton.classList.remove('hidden');
+    this._noSubButton.classList.add('hidden');
+  }
 
   categoryButtonClickHandler({ target }) {
     const categorySection = target.closest('[data-id="category"]');
@@ -89,14 +143,14 @@ export default class ListAllView {
   }
 
   setEvent() {
-    const subOrNoSubButtonContainer = REFERENCE.NS_CONTAINER.querySelector('.list_view_top');
-    const categoryButtonContainer = REFERENCE.NS_CONTAINER.querySelector('.list_header');
-
-    subOrNoSubButtonContainer.addEventListener(
+    this._subOrNoSubButtonContainer.addEventListener(
       'click',
       this.subOrNoSubButtonClickHandler.bind(this)
     );
 
-    categoryButtonContainer.addEventListener('click', this.categoryButtonClickHandler.bind(this));
+    this._categoryButtonContainer.addEventListener(
+      'click',
+      this.categoryButtonClickHandler.bind(this)
+    );
   }
 }

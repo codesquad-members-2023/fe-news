@@ -124,6 +124,10 @@ export default class NSSectionCurViewStateModel extends Observer {
     return article;
   }
 
+  deleteSubDataOnAllView(data) {
+    this._subPressData = this._subPressData.filter((subData) => subData.pressName !== data);
+  }
+
   deleteSubData(data) {
     this._subPressData = this._subPressData.filter((subData) => subData.pressName !== data);
     const { gridOrList, allOrSub } = this._curViewState;
