@@ -95,14 +95,14 @@ const createJournalList = () => {
     const journalItems = await fetchJournalData(journalURL);
 
     const currentJournalType = journalDetailStore.getCurrentJournalType();
-    const chosenJounralList = journalItems.filter((journal) => {
+    const chosenJouralList = journalItems.filter((journal) => {
       if (journal.journalData.mediaInfo.type === currentJournalType) {
         return true;
       }
       return false;
     });
 
-    journalDetailStore.setDetailListAll(chosenJounralList);
+    journalDetailStore.setDetailListAll(chosenJouralList);
   };
 
   // batch 페이지에 언론사 디테일 삽입

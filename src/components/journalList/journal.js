@@ -114,7 +114,15 @@ export class Journal {
     this.detailElement.innerHTML += detailArticleHTML;
   }
 
+  addSubEventToDetail() {
+    const subscribeBtnjj = this.detailElement.querySelector(".sub-button");
+    subscribeBtnjj.addEventListener("click", () => {
+      this.journalHeaderStore.addSubscribe(this);
+    });
+  }
+
   renderDetail() {
     this.getdetailArticleHTML();
+    this.addSubEventToDetail();
   }
 }

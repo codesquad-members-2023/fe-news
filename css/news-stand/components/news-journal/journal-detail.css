@@ -97,3 +97,7 @@
 .navType span:first-child:hover {
   text-decoration: underline;
 }
+
+.sub-button {
+  cursor: pointer;
+}
