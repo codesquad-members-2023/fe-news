@@ -82,7 +82,7 @@ export default class GridAllView {
   }
 
   noSubButtonHandler() {
-    this._curViewStateModel.deleteSubData(this._pressName);
+    this._curViewStateModel.deleteSubDataOnAllView(this._pressName);
     this._subPopupWrap.classList.remove('hidden');
     this._noSubPopupWrap.classList.add('hidden');
   }
