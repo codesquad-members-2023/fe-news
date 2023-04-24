@@ -65,7 +65,6 @@ export class MainView extends Component {
       });
     } else if (viewState === "list" && isSubscribePressExist) {
       const { pressCategories } = this.props;
-
       new ListView(viewContainer, {
         btnState,
         viewState,

@@ -13,40 +13,73 @@ export class ListViewHeader extends Component {
 
     const headCategoryNodes =
       btnState === "all-press"
-        ? categoryIds.reduce((acc, category) => {
-            if (category === currentCategory) {
-              return (
-                acc +
-                `
-            <div class="list-view__current-category">
-              <div class="current-category">${pressCategories[0][category]}</div>
-              <div class="current-page">${currentPageInCategory}/${currentCategoryTotalPage}</div>
-            </div>`
-              );
-            } else {
-              return (
-                acc +
-                `<div class="list-view__category">${pressCategories[0][category]}</div>`
-              );
-            }
-          }, "")
-        : categoryIds.reduce((acc, name) => {
-            if (name === currentCategory) {
-              return (
-                acc +
-                `
-            <div class="list-view__current-category">
-              <div class="current-category">${name}</div>
-              <div class="category-direction">></div>
-            </div>`
-              );
-            } else {
-              return acc + `<div class="list-view__category">${name}</div>`;
-            }
-          }, "");
+        ? this.getAllPressCategoryHeader(
+            categoryIds,
+            currentCategory,
+            currentPageInCategory,
+            currentCategoryTotalPage,
+            pressCategories
+          )
+        : this.getSubscribePressCategoryHeader(categoryIds, currentCategory);
 
-    return `
-      ${headCategoryNodes}
-    `;
+    return `${headCategoryNodes}`;
+  }
+
+  setEvent() {
+    this.target.addEventListener(
+      "click",
+      ({ target: { tagName, dataset } }) => {
+        if (tagName !== "A") return;
+        const { moveToTargetCategoryBy, btnState } = this.props;
+        const categoryId = dataset.categoryId;
+        moveToTargetCategoryBy(categoryId, btnState);
+      }
+    );
+  }
+
+  getAllPressCategoryHeader(
+    categoryIds,
+    currentCategory,
+    currentPageInCategory,
+    currentCategoryTotalPage,
+    pressCategories
+  ) {
+    return categoryIds.reduce((acc, category) => {
+      if (category === currentCategory) {
+        return (
+          acc +
+          `
+      <div class="list-view__current-category">
+        <a class="current-category" data-category-id="${category}">${pressCategories[0][category]}</a>
+        <div class="current-page">${currentPageInCategory}/${currentCategoryTotalPage}</div>
+      </div>`
+        );
+      } else {
+        return (
+          acc +
+          `<a class="list-view__category" data-category-id="${category}">${pressCategories[0][category]}</a>`
+        );
+      }
+    }, "");
+  }
+
+  getSubscribePressCategoryHeader(categoryIds, currentCategory) {
+    return categoryIds.reduce((acc, name) => {
+      if (name === currentCategory) {
+        return (
+          acc +
+          `
+      <div class="list-view__current-category">
+        <a class="current-category" data-category-id="${name}">${name}</a>
+        <div class="category-direction">></div>
+      </div>`
+        );
+      } else {
+        return (
+          acc +
+          `<a class="list-view__category" data-category-id="${name}">${name}</a>`
+        );
+      }
+    }, "");
   }
 }

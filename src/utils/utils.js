@@ -18,6 +18,6 @@ export const listUpPressName = (data) => {
   return [...filteredCategories];
 };
 
-export const getPageNumberBy = (dir, page) => {
+export const getPageNumberByDir = (dir, page) => {
   return dir === "right" ? (page += 1) : (page -= 1);
 };

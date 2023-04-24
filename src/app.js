@@ -2,7 +2,7 @@ import { Header } from "./components/Header/Header.js";
 import { TrendNews } from "./components/TrendNews/TrendNews.js";
 import { MainView } from "./components/MainView/MainView.js";
 import { Component } from "./core/Component.js";
-import { getPressData, getPressCategories } from "./api/api.js";
+import { getDataBy } from "./api/api.js";
 import { suffleData } from "./utils/utils.js";
 
 export class App extends Component {
@@ -22,9 +22,11 @@ export class App extends Component {
     new Header(header);
     new TrendNews(trendNews);
 
-    const pressData = await getPressData();
+    const [pressData, pressCategories] = await Promise.all([
+      getDataBy("http://localhost:5500/presses"),
+      getDataBy("http://localhost:5500/categories"),
+    ]);
     const suffledPressData = suffleData(pressData);
-    const pressCategories = await getPressCategories();
 
     new MainView(mainView, {
       pressData: suffledPressData,
