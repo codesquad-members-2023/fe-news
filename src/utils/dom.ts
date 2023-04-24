@@ -2,6 +2,7 @@ interface createProps {
   tagName: string;
   classList?: string[];
   attributeList?: attributeType[];
+  text?: string;
 }
 
 type attributeType = string[];
@@ -37,7 +38,12 @@ interface addStyleProps {
   style: HTMLStyleElement;
 }
 
-export function create({ tagName, classList, attributeList }: createProps) {
+export function create({
+  tagName,
+  classList,
+  attributeList,
+  text,
+}: createProps) {
   const element = document.createElement(tagName);
   if (classList)
     classList.forEach((_class: string) => {
@@ -48,6 +54,9 @@ export function create({ tagName, classList, attributeList }: createProps) {
       const [key, value] = _attribute;
       element.setAttribute(key, value);
     });
+  if (text) {
+    element.innerText = text;
+  }
   return element;
 }
 export function createWrap() {

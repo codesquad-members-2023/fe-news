@@ -2,6 +2,14 @@ export default function style() {
   const style = document.createElement('style');
 
   const content = `
+    a {
+      color: inherit;
+      text-decoration-line: none;
+    }
+
+    a:hover {
+      text-decoration-line: underline;
+    }
 
     :host {
       display: flex;
@@ -47,6 +55,16 @@ export default function style() {
       font-weight: var(--typo-body-sm-fontweight);
       font-size: var(--typo-body-sm-fontsize);
       line-height: var(--typo-body-sm-lineheight);
+
+      
+    }
+
+    .title a {
+      word-wrap: break-word;
+      width: 360px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
     `;
 

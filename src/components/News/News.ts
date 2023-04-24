@@ -23,7 +23,7 @@ class News extends HTMLElement {
     const template = `
     <header-element></header-element>
     <headline-element></headline-element>
-    <press-list-element></press-list-element>
+    
     `;
 
     add({

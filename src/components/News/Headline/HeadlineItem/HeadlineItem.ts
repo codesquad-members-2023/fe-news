@@ -1,6 +1,7 @@
 import { add, addStyle, addShadow, getProperty, create } from '@utils/dom';
 import style from './HeadlineItemStyle';
 import { getRollingNewsAPI } from '@apis/rollingNews';
+import { RollingNewsType } from '@store/news/newsType';
 
 interface HeadlineItem {
   icon?: string | null;
@@ -33,25 +34,28 @@ class HeadlineItem extends HTMLElement {
     const newsRight = news.slice(news.length / 2);
 
     if (this.position === 'left') {
-      newsLeft.forEach((news: string) => this.appendNews(news));
-    } else {
-      newsRight.forEach((news: string) => this.appendNews(news));
+      newsLeft.forEach((news: RollingNewsType) => this.appendNews(news));
+      return;
     }
+    newsRight.forEach((news: RollingNewsType) => this.appendNews(news));
   }
 
   roll() {
-    const rollingNewsList: HTMLElement | null | undefined =
-      this.shadowRoot?.querySelector('#rolling-news-list');
+    const rollingNewsList: HTMLElement | null =
+      this.shadowRoot?.querySelector('#rolling-news-list') ?? null;
+
     if (!rollingNewsList) {
       return;
     }
+
     const firstList = rollingNewsList.querySelector('li:first-child');
     if (!firstList) {
       return;
     }
-    const text = firstList.innerHTML;
+    const title = firstList.querySelector('a')?.innerText ?? '';
+    const link = firstList.querySelector('a')?.getAttribute('href') ?? '';
     firstList.remove();
-    this.appendNews(text);
+    this.appendNews({ title, link });
   }
 
   render() {
@@ -68,11 +72,19 @@ class HeadlineItem extends HTMLElement {
     });
   }
 
-  appendNews(text: string) {
+  appendNews(news: RollingNewsType) {
     const target = this.shadowRoot?.querySelector('#rolling-news-list');
-    const li = create({ tagName: 'li' });
-    li.classList.add('title');
-    li.innerText = text;
+    const li = create({
+      tagName: 'li',
+      classList: ['title'],
+    });
+    const a = create({
+      tagName: 'a',
+      attributeList: [['href', news.link]],
+      text: news.title,
+    });
+    li.append(a);
+
     target?.append(li);
   }
 }
