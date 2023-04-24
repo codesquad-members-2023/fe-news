@@ -6,16 +6,18 @@ export class App {
   constructor(appRoot: HTMLElement) {
     appRoot.innerHTML = `
       <div id="header-wrapper" class="h-1/6"></div>
-      <div id="main-wrapper"></div>
-      <div id="footer-wrapper"></div>
+      <div id="main-wrapper" class="h-4/6"></div>
+      <div id="footer-wrapper" class="h-1/6"></div>
     `;
     new HeaderComponent(
       appRoot.querySelector('#header-wrapper') as HTMLElement,
     );
     const main = new MainComponent();
-    const footer = new FooterComponent();
-    // header.attachTo();
-    appRoot.appendChild(main.element);
-    appRoot.appendChild(footer.element);
+    (appRoot.querySelector('#main-wrapper') as HTMLElement).appendChild(
+      main.element,
+    );
+    new FooterComponent(
+      appRoot.querySelector('#footer-wrapper') as HTMLElement,
+    );
   }
 }
