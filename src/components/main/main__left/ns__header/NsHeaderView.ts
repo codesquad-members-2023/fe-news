@@ -26,12 +26,12 @@ export class NsHeaderView extends TempAbstractView {
   }
 
   addChildren(state: State) {
-    const nsTitle = new NsTitleComponent();
+    const nsTitle = new NsTitleComponent(
+      this.$target.querySelector('#ns-title-wrapper') as HTMLElement,
+    );
+    // [리팩토링 예정]
     const nsDate = new NsDateComponent();
 
-    (
-      this.$target.querySelector('#ns-title-wrapper') as HTMLElement
-    ).appendChild(nsTitle.element);
     (this.$target.querySelector('#ns-date-wrapper') as HTMLElement).appendChild(
       nsDate.element,
     );
