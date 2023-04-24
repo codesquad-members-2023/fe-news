@@ -30,10 +30,8 @@ export class NsHeaderView extends TempAbstractView {
       this.$target.querySelector('#ns-title-wrapper') as HTMLElement,
     );
     // [리팩토링 예정]
-    const nsDate = new NsDateComponent();
-
-    (this.$target.querySelector('#ns-date-wrapper') as HTMLElement).appendChild(
-      nsDate.element,
+    const nsDate = new NsDateComponent(
+      this.$target.querySelector('#ns-date-wrapper') as HTMLElement,
     );
   }
 }
