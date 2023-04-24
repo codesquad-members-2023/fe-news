@@ -1,36 +1,69 @@
 import { displayActions } from '../actions/actionTypes.js';
-import { getStoreState, dispatch } from './store.js';
+import { getStoreState } from './store.js';
 
 export const subscribeReducer = (state, action) => {
   const subscribeList = getStoreState('subscribeData').subscribe;
-
+  let mineListCurPage = getStoreState('subscribeData').mineListCurPage;
   const mediaWholeData = getStoreState('mediaData').data;
+  const viewOptionData = getStoreState('viewOptionData').viewOption;
+
   switch (action.type) {
     case displayActions.GRID_SUBSCRIBE_BUTTON_CLICK:
-      subscribeList.push(mediaWholeData[action.payload - 1]);
-      return { ...state, subscribe: subscribeList };
+      let curIndex;
+      mediaWholeData.some((media, index) => {
+        if (media.mediaId === Number(action.payload)) {
+          curIndex = index;
+          return true;
+        }
+      });
+      subscribeList.push(mediaWholeData[curIndex]);
+
+      return {
+        mineListCurPage: subscribeList.length - 1,
+        subscribe: subscribeList,
+      };
+
     case displayActions.GRID_UNSUBSCRIBE_BUTTON_CLICK:
+      if (
+        viewOptionData.allOrMine === 'mine' &&
+        viewOptionData.gridOrList === 'list' &&
+        mineListCurPage === subscribeList.length - 1
+      ) {
+        mineListCurPage -= 1;
+      }
       subscribeList.some((subscribeMedia, index) => {
-        if (String(subscribeMedia.mediaId) === action.payload) {
+        if (Number(subscribeMedia.mediaId) === Number(action.payload)) {
           subscribeList.splice(index, 1);
           return true;
         }
       });
-      return { ...state, subscribe: subscribeList };
+      return {
+        mineListCurPage: mineListCurPage,
+        subscribe: subscribeList,
+      };
+
     case displayActions.MINE_LIST_TAB_BUTTON_CLICK:
       return { ...state, mineListCurPage: action.payload };
+
     case displayActions.MINE_LIST_LEFT_BUTTON_CLICK:
       const prevPage =
         state.mineListCurPage === 0
           ? subscribeList.length - 1
           : state.mineListCurPage - 1;
       return { ...state, mineListCurPage: prevPage };
+
     case displayActions.MINE_LIST_RIGHT_BUTTON_CLICK:
       const nextPage =
         state.mineListCurPage === subscribeList.length - 1
           ? 0
           : state.mineListCurPage + 1;
       return { ...state, mineListCurPage: nextPage };
+
+    case displayActions.MINE_LIST_RESET:
+      return {
+        ...state,
+        mineListCurPage: 0,
+      };
     default:
       return state;
   }
@@ -41,28 +74,24 @@ export const mainHeaderBtnClickReducer = (state, action) => {
 
   switch (action.type) {
     case displayActions.HEADER_LIST_BUTTON_CLICK:
-      if (viewOptionData.gridOrList === 'list')
-        return { ...state, viewOption: viewOptionData };
+      if (viewOptionData.gridOrList === 'list') return state;
       viewOptionData.gridOrList = 'list';
 
       return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_GRID_BUTTON_CLICK:
-      if (viewOptionData.gridOrList === 'grid')
-        return { ...state, viewOption: viewOptionData };
+      if (viewOptionData.gridOrList === 'grid') return state;
       viewOptionData.gridOrList = 'grid';
       return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_MY_MEDIA_BUTTON_CLICK:
-      if (viewOptionData.allOrMine === 'mine')
-        return { ...state, viewOption: viewOptionData };
+      if (viewOptionData.allOrMine === 'mine') return state;
       viewOptionData.allOrMine = 'mine';
       viewOptionData.gridOrList = 'list';
       return { ...state, viewOption: viewOptionData };
 
     case displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK:
-      if (viewOptionData.allOrMine === 'all')
-        return { ...state, viewOption: viewOptionData };
+      if (viewOptionData.allOrMine === 'all') return state;
       viewOptionData.allOrMine = 'all';
       viewOptionData.gridOrList = 'grid';
       return { ...state, viewOption: viewOptionData };
@@ -108,11 +137,15 @@ export const animationReducer = (state, action) => {
         animaionId: action.payload,
       };
     case displayActions.PROGRESS_BAR_ANIMATION_END:
+      if (!animationData) return state;
       cancelAnimationFrame(animationData.animaionId);
+
       return {
         ...state,
         animaionId: null,
       };
+    default:
+      return state;
   }
 };
 

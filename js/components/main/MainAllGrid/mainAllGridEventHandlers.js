@@ -1,4 +1,4 @@
-import { displayActionCreator } from '../../../actions/actions.js';
+import { displayActionCreator } from '../../../actions/ActionCreator.js';
 import { dispatch } from '../../../store/store.js';
 
 const SUBSCRIBE = 'subscribe';
@@ -29,7 +29,13 @@ const subscribeBtnClickHandler = (target, mediaName) => {
   target.alt = 'unsubscribe';
   target.src = './asset/unsubscribeButton.svg';
   // 구독 List에 추가하기 -> how?
-
+  const $mainHeader = document.querySelector('.main-header__media');
+  $mainHeader.firstElementChild.classList.remove('bold');
+  $mainHeader.lastElementChild.classList.add('bold');
+  const $listBtn = document.querySelector('.list-icon');
+  const $gridBtn = document.querySelector('.grid-icon');
+  $listBtn.classList.add('list-icon__enable');
+  $gridBtn.classList.remove('grid-icon__enable');
   dispatch(displayActionCreator.gridSubscribeBtnClick(mediaName));
 };
 

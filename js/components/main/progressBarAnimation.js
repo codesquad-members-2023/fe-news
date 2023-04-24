@@ -1,15 +1,23 @@
 import { dispatch, getStoreState } from '../../store/store.js';
-import { displayActionCreator } from '../../actions/actions.js';
+import { displayActionCreator } from '../../actions/ActionCreator.js';
+
+const ANIMATION = {
+  DURATION: 20000,
+  MAKE_PERCENT: 100,
+};
+
 export const animationStart = ($progressBar) => {
+  if (!$progressBar) return;
   const viewOption = getStoreState('viewOptionData').viewOption;
   let startTime = null;
+
   const progressBarAnimation = (timestamp) => {
     if (startTime === null) startTime = timestamp;
     const duration = timestamp - startTime;
 
-    if (duration <= 20000) {
+    if (duration <= ANIMATION.DURATION) {
       $progressBar.style.background = `linear-gradient(90deg, #4362d0 ${
-        (duration / 20000) * 100
+        (duration / ANIMATION.DURATION) * ANIMATION.MAKE_PERCENT
       }%, #7890e7 0%)`;
       dispatch(
         displayActionCreator.progressBarAnimationStart(
@@ -17,10 +25,11 @@ export const animationStart = ($progressBar) => {
         ),
       );
     } else {
-      if (viewOption.allOrMine === 'all')
+      if (viewOption.allOrMine === 'all') {
         dispatch(displayActionCreator.listRightBtnClick());
-      else if (viewOption.allOrMine === 'mine')
+      } else if (viewOption.allOrMine === 'mine') {
         dispatch(displayActionCreator.mineListRightBtnClick());
+      }
     }
   };
   dispatch(

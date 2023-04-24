@@ -1,6 +1,6 @@
 import { subscribe, getStoreState } from '../../../store/store.js';
 import { createElement } from '../../../utils/dom.js';
-import { fetchActionCreator } from '../../../actions/actions.js';
+import { fetchActionCreator } from '../../../actions/ActionCreator.js';
 import {
   mouseEventHandler,
   cilckEventHandler,
@@ -57,11 +57,13 @@ const updateMediaContent = ($element, content) => {
     const $grid = $element;
     const $thumbs = $grid.querySelectorAll('.thumb');
     const $popupBox = $grid.querySelectorAll('.popup-wrap');
+    const gridData = content.gridData;
+
     $thumbs.forEach((item, index) => {
       if (
         subscribeData
           .map((item) => item.mediaId)
-          .includes(content.data[index].mediaId)
+          .includes(gridData[index].mediaId)
       ) {
         $popupBox[index].querySelector('img').src =
           './asset/unsubscribeButton.svg';
@@ -69,8 +71,8 @@ const updateMediaContent = ($element, content) => {
       }
       const $image = createElement('img', {
         class: 'main-grid__logo',
-        src: `${content.data[index].mediaInfo.imgSrc}`,
-        alt: `${content.data[index].mediaId}`,
+        src: `${gridData[index].mediaInfo.imgSrc}`,
+        alt: `${gridData[index].mediaId}`,
       });
       item.append($image);
     });

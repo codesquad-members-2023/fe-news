@@ -30,13 +30,22 @@ export const mediaDataReducer = (state, action) => {
       return {
         ...state,
         loading: true,
-        error: null,
       };
     case fetchActions.FETCH_MEDIA_DATA_SUCCESS:
+      const data = [...action.payload];
+      const gridData = [];
+
+      while (gridData.length < 96) {
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const randomItem = data.splice(randomIndex, 1)[0];
+        gridData.push(randomItem);
+      }
+
       return {
         ...state,
         loading: false,
         data: action.payload,
+        gridData: gridData,
       };
     default:
       return state;

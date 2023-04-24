@@ -157,6 +157,7 @@ const checkSubscribe = (curMediaId) => {
   const subscribeMediaId = getStoreState('subscribeData').subscribe.map(
     (item) => item.mediaId,
   );
+
   if (subscribeMediaId.includes(curMediaId)) return true;
   else return false;
 };

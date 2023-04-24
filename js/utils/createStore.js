@@ -76,6 +76,12 @@ const createStore = (initialState = {}) => {
     if (isDispatching) {
       throw new Error('action is dispatching');
     }
+
+    if (typeof action === 'function') {
+      action(dispatch);
+      return;
+    }
+
     const domains = Object.keys(state);
     const isDomainChanged = {};
 

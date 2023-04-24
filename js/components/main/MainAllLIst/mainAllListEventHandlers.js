@@ -1,5 +1,5 @@
 import { dispatch } from '../../../store/store.js';
-import { displayActionCreator } from '../../../actions/actions.js';
+import { displayActionCreator } from '../../../actions/ActionCreator.js';
 import { MEDIA_CATEGORIES } from './mainAllList.js';
 
 export const tabClickEventHandler = ({ target }) => {
@@ -10,16 +10,20 @@ export const tabClickEventHandler = ({ target }) => {
   dispatch(displayActionCreator.listTabBtnClick(categoryIdx));
 };
 
-export const subscribeBtnClickEventHandler = (mediaIdx, event) => {
+export const subscribeBtnClickEventHandler = (mediaId, event) => {
   const $img = event.currentTarget.querySelector('img');
 
   if ($img.alt === 'subscribe') {
     $img.alt = 'unsubscribe';
     $img.src = './asset/listUnsubscribeBtn.svg';
-    dispatch(displayActionCreator.gridSubscribeBtnClick(mediaIdx));
+    const $mainHeader = document.querySelector('.main-header__media');
+    $mainHeader.firstElementChild.classList.remove('bold');
+    $mainHeader.lastElementChild.classList.add('bold');
+
+    dispatch(displayActionCreator.gridSubscribeBtnClick(mediaId));
   } else {
     $img.alt = 'subscribe';
     $img.src = './asset/subscribeButton.svg';
-    dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaIdx));
+    dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaId));
   }
 };
