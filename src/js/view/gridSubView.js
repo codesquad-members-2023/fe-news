@@ -1,16 +1,22 @@
-import { REFERENCE, NS_SECTION_INFO } from '../constant/dom.js';
+import { REFERENCE, NS_SECTION_INFO, VIEW_STATE } from '../constant/dom.js';
+import { isEquivalent } from '../utils/objectUtils.js';
 
 export default class GridSubView {
   _gridPress;
   _pressName;
   _noSubPopupWrap;
-  constructor(gridSubModel) {
-    this._gridSubModel = gridSubModel;
-    this._gridSubModel.subscribe(this.render.bind(this));
+  constructor(curViewStateModel) {
+    this._curViewStateModel = curViewStateModel;
+    this._curViewStateModel.subscribe(this.render.bind(this));
+    this._state = {
+      gridOrList: VIEW_STATE.GRID,
+      allOrSub: VIEW_STATE.SUB,
+    };
   }
 
-  render() {
-    const gridSubSection = this.getMarkUp(this._gridSubModel.getData());
+  render(selectedState) {
+    if (!isEquivalent(this._state, selectedState)) return;
+    const gridSubSection = this.getMarkUp(this._curViewStateModel.getGridSubData());
     const parentElem = REFERENCE.NS_CONTAINER.querySelector('.newssection_view');
     parentElem.innerHTML = '';
     parentElem.insertAdjacentHTML('afterbegin', gridSubSection);
@@ -61,7 +67,7 @@ export default class GridSubView {
 
   gridSectionClickEventHandler({ target }) {
     if (!target.classList.contains('nosub_button')) return;
-    this._gridSubModel.deleteSubData(this._pressName);
+    this._curViewStateModel.deleteSubData(this._pressName);
   }
 
   setEvent() {

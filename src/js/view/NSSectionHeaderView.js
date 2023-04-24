@@ -1,11 +1,10 @@
-//NS SECTION의 header와 이벤트 핸들러 등록
 import { REFERENCE, VIEW_STATE } from '../constant/dom.js';
 
 export default class NSSectionHeaderView {
-  constructor(sectionHeaderModel, buttonView, sectionCurStateModel) {
+  constructor(sectionHeaderModel, curViewStateModel) {
     this._sectionHeaderModel = sectionHeaderModel;
-    this._curViewStateModel = sectionCurStateModel;
-    this._buttonView = buttonView;
+    this._curViewStateModel = curViewStateModel;
+
     this._sectionHeaderModel.subscribe(this.render.bind(this));
   }
 
@@ -13,7 +12,7 @@ export default class NSSectionHeaderView {
     const markup = this.getMarkup();
     const sibling = REFERENCE.NS_CONTAINER.querySelector('.newsstand_headline_container');
     sibling.insertAdjacentHTML('afterend', markup);
-    this._buttonView.changeReadyState();
+    this._curViewStateModel.changeRenderState();
     this.setEvent();
   }
 
@@ -45,7 +44,7 @@ export default class NSSectionHeaderView {
         break;
     }
 
-    this._curViewStateModel.changeState(selectedState);
+    this._curViewStateModel.changeCurViewState(selectedState);
   }
 
   setEvent() {
@@ -72,6 +71,7 @@ export default class NSSectionHeaderView {
       </div>
     </div>
     <div class="newssection_view"></div>
+    <div class="newssection_button_container"></div>
     </div>`;
   }
 }
