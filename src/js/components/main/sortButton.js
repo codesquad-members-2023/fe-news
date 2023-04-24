@@ -1,27 +1,31 @@
 import createEl from "../../utils/util.js";
-import { CONSTANTS } from '../../core/constants.js';
-import { ViewStore } from "../../stores/viewStore.js";
+import { VIEWTYPE } from '../../core/constants.js';
+import { ViewTypeStore } from "../../stores/viewTypeStore.js";
 import { PageStore } from "../../stores/pressPageStore.js";
 
 class SortButton {
-  #viewStore;
+  #viewTypeStore;
   #pageStore;
   constructor() {
-    this.#viewStore = ViewStore;
+    this.#viewTypeStore = ViewTypeStore;
     this.#pageStore = PageStore;
     this.sortButtons = createEl('div', 'sort-buttons');
   }
 
-  render() {
-    const { press, view } = this.#viewStore.getState();
+  init() {
+    this.setTemplate();
+    this.clickPress();
+    this.clickView();
+    return this;
+  }
+
+  setTemplate({ press, view } = this.#viewTypeStore.getState()) {
     const pressType = Object.keys(press);
     const viewType = Object.keys(view);
-
-    const template = `
-      <div class="press-buttons">
+    const template = `<div class="press-buttons">
         ${pressType.reduce((template, cur) => {
           const isActive = press[cur] ? 'class="active"' : ``;
-          template += `<a ${isActive}>${CONSTANTS[cur]}</a>`;
+          template += `<a ${isActive}>${VIEWTYPE[cur]}</a>`;
           return template;
         }, ``)}
       </div>
@@ -33,59 +37,54 @@ class SortButton {
         }, ``)}
       </div>
       `;
-
     this.sortButtons.innerHTML = template;
-    this.clickPress();
-    this.clickView();
-    return this.sortButtons;
+  }
+
+  #reRender() {
+    const state = this.#viewTypeStore.getState();
+    return this.init({ ...state });
   }
 
   clickPress() {
     const pressType = this.sortButtons.querySelectorAll('.press-buttons > a');
     pressType.forEach(pressButton => {
       pressButton.addEventListener('click', ({ currentTarget }) => {
-        const reRender = () => {
-          const state = this.#viewStore.getState();
-          this.render({
-            ...state,
-            press: this.#viewStore.getState().press,
-          });
-        }
-
-        this.#viewStore.subscribe(reRender);
-        const isAll = currentTarget.textContent === CONSTANTS['all'];
-        const clickTargetName = isAll? 'all' : 'subscribed';
-        this.#viewStore.dispatch({
+        this.#viewTypeStore.subscribe(this.#reRender.bind(this));
+        const isAll = currentTarget.textContent === VIEWTYPE['all'];
+        const clickTargetName = isAll? 'all' : 'subscribe';
+        this.#viewTypeStore.dispatch({
           type: 'CHANGE_PRESS',
           payload: clickTargetName,
         });
+        this.#pageStore.dispatch({
+          type: 'RESET_PAGE',
+        });
       });
-    })
+    });
+    return this;
   }
 
   clickView() {
     const viewType = this.sortButtons.querySelectorAll('.view-buttons > a');
     viewType.forEach(pressButton => {
       pressButton.addEventListener('click', ({ currentTarget }) => {
-        const reRender = () => {
-          const state = this.#viewStore.getState();
-          this.render({
-            ...state,
-            press: this.#viewStore.getState().press,
-          });
-        }
-        this.#viewStore.subscribe(reRender);
+        this.#viewTypeStore.subscribe(this.#reRender.bind(this));
         const isGrid = currentTarget.className.includes('grid');
         const clickTargetName = isGrid? 'grid' : 'list';
-        this.#viewStore.dispatch({
+        this.#viewTypeStore.dispatch({
           type: 'CHANGE_VIEW',
           payload: clickTargetName,
         });
         this.#pageStore.dispatch({
           type: 'RESET_PAGE',
         });
-      })
-    })
+      });
+    });
+    return this;
+  }
+
+  getSortButtons() {
+    return this.sortButtons;
   }
 }
 

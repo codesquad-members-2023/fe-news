@@ -2,7 +2,8 @@ import Store from '../core/store.js';
 
 const initialState = {
   page: {
-    pressData: {}, //map객체
+    pressData: [],
+    pressMap: {}, //map객체
     categoryIndex: 0,
     pageIndex: 0,
   },
@@ -11,7 +12,8 @@ const initialState = {
 const pageReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_PRESSDATA':
-      state.page.pressData = categoryMap(action.payload);
+      state.page.pressData = action.payload;
+      state.page.pressMap = categoryMap(action.payload);
       return {
         ...state,
       };
@@ -22,12 +24,12 @@ const pageReducer = (state = initialState, action) => {
         ...state,
       };
     case 'CLICK_PREV':
-      state = movePrevPage(state.page, state.page.pressData);
+      state = movePrevPage(state.page, state.page.pressMap);
       return {
         ...state,
       };
     case 'CLICK_NEXT':
-      state = moveNextPage(state.page, state.page.pressData);
+      state = moveNextPage(state.page, state.page.pressMap);
       return {
         ...state,
       };
@@ -59,23 +61,23 @@ const categoryMap = (media) => {
   return map;
 };
 
-const movePrevPage = (page, pressData) => {
-  const LAST_CATEGORY = pressData.size - 1;
+const movePrevPage = (page, pressMap) => {
+  const LAST_CATEGORY = pressMap.size - 1;
   page.pageIndex--;
   if (page.pageIndex < 0) {
     page.categoryIndex--;
     if (page.categoryIndex < 0) page.categoryIndex = LAST_CATEGORY;
-    page.pageIndex = [...pressData.values()][page.categoryIndex].length - 1;
+    page.pageIndex = [...pressMap.values()][page.categoryIndex].length - 1;
   }
   return { page };
 };
 
-const moveNextPage = (page, pressData) => {
-  const LAST_CATEGORY = pressData.size - 1;
+const moveNextPage = (page, pressMap) => {
+  const LAST_CATEGORY = pressMap.size - 1;
   page.pageIndex++;
   if (
     page.pageIndex ===
-    [...pressData.values()][page.categoryIndex].length - 1
+    [...pressMap.values()][page.categoryIndex].length - 1
   ) {
     page.categoryIndex++;
     if (page.categoryIndex > LAST_CATEGORY) page.categoryIndex = 0;

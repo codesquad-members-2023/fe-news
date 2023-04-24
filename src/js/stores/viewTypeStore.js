@@ -3,7 +3,7 @@ import Store from '../core/store.js';
 const initialState = {
   press: {
     all: true,
-    subscribed: false,
+    subscribe: false,
   },
   view: {
     list: false,
@@ -11,11 +11,11 @@ const initialState = {
   },
 };
 
-const viewReducer = (state = initialState, action) => {
+const viewTypeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CHANGE_PRESS':
       state.press[action.payload] = true;
-      state.press[action.payload === 'all' ? 'subscribed' : 'all'] = false;
+      state.press[action.payload === 'all' ? 'subscribe' : 'all'] = false;
       return {
         ...state,
       };
@@ -30,4 +30,4 @@ const viewReducer = (state = initialState, action) => {
   }
 };
 
-export const ViewStore = new Store(initialState, viewReducer);
+export const ViewTypeStore = new Store(initialState, viewTypeReducer);

@@ -1759,26 +1759,6 @@
       },
       {
         "category": "방송/통신",
-        "press": "YTN",
-        "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/052.png",
-        "editedDate": "2023.04.04. 14:26 편집",
-        "main": {
-          "thumbnail": "https://s.pstatic.net/static/newsstand/2023/0404/article_img/new_main/9015/143206_001.jpg",
-          "title": "하늘에서 2,400억 원이 내린다…오늘 내릴 봄비의 엄청난 가치"
-        },
-        "sub": {
-          "newsLists": [
-            "\n한덕수 \"한일 회담으로 가장 큰 돌덩이 치워\"\n",
-            "\n식약처 \"맥심 커피믹스 실리콘 혼입 가능성 커…원인 조사 중\"\n",
-            "\n원로가수 현미 별세… 향년 85세\n",
-            "\n尹 \"양곡법, 포퓰리즘이자 강제매수법\"…'1호 거부권' 행사\n",
-            "\n'납치 살인' 피의자 착수금 받은 정황…배후 수사 중\n",
-            "\n초등학생에게 흉기 휘두른 용의자 검거…정체는 10대 고등학생\n"
-          ]
-        }
-      },
-      {
-        "category": "방송/통신",
         "press": "TJB대전방송",
         "pressLogo": "https://s.pstatic.net/static/newsstand/up/2023/0103/nsd95227559.png",
         "editedDate": "2023.04.04. 08:00 편집",
@@ -2879,26 +2859,6 @@
       },
       {
         "category": "스포츠/연예",
-        "press": "스포츠동아",
-        "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/314.png",
-        "editedDate": "2023.04.04. 14:11 편집",
-        "main": {
-          "thumbnail": "https://s.pstatic.net/static/newsstand/2023/0404/article_img/new_main/9047/141439_001.jpg",
-          "title": "안정환 배신감에 치를 떨며 결별? “갈라서자는 거냐” (뭉뜬)"
-        },
-        "sub": {
-          "newsLists": [
-            "\n[속보] 가수 현미 오늘 별세, 향년 85세\n",
-            "\n심형탁, 18세↓ 일본인 예비신부 공개…소통 난항 (조선의 사랑꾼)\n",
-            "\n법인 카드로 명품 구매+커피믹스 3400만원어치…상상초월\n",
-            "\n함소원, 이혼한다더니 라방에서 신났네…?\n",
-            "\n홍진영, ‘술 한잔 해요’ 녹음 현장…너무 달라진 비주얼\n",
-            "\n“예쁘다” 김종국-김승혜 핑크빛…엄마도 대찬성\n"
-          ]
-        }
-      },
-      {
-        "category": "스포츠/연예",
         "press": "스포티비뉴스",
         "pressLogo": "https://s.pstatic.net/static/newsstand/up/2021/1130/nsd10159718.png",
         "editedDate": "2023.04.04. 15:00 편집",
@@ -3194,26 +3154,6 @@
             "\nSBS노사, 스튜디오S 드라마 제작 가이드라인 제정\n",
             "\n강원도 산불 잇따르는데 골프연습장 찾은 김진태\n",
             "\n신문윤리위, 선정적 '랜딩페이지 광고' 게재한 중앙일보 '경고'\n"
-          ]
-        }
-      },
-      {
-        "category": "매거진/전문지",
-        "press": "뉴스앤조이",
-        "pressLogo": "https://s.pstatic.net/static/newsstand/up/2022/0328/nsd22503109.png",
-        "editedDate": "2023.04.04. 14:50 편집",
-        "main": {
-          "thumbnail": "https://s.pstatic.net/static/newsstand/2023/0404/article_img/new_main/9356/145457_001.jpg",
-          "title": "아름다움 저편에서 평화를 호소하는 제주를 걷다"
-        },
-        "sub": {
-          "newsLists": [
-            "\n6년간 장례 못 치른 스텔라데이지호 실종자 가족들 \"2차 심해 수색 실시하라\"\n",
-            "\n\"감리회가 교회협 탈퇴하든 말든 청년들에게 무슨 상관이 있겠나\"\n",
-            "\n교회와 민주주의, 친구일까요 적일까요?\n",
-            "\n달리면서 기부하는 '달리다꿈'\n",
-            "\n임보라 목사, 앰네스티 언론상 특별상 수상\n",
-            "\n세월호 엄마들도 때론 '더 멋지게' 살고 싶다\n"
           ]
         }
       },

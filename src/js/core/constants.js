@@ -1,11 +1,16 @@
-export const CONSTANTS = {
+import systemTimeOption from '../utils/systemTime.js'
+
+const CONSTANTS = {
   'NEWS_STAND' : '뉴스스탠드',
   'ROLLING_LINK_PRESS' : '연합뉴스',
-  'all' : '전체 언론사',
-  'subscribed' : '내가 구독한 언론사',
 }
 
-export const rollingPositionClassName = ['left', 'right'];
+export const VIEWTYPE = {
+  'all' : '전체 언론사',
+  'subscribe' : '내가 구독한 언론사',
+}
+
+const rollingPositionClassName = ['left', 'right'];
 
 const URL = 'http://localhost:3001';
 export const API_URL = {
@@ -14,9 +19,6 @@ export const API_URL = {
 }
 
 export const autoAnimationInfo = {
-  transitionDuration : '500ms',
-  leftDelayTime : 4000,
-  timeDiff : 1000,
   pageDelayTime: 5000,
 }
 
@@ -31,4 +33,19 @@ export const GRID_INFO = {
   'FIRST_PAGE': 0,
   'LAST_PAGE': 3,
   'GRID_COUNT': 24,
+}
+
+export const newsHeaderInfo = {
+  headerTitle: CONSTANTS['NEWS_STAND'],
+  timeOption: systemTimeOption,
+}
+
+export const rollingBarInfo = {
+  newsTitle: CONSTANTS['ROLLING_LINK_PRESS'],
+  postionClassName: rollingPositionClassName,
+  autoAnimationInfo: {
+    transitionDuration: '500ms',
+    leftDelayTime: 4000,
+    timeDiff: 1000,
+  },
 }

@@ -440,22 +440,34 @@ main .view-buttons .grid-active {
 
 .category-area {
   height: 40px;
+  line-height: 40px;
   background-color: #F5F7F9;
   border-bottom: 1px solid #D2DAE0;
-  line-height: 40px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
-.category-area .list-category {
+.category-area .list-category, .category-area .list-category-subscribed {
   display: flex;
-  flex-direction: row;
-  align-items: center;
 }
-.category-area .list-category li:not(.current) {
+.category-area .list-category-subscribed {
+  width: max-content;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.category-area .list-category-subscribed::-webkit-scrollbar {
+  display: none;
+}
+.category-area .list-category li:not(.current, .current-subscribed), .category-area .list-category-subscribed li:not(.current, .current-subscribed) {
+  display: inline-block;
+  height: 40px;
+  width: auto;
   padding: 0 16px;
   font-size: 14px;
   font-weight: 500;
   color: #6E8091;
 }
-.category-area .list-category li:not(.current):hover {
+.category-area .list-category li:not(.current, .current-subscribed):hover, .category-area .list-category-subscribed li:not(.current, .current-subscribed):hover {
   text-decoration: underline #6E8091;
   cursor: pointer;
 }
@@ -538,8 +550,9 @@ main .view-buttons .grid-active {
   color: #879298;
 }
 
-.current {
+.current, .current-subscribed {
   width: 166px;
+  height: 40px;
   padding: 0 16px;
   font-size: 14px;
   font-weight: 700;
@@ -549,6 +562,13 @@ main .view-buttons .grid-active {
   justify-content: space-between;
   cursor: default;
 }
-.current div > span:nth-child(2) {
+.current-subscribed {
+  height: 40px;
+  background-color: #7890E7;
+}
+.current-subscribed img {
+  width: 7px;
+}
+.current div > span:nth-child(2), .current-subscribed div > span:nth-child(2) {
   color: rgba(255, 255, 255, 0.7);
 }
