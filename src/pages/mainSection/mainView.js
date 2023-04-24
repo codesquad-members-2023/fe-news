@@ -1,4 +1,5 @@
 import { getElement, createNode } from '../../script/utils.js'
+import { CONTENTS } from '../../script/contents.js'
 import PressesGridView from './pressesGridView.js'
 import PressListView from './pressListView.js'
 import ViewSelectionBtn from './viewSelectionBtn.js'
@@ -65,8 +66,8 @@ class MainView {
 
     const lastPage =
       currentViewType === 'grid'
-        ? Math.ceil(dataLength / 24) || 1
-        : dataLength - 1 || 0
+        ? Math.ceil(dataLength / CONTENTS.PRESSES_PER_PAGE) || 1
+        : dataLength || 0
     this.#directionButton.setAttribute('last-page', lastPage)
 
     if (currentViewType === 'grid') {

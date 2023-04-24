@@ -1,5 +1,7 @@
+import { CONTENTS } from '../../script/contents.js'
 import { getElement } from '../../script/utils.js'
 import MainView from './mainView.js'
+
 class MainHandler {
   #allData
   #mainView
@@ -57,16 +59,14 @@ class MainHandler {
         this.#currentPage--
       }
 
-      this.#renderView(this.#currentViewType)
+      this.#renderView()
     })
   }
 
   #getViewData(currentViewData) {
     if (this.#currentViewType === 'grid') {
-      const PRESSES_PER_PAGE = 24
-
-      const endPress = PRESSES_PER_PAGE * (this.#currentPage + 1)
-      const startPress = endPress - PRESSES_PER_PAGE
+      const endPress = CONTENTS.PRESSES_PER_PAGE * (this.#currentPage + 1)
+      const startPress = endPress - CONTENTS.PRESSES_PER_PAGE
 
       const slicedData = currentViewData.slice(startPress, endPress)
       const gridViewData = slicedData.map(press => {
@@ -194,7 +194,7 @@ class MainHandler {
 
     // reset page
     this.#currentPage = 0
-    this.#renderView(this.#currentViewType)
+    this.#renderView()
   }
 }
 
