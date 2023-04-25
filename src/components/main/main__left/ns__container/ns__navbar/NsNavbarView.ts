@@ -7,7 +7,7 @@ export class NsNavbarView extends AbstractView {
   }
 
   protected setWrapper() {
-    this._wrapperElement.innerHTML = `<nav class="w-full h-12 flex flex-row"></nav>`;
+    this._wrapperElement.innerHTML = `<nav class="h-full flex flex-row items-center"></nav>`;
   }
 
   render(state: State) {

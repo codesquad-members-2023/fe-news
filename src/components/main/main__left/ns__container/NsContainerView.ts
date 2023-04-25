@@ -1,30 +1,59 @@
-import { State } from '@custom-types/types';
-import { AbstractView } from '@custom-types/abstracts.js';
-import { $ } from '@utils/dom.js';
+import { Props, State } from '@custom-types/types';
+import { TempAbstractView } from '@custom-types/abstracts.js';
+import { NsNavbarComponent } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarComponent.js';
+import { NsPressContainerComponent } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerComponent.js';
+import { NsCategoryContainerObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/NsCategoryContainerObserverViewComponent.js';
 
-export class NsContainerView extends AbstractView {
-  constructor() {
-    super();
+export class NsContainerView extends TempAbstractView {
+  constructor($target: HTMLElement) {
+    super($target);
   }
 
-  protected setWrapper() {
-    this._wrapperElement.innerHTML = `<section class="h-full flex flex-col justify-start"></section>`;
+  template(state: State) {
+    return `<section class="h-full flex flex-col justify-start">
+              <div id="ns-navbar-wrapper" class="w-full h-12"></div>
+              ${
+                state.view === 'GRID'
+                  ? '<div id="ns-press-container-wrapper" class="p-3 h-full "></div>'
+                  : '<div id="ns-category-container-wrapper" class="p-3 h-full "></div>'
+              }
+            </section>`;
   }
 
   render(state: State) {
-    this.changeView(state);
+    this.$target.innerHTML = this.template(state);
+    this.addChildren(state);
+    this.setEvents(state);
+  }
+
+  setEvents(state: State) {
     return;
   }
 
-  changeView(state: State) {
-    const { view } = state;
+  addChildren(state: State) {
+    const { view, handleToView, articlesPromise } = state;
+    // 처음 컴포넌트 생성 시, state가 전달되지 않았을 때 early return 처리
+    if (!view) return;
+    const nsNavbar = new NsNavbarComponent(state);
+    const nsPressContainer = new NsPressContainerComponent(state);
+    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent(
+      state,
+    );
+    (
+      this.$target.querySelector('#ns-navbar-wrapper') as HTMLElement
+    ).appendChild(nsNavbar.element);
     if (view === 'GRID') {
-      $('#press-container', this.element)!.classList.remove('hidden');
-      $('#category-container', this.element)!.classList.add('hidden');
+      (
+        this.$target.querySelector('#ns-press-container-wrapper') as HTMLElement
+      ).appendChild(nsPressContainer.element);
     }
     if (view === 'LIST') {
-      $('#category-container', this.element)!.classList.remove('hidden');
-      $('#press-container', this.element)!.classList.add('hidden');
+      (
+        this.$target.querySelector(
+          '#ns-category-container-wrapper',
+        ) as HTMLElement
+      ).appendChild(nsCategoryContainer.element);
     }
+    return;
   }
 }

@@ -1,6 +1,5 @@
 import { State } from '@custom-types/types';
 import { TempAbstractView } from '@custom-types/abstracts.js';
-import { $ } from '@utils/dom.js';
 
 export class NsIssueView extends TempAbstractView {
   constructor($target: HTMLElement) {
