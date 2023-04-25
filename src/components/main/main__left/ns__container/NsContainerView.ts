@@ -38,17 +38,19 @@ export class NsContainerView extends TempAbstractView {
       this.$target.querySelector('#ns-navbar-wrapper') as HTMLElement,
       props,
     );
-    const nsPressContainer = new NsPressContainerComponent(props);
-    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent(
-      props,
-    );
-    // [리팩토링 예정]
     if (view === 'GRID') {
-      (
-        this.$target.querySelector('#ns-press-container-wrapper') as HTMLElement
-      ).appendChild(nsPressContainer.element);
+      const nsPressContainer = new NsPressContainerComponent(
+        this.$target.querySelector(
+          '#ns-press-container-wrapper',
+        ) as HTMLElement,
+        props,
+      );
     }
     if (view === 'LIST') {
+      const nsCategoryContainer = new NsCategoryContainerObserverViewComponent(
+        props,
+      );
+      // [리팩토링 예정]
       (
         this.$target.querySelector(
           '#ns-category-container-wrapper',

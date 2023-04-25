@@ -18,6 +18,13 @@ export class NavbarRightView extends TempAbstractView {
     this.$target.innerHTML = this.template(state);
     this.addChildren(state);
     this.setEvents(state);
+    // [리팩토링 예정] toggleBtn() 메서드들의 위치가 여기가 맞을까?
+    if (state.view === 'GRID') {
+      (this.toggleGridBtn as () => void)();
+    }
+    if (state.view === 'LIST') {
+      (this.toggleListBtn as () => void)();
+    }
   }
 
   setEvents(state: State) {
@@ -26,13 +33,9 @@ export class NavbarRightView extends TempAbstractView {
     const $listBtn = $('#list-btn', this.$target) as HTMLButtonElement;
     $gridBtn.addEventListener('click', () => {
       (handleToView as (state: State) => void)({ view: 'GRID' });
-      // [기능 수정 예정] toggleGridBtn() 적용이 안됨
-      (this.toggleGridBtn as () => void)();
     });
     $listBtn.addEventListener('click', () => {
       (handleToView as (state: State) => void)({ view: 'LIST' });
-      // [기능 수정 예정] toggleListBtn() 적용이 안됨
-      (this.toggleListBtn as () => void)();
     });
   }
 
@@ -53,7 +56,6 @@ export class NavbarRightView extends TempAbstractView {
     ($('#grid-btn', this.$target) as HTMLButtonElement).classList.remove(
       'bg-grid-on',
     );
-    console.log($('#grid-btn', this.$target) as HTMLButtonElement);
   }
 
   toggleGridBtn() {
