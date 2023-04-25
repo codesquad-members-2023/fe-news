@@ -34,7 +34,6 @@ export class MainLeftView extends TempAbstractView {
     const nsNavbar = new NsIssueContainerComponent(
       this.$target.querySelector('#ns-navbar-wrapper') as HTMLElement,
     );
-    // [리팩토링 예정] 여기부터 시작 🥹
     const nsContainer = new NsContainerComponent(
       this.$target.querySelector('#ns-container-wrapper') as HTMLElement,
     );

@@ -27,12 +27,10 @@ export class NsNavbarView extends TempAbstractView {
   }
 
   addChildren(props: Props) {
-    const navbarLeft = new NavbarLeftComponent();
-    const navbarRight = new NavbarRightComponent(props);
-
-    ($('#navbar-left', this.$target) as HTMLElement).appendChild(
-      navbarLeft.element,
+    const navbarLeft = new NavbarLeftComponent(
+      $('#navbar-left', this.$target) as HTMLElement,
     );
+    const navbarRight = new NavbarRightComponent(props);
     ($('#navbar-right', this.$target) as HTMLElement).appendChild(
       navbarRight.element,
     );
