@@ -183,6 +183,7 @@ main {
   color: #14212b; }
 
 .main-grid {
+  position: relative;
   margin-top: 26.5px;
   width: 930px;
   height: 388px; }
@@ -396,3 +397,66 @@ main {
 
 .mine-list__nav-item:first-child {
   border-left: 1px solid #d2dae0; }
+
+#root::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: none; }
+
+#root.clicked::after {
+  display: block; }
+
+#snack-bar {
+  position: absolute;
+  display: flex;
+  padding: 16px 24px;
+  background: #4362d0;
+  color: white;
+  font-weight: 500;
+  font-size: 16px;
+  width: 286px;
+  height: 54px;
+  box-shadow: 0px 4px 2px rgba(20, 33, 43, 0.02), 0px 2px 18px rgba(20, 33, 43, 0.08);
+  left: 322px;
+  z-index: 110; }
+
+#alert {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  height: 140px;
+  left: 305px;
+  z-index: 110;
+  border: 1px solid #d2dae0;
+  font-size: 16px;
+  top: 132px; }
+  #alert .alert-text {
+    padding-top: 24px;
+    height: 92px;
+    text-align: center;
+    background-color: white; }
+  #alert .alert-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: center;
+    background: #f5f7f9;
+    height: 48px;
+    border-top: 1px solid #d2dae0; }
+    #alert .alert-buttons .alert-unsubscribe,
+    #alert .alert-buttons .alert-cancel {
+      padding-top: 15px;
+      width: 160px; }
+    #alert .alert-buttons .alert-unsubscribe {
+      height: 48px;
+      border-right: 1px solid #d2dae0; }
+    #alert .alert-buttons .alert-unsubscribe:hover {
+      text-decoration: underline; }
+    #alert .alert-buttons .alert-cancel:hover {
+      text-decoration: underline; }
