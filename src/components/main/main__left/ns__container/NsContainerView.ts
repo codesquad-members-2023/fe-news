@@ -30,18 +30,19 @@ export class NsContainerView extends TempAbstractView {
     return;
   }
 
-  addChildren(state: State) {
-    const { view, handleToView, articlesPromise } = state;
+  addChildren(props: Props) {
+    const { view, handleToView, articlesPromise } = props;
     // 처음 컴포넌트 생성 시, state가 전달되지 않았을 때 early return 처리
     if (!view) return;
-    const nsNavbar = new NsNavbarComponent(state);
-    const nsPressContainer = new NsPressContainerComponent(state);
-    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent(
-      state,
+    const nsNavbar = new NsNavbarComponent(
+      this.$target.querySelector('#ns-navbar-wrapper') as HTMLElement,
+      props,
     );
-    (
-      this.$target.querySelector('#ns-navbar-wrapper') as HTMLElement
-    ).appendChild(nsNavbar.element);
+    const nsPressContainer = new NsPressContainerComponent(props);
+    const nsCategoryContainer = new NsCategoryContainerObserverViewComponent(
+      props,
+    );
+    // [리팩토링 예정]
     if (view === 'GRID') {
       (
         this.$target.querySelector('#ns-press-container-wrapper') as HTMLElement

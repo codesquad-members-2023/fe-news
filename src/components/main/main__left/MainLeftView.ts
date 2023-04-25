@@ -13,7 +13,7 @@ export class MainLeftView extends TempAbstractView {
     return `<section class="h-full w-full flex flex-col flex-initial">
               <div id="ns-header-wrapper" class="px-2 w-full h-12"></div>
               <div id="ns-navbar-wrapper" class="w-full h-12 "></div>
-              <div id="ns-container-wrapper" class="px-2 h-full border border-blue-500 "></div>
+              <div id="ns-container-wrapper" class="px-2 h-full border border-blue-500"></div>
             </section>`;
   }
 
