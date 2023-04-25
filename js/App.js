@@ -3,7 +3,7 @@ import AutoRolling from './components/AutoRolling/autoRolling.js';
 import MainCommon from './components/main/MainCommon/mainCommon.js';
 import MainGrid from './components/main/MainAllGrid/mainAllGrid.js';
 import MainAllList from './components/main/MainAllLIst/mainAllList.js';
-import { MineGrid } from './components/main/mainMineGrid/mainMineGird.js';
+import { MineGrid } from './components/main/MainMineGrid/mainMineGird.js';
 import { MineList } from './components/main/MainMineList/mainMineList.js';
 import { createElement } from './utils/dom.js';
 // 애플리케이션의 root 컴포넌트.
