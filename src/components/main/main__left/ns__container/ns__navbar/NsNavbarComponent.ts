@@ -11,6 +11,8 @@ export class NsNavbarComponent implements TempComponent {
     this.$target = targetElement as HTMLElement;
     this._model = new NsNavbarModel();
     this._view = new NsNavbarView(this.$target);
+
+    this.setState(props as Props);
   }
 
   get state() {

@@ -11,8 +11,8 @@ export class NsNavbarView extends TempAbstractView {
 
   template(state: State) {
     return `<nav class="h-full flex flex-row items-center">
-              <div id="navbar-left" class="w-1/2"></div>
-              <div id="navbar-right" class="w-1/2"></div>
+              <div id="navbar-left-wrapper" class="w-1/2"></div>
+              <div id="navbar-right-wrapper" class="w-1/2"></div>
             </nav>`;
   }
 
@@ -28,11 +28,11 @@ export class NsNavbarView extends TempAbstractView {
 
   addChildren(props: Props) {
     const navbarLeft = new NavbarLeftComponent(
-      $('#navbar-left', this.$target) as HTMLElement,
+      $('#navbar-left-wrapper', this.$target) as HTMLElement,
     );
-    const navbarRight = new NavbarRightComponent(props);
-    ($('#navbar-right', this.$target) as HTMLElement).appendChild(
-      navbarRight.element,
+    const navbarRight = new NavbarRightComponent(
+      $('#navbar-right-wrapper', this.$target) as HTMLElement,
+      props,
     );
   }
 }
