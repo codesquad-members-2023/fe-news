@@ -58,14 +58,15 @@ const modalClickEventHandler = (mediaId, curTarget, { target }) => {
   const $mainGrid = document.querySelector('.main-grid');
 
   if (target.closest('.alert-unsubscribe')) {
-    $mainGrid.removeChild($mainGrid.lastElementChild);
+    $mainGrid.removeChild($mainGrid.querySelector('#alert'));
     document.querySelector('#root').removeAttribute('class');
     curTarget.alt = 'subscribe';
     curTarget.src = './asset/subscribeButton.svg';
     dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaId));
   } else if (target.closest('.alert-cancel')) {
+    if ($mainGrid.querySelector('#alert') === null) return;
+    $mainGrid.removeChild($mainGrid.querySelector('#alert'));
     document.querySelector('#root').removeAttribute('class');
-    $mainGrid.removeChild($mainGrid.lastElementChild);
   }
 };
 

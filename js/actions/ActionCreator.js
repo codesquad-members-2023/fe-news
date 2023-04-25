@@ -201,4 +201,11 @@ export const displayActionCreator = {
       type: actionTypes.displayActions.PROGRESS_BAR_ANIMATION_END,
     };
   },
+
+  progressBarAnimationPause(payload) {
+    return {
+      type: actionTypes.displayActions.PROGRESS_BAR_ANIMATION_PAUSE,
+      payload,
+    };
+  },
 };

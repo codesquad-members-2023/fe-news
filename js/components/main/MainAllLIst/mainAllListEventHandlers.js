@@ -89,6 +89,8 @@ const modalClickEventHandler = (mediaId, { target }) => {
     document.querySelector('#root').removeAttribute('class');
     dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaId));
   } else if (target.closest('.alert-cancel')) {
+    if ($mainList.querySelector('#alert') === null) return;
+    $mainList.removeChild($mainList.querySelector('#alert'));
     document.querySelector('#root').removeAttribute('class');
     $mainList.removeChild($mainList.querySelector('#alert'));
   }
