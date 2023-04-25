@@ -1,0 +1,60 @@
+// 메인 버튼
+.sort_button {
+  display: flex;
+  gap: 24px;
+  span {
+    font-size: map-get($fontSize, 'MD');
+  }
+}
+
+.main_view-button {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+
+.all-press,
+.subscribe-press {
+  span {
+    color: gray;
+  }
+}
+
+.view_switch-button {
+  display: flex;
+  gap: 14px;
+}
+
+// grid
+.view_grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  width: 930px;
+  height: 388px;
+  list-style: none;
+  border: 0.5px solid $gray100;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.5px solid $gray100;
+  }
+}
+
+.main {
+  position: relative;
+}
+
+.prev-button {
+  position: absolute;
+  left: -50px;
+  top: 210px;
+}
+
+.next-button {
+  position: absolute;
+  right: -50px;
+  top: 210px;
+}
