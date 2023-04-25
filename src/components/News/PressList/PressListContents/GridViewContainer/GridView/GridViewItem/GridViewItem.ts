@@ -50,8 +50,8 @@ class GridViewItem extends HTMLElement {
       return;
     }
     const subscribingPress: string[] =
-      this.userStore.getState().subscribingPressId;
-    const isSubscribed = id ? subscribingPress.includes(id) : false;
+      this.userStore.getState().subscribingPressIds;
+    const isSubscribed = id ? subscribingPress?.includes(id) : false;
     const btnContainer = this.querySelector('.press-subscribe-btn-container');
     const template = `${
       isSubscribed

@@ -1,73 +1,77 @@
-import { add, addStyle, addShadow, getProperty, setProperty } from '@utils/dom';
+import {
+  add,
+  addStyle,
+  addShadow,
+  getProperty,
+  setProperty,
+  create,
+  select,
+  addClass,
+  removeClass,
+  selectAll,
+} from '@utils/dom';
 import style from './GridViewContainerStyle';
 import { MAX_ITEM_NUM } from '@constant/index';
 import { sliceByPage } from '@utils/common';
 import { StoreType } from '@utils/redux';
 
 import store from '@store/index';
-import { NewsType } from '@store/news/newsType';
-
-interface GridViewContainer {
-  icon?: string | null;
-}
+import { NewsType, PressType, TAB, VIEW } from '@store/news/newsType';
+import { getPressList, getCustomPressList } from '@services/news/press/press';
 
 class GridViewContainer extends HTMLElement {
   wrap: HTMLElement | null = null;
   newsStore: StoreType<NewsType>;
+  tab: TAB;
 
   constructor() {
     super();
     this.newsStore = store.news;
+    this.tab = getProperty({ target: this, name: 'tab' });
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     addShadow({ target: this });
-
-    const pressListStr = getProperty({ target: this, name: 'press-list' });
-    const pressList = pressListStr ? JSON.parse(pressListStr) : [];
-
-    this.render(pressList);
+    this.render();
     addStyle({
       target: this.shadowRoot,
       style: style(),
     });
+    this.newsStore.subscribe(this.handleDisplay.bind(this));
+  }
 
-    this.newsStore.subscribe(() => {
-      this.changePage();
+  handleDisplay() {
+    const { currentPage } = this.newsStore.getState().display;
+    const gridViewElements = selectAll({
+      selector: ['grid-view-element'],
+      parent: this,
+    });
+    gridViewElements.forEach((element: HTMLElement, i: number) => {
+      if (currentPage === i)
+        setProperty({
+          target: element,
+          name: 'show',
+          value: 1,
+          type: 'boolean',
+        });
+      else
+        setProperty({
+          target: element,
+          name: 'show',
+          value: 0,
+          type: 'boolean',
+        });
     });
   }
 
-  static get observedAttributes() {
-    return ['press-list'];
-  }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'press-list') {
-      const pressList = JSON.parse(newValue);
-
-      this.render(pressList);
-    }
-  }
-
-  changePage() {
-    const currentTab = this.newsStore.getState().display.currentTab;
-    const currentPage = this.newsStore.getState().display.currentPage;
-    this.shadowRoot
-      ?.querySelectorAll('grid-view-element')
-      .forEach((gridViewElement: any, i: number) => {
-        setProperty({
-          target: gridViewElement,
-          name: 'show',
-          value: i === currentPage ? 'true' : 'false',
-        });
-      });
-  }
-
-  render(pressList: any) {
+  async render() {
+    const isGeneral = this.tab === TAB.GENERAL;
+    const pressList = isGeneral
+      ? await getPressList({ newsStore: this.newsStore })
+      : await getCustomPressList({ newsStore: this.newsStore });
     const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);
-
     const slicedPressList = Array.from({ length: maxPage }).map(
-      (v: any, i: number) =>
+      (v: unknown, i: number) =>
         sliceByPage({
           page: i,
           maxItemNum: MAX_ITEM_NUM,
@@ -83,7 +87,7 @@ class GridViewContainer extends HTMLElement {
                 (press: any, i: number) =>
                   `<grid-view-element press-list='${JSON.stringify(
                     press
-                  )}' show="${i === 0 ? 'true' : 'false'}"></grid-view-element>`
+                  )}' show="${i === 0 ? '1' : '0'}"></grid-view-element>`
               )
               .join('')}`
           : `

@@ -1,4 +1,4 @@
-import { NewsType } from '@store/news/newsType';
+import { NewsType, TAB } from '@store/news/newsType';
 import { UserType } from '@store/user/userType';
 import { StoreType } from '@utils/redux';
 
@@ -7,10 +7,10 @@ export interface sectionContentsPropsType {
 }
 
 export interface getSectionPropsType extends sectionContentsPropsType {
-  page: number;
+  page?: number;
 }
 
 export interface getCustomSectionPropsType extends sectionContentsPropsType {
   userStore: StoreType<UserType>;
-  page: number;
+  page?: number;
 }

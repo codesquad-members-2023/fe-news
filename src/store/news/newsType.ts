@@ -1,24 +1,5 @@
 export interface NewsType {
   display: DisplayType;
-  press: {
-    pressList: PressType[];
-    customPressList: PressType[];
-  };
-  rollingNews: { rollingNewsList: RollingNewsType[] };
-  section: {
-    categoryCounts: {
-      [CATEGORY.GENERAL]: number;
-      [CATEGORY.BRODCAST]: number;
-      [CATEGORY.IT]: number;
-      [CATEGORY.ENGLISH]: number;
-      [CATEGORY.SPORT]: number;
-      [CATEGORY.MAGAZINE]: number;
-      [CATEGORY.REGION]: number;
-    };
-    section: SectionType;
-    totalNumber: number;
-    currentCategoryIndex: number;
-  };
 }
 
 export enum TAB {
@@ -57,7 +38,7 @@ export interface DisplayType {
   };
 }
 
-interface PressType {
+export interface PressType {
   pid: string;
   pname: string;
   newMainLogo: string;
@@ -74,12 +55,27 @@ export type RollingNewsType = {
 };
 
 export interface SectionType {
-  id: string;
-  pressId: string;
-  lastEdited: Date;
-  articles: ArticleInterface[];
-  category: string;
-  press: PressType;
+  sectionData: {
+    id: string;
+    pressId: string;
+    lastEdited: Date;
+    articles: ArticleInterface[];
+    category: string;
+    press: PressType;
+  };
+  tabData: {
+    categoryCounts: {
+      [CATEGORY.GENERAL]: number;
+      [CATEGORY.BRODCAST]: number;
+      [CATEGORY.IT]: number;
+      [CATEGORY.ENGLISH]: number;
+      [CATEGORY.SPORT]: number;
+      [CATEGORY.MAGAZINE]: number;
+      [CATEGORY.REGION]: number;
+    };
+    totalNumber: number;
+    currentCategoryIndex: number;
+  };
 }
 
 export interface ArticleInterface {
@@ -119,26 +115,4 @@ export interface setTotalPagePropsType extends newsPropsType {
     tab: TAB;
     totalPage: number;
   };
-}
-
-export interface setPressListPropsType extends newsPropsType {
-  payload: NewsType['press'];
-}
-
-export interface subscribePropsType extends newsPropsType {
-  payload: string;
-}
-
-export interface unsubscribePropsType extends newsPropsType {
-  payload: string;
-}
-
-export interface setRollingNewsPropsType extends newsPropsType {
-  payload: {
-    rollingNewsList: NewsType['rollingNews']['rollingNewsList'];
-  };
-}
-
-export interface changeSectionPropsType extends newsPropsType {
-  payload: NewsType['section'];
 }

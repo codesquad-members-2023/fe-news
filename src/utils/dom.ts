@@ -15,13 +15,14 @@ interface selectProps {
 interface getPropertyProps {
   target: HTMLElement | Element | null;
   name: string;
-  isStringfied?: boolean;
+  type?: 'object' | 'string' | 'number' | 'boolean';
 }
 
 interface setPropertyProps {
   target: HTMLElement | Element | null | undefined;
   name: string;
-  value: string;
+  value: object | string | number;
+  type?: 'object' | 'string' | 'number' | 'boolean';
 }
 
 interface addProps {
@@ -106,17 +107,36 @@ export function selectAll({ selector, parent }: selectProps) {
   }, null);
 }
 
-export function getProperty({ target, name, isStringfied }: getPropertyProps) {
+export function getProperty({
+  target,
+  name,
+  type = 'string',
+}: getPropertyProps) {
   if (!target?.hasAttribute(name)) return null;
   const value = target.getAttribute(name);
-  if (value && isStringfied) {
+  if (!value) return;
+  if (type === 'object') {
     return JSON.parse(value);
+  }
+  if (type === 'number') {
+    return Number(value);
+  }
+  if (type === 'boolean') {
+    return Boolean(Number(value));
   }
   return value;
 }
 
-export function setProperty({ target, name, value }: setPropertyProps) {
-  target?.setAttribute(name, value);
+export function setProperty({
+  target,
+  name,
+  value,
+  type = 'string',
+}: setPropertyProps) {
+  if (type === 'object') {
+    return target?.setAttribute(name, JSON.stringify(value));
+  }
+  return target?.setAttribute(name, `${value}`);
 }
 
 export function add({ target, template }: addProps) {
@@ -131,16 +151,38 @@ export function addStyle({ target, style }: addStyleProps) {
   target?.append(style);
 }
 
-export const toggleClass = (
-  target: Element | null,
-  action: 'show' | 'hide'
-) => {
-  if (action === 'hide') {
-    if (target?.classList.contains('show')) target?.classList.remove('show');
-  }
-  if (action === 'show') {
-    if (!target?.classList.contains('show')) target?.classList.add('show');
-  }
+export const toggleClass = ({
+  target = null,
+  className = '',
+}: {
+  target: Element | null;
+  className: string;
+}) => {
+  if (!target) return;
+  if (target.classList.contains(className)) target.classList.remove(className);
+  else target?.classList.add(className);
+};
+
+export const addClass = ({
+  target = null,
+  className = '',
+}: {
+  target: Element | null;
+  className: string;
+}) => {
+  if (!target) return;
+  if (!target.classList.contains(className)) target.classList.add(className);
+};
+
+export const removeClass = ({
+  target = null,
+  className = '',
+}: {
+  target: Element | null;
+  className: string;
+}) => {
+  if (!target) return;
+  if (target.classList.contains(className)) target.classList.remove(className);
 };
 
 export default {

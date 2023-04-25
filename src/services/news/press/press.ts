@@ -2,6 +2,7 @@ import { MAX_ITEM_NUM, TEMP_ID } from '@constant/index';
 import { getPressAPI } from '@apis/news';
 import { getUser } from '@apis/user';
 import { pressListContentsPropsType } from './pressType';
+import { VIEW, TAB } from '@store/news/newsType';
 
 export const getPressList = async ({
   newsStore,
@@ -11,15 +12,13 @@ export const getPressList = async ({
   newsStore.dispatch({
     type: 'SET_TOTAL_PAGE',
     payload: {
-      view: 'grid',
-      tab: 'general',
+      view: VIEW.GRID,
+      tab: TAB.GENERAL,
       totalPage: Math.ceil(pressList.length / 24) - 1,
     },
   });
-  newsStore.dispatch({
-    type: 'SET_PRESS_LIST',
-    payload: { pressList },
-  });
+
+  return pressList;
 };
 
 export const getCustomPressList = async ({
@@ -40,13 +39,10 @@ export const getCustomPressList = async ({
   newsStore.dispatch({
     type: 'SET_TOTAL_PAGE',
     payload: {
-      view: 'grid',
-      tab: 'custom',
+      view: VIEW.GRID,
+      tab: TAB.CUSTOM,
       totalPage: Math.ceil(customPressList.length / 24) - 1,
     },
   });
-  newsStore.dispatch({
-    type: 'SET_CUSTOM_PRESS_LIST',
-    payload: { pressList: customPressList },
-  });
+  return customPressList;
 };

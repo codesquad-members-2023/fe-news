@@ -4,11 +4,11 @@ import { TEMP_ID } from '@constant/index';
 
 const initialState: UserType = {
   id: TEMP_ID,
-  subscribingPressId: [] as string[],
+  subscribingPressIds: [] as string[],
 };
 
 const setUser = ({ payload }: { state: UserType; payload: any }) => {
-  return { ...payload, subscribingPress: payload.subscribingPressIds };
+  return { ...payload, subscribingPressIds: payload.subscribingPressIds };
 };
 
 const subscribe = ({
@@ -18,11 +18,11 @@ const subscribe = ({
   state: UserType;
   payload: string;
 }) => {
-  if (state.subscribingPressId.length === 0)
-    return { ...state, subscribingPress: [payload] };
+  if (state.subscribingPressIds.length === 0)
+    return { ...state, subscribingPressIds: [payload] };
   return {
     ...state,
-    subscribingPress: [...state.subscribingPressId, payload],
+    subscribingPressIds: [...state.subscribingPressIds, payload],
   };
 };
 
@@ -33,10 +33,10 @@ const unsubscribe = ({
   state: UserType;
   payload: string;
 }) => {
-  const newSubscribingPress = state.subscribingPressId.filter(
+  const newSubscribingPress = state.subscribingPressIds.filter(
     (pressId: string) => pressId !== payload
   );
-  return { ...state, subscribingPress: newSubscribingPress };
+  return { ...state, subscribingPressIds: newSubscribingPress };
 };
 
 const reducer: ReducerType<UserType> = (

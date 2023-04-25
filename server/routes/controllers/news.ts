@@ -104,10 +104,12 @@ export const getSection = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-      section: sectionsWithPress[0],
-      categoryCounts: categoryCountsObj,
-      totalNumber,
-      currentCategoryIndex,
+      sectionData: sectionsWithPress[0],
+      tabData: {
+        categoryCounts: categoryCountsObj,
+        totalNumber,
+        currentCategoryIndex,
+      },
     });
   } catch (error) {
     res.status(400).json({ message: error });
@@ -147,7 +149,7 @@ export const getCustomSection = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-      section: sectionWithPress[0],
+      sectionData: sectionWithPress[0],
     });
   } catch (error) {
     res.status(400).json({ message: error });
