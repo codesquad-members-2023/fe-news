@@ -3,22 +3,28 @@ import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
 import { ListViewHeader } from "./ListViewHeader.js";
 import { ListViewMain } from "./ListViewMain.js";
 import { getPageNumberByDir } from "../../../utils/utils.js";
-import { ProgressBarAnimationManager } from "./ListViewAnimaionManager.js";
-import { ALL_PRESSES } from "../../../constants/index.js";
+import { ALL_PRESSES, LIST_VIEW } from "../../../constants/index.js";
 import { PREV_PAGE_BTN, NEXT_PAGE_BTN } from "../../../constants/ui.js";
+import { ProgressBarAnimationManager } from "./ListViewAnimaionManager.js";
 
 export class ListView extends Component {
   constructor(target, props) {
     super(target, props);
+    const { PAGE_FLIP_INTERVAL, DIRECTION } = LIST_VIEW;
+    const {
+      initProgressBarAnimation,
+      repaintProgressBar,
+      moveToNextPageToward,
+    } = this;
+
     this.progressBarAnimation = new ProgressBarAnimationManager({
-      moveToNextPageToward: this.moveToNextPageToward.bind(this),
-      getCurrentCategoryNode: this.getCurrentCategoryNode.bind(this),
+      PAGE_FLIP_INTERVAL,
+      DIRECTION,
+      repaintProgressBar,
+      moveToNextPageToward: moveToNextPageToward.bind(this),
+      initProgressBarAnimation: initProgressBarAnimation.bind(this),
     });
     this.initProgressBarAnimation();
-  }
-
-  initProgressBarAnimation() {
-    this.progressBarAnimation.init();
   }
 
   setUp() {
@@ -41,6 +47,7 @@ export class ListView extends Component {
       if (target.closest(".view-page-btn")) {
         const [_, dir] = target.closest(".view-page-btn").className.split(" ");
         this.moveToNextPageToward(dir);
+        this.initProgressBarAnimation();
       }
     });
   }
@@ -79,10 +86,26 @@ export class ListView extends Component {
     });
   }
 
-  getCurrentListViewState(listViewData, dir) {
-    const FIRST_PAGE = 1;
+  initProgressBarAnimation() {
+    const progressBarNode = this.getProgressBarNode();
+    this.progressBarAnimation.init(progressBarNode);
+  }
 
+  getProgressBarNode() {
+    const currentCategoryText = this.target.querySelector(
+      `[data-category-id="${this._state.currentCategory}"`
+    );
+    return currentCategoryText.closest(".list-view__current-category");
+  }
+
+  repaintProgressBar(target, percentage) {
+    const { CURRENT_BACKGROUND_COLOR, BACKGROUND_COLOR_TO_FILL } = LIST_VIEW;
+    target.style.backgroundImage = `linear-gradient(to right, ${CURRENT_BACKGROUND_COLOR} ${percentage}%, ${BACKGROUND_COLOR_TO_FILL} ${percentage}%)`;
+  }
+
+  getCurrentListViewState(listViewData, dir) {
     let {
+      START_PAGE,
       currentPageInAllCategories,
       currentPageInCategory,
       currentCategory,
@@ -111,12 +134,12 @@ export class ListView extends Component {
         : this.getPageNumberByTargetCategory(
             targetCategory,
             categoryLengths,
-            FIRST_PAGE
+            START_PAGE
           );
 
     if (nextPageInAllCategories > LAST_PAGE) {
-      nextPageInAllCategories = FIRST_PAGE;
-    } else if (nextPageInAllCategories < FIRST_PAGE) {
+      nextPageInAllCategories = START_PAGE;
+    } else if (nextPageInAllCategories < START_PAGE) {
       nextPageInAllCategories = LAST_PAGE;
     }
 
@@ -135,7 +158,7 @@ export class ListView extends Component {
     let nextPageInCategory =
       currentCategory !== nextCategory || !currentPageInCategory
         ? dir === "right" || dir === undefined
-          ? FIRST_PAGE
+          ? START_PAGE
           : nextCategoryTotalPage
         : getPageNumberByDir(dir, currentPageInCategory);
 
@@ -144,6 +167,7 @@ export class ListView extends Component {
       targetPressSubscribeStatus[nextPageInAllCategories - 1];
 
     return {
+      START_PAGE,
       currentPageInAllCategories: nextPageInAllCategories,
       currentPageInCategory: nextPageInCategory,
       currentCategory: nextCategory,
@@ -190,8 +214,8 @@ export class ListView extends Component {
     return allPressContents.length;
   }
 
-  getPageNumberByTargetCategory(targetCategory, categoryLengths, FIRST_PAGE) {
-    let CURRENT_PAGE = FIRST_PAGE;
+  getPageNumberByTargetCategory(targetCategory, categoryLengths, START_PAGE) {
+    let CURRENT_PAGE = START_PAGE;
     if (!targetCategory) return CURRENT_PAGE;
 
     for (const [key, value] of Object.entries(categoryLengths)) {
@@ -201,27 +225,20 @@ export class ListView extends Component {
   }
 
   moveToTargetCategoryBy(targetCategory, filterBtnState) {
-    const { pressData, targetPressSubscribeStatus } = this._state;
+    const { START_PAGE, pressData, targetPressSubscribeStatus } = this._state;
 
     this.setState(
       this.getCurrentListViewState({
+        START_PAGE,
         pressData,
         targetPressSubscribeStatus,
         filterBtnState,
         targetCategory,
       })
     );
-    this.initProgressBarAnimation();
   }
 
   moveToNextPageToward(dir) {
     this.setState(this.getCurrentListViewState(this._state, dir));
-    this.initProgressBarAnimation();
-  }
-
-  getCurrentCategoryNode() {
-    return this.target.querySelector(
-      `[data-category-id="${this._state.currentCategory}"`
-    );
   }
 }

@@ -1,14 +1,19 @@
+import { PRESS_STATUS } from "../../../constants/index.js";
+import {
+  SUBSCRIBE_BTN_TEXT,
+  UNSUBSCRIBE_BTN_TEXT,
+} from "../../../constants/ui.js";
 import { Component } from "../../../core/Component.js";
 import subscribeBtn from "../../../images/subscribe_btn.svg";
 
-export class GridItem extends Component {
+export class ItemView extends Component {
   setUp() {
     const { pressIcon, subscribeStatus } = this.props;
 
     const btnText =
-      subscribeStatus === "구독되어 있지 않습니다."
-        ? "+ 구독하기"
-        : "- 해지하기";
+      subscribeStatus === PRESS_STATUS.UNSUBSCRIBED
+        ? SUBSCRIBE_BTN_TEXT
+        : UNSUBSCRIBE_BTN_TEXT;
 
     this._state = {
       currentIcon: pressIcon,
@@ -61,6 +66,8 @@ export class GridItem extends Component {
   }
 
   getBtnTextToChange(btnState) {
-    return btnState === "+ 구독하기" ? "- 해지하기" : "+ 구독하기";
+    return btnState === SUBSCRIBE_BTN_TEXT
+      ? UNSUBSCRIBE_BTN_TEXT
+      : SUBSCRIBE_BTN_TEXT;
   }
 }

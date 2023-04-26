@@ -31,9 +31,14 @@ export class ListViewHeader extends Component {
       "click",
       ({ target: { tagName, dataset } }) => {
         if (tagName !== "A") return;
-        const { moveToTargetCategoryBy, filterBtnState } = this.props;
+        const {
+          moveToTargetCategoryBy,
+          filterBtnState,
+          initProgressBarAnimation,
+        } = this.props;
         const categoryId = dataset.categoryId;
         moveToTargetCategoryBy(categoryId, filterBtnState);
+        initProgressBarAnimation();
       }
     );
   }

@@ -9,6 +9,7 @@ import {
   GRID,
   GRID_VIEW,
   LIST,
+  LIST_VIEW,
   PRESS_STATUS,
 } from "../../constants/index.js";
 
@@ -41,6 +42,7 @@ export class MainView extends Component {
     const viewBtnContainer = this.target.querySelector(
       ".main__view-btn__container"
     );
+    const viewContainer = this.target.querySelector(".view__container");
 
     new FilterBtns(filterBtnsContainer, {
       changeViewBtnState: changeViewBtnState.bind(this),
@@ -59,7 +61,6 @@ export class MainView extends Component {
       targetPressData,
       subscribedPressSrcs
     );
-    const viewContainer = this.target.querySelector(".view__container");
     const isSubscribePressExist = targetPressData.length !== 0;
 
     if (viewBtnState === GRID) {
@@ -74,9 +75,11 @@ export class MainView extends Component {
         subscribePress: subscribePress.bind(this),
       });
     } else if (viewBtnState === LIST && isSubscribePressExist) {
+      const { START_PAGE } = LIST_VIEW;
       const { pressCategories } = this.props;
 
       new ListView(viewContainer, {
+        START_PAGE,
         filterBtnState,
         viewBtnState,
         pressData: targetPressData,
@@ -85,7 +88,7 @@ export class MainView extends Component {
         subscribePress: subscribePress.bind(this),
       });
     } else {
-      new NoticeView(viewBtnContainer);
+      new NoticeView(viewContainer);
     }
   }
 

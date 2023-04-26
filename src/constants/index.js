@@ -15,16 +15,17 @@ const GRID_VIEW = {
   ITEM_LIMIT_PER_PAGE: 24,
 };
 
-const PRESS_STATUS = {
-  SUBSCRIBED: "구독되어 있습니다.",
-  UNSUBSCRIBED: "구독되어 있지 않습니다.",
-};
-
-const PROGRESS_BAR = {
+const LIST_VIEW = {
+  START_PAGE: 1,
   PAGE_FLIP_INTERVAL: 20000,
   CURRENT_BACKGROUND_COLOR: "#4362D0",
   BACKGROUND_COLOR_TO_FILL: "#7890E7",
   DIRECTION: "right",
+};
+
+const PRESS_STATUS = {
+  SUBSCRIBED: "subscribed",
+  UNSUBSCRIBED: "unsubscribed",
 };
 
 export {
@@ -34,6 +35,6 @@ export {
   SUBSCRIBED_PRESSES,
   URLS,
   GRID_VIEW,
+  LIST_VIEW,
   PRESS_STATUS,
-  PROGRESS_BAR,
 };
