@@ -1,5 +1,6 @@
 import { dispatch } from '../../../store/store.js';
 import { displayActionCreator } from '../../../actions/ActionCreator.js';
+import { unsubscribeBtnClickHandler } from '../MainAllLIst/mainAllListEventHandlers.js';
 
 export const mineListHeaderEventHandler = (subscribeNameArr, { target }) => {
   const clickedMediaName = target.textContent.trim();
@@ -9,6 +10,7 @@ export const mineListHeaderEventHandler = (subscribeNameArr, { target }) => {
   dispatch(displayActionCreator.mineListTabBtnClick(targetIndex));
 };
 
-export const mineListUnsubscribeBtnEventHandler = (mediaId, event) => {
-  dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaId));
+export const mineListUnsubscribeBtnEventHandler = (mediaId) => {
+  dispatch(displayActionCreator.progressBarAnimationPause());
+  unsubscribeBtnClickHandler(mediaId);
 };
