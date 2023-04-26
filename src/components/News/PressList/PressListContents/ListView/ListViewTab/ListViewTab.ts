@@ -12,6 +12,7 @@ import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
 import { CATEGORY, NewsType, SectionType, TAB } from '@store/news/newsType';
 import PressList from '@component/News/PressList/PressList';
+import { CATEGORIES } from '@constant/index';
 
 interface ListViewTab {
   icon?: string | null;
@@ -91,25 +92,15 @@ class ListViewTab extends HTMLElement {
     const isActive = (categoryId: string) =>
       category === categoryId ? true : false;
 
-    const categories: CATEGORY[] = [
-      CATEGORY.GENERAL,
-      CATEGORY.BRODCAST,
-      CATEGORY.IT,
-      CATEGORY.ENGLISH,
-      CATEGORY.SPORT,
-      CATEGORY.MAGAZINE,
-      CATEGORY.REGION,
-    ];
-
     const template = `
       <div class="tab-wrap">
       ${Object.keys(categoryCounts)
-        .map((categoryId) => {
+        .map((categoryId, i: number) => {
           return `
           <list-view-tab-item-element id='${pressId}' total-number='${
             categoryCounts[categoryId]
           }' name='${
-            categories[Number(categoryId)]
+            CATEGORIES[Number(categoryId)]
           }' category-id='${categoryId}' is-active=${
             isActive(categoryId) ? '1' : '0'
           } ${
@@ -130,6 +121,38 @@ class ListViewTab extends HTMLElement {
       target: this.shadowRoot,
       style: style(),
     });
+    selectAll({
+      selector: ['list-view-tab-item-element'],
+      parent: this,
+    })?.forEach((element: HTMLElement) =>
+      element.addEventListener('click', (e) =>
+        this.handleTabClick(e, categoryCounts)
+      )
+    );
+  }
+
+  handleTabClick(e: Event, categoryCounts: any) {
+    const target = e.target as HTMLElement;
+    const categoryId = getProperty({
+      target,
+      name: 'category-id',
+      type: 'number',
+    });
+    const categoryCountsValues: number[] = Object.values(categoryCounts);
+
+    let targetPage = 0;
+    if (categoryId !== 0) {
+      targetPage = categoryCountsValues
+        .slice(0, categoryId)
+        .reduce((acc: number, curr: number, i: number) => {
+          return acc + curr;
+        }, 0);
+    }
+
+    this.newStore.dispatch({
+      type: 'SET_CURRENT_PAGE',
+      payload: { currentPage: targetPage },
+    });
   }
 
   renderTabForCustomTab() {
@@ -147,9 +170,9 @@ class ListViewTab extends HTMLElement {
     const template = `
       <div class="tab-wrap" draggable="true">
       ${this.pressList
-        .map((press: any) => {
+        .map((press: any, i: number) => {
           const isActive = checkActive(press.pid, pressId);
-          return `<list-view-tab-item-element is-active=${
+          return `<list-view-tab-item-element index='${i}' is-active=${
             isActive ? '1' : '0'
           } ${isActive ? `progress="50"` : ''} id='${press.pid}' name='${
             press.pname
@@ -166,6 +189,21 @@ class ListViewTab extends HTMLElement {
     addStyle({
       target: this.shadowRoot,
       style: style(),
+    });
+    selectAll({
+      selector: ['list-view-tab-item-element'],
+      parent: this,
+    })?.forEach((element: HTMLElement) =>
+      element.addEventListener('click', this.handleCustomTabClick.bind(this))
+    );
+  }
+
+  handleCustomTabClick(e: Event) {
+    const target = e.target as HTMLElement;
+    const index = getProperty({ target, name: 'index' });
+    this.newStore.dispatch({
+      type: 'SET_CURRENT_PAGE',
+      payload: { currentPage: index },
     });
   }
 }
