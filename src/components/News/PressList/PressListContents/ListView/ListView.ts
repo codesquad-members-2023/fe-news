@@ -5,6 +5,7 @@ import {
   getProperty,
   select,
   setProperty,
+  create,
 } from '@utils/dom';
 import style from './ListViewStyle';
 import { getSection, getCustomSection } from '@services/news/section/section';

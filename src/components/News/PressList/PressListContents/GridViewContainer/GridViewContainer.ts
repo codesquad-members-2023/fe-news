@@ -17,7 +17,6 @@ import { StoreType } from '@utils/redux';
 
 import store from '@store/index';
 import { NewsType, PressType, TAB, VIEW } from '@store/news/newsType';
-import { getPressList, getCustomPressList } from '@services/news/press/press';
 import { UserType } from '@store/user/userType';
 import { filterSusbscribedPress } from '@services/news/news';
 

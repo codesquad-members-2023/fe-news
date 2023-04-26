@@ -110,6 +110,9 @@ class PressListHeader extends HTMLElement {
     this.newsStore.subscribe(rerender);
     const isGeneral = tab.classList.contains('general');
     this.newsStore.dispatch({
+      type: 'RESET_PAGE',
+    });
+    this.newsStore.dispatch({
       type: 'CHANGE_TAB',
       payload: isGeneral ? 'general' : 'custom',
     });

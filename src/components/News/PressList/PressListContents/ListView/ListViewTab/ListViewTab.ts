@@ -1,4 +1,11 @@
-import { add, addStyle, addShadow, getProperty, setProperty } from '@utils/dom';
+import {
+  add,
+  addStyle,
+  addShadow,
+  getProperty,
+  setProperty,
+  selectAll,
+} from '@utils/dom';
 import style from './ListViewTabStyle';
 import store from '@store/index';
 import { StoreType } from '@utils/redux';
@@ -131,25 +138,22 @@ class ListViewTab extends HTMLElement {
       name: 'section-data',
       type: 'object',
     });
-
     if (!section) return;
-
     const { pressId } = section.sectionData;
 
-    const currentPressId = pressId;
-    const isActive = (id: string, currentPressId: string) =>
+    const checkActive = (id: string, currentPressId: string) =>
       currentPressId === id;
-    const currentPage = this.newStore.getState().display.currentPage;
 
     const template = `
       <div class="tab-wrap" draggable="true">
       ${this.pressList
         .map((press: any) => {
+          const isActive = checkActive(press.pid, pressId);
           return `<list-view-tab-item-element is-active=${
-            isActive(press.pid, currentPressId) ? '1' : '0'
-          } ${isActive(press.pid, currentPressId) ? `progress="50"` : ''} id='${
-            press.pid
-          }' name='${press.pname}'>
+            isActive ? '1' : '0'
+          } ${isActive ? `progress="50"` : ''} id='${press.pid}' name='${
+            press.pname
+          }'>
             </list-view-tab-item-element>`;
         })
         .join('')}
@@ -161,7 +165,7 @@ class ListViewTab extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: style(currentPage),
+      style: style(),
     });
   }
 }

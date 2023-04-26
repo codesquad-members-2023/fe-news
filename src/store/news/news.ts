@@ -34,7 +34,7 @@ const initialState: NewsType = {
 
 const changeTab = ({ state, payload }: changeTabPropsType) => {
   state.display.currentTab = payload;
-  state.display.currentPage = 0;
+
   return {
     ...state,
   };
@@ -42,7 +42,7 @@ const changeTab = ({ state, payload }: changeTabPropsType) => {
 
 const changeView = ({ state, payload }: changeViewPropsType) => {
   state.display.currentView = payload;
-  state.display.currentPage = 0;
+
   return {
     ...state,
   };
