@@ -2,7 +2,7 @@ import { Props, State } from '@custom-types/types';
 import { TempAbstractView } from '@custom-types/abstracts.js';
 import { NsNavbarComponent } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarComponent.js';
 import { NsPressContainerComponent } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerComponent.js';
-import { NsCategoryContainerObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/NsCategoryContainerObserverViewComponent.js';
+import { NsCategoryContainerComponent } from '@components/main/main__left/ns__container/ns__category-container/NsCategoryContainerComponent.js';
 
 export class NsContainerView extends TempAbstractView {
   constructor($target: HTMLElement) {
@@ -47,15 +47,13 @@ export class NsContainerView extends TempAbstractView {
       );
     }
     if (view === 'LIST') {
-      const nsCategoryContainer = new NsCategoryContainerObserverViewComponent(
+      const nsCategoryContainer = new NsCategoryContainerComponent(
+        this.$target.querySelector(
+          '#ns-category-container-wrapper',
+        ) as HTMLElement,
         props,
       );
       // [리팩토링 예정]
-      (
-        this.$target.querySelector(
-          '#ns-category-container-wrapper',
-        ) as HTMLElement
-      ).appendChild(nsCategoryContainer.element);
     }
     return;
   }
