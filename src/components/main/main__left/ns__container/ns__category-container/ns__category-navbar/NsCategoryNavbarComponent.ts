@@ -1,4 +1,4 @@
-import { Article, Props, State } from '@custom-types/types';
+import { Props, State } from '@custom-types/types';
 import { TempComponent } from '@custom-types/interfaces';
 import { NsCategoryNavbarView } from '@components/main/main__left/ns__container/ns__category-container/ns__category-navbar/NsCategoryNavbarView.js';
 import { NsCategoryNavbarModel } from '@components/main/main__left/ns__container/ns__category-container/ns__category-navbar/NsCategoryNavbarModel.js';

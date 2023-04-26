@@ -14,7 +14,7 @@ export class NsContainerView extends TempAbstractView {
               <div id="ns-navbar-wrapper" class="w-full h-12"></div>
               ${
                 state.view === 'GRID'
-                  ? '<div id="ns-press-container-wrapper" class="p-3 h-full "></div>'
+                  ? '<div id="ns-press-container-wrapper" class="p-3 h-full"></div>'
                   : '<div id="ns-category-container-wrapper" class="p-3 h-full "></div>'
               }
             </section>`;

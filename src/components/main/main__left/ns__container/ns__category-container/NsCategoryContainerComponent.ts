@@ -15,8 +15,8 @@ export class NsCategoryContainerComponent implements TempComponent {
     this.setState({
       ...props,
       page: 0,
-      handleToPrev: this.handleToPrev.bind(this),
-      handleToNext: this.handleToNext.bind(this),
+      handleToPrev: this.handleClickToPrev.bind(this),
+      handleToNext: this.handleClickToNext.bind(this),
     });
   }
 
@@ -29,15 +29,15 @@ export class NsCategoryContainerComponent implements TempComponent {
     this._view.render(this._model.state);
   }
 
-  handleToPrev(state: State) {
-    let page = state.page as number;
+  handleClickToPrev() {
+    let page = this.state.page as number;
     if (page <= 0) return;
     this.setState({ page: --page });
   }
 
-  async handleToNext(state: State) {
-    const articles = (await state.articlesPromise) as Array<Article>;
-    let page = state.page as number;
+  async handleClickToNext() {
+    const articles = (await this.state.articlesPromise) as Array<Article>;
+    let page = this.state.page as number;
     if (page >= articles?.length - 1) return;
     this.setState({ page: ++page });
   }

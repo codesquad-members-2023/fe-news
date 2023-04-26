@@ -1,7 +1,7 @@
 import { Article, Props, State } from '@custom-types/types';
 import { TempAbstractView } from '@src/types/abstracts.js';
 import { NsCategoryNavbarComponent } from '@components/main/main__left/ns__container/ns__category-container/ns__category-navbar/NsCategoryNavbarComponent.js';
-import { NsArticleContainerObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/ns__article-container/NsArticleContainerObserverViewComponent.js';
+import { NsArticleContainerComponent } from '@components/main/main__left/ns__container/ns__category-container/ns__article-container/NsArticleContainerComponent.js';
 import { $ } from '@utils/dom.js';
 import { CATEGORY_CONTAINER_PAGE_START } from '@src/constants/constants.js';
 
@@ -20,12 +20,12 @@ export class NsCategoryContainerView extends TempAbstractView {
 
   template(state: State) {
     return `<section id="category-container" class="h-full flex flex-col justify-start relative">
-              <div id="category-navbar-wrapper"></div>
-              <div id="article-container-wrapper"></div>
-              <button id="btn-prev" class="absolute left-0 top-1/2 border rounded-full bg-white drop-shadow-very-xl">
+              <div id="category-navbar-wrapper" class="w-full h-10"></div>
+              <div id="article-container-wrapper" class="w-full h-full"></div>
+              <button id="btn-prev" class="absolute -left-2.5 top-1/2 border rounded-full bg-white drop-shadow-very-xl">
                 <img src="/public/images/symbols/chevron-left.svg" alt="chevron-left" class="h-6 w-6"/>
               </button>
-              <button id="btn-next" class="absolute right-0 top-1/2 border rounded-full bg-white drop-shadow-very-xl">
+              <button id="btn-next" class="absolute -right-2.5 top-1/2 border rounded-full bg-white drop-shadow-very-xl">
                 <img src="/public/images/symbols/chevron-right.svg" alt="chevron-right" class="h-6 w-6"/>
               </button>
             </section>`;
@@ -37,7 +37,7 @@ export class NsCategoryContainerView extends TempAbstractView {
     this.$target.innerHTML = this.template(state);
     this.addChildren(state);
     this.setEvents(state);
-    this.toggleGridButton(state);
+    this.toggleListButton(state);
   }
 
   setEvents(state: State) {
@@ -58,15 +58,13 @@ export class NsCategoryContainerView extends TempAbstractView {
       $('#category-navbar-wrapper', this.$target) as HTMLElement,
       props,
     );
-    const nsArticleContainer = new NsArticleContainerObserverViewComponent(
+    const nsArticleContainer = new NsArticleContainerComponent(
+      $('#article-container-wrapper', this.$target) as HTMLElement,
       props,
-    );
-    ($('#article-container-wrapper', this.$target) as HTMLElement).appendChild(
-      nsArticleContainer.element,
     );
   }
 
-  async toggleGridButton(state: State) {
+  async toggleListButton(state: State) {
     // 추후 코드 리팩토링
     const { page, articlesPromise } = state;
     const articles = (await articlesPromise) as Article[];
@@ -89,59 +87,3 @@ export class NsCategoryContainerView extends TempAbstractView {
     }
   }
 }
-
-// const { articlesPromise } = state;
-// const articles = (await articlesPromise) as Article[];
-
-// constructor
-// const page = 0;
-
-// addEvent에 있던 애들
-// this.setState({ ...props, page });
-// this.addButtonEvent(this.state);
-
-// [기억] ns-article-container에 가게 하자.
-// async addArticleHeader(state: State) {
-//   const { page, articlesPromise } = state;
-//   const articles = (await articlesPromise) as Article[];
-//   const targetArticle = articles[page as number];
-//   const targetPressImg = targetArticle.mediaInfo.imgSrc;
-//   const targetModifiedTime = targetArticle.mediaInfo.modifiedTime;
-//   ($('#article-header', this.element) as HTMLElement).innerHTML = `
-//              <img src="${targetPressImg}" class="h-5" alt="target-press"/>
-//              <p class="text-xs text-gray-500">${targetModifiedTime}</p>
-//              <button id="subscribe-btn" class="px-2 py-px border border-gray-200 bg-gray-100 text-xs text-gray-400 rounded-3xl">+ 구독하기</button>
-//            `;
-// }
-
-// [기억] ns-article-container에 가게 하자.
-// async addMainArticle(state: State) {
-//   // [리팩토링] 아래 반복되는 3줄
-//   const { page, articlesPromise } = state;
-//   const articles = (await articlesPromise) as Article[];
-//   const targetArticle = articles[page as number];
-//   const targetMainImg = targetArticle.mainContent.mainImgSrc;
-//   const targetMainTitle = targetArticle.mainContent.mainTitle;
-//   ($('#main-article', this.element) as HTMLElement).innerHTML = `
-//          <img src="${targetMainImg}" class="w-4/5" alt="target-main"/>
-//          <p class="w-3/4 h-3 text-base ">${targetMainTitle}</p>
-//       `;
-// }
-
-// [기억] ns-article-container에 가게 하자.
-// async addSubArticles(state: State) {
-//   // [리팩토링] 아래 반복되는 3줄
-//   const { page, articlesPromise } = state;
-//   const articles = (await articlesPromise) as Article[];
-//   const targetArticle = articles[page as number];
-//   const targetSubArticles = targetArticle.subContent.subNewsList;
-//   ($('#sub-articles', this.element) as HTMLElement).innerHTML =
-//     targetSubArticles.reduce((acc, cur) => {
-//       return (
-//         acc +
-//         `
-//             <li class="w-full h-full">${cur}</li>
-//           `
-//       );
-//     }, '');
-// }
