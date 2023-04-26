@@ -20,14 +20,14 @@ export class NsPressContainerComponent implements TempComponent {
     this._view = new NsPressContainerView(this.$target);
 
     const randomArticlesPromise = this.getRandomArticles(
-      props!.articlesPromise as Promise<Article[]>,
+      (props as Props).articlesPromise as Promise<Article[]>,
     );
 
     this.setInitState({
       randomArticlesPromise,
       page: PRESS_CONTAINER_PAGE_START,
-      handleToPrev: this.handleToPrev.bind(this),
-      handleToNext: this.handleToNext.bind(this),
+      handleToPrev: this.handleClickToPrev.bind(this),
+      handleToNext: this.handleClickToNext.bind(this),
     });
   }
 
@@ -40,7 +40,7 @@ export class NsPressContainerComponent implements TempComponent {
     this._view.render(this._model.state);
   }
 
-  handleToPrev() {
+  handleClickToPrev() {
     const page =
       +this.state.page - PRESS_CONTAINER_PAGE_UNIT < PRESS_CONTAINER_PAGE_START
         ? PRESS_CONTAINER_PAGE_START
@@ -48,7 +48,7 @@ export class NsPressContainerComponent implements TempComponent {
     this.setState({ page });
   }
 
-  handleToNext() {
+  handleClickToNext() {
     const page =
       +this.state.page + PRESS_CONTAINER_PAGE_UNIT > PRESS_CONTAINER_PAGE_END
         ? PRESS_CONTAINER_PAGE_END

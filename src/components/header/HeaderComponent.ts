@@ -7,8 +7,8 @@ export class HeaderComponent implements TempComponent {
   private _model: HeaderModel;
   private _view: HeaderView;
   $target: HTMLElement;
-  constructor(targetElement?: HTMLElement, props?: Props) {
-    this.$target = targetElement as HTMLElement;
+  constructor($target?: HTMLElement, props?: Props) {
+    this.$target = $target as HTMLElement;
     this._model = new HeaderModel();
     this._view = new HeaderView(this.$target);
   }
