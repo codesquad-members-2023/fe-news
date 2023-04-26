@@ -69,6 +69,7 @@ const render = ($main, index, content) => {
     content.viewOption.allOrMine === 'mine';
 
   if (!breakCondition) return;
+  dispatch(displayActionCreator.progressBarReset());
   dispatch(displayActionCreator.progressBarAnimationEnd());
 
   const subscribeData = getStoreState('subscribeData').subscribe;
