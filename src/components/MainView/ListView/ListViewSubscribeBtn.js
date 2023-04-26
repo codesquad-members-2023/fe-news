@@ -1,14 +1,20 @@
+import { PRESS_STATUS } from "../../../constants/index.js";
+import {
+  SUBSCRIBE_BTN_TEXT,
+  UNSUBSCRIBE_BTN_TEXT,
+} from "../../../constants/ui.js";
 import { Component } from "../../../core/Component.js";
 
 export class ListViewSubscribeBtn extends Component {
   setUp() {
-    const { subscribeStatus } = this.props;
+    const { currentPressSubscribeStatus } = this.props;
     const btnText =
-      subscribeStatus === "구독되어 있지 않습니다."
-        ? "+ 구독하기"
-        : "- 해지하기";
+      currentPressSubscribeStatus === PRESS_STATUS.UNSUBSCRIBED
+        ? SUBSCRIBE_BTN_TEXT
+        : UNSUBSCRIBE_BTN_TEXT;
+
     this._state = {
-      btnText: btnText,
+      btnText,
     };
   }
 
@@ -31,7 +37,9 @@ export class ListViewSubscribeBtn extends Component {
     });
   }
 
-  getBtnTextToChange(btnState) {
-    return btnState === "+ 구독하기" ? "- 해지하기" : "+ 구독하기";
+  getBtnTextToChange(btnText) {
+    return btnText === SUBSCRIBE_BTN_TEXT
+      ? UNSUBSCRIBE_BTN_TEXT
+      : SUBSCRIBE_BTN_TEXT;
   }
 }

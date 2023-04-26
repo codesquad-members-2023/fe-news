@@ -1,4 +1,5 @@
 import { Component } from "../../../core/Component.js";
+import { ALL_PRESSES } from "../../../constants/index.js";
 
 export class ListViewHeader extends Component {
   templete() {
@@ -8,19 +9,19 @@ export class ListViewHeader extends Component {
       currentCategoryTotalPage,
       categoryIds,
       pressCategories,
-      btnState,
+      filterBtnState,
     } = this.props;
 
     const headCategoryNodes =
-      btnState === "all-press"
-        ? this.getAllPressCategoryHeader(
+      filterBtnState === ALL_PRESSES
+        ? this.getAllPressCategoryNodes(
             categoryIds,
             currentCategory,
             currentPageInCategory,
             currentCategoryTotalPage,
             pressCategories
           )
-        : this.getSubscribePressCategoryHeader(categoryIds, currentCategory);
+        : this.getSubscribePressCategoryNodes(categoryIds, currentCategory);
 
     return `${headCategoryNodes}`;
   }
@@ -30,14 +31,14 @@ export class ListViewHeader extends Component {
       "click",
       ({ target: { tagName, dataset } }) => {
         if (tagName !== "A") return;
-        const { moveToTargetCategoryBy, btnState } = this.props;
+        const { moveToTargetCategoryBy, filterBtnState } = this.props;
         const categoryId = dataset.categoryId;
-        moveToTargetCategoryBy(categoryId, btnState);
+        moveToTargetCategoryBy(categoryId, filterBtnState);
       }
     );
   }
 
-  getAllPressCategoryHeader(
+  getAllPressCategoryNodes(
     categoryIds,
     currentCategory,
     currentPageInCategory,
@@ -63,7 +64,7 @@ export class ListViewHeader extends Component {
     }, "");
   }
 
-  getSubscribePressCategoryHeader(categoryIds, currentCategory) {
+  getSubscribePressCategoryNodes(categoryIds, currentCategory) {
     return categoryIds.reduce((acc, name) => {
       if (name === currentCategory) {
         return (

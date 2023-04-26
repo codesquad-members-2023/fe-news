@@ -1,27 +1,33 @@
+import {
+  ALL_PRESSES,
+  GRID,
+  LIST,
+  SUBSCRIBED_PRESSES,
+} from "../../../constants/index.js";
 import { Component } from "../../../core/Component.js";
 
 export class FilterBtns extends Component {
   templete() {
-    const { btnState } = this.props;
+    const { filterBtnState } = this.props;
     return `
       <div class="main__btn all-press ${
-        btnState === "all-press" ? "clicked" : "unclicked"
+        filterBtnState === ALL_PRESSES ? "clicked" : "unclicked"
       }">전체 언론사</div>
       <div class="main__btn subscribed-press ${
-        btnState === "subscribed-press" ? "clicked" : "unclicked"
+        filterBtnState === SUBSCRIBED_PRESSES ? "clicked" : "unclicked"
       }">내가 구독한 언론사</div>
       `;
   }
 
   setEvent() {
     this.target.addEventListener("click", ({ target: { className } }) => {
-      const [elementName, btnStatus, type] = className.split(" ");
-      const { changeBtnState, changeViewState } = this.props;
+      const [_elementName, btnState, _type] = className.split(" ");
+      const { changeFilterBtnState, changeViewBtnState } = this.props;
 
-      const viewStatus = btnStatus === "all-press" ? "grid" : "list";
+      const filterBtnState = btnState === ALL_PRESSES ? GRID : LIST;
 
-      changeViewState(viewStatus);
-      changeBtnState(btnStatus);
+      changeViewBtnState(filterBtnState);
+      changeFilterBtnState(btnState);
     });
   }
 }

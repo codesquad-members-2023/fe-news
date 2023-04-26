@@ -4,12 +4,19 @@ import { GridView } from "./GridView/GridView.js";
 import { ListView } from "./ListView/ListView.js";
 import { ViewBtns } from "./Buttons/ViewBtns.js";
 import { NoticeView } from "./NoticeView/NoticeView.js";
+import {
+  ALL_PRESSES,
+  GRID,
+  GRID_VIEW,
+  LIST,
+  PRESS_STATUS,
+} from "../../constants/index.js";
 
 export class MainView extends Component {
   setUp() {
     this._state = {
-      btnState: "all-press",
-      viewState: "grid",
+      filterBtnState: ALL_PRESSES,
+      viewBtnState: GRID,
     };
   }
 
@@ -24,10 +31,9 @@ export class MainView extends Component {
   }
 
   mounted() {
-    const { pressData, pageLimit, itemLimitPerPage, subscribedPressSrcs } =
-      this.props;
-    const { subscribePress, changeBtnState, changeViewState } = this;
-    const { btnState, viewState } = this._state;
+    const { allPressData, subscribedPressSrcs } = this.props;
+    const { subscribePress, changeFilterBtnState, changeViewBtnState } = this;
+    const { filterBtnState, viewBtnState } = this._state;
 
     const filterBtnsContainer = this.target.querySelector(
       ".main__filter-btn__container"
@@ -37,82 +43,97 @@ export class MainView extends Component {
     );
 
     new FilterBtns(filterBtnsContainer, {
-      btnState,
-      changeBtnState: changeBtnState.bind(this),
-      changeViewState: changeViewState.bind(this),
+      changeViewBtnState: changeViewBtnState.bind(this),
+      changeFilterBtnState: changeFilterBtnState.bind(this),
+      filterBtnState,
     });
+
     new ViewBtns(viewBtnContainer, {
-      viewState,
-      changeViewState: changeViewState.bind(this),
+      changeViewBtnState: changeViewBtnState.bind(this),
+      viewBtnState,
     });
 
     const targetPressData =
-      btnState === "all-press" ? pressData : subscribedPressSrcs;
-    const allPressSubscribeStatus = this.getSubscribeStatus(
+      filterBtnState === ALL_PRESSES ? allPressData : subscribedPressSrcs;
+    const targetPressSubscribeStatus = this.getSubscribeStatus(
       targetPressData,
       subscribedPressSrcs
     );
     const viewContainer = this.target.querySelector(".view__container");
     const isSubscribePressExist = targetPressData.length !== 0;
 
-    if (viewState === "grid") {
+    if (viewBtnState === GRID) {
+      const { START_PAGE, PAGE_LIMIT, ITEM_LIMIT_PER_PAGE } = GRID_VIEW;
+
       new GridView(viewContainer, {
-        pageLimit,
-        itemLimitPerPage,
-        allPressData: targetPressData,
-        allPressSubscribeStatus,
+        START_PAGE,
+        PAGE_LIMIT,
+        ITEM_LIMIT_PER_PAGE,
+        targetPressData,
+        targetPressSubscribeStatus,
         subscribePress: subscribePress.bind(this),
       });
-    } else if (viewState === "list" && isSubscribePressExist) {
+    } else if (viewBtnState === LIST && isSubscribePressExist) {
       const { pressCategories } = this.props;
+
       new ListView(viewContainer, {
-        btnState,
-        viewState,
+        filterBtnState,
+        viewBtnState,
         pressData: targetPressData,
-        allPressSubscribeStatus,
-        subscribePress: subscribePress.bind(this),
         pressCategories,
+        targetPressSubscribeStatus,
+        subscribePress: subscribePress.bind(this),
       });
     } else {
-      new NoticeView(viewContainer);
+      new NoticeView(viewBtnContainer);
     }
   }
 
   subscribePress(pressSrc) {
-    const { subscribedPressSrcs, pressData } = this.props;
+    const { subscribedPressSrcs, allPressData } = this.props;
     const isAlreadySubScribed = subscribedPressSrcs.some(
       ({ logo_src }) => logo_src === pressSrc
     );
     if (isAlreadySubScribed) {
-      const targetIndex = subscribedPressSrcs.indexOf({ logo_src: pressSrc });
-      subscribedPressSrcs.splice(targetIndex, 1);
+      this.unsubcribe(pressSrc, subscribedPressSrcs);
     } else {
-      const targetPressData = pressData.find(
-        (press) => press.logo_src === pressSrc
-      );
-      subscribedPressSrcs.push(targetPressData);
+      this.subscribe(pressSrc, subscribedPressSrcs, allPressData);
     }
   }
 
-  changeBtnState(state) {
-    this.setState({ btnState: state });
+  unsubcribe(pressSrc, subscribedPressSrcs) {
+    const targetIndex = subscribedPressSrcs.indexOf({ logo_src: pressSrc });
+    subscribedPressSrcs.splice(targetIndex, 1);
   }
 
-  changeViewState(state) {
-    this.setState({ viewState: state });
+  subscribe(pressSrc, subscribedPressSrcs, allPressData) {
+    const targetPressData = allPressData.find(
+      (press) => press.logo_src === pressSrc
+    );
+    subscribedPressSrcs.push(targetPressData);
+  }
+
+  changeFilterBtnState(state) {
+    this.setState({ filterBtnState: state });
+  }
+
+  changeViewBtnState(state) {
+    this.setState({ viewBtnState: state });
   }
 
   getSubscribeStatus(pressData, subscribedPressSrcs) {
-    const allPressSubscribeStatus = [];
+    const targetPressSubscribeStatus = [];
+    const { SUBSCRIBED, UNSUBSCRIBED } = PRESS_STATUS;
+
     pressData.forEach(({ logo_src }) => {
       const pressSrc = logo_src;
       const isPressSubscribed = subscribedPressSrcs.some(({ logo_src }) => {
         const subscribedSrc = logo_src;
         return subscribedSrc === pressSrc;
       });
-      if (isPressSubscribed) allPressSubscribeStatus.push("구독되어 있습니다.");
-      else allPressSubscribeStatus.push("구독되어 있지 않습니다.");
+      if (isPressSubscribed) targetPressSubscribeStatus.push(SUBSCRIBED);
+      else targetPressSubscribeStatus.push(UNSUBSCRIBED);
     });
-    return allPressSubscribeStatus;
+    return targetPressSubscribeStatus;
   }
 }
