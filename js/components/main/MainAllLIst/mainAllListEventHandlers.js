@@ -3,6 +3,7 @@ import { displayActionCreator } from '../../../actions/ActionCreator.js';
 import { MEDIA_CATEGORIES } from './mainAllList.js';
 import { createElement } from '../../../utils/dom.js';
 import { createAlertElement } from '../MainAllGrid/mainAllGridEventHandlers.js';
+import { animationStart } from '../progressBarAnimation.js';
 
 export const tabClickEventHandler = ({ target }) => {
   const $tab = target.closest('.main-list__nav-item');
@@ -14,7 +15,7 @@ export const tabClickEventHandler = ({ target }) => {
 
 export const subscribeBtnClickEventHandler = (mediaId, event) => {
   const $img = event.currentTarget.querySelector('img');
-
+  dispatch(displayActionCreator.progressBarAnimationPause());
   if ($img.alt === 'subscribe') {
     subscribeSnackBarCreate(mediaId);
   } else {
@@ -50,6 +51,7 @@ const snackBarEvent = (startTime, mediaName, $mainList, timestamp) => {
     $listBtn.classList.add('list-icon__enable');
     $gridBtn.classList.remove('grid-icon__enable');
     dispatch(displayActionCreator.gridSubscribeBtnClick(mediaName));
+    dispatch(displayActionCreator.progressBarAnimationResume());
   } else {
     requestAnimationFrame(
       snackBarEvent.bind(null, startTime, mediaName, $mainList),
@@ -57,7 +59,7 @@ const snackBarEvent = (startTime, mediaName, $mainList, timestamp) => {
   }
 };
 
-const unsubscribeBtnClickHandler = (mediaId) => {
+export const unsubscribeBtnClickHandler = (mediaId) => {
   // TODO : modal창도 띄워야함.....
   // DOM조작 : 해지하기 버튼 -> 구독하기 버튼.
   const $mainList = document.querySelector('.main-list');
@@ -74,7 +76,8 @@ const unsubscribeBtnClickHandler = (mediaId) => {
 
   $mainList.append(createAlertElement(mediaName));
   // 구독 List에서 Pop -> how?
-  // TODO : 이 로직은 팝업 창 나오고 나서 실행시켜야함.
+  // TODO : 애니메이션 중지!
+
   $mainList.addEventListener(
     'click',
     modalClickEventHandler.bind(null, mediaId),
@@ -83,15 +86,23 @@ const unsubscribeBtnClickHandler = (mediaId) => {
 
 const modalClickEventHandler = (mediaId, { target }) => {
   const $mainList = document.querySelector('.main-list');
-
+  if (!$mainList) return;
   if (target.closest('.alert-unsubscribe')) {
-    $mainList.removeChild($mainList.querySelector('#alert'));
-    document.querySelector('#root').removeAttribute('class');
-    dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaId));
-  } else if (target.closest('.alert-cancel')) {
     if ($mainList.querySelector('#alert') === null) return;
     $mainList.removeChild($mainList.querySelector('#alert'));
     document.querySelector('#root').removeAttribute('class');
+    dispatch(displayActionCreator.progressBarAnimationResume());
+    animationStart(document.querySelector('#current-category'));
+    const $button = document.querySelector('.list__subscribe-button img');
+    if (!$button) return;
+    $button.alt = 'subscribe';
+    $button.src = './asset/subscribeButton.svg';
+    dispatch(displayActionCreator.gridUnsubscribeBtnClick(mediaId));
+  } else if (target.closest('.alert-cancel')) {
+    if ($mainList.querySelector('#alert') === null) return;
+    dispatch(displayActionCreator.progressBarAnimationResume());
+    animationStart(document.querySelector('#current-category'));
     $mainList.removeChild($mainList.querySelector('#alert'));
+    document.querySelector('#root').removeAttribute('class');
   }
 };
