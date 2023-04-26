@@ -6,17 +6,10 @@ import grayGridBtn from "../../../images/grid_btn_gray.svg";
 import { GRID, LIST } from "../../../constants/index.js";
 
 export class ViewBtns extends Component {
-<<<<<<< HEAD
-  templete() {
+  template() {
     const { viewBtnState } = this.props;
     const listBtn = viewBtnState === LIST ? blueListBtn : grayListBtn;
     const gridBtn = viewBtnState === GRID ? blueGridBtn : grayGridBtn;
-=======
-  template() {
-    const { viewState } = this.props;
-    const listColor = viewState === "list" ? "blue" : "gray";
-    const gridColor = listColor === "blue" ? "gray" : "blue";
->>>>>>> w03/mid
 
     return `
       <img class="main__btn list" src="${listBtn}" alt="" />
