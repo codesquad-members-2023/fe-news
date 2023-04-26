@@ -18,7 +18,7 @@ export class ListViewSubscribeBtn extends Component {
     };
   }
 
-  templete() {
+  template() {
     const { btnText } = this._state;
     return `
       <div class="subscribe-text">${btnText}</div>

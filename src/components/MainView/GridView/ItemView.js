@@ -22,8 +22,13 @@ export class ItemView extends Component {
     };
   }
 
+<<<<<<< HEAD:src/components/MainView/GridView/ItemView.js
   templete() {
     const { currentIcon, btnText, subscribeBtn } = this._state;
+=======
+  template() {
+    const { currentIcon, btnText, btnIcon } = this._state;
+>>>>>>> w03/mid:src/components/MainView/GridView/GridItem.js
     const itemNode =
       currentIcon === subscribeBtn
         ? `<div class="subscribe-btn">

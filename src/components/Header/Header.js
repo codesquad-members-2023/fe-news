@@ -14,7 +14,7 @@ export class Header extends Component {
     this._state = { date: formattedDate };
   }
 
-  templete() {
+  template() {
     const { date } = this._state;
     return `
       <a class="header-logo" href="">

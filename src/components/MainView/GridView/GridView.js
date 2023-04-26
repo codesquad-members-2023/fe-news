@@ -10,9 +10,15 @@ export class GridView extends Component {
     this._state = sortedItems;
   }
 
+<<<<<<< HEAD
   templete() {
     const { ITEM_LIMIT_PER_PAGE } = this.props;
     const { targetPressData, btnDirState } = this._state;
+=======
+  template() {
+    const { itemLimitPerPage } = this.props;
+    const { allPressData, btnDir } = this._state;
+>>>>>>> w03/mid
 
     const btnNodes =
       targetPressData.length > ITEM_LIMIT_PER_PAGE

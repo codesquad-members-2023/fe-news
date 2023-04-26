@@ -7,7 +7,7 @@ import { suffleData } from "./utils/utils.js";
 import { URLS } from "./constants/index.js";
 
 export class App extends Component {
-  templete() {
+  template() {
     return `
       <div class="newsstand-header"></div>
       <div class="newsstand-trendnews"></div>

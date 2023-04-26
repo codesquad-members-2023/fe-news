@@ -7,11 +7,16 @@ import {
 import { Component } from "../../../core/Component.js";
 
 export class FilterBtns extends Component {
+<<<<<<< HEAD
   templete() {
     const { filterBtnState } = this.props;
+=======
+  template() {
+    const { btnState } = this.props;
+>>>>>>> w03/mid
     return `
       <div class="main__btn all-press ${
-        filterBtnState === ALL_PRESSES ? "clicked" : "unclicked"
+        btnState === "all-press" ? "clicked" : "unclicked"
       }">전체 언론사</div>
       <div class="main__btn subscribed-press ${
         filterBtnState === SUBSCRIBED_PRESSES ? "clicked" : "unclicked"

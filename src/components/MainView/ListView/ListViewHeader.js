@@ -2,7 +2,7 @@ import { Component } from "../../../core/Component.js";
 import { ALL_PRESSES } from "../../../constants/index.js";
 
 export class ListViewHeader extends Component {
-  templete() {
+  template() {
     const {
       currentPageInCategory,
       currentCategory,

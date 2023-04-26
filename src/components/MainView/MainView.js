@@ -21,7 +21,7 @@ export class MainView extends Component {
     };
   }
 
-  templete() {
+  template() {
     return `
       <div class="main__header">
         <div class="main__filter-btn__container"></div>

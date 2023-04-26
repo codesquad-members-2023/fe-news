@@ -2,7 +2,7 @@ import { Component } from "../../../core/Component.js";
 import { ListViewSubscribeBtn } from "./ListViewSubscribeBtn.js";
 
 export class ListViewMain extends Component {
-  templete() {
+  template() {
     const { currentCategoryData } = this.props;
     const {
       name,
