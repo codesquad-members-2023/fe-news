@@ -266,7 +266,10 @@ body {
             font-size: 1.6rem;
             font-weight: 500;
             font-family: 'Pretendard', sans-serif;
-            line-height: 22px; }
+            line-height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap; }
         .newssection_view .newssection_view_list .list_view .list_view_bottom .bottom_sub .sub_instruction {
           width: 530px;
           height: 17px;

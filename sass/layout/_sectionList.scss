@@ -138,6 +138,10 @@
 
               @include font($Body_md, $Medium);
               line-height: 22px;
+
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
           }
           .sub_instruction {
