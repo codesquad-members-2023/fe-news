@@ -25,7 +25,7 @@ const customFetch = async ({ path, method, body }: customFetchProp) => {
     }
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

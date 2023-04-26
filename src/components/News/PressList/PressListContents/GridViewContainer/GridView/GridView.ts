@@ -22,12 +22,11 @@ class GridView extends HTMLElement {
     this.wrap.classList.add('grid-view');
     this.shadowRoot?.append(this.wrap);
     this.render();
-    this.setShowAtrribute();
-
     addStyle({
       target: this.shadowRoot,
       style: style(),
     });
+    this.setShowAtrribute();
   }
 
   static get observedAttributes() {

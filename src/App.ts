@@ -5,7 +5,7 @@ import { StoreType } from '@utils/redux';
 import store from './store';
 import { TEMP_ID } from './constant';
 
-class News extends HTMLElement {
+class App extends HTMLElement {
   userStore: StoreType<UserType>;
   constructor() {
     super();
@@ -31,4 +31,4 @@ class News extends HTMLElement {
   }
 }
 
-export default News;
+customElements.define('app-element', App);

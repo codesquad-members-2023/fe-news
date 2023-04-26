@@ -3,8 +3,8 @@ import style from './ListViewTabStyle';
 import store from '@store/index';
 import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
-import { NewsType, SectionType, TAB } from '@store/news/newsType';
-import News from 'src/App';
+import { CATEGORY, NewsType, SectionType, TAB } from '@store/news/newsType';
+import PressList from '@component/News/PressList/PressList';
 
 interface ListViewTab {
   icon?: string | null;
@@ -13,10 +13,17 @@ interface ListViewTab {
 class ListViewTab extends HTMLElement {
   userStore: StoreType<UserType>;
   newStore: StoreType<NewsType>;
+  tab: TAB;
+  pressList: PressList[];
   constructor() {
     super();
     this.userStore = store.user;
     this.newStore = store.news;
+    this.tab = getProperty({
+      target: this,
+      name: 'tab',
+    });
+    this.pressList = [];
   }
 
   connectedCallback() {
@@ -25,11 +32,19 @@ class ListViewTab extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['section'];
+    return ['section-data', 'press-list'];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'section') {
+    if ((this.tab === TAB.CUSTOM && name) === 'press-list') {
+      this.pressList = getProperty({
+        target: this,
+        name: 'press-list',
+        type: 'object',
+      });
+      this.renderTabForCustomTab();
+    }
+    if (name === 'section-data') {
       this.render();
     }
   }
@@ -41,25 +56,13 @@ class ListViewTab extends HTMLElement {
   }
 
   render() {
-    const tab = getProperty({
-      target: this,
-      name: 'tab',
-    });
-
-    const sectionData = getProperty({
-      target: this,
-      name: 'section-data',
-      type: 'object',
-    });
-
-    if (tab === TAB.GENERAL) {
+    if (this.tab === TAB.GENERAL) {
       this.renderTabForGeneralTab();
-    } else {
-      this.renderTabForCustomTab(sectionData);
+    }
+    if (this.tab === TAB.CUSTOM) {
+      this.renderTabForCustomTab();
       this.userStore.subscribe(() => {
-        const subscribingPressIds =
-          this.userStore.getState().subscribingPressIds;
-        this.renderTabForCustomTab(sectionData);
+        this.renderTabForCustomTab();
       });
     }
     this.handleDrag();
@@ -68,41 +71,46 @@ class ListViewTab extends HTMLElement {
   renderTabForGeneralTab() {
     const section = getProperty({
       target: this,
-      name: 'section',
+      name: 'section-data',
       type: 'object',
     });
 
-    const { category, pressId } = section.sectionData;
-    const { categoryCounts, categoryIndex } = section.tabData;
+    if (!section) return;
+
+    const { sectionData, tabData } = section;
+    const { category, pressId } = sectionData;
+    const { categoryCounts, currentCategoryIndex } = tabData;
 
     const isActive = (categoryId: string) =>
       category === categoryId ? true : false;
 
-    const categories = [
-      '종합/경제',
-      '방송/통신',
-      'IT',
-      '영자지',
-      '스포츠/연예',
-      '매거진/전문지',
-      '지역',
+    const categories: CATEGORY[] = [
+      CATEGORY.GENERAL,
+      CATEGORY.BRODCAST,
+      CATEGORY.IT,
+      CATEGORY.ENGLISH,
+      CATEGORY.SPORT,
+      CATEGORY.MAGAZINE,
+      CATEGORY.REGION,
     ];
 
     const template = `
       <div class="tab-wrap">
       ${Object.keys(categoryCounts)
         .map((categoryId) => {
-          return `<list-view-tab-item-element id='${pressId}' total-number='${
+          return `
+          <list-view-tab-item-element id='${pressId}' total-number='${
             categoryCounts[categoryId]
           }' name='${
             categories[Number(categoryId)]
           }' category-id='${categoryId}' is-active=${
-            isActive(categoryId) ? 'true' : 'false'
+            isActive(categoryId) ? '1' : '0'
           } ${
             isActive(categoryId)
-              ? `progress="50" current-number='${categoryIndex}'`
+              ? `progress="50" current-number='${currentCategoryIndex}'`
               : ''
-          }></list-view-tab-item-element>`;
+          }></list-view-tab-item-element>
+          `;
         })
         .join('')}
       </div>
@@ -117,30 +125,33 @@ class ListViewTab extends HTMLElement {
     });
   }
 
-  renderTabForCustomTab(tabData: SectionType['tabData']) {
+  renderTabForCustomTab() {
     const section = getProperty({
       target: this,
-      name: 'section',
+      name: 'section-data',
       type: 'object',
     });
+
+    if (!section) return;
+
     const { pressId } = section.sectionData;
-    const subscribingPressIds = this.userStore.getState().subscribingPressIds;
+
     const currentPressId = pressId;
-    const isActive = (id: string) => (currentPressId === id ? true : false);
+    const isActive = (id: string, currentPressId: string) =>
+      currentPressId === id;
     const currentPage = this.newStore.getState().display.currentPage;
 
     const template = `
       <div class="tab-wrap" draggable="true">
-      ${subscribingPressIds
-        .map(
-          (press: any) =>
-            `<list-view-tab-item-element is-active=${
-              isActive(press.pid) ? 'true' : 'false'
-            } ${isActive(press.pid) ? `progress="50"` : ''} id='${
-              press.pid
-            }' name='${press.pname}'>
-            </list-view-tab-item-element>`
-        )
+      ${this.pressList
+        .map((press: any) => {
+          return `<list-view-tab-item-element is-active=${
+            isActive(press.pid, currentPressId) ? '1' : '0'
+          } ${isActive(press.pid, currentPressId) ? `progress="50"` : ''} id='${
+            press.pid
+          }' name='${press.pname}'>
+            </list-view-tab-item-element>`;
+        })
         .join('')}
       </div>
     `;

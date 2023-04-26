@@ -33,11 +33,11 @@ class ListViewTabItem extends HTMLElement {
       target: this,
       name: 'name',
     });
-    const isActive =
-      getProperty({
-        target: this,
-        name: 'is-active',
-      }) === 'true';
+    const isActive = getProperty({
+      target: this,
+      name: 'is-active',
+      type: 'boolean',
+    });
     const totalNumber = getProperty({
       target: this,
       name: 'total-number',

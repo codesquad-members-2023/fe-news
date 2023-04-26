@@ -29,13 +29,7 @@ class ListViewItem extends HTMLElement {
     addShadow({ target: this });
 
     this.render();
-    this.rerenderWhenSubscribeUpdated();
-  }
-
-  rerenderWhenSubscribeUpdated() {
-    this.userStore.subscribe(() => {
-      this.renderSubscribingBtn();
-    });
+    // this.userStore.subscribe(this.renderSubscribingBtn);
   }
 
   static get observedAttributes() {
@@ -54,21 +48,24 @@ class ListViewItem extends HTMLElement {
       name: 'section-data',
       type: 'object',
     });
-    const now = new Date(sectionData?.lastEdited);
 
-    const lastEdited = now.toLocaleString('ko-KR', {
-      timeZone: 'Asia/Seoul',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
+    if (!sectionData) return;
 
     const { press, articles } = sectionData;
     const mainArticle = articles?.[0];
     const otherArticles = articles?.slice(1);
+    const lastEdited = new Date(sectionData?.lastEdited).toLocaleString(
+      'ko-KR',
+      {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }
+    );
 
     const template = `
     <div class="header">
@@ -108,12 +105,13 @@ class ListViewItem extends HTMLElement {
       target: this.shadowRoot,
       template,
     });
+
     addStyle({
       target: this.shadowRoot,
       style: style(),
     });
 
-    this.renderSubscribingBtn();
+    // this.renderSubscribingBtn();
   }
 
   renderSubscribingBtn() {

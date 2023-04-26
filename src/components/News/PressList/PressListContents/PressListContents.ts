@@ -20,6 +20,8 @@ import { TEMP_ID } from '@constant/index';
 import { UserType } from '@store/user/userType';
 import { getSection, getCustomSection } from '@services/news/section/section';
 import { NewsType, TAB, VIEW } from '@store/news/newsType';
+import { getPressList } from '@services/news/press/press';
+import { filterSusbscribedPress } from '@services/news/news';
 
 interface PressListContents {
   icon?: string | null;
@@ -34,6 +36,56 @@ class PressListContents extends HTMLElement {
     super();
     this.newsStore = store.news;
     this.userStore = store.user;
+  }
+
+  async connectedCallback() {
+    addShadow({ target: this });
+    this.wrap = createWrap();
+    this.shadowRoot?.append(this.wrap);
+    this.render();
+    addStyle({
+      target: this.shadowRoot,
+      style: list(),
+    });
+
+    await this.setPressList();
+    this.handleDisplay();
+  }
+
+  async setPressList() {
+    const pressList = await getPressList({ newsStore: this.newsStore });
+    const customPressList = filterSusbscribedPress({
+      pressList,
+      subscribingPressIds: this.userStore.getState().subscribingPressIds,
+    });
+
+    setProperty({
+      target: select({
+        selector: ['section.general grid-view-container-element'],
+        parent: this,
+      }),
+      name: 'press-list',
+      value: pressList,
+      type: 'object',
+    });
+    setProperty({
+      target: select({
+        selector: ['section.custom grid-view-container-element'],
+        parent: this,
+      }),
+      name: 'press-list',
+      value: customPressList,
+      type: 'object',
+    });
+    setProperty({
+      target: select({
+        selector: ['section.custom list-view-element'],
+        parent: this,
+      }),
+      name: 'press-list',
+      value: customPressList,
+      type: 'object',
+    });
   }
 
   render() {
@@ -61,19 +113,6 @@ class PressListContents extends HTMLElement {
       target: this.wrap,
       template,
     });
-  }
-
-  async connectedCallback() {
-    addShadow({ target: this });
-    this.wrap = createWrap();
-    this.shadowRoot?.append(this.wrap);
-    this.render();
-    addStyle({
-      target: this.shadowRoot,
-      style: list(),
-    });
-
-    this.handleDisplay();
   }
 
   async handleDisplay() {

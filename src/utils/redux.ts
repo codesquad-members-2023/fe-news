@@ -74,3 +74,20 @@ export const createStore = <S>(reducer: ReducerType<S>, initialState: S) => {
     getState,
   };
 };
+
+export const checkStateChanged = <S, V>({
+  store,
+  target,
+  prevState,
+}: {
+  store: StoreType<S>;
+  target: string[];
+  prevState: V;
+}) => {
+  const getCurrentState = (state: S) =>
+    target.reduce((pre: any, curr: string) => {
+      return pre[curr];
+    }, state);
+
+  return prevState !== getCurrentState(store.getState());
+};

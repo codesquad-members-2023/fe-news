@@ -28,7 +28,7 @@ export const postPress = async (req: Request, res: Response) => {
     });
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ message: error });
   }
 };
@@ -166,7 +166,7 @@ export const postSection = async (req: Request, res: Response) => {
     if (!result) res.status(204).json({ message: 'No section' });
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ message: error });
   }
 };

@@ -1,5 +1,8 @@
 import { add, addStyle, addShadow } from '@utils/dom';
 import style from './PressListStyle';
+import { StoreType } from '@utils/redux';
+import { NewsType, PressType } from '@store/news/newsType';
+import store from '@store/index';
 
 interface PressList {
   icon?: string | null;
