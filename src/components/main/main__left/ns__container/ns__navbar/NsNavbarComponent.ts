@@ -1,25 +1,18 @@
 import { Props, State } from '@custom-types/types';
-import { Component } from '@custom-types/interfaces';
+import { TempComponent } from '@custom-types/interfaces';
 import { NsNavbarModel } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarModel.js';
 import { NsNavbarView } from '@components/main/main__left/ns__container/ns__navbar/NsNavbarView.js';
-import { NavbarLeftComponent } from '@components/main/main__left/ns__container/ns__navbar/navbar__left/NavbarLeftComponent.js';
-import { NavbarRightComponent } from '@components/main/main__left/ns__container/ns__navbar/navbar__right/NavbarRightComponent.js';
 
-export class NsNavbarComponent implements Component {
+export class NsNavbarComponent implements TempComponent {
   private _model: NsNavbarModel;
   private _view: NsNavbarView;
-  constructor(props?: Props) {
+  $target: HTMLElement;
+  constructor(targetElement?: HTMLElement, props?: Props) {
+    this.$target = targetElement as HTMLElement;
     this._model = new NsNavbarModel();
-    this._view = new NsNavbarView();
+    this._view = new NsNavbarView(this.$target);
 
-    const navbarLeft = new NavbarLeftComponent();
-    const navbarRight = new NavbarRightComponent(props);
-    navbarLeft.attachTo(this);
-    navbarRight.attachTo(this);
-  }
-
-  get element() {
-    return this._view.element;
+    this.setState(props as Props);
   }
 
   get state() {
@@ -29,9 +22,5 @@ export class NsNavbarComponent implements Component {
   private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
-  }
-
-  attachTo(component: Component, position: InsertPosition = 'beforeend') {
-    component.element.insertAdjacentElement(position, this.element);
   }
 }

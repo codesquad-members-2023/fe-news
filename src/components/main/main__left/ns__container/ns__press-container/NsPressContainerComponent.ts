@@ -1,10 +1,8 @@
 import { Article, Props, State } from '@custom-types/types';
-import { Component } from '@custom-types/interfaces';
+import { TempComponent } from '@custom-types/interfaces';
 import { NsPressContainerModel } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerModel.js';
 import { NsPressContainerView } from '@components/main/main__left/ns__container/ns__press-container/NsPressContainerView.js';
-import { customGet } from '@utils/customFetch.js';
 import {
-  BASIC_URL,
   PRESS_CONTAINER_PAGE_END,
   PRESS_CONTAINER_ITEM_COUNT,
   PRESS_CONTAINER_PAGE_UNIT,
@@ -12,16 +10,19 @@ import {
 } from '@src/constants/constants.js';
 import { pickRandomData } from '@utils/pickRandomData.js';
 
-export class NsPressContainerComponent implements Component {
+export class NsPressContainerComponent implements TempComponent {
   private _model: NsPressContainerModel;
   private _view: NsPressContainerView;
-  constructor(props?: Props) {
+  $target: HTMLElement;
+  constructor(targetElement?: HTMLElement, props?: Props) {
+    this.$target = targetElement as HTMLElement;
     this._model = new NsPressContainerModel();
-    this._view = new NsPressContainerView();
+    this._view = new NsPressContainerView(this.$target);
 
     const randomArticlesPromise = this.getRandomArticles(
       props!.articlesPromise as Promise<Article[]>,
     );
+
     this.setInitState({
       randomArticlesPromise,
       page: PRESS_CONTAINER_PAGE_START,
@@ -30,36 +31,13 @@ export class NsPressContainerComponent implements Component {
     });
   }
 
-  get element() {
-    return this._view.element;
-  }
-
   get state() {
     return this._model.state;
   }
 
-  setState(state: State) {
+  private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
-  }
-
-  attachTo(component: Component, position: InsertPosition = 'beforeend') {
-    component.element.insertAdjacentElement(position, this.element);
-  }
-
-  async setInitState({
-    randomArticlesPromise,
-    page,
-    handleToPrev,
-    handleToNext,
-  }: {
-    randomArticlesPromise: Promise<Article[]>;
-    page: number;
-    handleToPrev: (e: Event, state: State) => void;
-    handleToNext: (e: Event, state: State) => void;
-  }) {
-    const articles = await randomArticlesPromise;
-    this.setState({ articles, page, handleToPrev, handleToNext });
   }
 
   handleToPrev() {
@@ -84,5 +62,20 @@ export class NsPressContainerComponent implements Component {
     const totalItemCount =
       PRESS_CONTAINER_PAGE_END * PRESS_CONTAINER_ITEM_COUNT;
     return pickRandomData(articleData, totalItemCount);
+  }
+
+  async setInitState({
+    randomArticlesPromise,
+    page,
+    handleToPrev,
+    handleToNext,
+  }: {
+    randomArticlesPromise: Promise<Article[]>;
+    page: number;
+    handleToPrev: (e: Event, state: State) => void;
+    handleToNext: (e: Event, state: State) => void;
+  }) {
+    const articles = await randomArticlesPromise;
+    this.setState({ articles, page, handleToPrev, handleToNext });
   }
 }

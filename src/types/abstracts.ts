@@ -24,15 +24,15 @@ export abstract class AbstractView implements View {
     this._wrapperElement = document.createElement('div');
     this._element = this._wrapperElement.firstElementChild as HTMLElement;
 
-    this.setWrapper();
+    this.setWrapper({});
     this.setElement();
   }
 
   template(state: State) {
-    return '';
+    return `<div>${state}</div>`;
   }
 
-  protected setWrapper() {
+  protected setWrapper(state: State) {
     this._wrapperElement.innerHTML = this.template({});
   }
 
@@ -41,6 +41,9 @@ export abstract class AbstractView implements View {
   }
 
   render(state: State) {
+    // element의 값을 업데이트해야 한다.
+    this._wrapperElement.innerHTML = this.template(state);
+
     this.addEvents();
   }
 
@@ -58,6 +61,32 @@ export abstract class AbstractView implements View {
     handler: EventListener,
   ) {
     $(selector, this.element)!.addEventListener(eventName, handler);
+  }
+}
+
+export abstract class TempAbstractView {
+  $target: HTMLElement;
+  protected constructor($target: HTMLElement) {
+    this.$target = $target;
+    this.render({});
+  }
+
+  render(state: State) {
+    this.$target.innerHTML = this.template(state);
+    this.addChildren(state);
+    this.setEvents(state);
+  }
+
+  template(state: State) {
+    return ``;
+  }
+
+  addChildren(state: State) {
+    return;
+  }
+
+  setEvents(state: State) {
+    return;
   }
 }
 

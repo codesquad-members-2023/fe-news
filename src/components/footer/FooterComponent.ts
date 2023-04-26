@@ -1,18 +1,16 @@
 import { Props, State } from '@custom-types/types';
-import { Component } from '@custom-types/interfaces';
+import { TempComponent } from '@custom-types/interfaces';
 import { FooterModel } from '@components/footer/FooterModel.js';
 import { FooterView } from '@components/footer/FooterView.js';
 
-export class FooterComponent implements Component {
+export class FooterComponent implements TempComponent {
   private _model: FooterModel;
   private _view: FooterView;
-  constructor(props?: Props) {
+  $target: HTMLElement;
+  constructor(targetElement?: HTMLElement, props?: Props) {
+    this.$target = targetElement as HTMLElement;
     this._model = new FooterModel();
-    this._view = new FooterView();
-  }
-
-  get element() {
-    return this._view.element;
+    this._view = new FooterView(this.$target);
   }
 
   get state() {
@@ -22,9 +20,5 @@ export class FooterComponent implements Component {
   private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
-  }
-
-  attachTo(component: Component, position: InsertPosition = 'beforeend') {
-    component.element.insertAdjacentElement(position, this.element);
   }
 }

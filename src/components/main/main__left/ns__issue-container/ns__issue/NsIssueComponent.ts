@@ -1,21 +1,27 @@
 import { Props, State } from '@custom-types/types';
-import { Component } from '@custom-types/interfaces';
+import { TempComponent } from '@custom-types/interfaces';
 import { NsIssueModel } from '@components/main/main__left/ns__issue-container/ns__issue/NsIssueModel.js';
 import { NsIssueView } from '@components/main/main__left/ns__issue-container/ns__issue/NsIssueView.js';
+import {
+  ISSUE_TIME_INTERVAL,
+  ISSUES_START_INDEX,
+} from '@src/constants/constants.js';
 
-export class NsIssueComponent implements Component {
+export class NsIssueComponent implements TempComponent {
   private _model: NsIssueModel;
   private _view: NsIssueView;
-  constructor(props?: Props) {
+  $target: HTMLElement;
+  constructor(targetElement?: HTMLElement, props?: Props) {
+    this.$target = targetElement as HTMLElement;
     this._model = new NsIssueModel();
-    this._view = new NsIssueView();
+    this._view = new NsIssueView(this.$target);
 
-    const { issues } = props!;
-    this.setState({ issues });
-  }
+    const { issues, startTime } = props as {
+      issues: string[];
+      startTime: number;
+    };
 
-  get element() {
-    return this._view.element;
+    this.setIssue(issues, startTime);
   }
 
   get state() {
@@ -27,7 +33,17 @@ export class NsIssueComponent implements Component {
     this._view.render(this._model.state);
   }
 
-  attachTo(component: Component, position: InsertPosition = 'beforeend') {
-    component.element.insertAdjacentElement(position, this.element);
+  setIssue(issues: string[], startTime: number) {
+    this.setState({ issue: issues[ISSUES_START_INDEX] });
+    setTimeout(() => {
+      let issueIndex = ISSUES_START_INDEX + 1;
+
+      setInterval(() => {
+        if (issueIndex === (issues as string[]).length) {
+          issueIndex = ISSUES_START_INDEX;
+        }
+        this.setState({ issue: issues[issueIndex++] });
+      }, ISSUE_TIME_INTERVAL);
+    }, startTime);
   }
 }

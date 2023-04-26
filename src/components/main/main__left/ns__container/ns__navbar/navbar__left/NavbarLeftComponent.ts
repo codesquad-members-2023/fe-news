@@ -1,20 +1,16 @@
 import { Props, State } from '@custom-types/types';
-import { Component } from '@custom-types/interfaces';
+import { TempComponent } from '@custom-types/interfaces';
 import { NavbarLeftModel } from '@components/main/main__left/ns__container/ns__navbar/navbar__left/NavbarLeftModel.js';
 import { NavbarLeftView } from '@components/main/main__left/ns__container/ns__navbar/navbar__left/NavbarLeftView.js';
 
-export class NavbarLeftComponent implements Component {
+export class NavbarLeftComponent implements TempComponent {
   private _model: NavbarLeftModel;
   private _view: NavbarLeftView;
-  constructor(props?: Props) {
+  $target: HTMLElement;
+  constructor(targetElement?: HTMLElement, props?: Props) {
+    this.$target = targetElement as HTMLElement;
     this._model = new NavbarLeftModel();
-    this._view = new NavbarLeftView();
-
-    const isTotal = true;
-  }
-
-  get element() {
-    return this._view.element;
+    this._view = new NavbarLeftView(this.$target);
   }
 
   get state() {
@@ -24,9 +20,5 @@ export class NavbarLeftComponent implements Component {
   private setState(state: State) {
     this._model.setState(state);
     this._view.render(this._model.state);
-  }
-
-  attachTo(component: Component, position: InsertPosition = 'beforeend') {
-    component.element.insertAdjacentElement(position, this.element);
   }
 }

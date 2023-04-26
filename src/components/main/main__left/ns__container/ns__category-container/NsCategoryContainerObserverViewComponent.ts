@@ -35,7 +35,7 @@ export class NsCategoryContainerObserverViewComponent
 
   // setTemplate은 subscriber 처리하면 안된다. 그러면 element가 초기화되어버림.
   setWrapper() {
-    this._wrapperElement.innerHTML = `<section id="category-container" class="p-3 h-full flex flex-col justify-start relative">
+    this._wrapperElement.innerHTML = `<section id="category-container" class="h-full flex flex-col justify-start relative">
                                          <button id="btn-prev" class="absolute left-0 top-1/2 border rounded-full bg-white drop-shadow-very-xl">
                                            <img src="/public/images/symbols/chevron-left.svg" alt="chevron-left" class="h-6 w-6"/>
                                          </button>                                     
