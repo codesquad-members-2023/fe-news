@@ -18,7 +18,7 @@ interface subscribeProps {
   pressId: string;
 }
 
-export const subscribe = async ({ pressId }: subscribeProps) => {
+export const subscribeAPI = async ({ pressId }: subscribeProps) => {
   const path = `/subscribe?id=${TEMP_ID}&pressId=${pressId}`;
   const method = 'PATCH';
   const data = await customFetch({ path, method });
@@ -30,7 +30,7 @@ interface unsubscribeProps {
   pressId: string;
 }
 
-export const unsubscribe = async ({ pressId }: unsubscribeProps) => {
+export const unsubscribeAPI = async ({ pressId }: unsubscribeProps) => {
   const path = `/unsubscribe?id=${TEMP_ID}&pressId=${pressId}`;
   const method = 'PATCH';
   const data = await customFetch({ path, method });

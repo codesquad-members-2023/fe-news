@@ -1,8 +1,8 @@
 import { add, addStyle, addShadow, createWrap } from '@utils/dom';
 import style from './PressListHeaderStyle';
 import store from '@store/index';
-import { StroeType } from '@utils/redux';
-import { DisplayType } from '@store/display/displayType';
+import { StoreType } from '@utils/redux';
+import { NewsType } from '@store/news/newsType';
 
 interface PressListHeader {
   icon?: string | null;
@@ -10,11 +10,11 @@ interface PressListHeader {
 
 class PressListHeader extends HTMLElement {
   wrap: HTMLElement | null = null;
-  displayStore: StroeType<DisplayType>;
+  newsStore: StoreType<NewsType>;
 
   constructor() {
     super();
-    this.displayStore = store.display;
+    this.newsStore = store.news;
   }
 
   connectedCallback() {
@@ -28,7 +28,7 @@ class PressListHeader extends HTMLElement {
     });
   }
 
-  render({ currentTab, currentView }: any = this.displayStore.getState()) {
+  render({ currentTab, currentView }: any = this.newsStore.getState().display) {
     const tab = {
       general: {
         isActive: currentTab === 'general',
@@ -96,15 +96,15 @@ class PressListHeader extends HTMLElement {
         const buttonClickHandler = (e: MouseEvent) => {
           const tab = e.currentTarget as HTMLElement;
           const rerender = () => {
-            const state = this.displayStore.getState();
+            const state = this.newsStore.getState();
             this.render({
-              ...state,
-              currentTab: this.displayStore.getState().currentTab,
+              currentView: this.newsStore.getState().display.currentView,
+              currentTab: this.newsStore.getState().display.currentTab,
             });
           };
-          this.displayStore.subscribe(rerender);
+          this.newsStore.subscribe(rerender);
           const isGeneral = tab.classList.contains('general');
-          this.displayStore.dispatch({
+          this.newsStore.dispatch({
             type: 'CHANGE_TAB',
             payload: isGeneral ? 'general' : 'custom',
           });
@@ -124,14 +124,14 @@ class PressListHeader extends HTMLElement {
             ?.getAttribute('name');
 
           const rerender = () => {
-            const state = this.displayStore.getState();
+            const state = this.newsStore.getState();
             this.render({
-              ...state,
-              currentView: this.displayStore.getState().currentView,
+              currentTab: this.newsStore.getState().display.currentTab,
+              currentView: this.newsStore.getState().display.currentView,
             });
           };
-          this.displayStore.subscribe(rerender);
-          this.displayStore.dispatch({
+          this.newsStore.subscribe(rerender);
+          this.newsStore.dispatch({
             type: 'CHANGE_VIEW',
             payload: viewName,
           });

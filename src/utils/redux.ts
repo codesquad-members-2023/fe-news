@@ -6,7 +6,7 @@ export interface ActionType {
   payload?: any;
 }
 
-export interface StroeType<S> {
+export interface StoreType<S> {
   getState: () => S;
   subscribe: (listener: ListenerType) => () => void;
   dispatch: (action: ActionType) => void;

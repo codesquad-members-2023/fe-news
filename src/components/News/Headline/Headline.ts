@@ -1,4 +1,4 @@
-import { add, addStyle, addShadow } from '@utils/dom';
+import { add, addStyle, addShadow, select, selectAll } from '@utils/dom';
 import style from './HeadlineStyle';
 
 interface HeadlineItem {
@@ -6,8 +6,10 @@ interface HeadlineItem {
 }
 
 class HeadlineItem extends HTMLElement {
+  count: number;
   constructor() {
     super();
+    this.count = 0;
   }
 
   connectedCallback() {

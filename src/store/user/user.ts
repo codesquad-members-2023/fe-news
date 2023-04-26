@@ -4,43 +4,39 @@ import { TEMP_ID } from '@constant/index';
 
 const initialState: UserType = {
   id: TEMP_ID,
-  subscribingPress: [] as string[],
+  subscribingPressIds: [] as string[],
 };
 
-interface props {
+const setUser = ({ payload }: { state: UserType; payload: any }) => {
+  return { ...payload, subscribingPressIds: payload.subscribingPressIds };
+};
+
+const subscribe = ({
+  state,
+  payload,
+}: {
   state: UserType;
-}
-
-interface setUserProps extends props {
-  payload: any;
-}
-
-interface subscribeProps extends props {
   payload: string;
-}
-
-interface unsubscribeProps extends props {
-  payload: string;
-}
-
-const setUser = ({ payload }: setUserProps) => {
-  return { ...payload, subscribingPress: payload.subscribingPressIds };
-};
-
-const subscribe = ({ state, payload }: subscribeProps) => {
-  if (state.subscribingPress.length === 0)
-    return { ...state, subscribingPress: [payload] };
+}) => {
+  if (state.subscribingPressIds.length === 0)
+    return { ...state, subscribingPressIds: [payload] };
   return {
     ...state,
-    subscribingPress: [...state.subscribingPress, payload],
+    subscribingPressIds: [...state.subscribingPressIds, payload],
   };
 };
 
-const unsubscribe = ({ state, payload }: unsubscribeProps) => {
-  const newSubscribingPress = state.subscribingPress.filter(
+const unsubscribe = ({
+  state,
+  payload,
+}: {
+  state: UserType;
+  payload: string;
+}) => {
+  const newSubscribingPress = state.subscribingPressIds.filter(
     (pressId: string) => pressId !== payload
   );
-  return { ...state, subscribingPress: newSubscribingPress };
+  return { ...state, subscribingPressIds: newSubscribingPress };
 };
 
 const reducer: ReducerType<UserType> = (

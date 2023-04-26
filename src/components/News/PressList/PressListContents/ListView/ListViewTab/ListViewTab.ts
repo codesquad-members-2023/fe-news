@@ -1,25 +1,22 @@
 import { add, addStyle, addShadow, getProperty, setProperty } from '@utils/dom';
 import style from './ListViewTabStyle';
 import store from '@store/index';
-import { StroeType } from '@utils/redux';
+import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
-import { PressListType } from '@store/press/pressType';
-import { SectionInfoType } from '@store/section/sectionType';
-import { DisplayType } from '@store/display/displayType';
+import { NewsType, SectionType, TAB } from '@store/news/newsType';
+import News from 'src/App';
 
 interface ListViewTab {
   icon?: string | null;
 }
 
 class ListViewTab extends HTMLElement {
-  userStore: StroeType<UserType>;
-  pressStore: StroeType<PressListType>;
-  displayStore: StroeType<DisplayType>;
+  userStore: StoreType<UserType>;
+  newStore: StoreType<NewsType>;
   constructor() {
     super();
     this.userStore = store.user;
-    this.pressStore = store.press;
-    this.displayStore = store.display;
+    this.newStore = store.news;
   }
 
   connectedCallback() {
@@ -28,11 +25,11 @@ class ListViewTab extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['section-data'];
+    return ['section'];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'section-data') {
+    if (name === 'section') {
       this.render();
     }
   }
@@ -43,52 +40,43 @@ class ListViewTab extends HTMLElement {
       ?.addEventListener('drag', () => {});
   }
 
-  renderTabForCustomTab(
-    sectionData: SectionInfoType,
-    subscribingPress: PressListType['customPressList']
-  ) {
-    const currentPressId = sectionData.section.pressId;
-    const isActive = (pressId: string) =>
-      currentPressId === pressId ? true : false;
-    const currentPage =
-      this.displayStore.getState().page['list']['custom'].currentPage;
+  render() {
+    const tab = getProperty({
+      target: this,
+      name: 'tab',
+    });
 
-    const template = `
-      <div class="tab-wrap" draggable="true">
-      ${subscribingPress
-        .map(
-          (press) =>
-            `<list-view-tab-item-element is-active=${
-              isActive(press.pid) ? 'true' : 'false'
-            } ${isActive(press.pid) ? `progress="50"` : ''} id='${
-              press.pid
-            }' name='${press.pname}' section-data='${JSON.stringify(
-              sectionData
-            )}'>
-            </list-view-tab-item-element>`
-        )
-        .join('')}
-      </div>
-    `;
-    add({
-      target: this.shadowRoot,
-      template,
+    const sectionData = getProperty({
+      target: this,
+      name: 'section-data',
+      type: 'object',
     });
-    addStyle({
-      target: this.shadowRoot,
-      style: style(currentPage),
-    });
+
+    if (tab === TAB.GENERAL) {
+      this.renderTabForGeneralTab();
+    } else {
+      this.renderTabForCustomTab(sectionData);
+      this.userStore.subscribe(() => {
+        const subscribingPressIds =
+          this.userStore.getState().subscribingPressIds;
+        this.renderTabForCustomTab(sectionData);
+      });
+    }
+    this.handleDrag();
   }
 
-  renderTabForGeneralTab(sectionData: SectionInfoType) {
-    const currentCategory = sectionData.section.category;
-    const categoryCounts = sectionData.categoryCounts;
-    const categoryIndex = sectionData.currentCategoryIndex;
+  renderTabForGeneralTab() {
+    const section = getProperty({
+      target: this,
+      name: 'section',
+      type: 'object',
+    });
 
-    const currentNumber =
-      this.displayStore.getState().category['list']['general'].index;
+    const { category, pressId } = section.sectionData;
+    const { categoryCounts, categoryIndex } = section.tabData;
+
     const isActive = (categoryId: string) =>
-      currentCategory === categoryId ? true : false;
+      category === categoryId ? true : false;
 
     const categories = [
       '종합/경제',
@@ -100,24 +88,11 @@ class ListViewTab extends HTMLElement {
       '지역',
     ];
 
-    const getCurrentCategoryIndex = () => {
-      const accumulatedNum = Object.entries(categoryCounts).reduce(
-        (result: number, count: any) => {
-          const key = count[0];
-          const value = count[1];
-          if (Number(key) < Number(currentCategory)) return result + value;
-          return result;
-        },
-        0
-      );
-      return currentNumber - accumulatedNum;
-    };
-
     const template = `
       <div class="tab-wrap">
       ${Object.keys(categoryCounts)
         .map((categoryId) => {
-          return `<list-view-tab-item-element total-number='${
+          return `<list-view-tab-item-element id='${pressId}' total-number='${
             categoryCounts[categoryId]
           }' name='${
             categories[Number(categoryId)]
@@ -142,27 +117,41 @@ class ListViewTab extends HTMLElement {
     });
   }
 
-  render() {
-    const isCustom = getProperty({
+  renderTabForCustomTab(tabData: SectionType['tabData']) {
+    const section = getProperty({
       target: this,
-      name: 'is-custom',
+      name: 'section',
+      type: 'object',
     });
+    const { pressId } = section.sectionData;
+    const subscribingPressIds = this.userStore.getState().subscribingPressIds;
+    const currentPressId = pressId;
+    const isActive = (id: string) => (currentPressId === id ? true : false);
+    const currentPage = this.newStore.getState().display.currentPage;
 
-    const sectionData = JSON.parse(
-      getProperty({ target: this, name: 'section-data', isStringfied: true })
-    );
-
-    if (isCustom !== 'true') {
-      this.renderTabForGeneralTab(sectionData);
-    } else {
-      const subscribingPress = this.pressStore.getState().customPressList;
-      this.renderTabForCustomTab(sectionData, subscribingPress);
-      this.pressStore.subscribe(() => {
-        const subscribingPress = this.pressStore.getState().customPressList;
-        this.renderTabForCustomTab(sectionData, subscribingPress);
-      });
-    }
-    this.handleDrag();
+    const template = `
+      <div class="tab-wrap" draggable="true">
+      ${subscribingPressIds
+        .map(
+          (press: any) =>
+            `<list-view-tab-item-element is-active=${
+              isActive(press.pid) ? 'true' : 'false'
+            } ${isActive(press.pid) ? `progress="50"` : ''} id='${
+              press.pid
+            }' name='${press.pname}'>
+            </list-view-tab-item-element>`
+        )
+        .join('')}
+      </div>
+    `;
+    add({
+      target: this.shadowRoot,
+      template,
+    });
+    addStyle({
+      target: this.shadowRoot,
+      style: style(currentPage),
+    });
   }
 }
 

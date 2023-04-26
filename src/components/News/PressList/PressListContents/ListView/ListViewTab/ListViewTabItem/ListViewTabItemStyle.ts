@@ -14,7 +14,14 @@ export default function style(target: HTMLElement) {
       color: var(--gray300);
       border: 0;
       background-color: transparent;
-      
+    }
+
+    .tab-container:hover {
+      cursor: pointer;
+    }
+
+    .tab-container:hover span {
+      text-decoration-line: underline;
     }
 
     .tab-container span {

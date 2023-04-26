@@ -34,6 +34,9 @@ customElements.define('presslist-header-element', PressListHeader);
 import PressListContents from './News/PressList/PressListContents/PressListContents';
 customElements.define('presslist-contents-element', PressListContents);
 
+import PressListController from './News/PressList/PressListContents/PressListController/PressListController';
+customElements.define('press-list-controller-element', PressListController);
+
 import PressList from './News/PressList/PressList';
 customElements.define('press-list-element', PressList);
 
