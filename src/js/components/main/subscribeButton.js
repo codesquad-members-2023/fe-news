@@ -8,13 +8,13 @@ export const createBtn = (type) => {
   </button>`;
 }
 
-export const popupUnsubscribeBtn = (press) => {
+export const getUnsubscribePopup = (press) => {
   return `<div class="popup-confirm">
     <p><strong>${press}</strong>을(를)<br>구독해지 하시겠습니까?</p>
     <div class="popup-btn"><a class="confirm">확인</a><a class="cancle">취소</a></div>
   </div>`;
 }
 
-export const popupSubscribeBtn = () => {
+export const getSubscribePopup = () => {
   return `<div class="popup-add">내가 구독한 언론사에 추가되었습니다.</div>`;
 }

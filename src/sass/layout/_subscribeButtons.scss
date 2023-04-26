@@ -44,7 +44,7 @@
   position: absolute;
   top: 130px;
   left: 305px;
-  width: $popupWidth;
+  width: $boxWidth;
   height: 150px;
 
   display: flex;
@@ -54,8 +54,18 @@
   text-align: center;
   background-color: $white;
 
+  &::after {
+    z-index: $afterZindex;
+    position: absolute;
+    left: -480px;
+    top: -190px;
+    width: $afterWidth;
+    height: $afterHeight;
+    content: '';
+  }
+
   p {
-    width: $popupWidth;
+    width: $boxWidth;
     height: 100%;
     padding: 28px;
     color: $gray400;
@@ -66,8 +76,9 @@
     }
   }
 
-  & > div {
-    width: $popupWidth;
+  .popup-btn {
+    z-index: $popupZindex;
+    width: $boxWidth;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -93,18 +104,25 @@
 }
 
 .popup-add {
+  z-index: $popupZindex;
   position: absolute;
   top: 130px;
-  left: 300px;
-  width: $popupWidth;
+  left: 305px;
+  width: $boxWidth;
   height: 55px;
   line-height: 55px;
   text-align: center;
   background-color: $primary;
   color: $white;
   cursor: defalt;
-  -webkit-user-select: all;
-  -moz-user-select: all;
-  -ms-use-select: all;
-  user-select: all;
+
+  &::after {
+    z-index: $afterZindex;
+    position: absolute;
+    left: -480px;
+    top: -190px;
+    width: $afterWidth;
+    height: $afterHeight;
+    content: '';
+  }
 }

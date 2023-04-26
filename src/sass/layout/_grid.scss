@@ -1,12 +1,12 @@
 .view-container {
   position: relative;
   width: $containerWidth;
-  height: 390px;
+  height: $containerHeight;
 
   .list-container,
   .grid-area {
     width: $containerWidth;
-    height: 390px;
+    height: $containerHeight;
     border: 1px solid $gray100;
   }
 
@@ -58,7 +58,7 @@
 
 .no-subscription {
   width: $containerWidth;
-  height: 390px;
+  height: $containerHeight;
   display: flex;
   flex-direction: column;
   justify-content: center;
