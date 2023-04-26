@@ -52,17 +52,19 @@ class ListViewTabItem extends HTMLElement {
 
     const template = `
     <button class="tab-container typo-body-sm${isActive ? ' is-active' : ''}">
-      <span>${name}</span>
-      ${
-        isActive && totalNumber
-          ? `
-          <span class="index-indicator typo-title-xs">
-            <span class="current-index">${
-              Number(currentNumber) + 1
-            }</span><span>/</span><span class="total-index">${totalNumber}</span>
-          </span>`
-          : ''
-      }
+      <div class="tab-contents">
+        <span>${name}</span>
+        ${
+          isActive && totalNumber
+            ? `
+            <span class="index-indicator typo-title-xs">
+              <span class="current-index">${
+                Number(currentNumber) + 1
+              }</span><span>/</span><span class="total-index">${totalNumber}</span>
+            </span>`
+            : ''
+        }
+      </div>
     </button>
     `;
 

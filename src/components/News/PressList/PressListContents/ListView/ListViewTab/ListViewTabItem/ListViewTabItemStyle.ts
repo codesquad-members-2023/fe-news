@@ -9,13 +9,39 @@ export default function style(target: HTMLElement) {
   const content = `
     .tab-container {
       display: flex;
-      justify-content: space-between;
-      padding: 0 16px;
       height: 100%;
       align-items: center;
       color: var(--gray300);
       border: 0;
       background-color: transparent;
+      position: relative;
+      padding: 0 16px;
+    }
+
+    .is-active {
+      background-color: #7890E7;
+    }
+
+    .progress-bar {
+      display: none;
+    }
+    
+    .is-active::before {
+      content: '';
+      display: block;
+      position: absolute;
+      height: 100%;
+      background-color: var(--primary);
+      width: 100%;
+      left: 0;
+      animation: progressBarAnimation ${SILDE_INTERVAL_TIME}ms linear;
+    }
+  
+    .is-active .tab-contents {
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+      width: calc(166px - 16px - 16px);
     }
 
     .tab-container:hover {
@@ -32,20 +58,20 @@ export default function style(target: HTMLElement) {
       
     }
 
-    @keyframes progress {
-      ${Array.from({ length: 10000 })
-        .map((_, i) => getGrdient(i))
-        .join('')}
+    @keyframes progressBarAnimation {
+      from {
+        width: 0%;
+      }
+      to {
+        width: 100%;
+      }
     }
 
-
     .is-active {
-      
       width: 166px;
       color: var(--white);
       font-weight: 700;
-      animation-name: progress;
-      animation-duration: ${SILDE_INTERVAL_TIME}ms;
+      
     }
 
     .index-indicator {

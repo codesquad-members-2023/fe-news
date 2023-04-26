@@ -200,10 +200,9 @@ class ListView extends HTMLElement {
       template,
     });
 
-    customSetInterval({
-      intervalTime: SILDE_INTERVAL_TIME,
-      callback: this.handleSlide.bind(this),
-    });
+    if (this.newsStore.getState().display.currentTab === this.tab) {
+      setInterval(this.handleSlide.bind(this), SILDE_INTERVAL_TIME);
+    }
   }
 }
 
