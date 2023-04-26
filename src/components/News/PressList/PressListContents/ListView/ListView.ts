@@ -19,6 +19,8 @@ import {
 } from '@store/news/newsType';
 import { StoreType, checkStateChanged } from '@utils/redux';
 import { UserType } from '@store/user/userType';
+import { customSetInterval } from '@utils/animation';
+import { SILDE_INTERVAL_TIME } from '@constant/index';
 
 class ListView extends HTMLElement {
   newsStore: StoreType<NewsType>;
@@ -26,7 +28,7 @@ class ListView extends HTMLElement {
   currentPage: number;
   tab: TAB;
   pressList: PressType[];
-  isEmpty: boolean;
+  time: number;
 
   constructor() {
     super();
@@ -38,7 +40,7 @@ class ListView extends HTMLElement {
       name: 'tab',
     });
     this.pressList = [];
-    this.isEmpty = true;
+    this.time = 0;
 
     this.handleDisplay({});
   }
@@ -164,6 +166,20 @@ class ListView extends HTMLElement {
     });
   }
 
+  handleSlide() {
+    const target = select({
+      selector: ['list-view-tab-element'],
+      parent: this,
+    });
+    setProperty({
+      target,
+      name: 'progress',
+      value: 0,
+      type: 'number',
+    });
+    this.newsStore.dispatch({ type: 'NEXT_PAGE' });
+  }
+
   render() {
     const tab = getProperty({ target: this, name: 'tab' });
     const isCustom = tab === TAB.CUSTOM;
@@ -172,27 +188,21 @@ class ListView extends HTMLElement {
     }
 
     const template = `
-    ${
-      isCustom && this.pressList.length <= 0
-        ? `
-    <div class="press-container no-press">
-      <div class="empty">
-        <h3 class="typo-title-md">구독할 언론사가 없습니다.</h3>
-        <p class="typo-body-sm">언론사 구독 설정에서 관심있는 언론사를 구독하시면</p>
-        <p class="typo-body-sm">언론사가 직접 편집한 뉴스들을 네이버 홈에서 바로 보실 수 있습니다.</p>
-      </div>
-    </div>`
-        : `
+    ${`
     <div class="listview-container">
       <list-view-tab-element tab='${tab}'></list-view-tab-element>
       <list-view-item-element tab='${tab}'></list-view-item-element>
     </div>
-    `
-    }`;
+    `}`;
 
     add({
       target: this.shadowRoot,
       template,
+    });
+
+    customSetInterval({
+      intervalTime: SILDE_INTERVAL_TIME,
+      callback: this.handleSlide.bind(this),
     });
   }
 }

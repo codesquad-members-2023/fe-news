@@ -5,6 +5,7 @@ import {
   getProperty,
   setProperty,
   selectAll,
+  select,
 } from '@utils/dom';
 import style from './ListViewTabStyle';
 import store from '@store/index';
@@ -40,20 +41,23 @@ class ListViewTab extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['section-data', 'press-list'];
+    return ['section-data', 'press-list', 'progress'];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if ((this.tab === TAB.CUSTOM && name) === 'press-list') {
-      this.pressList = getProperty({
-        target: this,
-        name: 'press-list',
-        type: 'object',
-      });
+      this.pressList = JSON.parse(newValue);
       this.renderTabForCustomTab();
     }
     if (name === 'section-data') {
       this.render();
+    }
+    if (name === 'progress') {
+      const target = select({
+        selector: ['list-view-tab-item-element[is-active="1"]'],
+        parent: this,
+      });
+      setProperty({ target, name: 'progress', value: newValue });
     }
   }
 
@@ -105,7 +109,7 @@ class ListViewTab extends HTMLElement {
             isActive(categoryId) ? '1' : '0'
           } ${
             isActive(categoryId)
-              ? `progress="50" current-number='${currentCategoryIndex}'`
+              ? `progress="0" current-number='${currentCategoryIndex}'`
               : ''
           }></list-view-tab-item-element>
           `;

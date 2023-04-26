@@ -16,7 +16,7 @@ class ListViewTabItem extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['is-active', 'current-number'];
+    return ['is-active', 'current-number', 'progress'];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -24,6 +24,9 @@ class ListViewTabItem extends HTMLElement {
       this.render();
     }
     if (name === 'current-number') {
+      this.render();
+    }
+    if (name === 'progress') {
       this.render();
     }
   }

@@ -1,8 +1,10 @@
 import { getProperty } from '@utils/dom';
+import { SILDE_INTERVAL_TIME } from '@constant/index';
 
 export default function style(target: HTMLElement) {
   const style = document.createElement('style');
-  const progress = getProperty({ target, name: 'progress' }) ?? '0';
+  const getGrdient = (progress: number) =>
+    `${progress}%   {background: linear-gradient(90deg, #4362D0 0%, #4362D0 ${progress}%, #7890E7 ${progress}%, #7890E7 100%);}`;
 
   const content = `
     .tab-container {
@@ -30,12 +32,20 @@ export default function style(target: HTMLElement) {
       
     }
 
+    @keyframes progress {
+      ${Array.from({ length: 10000 })
+        .map((_, i) => getGrdient(i))
+        .join('')}
+    }
+
+
     .is-active {
-      background: linear-gradient(90deg, #4362D0 0%, #4362D0 ${progress}%, #7890E7 ${progress}%, #7890E7 100%);
+      
       width: 166px;
       color: var(--white);
       font-weight: 700;
-      
+      animation-name: progress;
+      animation-duration: ${SILDE_INTERVAL_TIME}ms;
     }
 
     .index-indicator {
