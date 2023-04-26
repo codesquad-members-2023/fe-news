@@ -86,6 +86,7 @@ export const displayActionCreator = {
     return function (dispatch) {
       dispatch(displayActionCreator.listPageReset());
       dispatch(displayActionCreator.mineListReset());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch(displayActionCreator.progressBarAnimationEnd());
       dispatch({
         type: actionTypes.displayActions.HEADER_LIST_BUTTON_CLICK,
@@ -97,6 +98,7 @@ export const displayActionCreator = {
     return function (dispatch) {
       dispatch(displayActionCreator.listPageReset());
       dispatch(displayActionCreator.mineListReset());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch(displayActionCreator.progressBarAnimationEnd());
       dispatch({
         type: actionTypes.displayActions.HEADER_GRID_BUTTON_CLICK,
@@ -108,6 +110,7 @@ export const displayActionCreator = {
     return function (dispatch) {
       dispatch(displayActionCreator.listPageReset());
       dispatch(displayActionCreator.mineListReset());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch(displayActionCreator.progressBarAnimationEnd());
       dispatch({
         type: actionTypes.displayActions.HEADER_ALL_MEDIA_BUTTON_CLICK,
@@ -119,6 +122,7 @@ export const displayActionCreator = {
     return function (dispatch) {
       dispatch(displayActionCreator.listPageReset());
       dispatch(displayActionCreator.mineListReset());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch(displayActionCreator.progressBarAnimationEnd());
       dispatch({
         type: actionTypes.displayActions.HEADER_MY_MEDIA_BUTTON_CLICK,
@@ -129,6 +133,7 @@ export const displayActionCreator = {
   listLeftBtnClick() {
     return function (dispatch) {
       dispatch(displayActionCreator.progressBarAnimationEnd());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch({
         type: actionTypes.displayActions.LIST_LEFT_BUTTON_CLICK,
       });
@@ -138,6 +143,7 @@ export const displayActionCreator = {
   listRightBtnClick() {
     return function (dispatch) {
       dispatch(displayActionCreator.progressBarAnimationEnd());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch({
         type: actionTypes.displayActions.LIST_RIGHT_BUTTON_CLICK,
       });
@@ -148,6 +154,7 @@ export const displayActionCreator = {
     // 여기서 payload는 탭 한 놈의 미디어 타입 정보.
     return function (dispatch) {
       dispatch(displayActionCreator.progressBarAnimationEnd());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch({
         type: actionTypes.displayActions.LIST_TAB_BUTTON_CLICK,
         payload,
@@ -158,6 +165,7 @@ export const displayActionCreator = {
   mineListTabBtnClick(payload) {
     return function (dispatch) {
       dispatch(displayActionCreator.progressBarAnimationEnd());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch({
         type: actionTypes.displayActions.MINE_LIST_TAB_BUTTON_CLICK,
         payload,
@@ -168,6 +176,7 @@ export const displayActionCreator = {
   mineListLeftBtnClick() {
     return function (dispatch) {
       dispatch(displayActionCreator.progressBarAnimationEnd());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch({
         type: actionTypes.displayActions.MINE_LIST_LEFT_BUTTON_CLICK,
       });
@@ -177,6 +186,7 @@ export const displayActionCreator = {
   mineListRightBtnClick() {
     return function (dispatch) {
       dispatch(displayActionCreator.progressBarAnimationEnd());
+      dispatch(displayActionCreator.progressBarReset());
       dispatch({
         type: actionTypes.displayActions.MINE_LIST_RIGHT_BUTTON_CLICK,
       });
@@ -202,10 +212,28 @@ export const displayActionCreator = {
     };
   },
 
-  progressBarAnimationPause(payload) {
+  progressBarAnimationPause() {
     return {
       type: actionTypes.displayActions.PROGRESS_BAR_ANIMATION_PAUSE,
+    };
+  },
+
+  progressBarAnimationResume() {
+    return {
+      type: actionTypes.displayActions.PROGRESS_BAR_ANIMATION_RESUME,
+    };
+  },
+
+  progressBarDurationSave(payload) {
+    return {
+      type: actionTypes.displayActions.PROGRESS_BAR_DURATION_SAVE,
       payload,
+    };
+  },
+
+  progressBarReset() {
+    return {
+      type: actionTypes.displayActions.PROGRESS_BAR_RESET,
     };
   },
 };

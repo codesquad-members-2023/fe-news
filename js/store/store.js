@@ -41,7 +41,8 @@ const defaultListPageData = {
 
 const defaultAnimaitonData = {
   animaitionId: null,
-  paused: false,
+  isPaused: false,
+  durationElapsed: 0,
 };
 
 // Store의 State 초기화.

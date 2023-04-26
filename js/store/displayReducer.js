@@ -111,6 +111,7 @@ export const listPageReducer = (state, action) => {
       return checkCurTypePage('right', state, mediaData, mediaTypeIdxArr);
     case displayActions.LIST_TAB_BUTTON_CLICK:
       return {
+        ...state,
         page: mediaTypeIdxArr[action.payload].startIdx,
         typePage: 1,
         currentMediaTypeIdx: action.payload,
@@ -118,6 +119,7 @@ export const listPageReducer = (state, action) => {
       };
     case displayActions.LIST_PAGE_RESET:
       return {
+        ...state,
         page: 0,
         typePage: 1,
         currentMediaTypeIdx: 0,
@@ -130,19 +132,40 @@ export const listPageReducer = (state, action) => {
 
 export const animationReducer = (state, action) => {
   const animationData = getStoreState('animationData');
+
   switch (action.type) {
     case displayActions.PROGRESS_BAR_ANIMATION_START:
+      if (animationData.animationId === action.payload) return state;
       return {
         ...state,
-        animaionId: action.payload,
+        animationId: action.payload,
       };
     case displayActions.PROGRESS_BAR_ANIMATION_END:
       if (!animationData) return state;
-      cancelAnimationFrame(animationData.animaionId);
-
+      cancelAnimationFrame(animationData.animationId);
       return {
         ...state,
-        animaionId: null,
+        animationId: null,
+      };
+    case displayActions.PROGRESS_BAR_ANIMATION_PAUSE:
+      return {
+        ...state,
+        isPaused: true,
+      };
+    case displayActions.PROGRESS_BAR_ANIMATION_RESUME:
+      return {
+        ...state,
+        isPaused: false,
+      };
+    case displayActions.PROGRESS_BAR_DURATION_SAVE:
+      return {
+        ...state,
+        durationElapsed: action.payload,
+      };
+    case displayActions.PROGRESS_BAR_RESET:
+      return {
+        ...state,
+        durationElapsed: 0,
       };
     default:
       return state;
