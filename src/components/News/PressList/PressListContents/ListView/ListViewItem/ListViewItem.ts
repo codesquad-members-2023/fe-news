@@ -111,7 +111,7 @@ class ListViewItem extends HTMLElement {
       style: style(),
     });
 
-    // this.renderSubscribingBtn();
+    this.renderSubscribingBtn();
   }
 
   renderSubscribingBtn() {
@@ -133,6 +133,22 @@ class ListViewItem extends HTMLElement {
           ${isSubscribed ? '해지하기' : '구독하기'}
       </button-element>`;
     add({ target: btnContainer, template });
+
+    select({ selector: ['button-element'], parent: this }).addEventListener(
+      'click',
+      this.handleClick.bind(this)
+    );
+  }
+
+  handleClick(e: Event) {
+    const target = e.target as HTMLElement;
+    const isSubscribed = getProperty({ target, name: 'icon' }) === 'close';
+    const id = getProperty({ target, name: 'id' });
+    this.userStore.dispatch({
+      type: isSubscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE',
+      payload: id,
+    });
+    this.renderSubscribingBtn();
   }
 }
 

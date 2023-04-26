@@ -45,14 +45,16 @@ class Controller extends HTMLElement {
         `controller-item-element[position="left"]`
       ),
       name: 'hide',
-      value: String(positon === 'all' || positon === 'left'),
+      value: positon === 'all' || positon === 'left' ? 1 : 0,
+      type: 'boolean',
     });
     setProperty({
       target: this.shadowRoot?.querySelector(
         `controller-item-element[position="right"]`
       ),
       name: 'hide',
-      value: String(positon === 'all' || positon === 'right'),
+      value: positon === 'all' || positon === 'right' ? 1 : 0,
+      type: 'boolean',
     });
   }
 

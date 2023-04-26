@@ -64,6 +64,10 @@ class GridViewItem extends HTMLElement {
         target: btnContainer,
         template,
       });
+    select({ selector: ['button-element'], parent: this })?.addEventListener(
+      'click',
+      this.handleClick.bind(this)
+    );
   }
 
   render() {
@@ -99,21 +103,31 @@ class GridViewItem extends HTMLElement {
     });
 
     this.renderSubscribingBtn();
-    this.handleHover();
+
+    this.wrap?.addEventListener('mouseenter', this.handleHover.bind(this));
   }
 
-  handleHover = () => {
-    this.wrap?.addEventListener('mouseenter', () => {
+  handleClick(e: Event) {
+    const target = e.target as HTMLElement;
+    const isSubscribed = getProperty({ target, name: 'icon' }) === 'close';
+    const id = getProperty({ target, name: 'id' });
+    this.userStore.dispatch({
+      type: isSubscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE',
+      payload: id,
+    });
+    this.renderSubscribingBtn();
+  }
+
+  handleHover() {
+    this.wrap
+      ?.querySelector('.press-subscribe-btn-container')
+      ?.classList.remove('hide');
+    this.addEventListener('mouseleave', () => {
       this.wrap
         ?.querySelector('.press-subscribe-btn-container')
-        ?.classList.remove('hide');
-      this.addEventListener('mouseleave', () => {
-        this.wrap
-          ?.querySelector('.press-subscribe-btn-container')
-          ?.classList.add('hide');
-      });
+        ?.classList.add('hide');
     });
-  };
+  }
 }
 
 export default GridViewItem;

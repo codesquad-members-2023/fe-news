@@ -1,19 +1,14 @@
 import { MAX_ITEM_NUM, TEMP_ID } from '@constant/index';
 import { getPressAPI } from '@apis/news';
-import { getUser } from '@apis/user';
 import {
   customPressListContentsPropsType,
   pressListContentsPropsType,
 } from './pressType';
-import { VIEW, TAB } from '@store/news/newsType';
 
-export const getPressList = async ({
-  newsStore,
+export const getSlicedPressList = ({
+  pressList,
 }: pressListContentsPropsType) => {
-  let pressList = await getPressAPI();
-  pressList = pressList.slice(0, MAX_ITEM_NUM * 4);
-
-  return pressList;
+  return pressList.slice(0, MAX_ITEM_NUM * 4);
 };
 
 export const getCustomPressList = async ({

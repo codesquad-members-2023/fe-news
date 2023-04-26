@@ -22,7 +22,7 @@ class ControllerItem extends HTMLElement {
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name === 'hide') {
-      this.hide = getProperty({ target: this, name: 'hide' });
+      this.hide = getProperty({ target: this, name: 'hide', type: 'boolean' });
       this.render();
     }
   }
