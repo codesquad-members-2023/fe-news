@@ -72,13 +72,14 @@ export abstract class TempAbstractView {
   }
 
   render(state: State) {
-    this.$target.innerHTML = this.template(state);
+    // [리팩토링 예정] template() 자체가 비동기 함수가 되는 경우를 위해 아래처럼 처리
+    this.$target.innerHTML = this.template(state) as string;
     this.addChildren(state);
     this.setEvents(state);
   }
 
-  template(state: State) {
-    return ``;
+  template(state: State): string | Promise<string> {
+    return '';
   }
 
   addChildren(state: State) {

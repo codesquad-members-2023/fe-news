@@ -1,6 +1,6 @@
 import { Article, Props, State } from '@custom-types/types';
 import { TempAbstractView } from '@src/types/abstracts.js';
-import { NsCategoryNavbarObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/ns__category-navbar/NsCategoryNavbarObserverViewComponent.js';
+import { NsCategoryNavbarComponent } from '@components/main/main__left/ns__container/ns__category-container/ns__category-navbar/NsCategoryNavbarComponent.js';
 import { NsArticleContainerObserverViewComponent } from '@components/main/main__left/ns__container/ns__category-container/ns__article-container/NsArticleContainerObserverViewComponent.js';
 import { $ } from '@utils/dom.js';
 import { CATEGORY_CONTAINER_PAGE_START } from '@src/constants/constants.js';
@@ -11,7 +11,7 @@ import { CATEGORY_CONTAINER_PAGE_START } from '@src/constants/constants.js';
 2. mvc 패턴으로 변경하면서 리팩토링?
 
 - 추후에 flux 패턴으로 리팩토링할 거라면 여기서는 다른 컴포넌트들과 동일한 mvc 구조로 만들고 리팩토링하는 게 더 편하지 않을까?
- */
+*/
 
 export class NsCategoryContainerView extends TempAbstractView {
   constructor($target: HTMLElement) {
@@ -54,12 +54,12 @@ export class NsCategoryContainerView extends TempAbstractView {
   }
 
   addChildren(props: Props) {
-    const nsCategoryNavbar = new NsCategoryNavbarObserverViewComponent(props);
-    const nsArticleContainer = new NsArticleContainerObserverViewComponent(
+    const nsCategoryNavbar = new NsCategoryNavbarComponent(
+      $('#category-navbar-wrapper', this.$target) as HTMLElement,
       props,
     );
-    ($('#category-navbar-wrapper', this.$target) as HTMLElement).appendChild(
-      nsCategoryNavbar.element,
+    const nsArticleContainer = new NsArticleContainerObserverViewComponent(
+      props,
     );
     ($('#article-container-wrapper', this.$target) as HTMLElement).appendChild(
       nsArticleContainer.element,
@@ -99,21 +99,6 @@ export class NsCategoryContainerView extends TempAbstractView {
 // addEvent에 있던 애들
 // this.setState({ ...props, page });
 // this.addButtonEvent(this.state);
-
-// [기억] 이게 ns-category-navbar에 가도록 하자.
-// async addCategoryList(state: State) {
-//
-//   const categories = articles.map((article) => {
-//     return article.mediaInfo.type;
-//   });
-//
-//   const categorySet = new Set(categories);
-//   ($('#category-navbar', this.element) as HTMLElement).innerHTML = [
-//     ...categorySet,
-//   ].reduce((acc, cur) => {
-//     return acc + `<li>${cur}</li>`;
-//   }, '');
-// }
 
 // [기억] ns-article-container에 가게 하자.
 // async addArticleHeader(state: State) {
