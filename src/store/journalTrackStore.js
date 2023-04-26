@@ -1,13 +1,13 @@
 export class JournalTrackStore {
   constructor() {
-    this.pageSize;
+    this.batchPageSize;
   }
 
   setBatchSize(batchElments) {
-    this.pageSize = batchElments.length;
+    this.batchPageSize = batchElments.length;
   }
 
   getBatchSize() {
-    return this.pageSize;
+    return this.batchPageSize;
   }
 }

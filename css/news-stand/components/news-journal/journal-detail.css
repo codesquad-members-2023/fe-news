@@ -97,3 +97,17 @@
 .navType span:first-child:hover {
   text-decoration: underline;
 }
+
+.sub-button button {
+  cursor: pointer;
+  color: var(--gray300);
+  border-radius: 10px;
+  border: none;
+  padding: 5px;
+  background-color: #f2f2f2;
+  transition: background-color 0.2s ease;
+}
+
+.sub-button button:active {
+  background-color: #d9d9d9;
+}

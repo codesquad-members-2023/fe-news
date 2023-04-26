@@ -21,7 +21,7 @@ const createJournalList = () => {
       return;
     }
 
-    journalTrack.render();
+    journalTrack.renderToJournalTrack();
 
     const journalContainer = document.querySelector(".journal-container");
     journalContainer.innerHTML = "";
@@ -51,7 +51,6 @@ const createJournalList = () => {
 
   const showSubscribePage = (journalList) => {
     batchJournalList(journalList);
-
     resetTrackButton();
   };
 
@@ -95,19 +94,16 @@ const createJournalList = () => {
     const journalItems = await fetchJournalData(journalURL);
 
     const currentJournalType = journalDetailStore.getCurrentJournalType();
-    const chosenJounralList = journalItems.filter((journal) => {
-      if (journal.journalData.mediaInfo.type === currentJournalType) {
-        return true;
-      }
-      return false;
-    });
+    const chosenJournalList = journalItems.filter(
+      (journal) => journal.journalData.mediaInfo.type === currentJournalType
+    );
 
-    journalDetailStore.setDetailListAll(chosenJounralList);
+    journalDetailStore.setDetailListAll(chosenJournalList);
   };
 
   // batch 페이지에 언론사 디테일 삽입
   const renderJournalDetail = (currentState) => {
-    journalTrack.render();
+    journalTrack.renderToJournalTrack();
     const journalContainer = document.querySelector(".journal-container");
     journalContainer.innerHTML = "";
 
@@ -118,7 +114,7 @@ const createJournalList = () => {
     resetTrackButton();
   };
 
-  // 언론사 디테일 구속 리스트 전체 보여주기
+  // 언론사 리스트 디테일 페이지에 전체 보여주기
   const showJournalDetailAll = (journalContainer) => {
     journalTrack.getDetailNavHTML();
     journalTrack.addDetailNavEvent();
@@ -128,7 +124,7 @@ const createJournalList = () => {
     createJournalDetailItems(journalContainer, journalDetailAllItems);
   };
 
-  // 언론사 디테일 구독 리스트 보여주기
+  // 언론사 디테일 구독된 리스트만 보여주기
   const showJournalDetailSub = (journalContainer) => {
     const journalDetailSubItems = journalHeaderStore.journalSubscribe;
 
@@ -201,11 +197,12 @@ const createJournalList = () => {
     });
   };
 
+  // 트렉 렌더링 시 현재 페이지 기준의 버튼 리렌더링
   const resetTrackButton = () => {
     const batchElments = document.querySelectorAll(".journal-batch");
     journalTrackStore.setBatchSize(batchElments);
-    journalTrack.addButton();
-    journalTrack.addEvent();
+    journalTrack.addTrackMoveButtons();
+    journalTrack.addMoveEventToBtns();
   };
 
   loadJournalItems().catch((error) => console.error(error));

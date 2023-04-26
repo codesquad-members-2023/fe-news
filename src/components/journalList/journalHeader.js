@@ -1,16 +1,15 @@
 export class JournalHeader {
-  constructor(store) {
-    this.journalHeaderStore = store;
+  constructor(journalHeaderStore) {
+    this.journalHeaderStore = journalHeaderStore;
     this.element = document.createElement("header");
     this.element.classList.add("journal-header", "display-flex");
-    this.render();
-    this.journalAllBtn;
-    this.journalSubBtn;
-    this.journalDetailBtn;
-    this.journalGridBtn;
+    this.renderJournalHeader();
   }
 
-  headerMarkup(currentState, currentFrame) {
+  getHeaderHTML() {
+    const currentState = this.journalHeaderStore.getState();
+    const currentFrame = this.journalHeaderStore.getFrame();
+
     const FONT_TITLE = "Title-MD";
     const FONT_BODY = "Body-MD";
     const SVG_DETAIL_OFF = "src/assets/icons/list-view.svg";
@@ -34,7 +33,7 @@ export class JournalHeader {
         ? SVG_GRID_ON
         : SVG_GRID_OFF;
 
-    const journalHeader = `
+    const journalHeaderHTML = `
       <div class="journal-area display-flex">
         <div class="journal-all ${fontAll}">전체 언론사</div>
         <div class="journal-subList ${fontSub}">내가 구독한 언론사</div>
@@ -49,39 +48,38 @@ export class JournalHeader {
       </div>
     `;
 
-    this.element.innerHTML = journalHeader;
+    this.element.innerHTML = journalHeaderHTML;
   }
 
-  addEvent() {
-    this.journalAllBtn.addEventListener("click", () => {
-      this.journalHeaderStore.setState("STATE_ALL");
-      this.render();
-    });
-
-    this.journalSubBtn.addEventListener("click", () => {
-      this.journalHeaderStore.setState("STATE_SUB");
-      this.render();
-    });
-
-    this.journalDetailBtn.addEventListener("click", () => {
-      this.journalHeaderStore.setFrame("FRAME_DETAIL");
-      this.render();
-    });
-
-    this.journalGridBtn.addEventListener("click", () => {
-      this.journalHeaderStore.setFrame("FRAME_GRID");
-      this.render();
-    });
-  }
-
-  render() {
-    const currentState = this.journalHeaderStore.getState();
-    const currentFrame = this.journalHeaderStore.getFrame();
-    this.headerMarkup(currentState, currentFrame);
+  addEventToHeader() {
     this.journalAllBtn = this.element.querySelector(".journal-all");
     this.journalSubBtn = this.element.querySelector(".journal-subList");
     this.journalDetailBtn = this.element.querySelector(".journal-btn__detail");
     this.journalGridBtn = this.element.querySelector(".journal-btn__grid");
-    this.addEvent();
+
+    this.journalAllBtn.addEventListener("click", () => {
+      this.journalHeaderStore.setState("STATE_ALL");
+      this.renderJournalHeader();
+    });
+
+    this.journalSubBtn.addEventListener("click", () => {
+      this.journalHeaderStore.setState("STATE_SUB");
+      this.renderJournalHeader();
+    });
+
+    this.journalDetailBtn.addEventListener("click", () => {
+      this.journalHeaderStore.setFrame("FRAME_DETAIL");
+      this.renderJournalHeader();
+    });
+
+    this.journalGridBtn.addEventListener("click", () => {
+      this.journalHeaderStore.setFrame("FRAME_GRID");
+      this.renderJournalHeader();
+    });
+  }
+
+  renderJournalHeader() {
+    this.getHeaderHTML();
+    this.addEventToHeader();
   }
 }
