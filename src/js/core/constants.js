@@ -18,8 +18,9 @@ export const API_URL = {
   'media' : `${URL}/mediaData`,
 }
 
-export const autoAnimationInfo = {
-  pageDelayTime: 5000,
+export const DURATION_TIME = {
+  autoAnimation: 5000,
+  snackbar: 5000,
 }
 
 export const TOTAL_GRID_COUNT = 96;

@@ -1,10 +1,10 @@
-import createEl from '../../utils/util.js';
+import createElement from '../../utils/util.js';
 import { ViewTypeStore } from '../../stores/viewTypeStore.js';
 import { SubscribeStore } from '../../stores/subscribeListStore.js';
 import { PageStore } from '../../stores/pressPageStore.js';
-import { autoAnimationInfo } from '../../core/constants.js';
+import { DURATION_TIME } from '../../core/constants.js';
 import { SubscribedPressPageStore } from '../../stores/subscribePressPageStore.js';
-import { createBtn } from './subscribeBtn.js';
+import { createBtn, popupUnsubscribeBtn, popupSubscribeBtn } from './subscribeButton.js';
 
 class ListView {
   #viewStore;
@@ -13,7 +13,6 @@ class ListView {
   #pageStore;
   movePages;
   constructor(pressData) {
-    this.DELAY_TIME = autoAnimationInfo.pageDelayTime;
     this.#viewStore = ViewTypeStore;
     this.#subscribeStore = SubscribeStore;
     this.#subscribedPressPageStore = SubscribedPressPageStore;
@@ -23,7 +22,7 @@ class ListView {
       payload: pressData,
     });
     this.rafState = true;
-    this.listContainer = createEl('div', 'list-container');
+    this.listContainer = createElement('div', 'list-container');
   }
 
   init() {
@@ -66,7 +65,7 @@ class ListView {
     const press = [...pressMap][page.categoryIndex][page.pageIndex];
     const isSubscribe = this.#subscribeStore.getState()
       .subscribedList.has(press.pressLogo);
-    const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
+    const buttonType = isSubscribe ? 'close' : 'subscribe';
     return this.pressBoxTemplate(press, buttonType);
   }
 
@@ -74,7 +73,7 @@ class ListView {
     return `<div class="content-area">
     <div class="press-box">
       <a>
-        <img src="${press.pressLogo}">
+        <img src=${press.pressLogo} alt=${press.press}>
       </a>
       <span>${press.editedDate}</span>${createBtn(buttonType)}
     </div>
@@ -135,19 +134,38 @@ class ListView {
   clickSubscribeBtn(target) {
     const subscribeBtn = target.closest('.subscribe');
     if (this.isValidTargetBtn.bind(this)(target)) return;
-    const isSubscribe = subscribeBtn ? 'SUBSCRIBE' : 'UNSUBSCRIBE';
-    const subscribedPressInfo = target.closest('.press-box').querySelector('img').src;
-    // 버튼만 리렌더하게 변경
-    this.#subscribeStore.dispatch({
-      type: `${isSubscribe}`,
-      payload: subscribedPressInfo,
-    });
+    const subscribedPressInfo = target.closest('.press-box').querySelector('img');
     if(!subscribeBtn) {
-      this.#subscribedPressPageStore.dispatch({
-      type: 'REMOVE_PRESS',
-      payload: subscribedPressInfo,
-    });
+      if(document.querySelector('.popup-btn')) document.querySelector('.popup-confirm').outerHTML = popupUnsubscribeBtn(subscribedPressInfo.alt);
+      else this.listContainer.insertAdjacentHTML('afterend', popupUnsubscribeBtn(subscribedPressInfo.alt));
+      this.confirmUnsubscribe.bind(this)(target, subscribedPressInfo);
+    } else {
+      const addPopup = document.querySelector('.popup-add');
+      if(addPopup) addPopup.classList.remove('hidden');
+      else this.listContainer.insertAdjacentHTML('afterend', popupSubscribeBtn());
+      this.disappearPopup();
+      this.#subscribeStore.dispatch({
+        type: 'SUBSCRIBE',
+        payload: subscribedPressInfo.src,
+      });
     }
+  }
+
+  confirmUnsubscribe(target, subscribedPressInfo) {
+    document.querySelector('.popup-btn').addEventListener('click', ({ target }) => {
+      const confirm = target.classList.contains('confirm');
+      if(confirm) {
+        this.#subscribeStore.dispatch({
+          type: 'UNSUBSCRIBE',
+          payload: subscribedPressInfo.src,
+        });
+        this.#subscribedPressPageStore.dispatch({
+          type: 'REMOVE_PRESS',
+          payload: subscribedPressInfo.src,
+        });
+      }
+      target.closest('.popup-confirm').style.display = 'none';
+    })
   }
 
   isValidTargetBtn(target) {
@@ -155,6 +173,12 @@ class ListView {
     const unsubscribeBtn = target.closest('.unsubscribe');
     const closeBtn = target.closest('.close');
     if(!subscribeBtn && !unsubscribeBtn && !closeBtn) return true;
+  }
+
+  disappearPopup() {
+    setTimeout(() => {
+      document.querySelector('.popup-add').classList.add('hidden');
+    }, DURATION_TIME.snackbar);
   }
 
   clickSubscribedPress(target) {
@@ -173,7 +197,7 @@ class ListView {
     let lastTime = 0;
     this.movePages = (currentTime) => {
       let deltaTime = currentTime - lastTime;
-      if (deltaTime > this.DELAY_TIME) {
+      if (deltaTime > DURATION_TIME.autoAnimation) {
         this.#pageStore.dispatch({ type: 'CLICK_NEXT' });
         lastTime = currentTime;
       }
