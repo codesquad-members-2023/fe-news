@@ -1,0 +1,31 @@
+.newssection_view {
+  .newssection_view_empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 930px;
+    height: 390px;
+    padding: 100px 0;
+    gap: 10px;
+    border-top: 1px solid $gray100;
+    border-bottom: 1px solid $gray100;
+
+    .view_empty_header {
+      margin-bottom: 20px;
+      @include font($Title_md, $Bold);
+    }
+    .view_empty_description {
+      color: $gray500;
+      @include font($Body_sm, $Medium);
+    }
+
+    .view_empty_subscribe_button {
+      width: 170px;
+      height: 50px;
+      margin-top: 20px;
+      background-color: $primary;
+      @include font($Title_md, $Bold);
+      color: $white;
+    }
+  }
+}

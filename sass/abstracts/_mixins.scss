@@ -1,4 +1,5 @@
 @mixin font($size, $weight) {
   font-size: $size;
   font-weight: $weight;
+  font-family: 'Pretendard', sans-serif;
 }

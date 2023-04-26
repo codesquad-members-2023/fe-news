@@ -1,0 +1,160 @@
+.newssection_view {
+  .newssection_view_list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+
+    width: 930px;
+    height: 388px;
+
+    .list_header {
+      display: flex;
+      align-items: center;
+      width: 930px;
+      height: 40px;
+      padding: 16px 0px;
+
+      border: 1px solid $gray100;
+      background-color: $off-white;
+
+      .list_header_category {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+
+        padding: 0px 14px;
+        gap: 8px;
+
+        color: $gray300;
+        cursor: pointer;
+      }
+
+      .show {
+        display: flex;
+        align-items: center;
+        padding: 0px 16px;
+        gap: 8px;
+
+        width: 166px;
+        height: 40px;
+
+        background: $primary;
+        color: $white;
+        cursor: inherit;
+      }
+    }
+
+    .list_view {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 930px;
+      height: 348px;
+      padding: 24px;
+      gap: 16px;
+
+      border: 1px solid $gray100;
+      .list_view_top {
+        display: flex;
+        align-items: center;
+        width: 882px;
+        height: 24px;
+        gap: 16px;
+
+        .press_logo {
+          width: 70px;
+          height: 30px;
+        }
+
+        .updatetime {
+          text-align: center;
+          width: 125px;
+          height: 14px;
+          @include font($Body_xs, $Medium);
+          line-height: 14px;
+
+          color: $gray400;
+        }
+        .subbutton {
+          width: 74px;
+          height: 24px;
+        }
+
+        .nosubbutton {
+          width: 24px;
+          height: 24px;
+        }
+
+        .hidden {
+          display: none;
+        }
+      }
+
+      .list_view_bottom {
+        display: flex;
+        .bottom_main {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 320px;
+          height: 260px;
+          padding: 0px;
+          gap: 16px;
+
+          .main_news_img {
+            box-sizing: border-box;
+            width: 320px;
+            height: 200px;
+
+            border: 1px solid $gray100;
+          }
+
+          .main_news_text {
+            width: 320px;
+            height: 44px;
+            @include font($Title_md, $Medium);
+          }
+        }
+        .bottom_sub {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 530px;
+          height: 245px;
+
+          padding: 0px;
+          gap: 16px;
+          .sub_list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            li {
+              width: 530px;
+              height: 22px;
+
+              padding-left: 40px;
+
+              @include font($Body_md, $Medium);
+              line-height: 22px;
+            }
+          }
+          .sub_instruction {
+            width: 530px;
+            height: 17px;
+
+            padding-left: 40px;
+            @include font($Body_sm, $Medium);
+            line-height: 17px;
+            color: $gray200;
+          }
+        }
+      }
+    }
+
+    a {
+      cursor: pointer;
+    }
+  }
+}
