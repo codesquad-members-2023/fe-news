@@ -204,7 +204,8 @@ class ListView extends HTMLElement {
       template,
     });
 
-    if (this.newsStore.getState().display.currentTab === this.tab) {
+    const { currentTab, currentView } = this.newsStore.getState().display;
+    if (currentView === VIEW.LIST && currentTab === this.tab) {
       setInterval(this.handleSlide.bind(this), SILDE_INTERVAL_TIME);
     }
   }
