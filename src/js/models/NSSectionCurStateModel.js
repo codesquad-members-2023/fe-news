@@ -173,6 +173,9 @@ export default class NSSectionCurViewStateModel extends Observer {
       }
     });
 
+    if (curPressIndex === this._subPressData.length - 1) {
+      curPressIndex -= 1;
+    }
     this._subPressData = this._subPressData.filter((subData) => subData.pressName !== pressName);
     this._subPressData.length !== 0
       ? this.setCurListSubPress(this._subPressData[curPressIndex])
@@ -283,5 +286,33 @@ export default class NSSectionCurViewStateModel extends Observer {
     const changedCategoryIndex = curCategoryIndex + 1;
     const changedCategory = this._allCategory.at(changedCategoryIndex - categoryCount);
     return changedCategory;
+  }
+
+  increaseIndexOnListSubView() {
+    const { curListSubPress } = this._curViewState;
+    let curPressIndex = null;
+    this._subPressData.some((press, index) => {
+      if (press === curListSubPress) {
+        curPressIndex = index;
+        return true;
+      }
+    });
+
+    this.setCurListSubPress(this._subPressData.at(curPressIndex + 1 - this._subPressData.length));
+    this.notify(this._curViewState);
+  }
+
+  decreaseIndexOnListSubView() {
+    const { curListSubPress } = this._curViewState;
+    let curPressIndex = null;
+    this._subPressData.some((press, index) => {
+      if (press === curListSubPress) {
+        curPressIndex = index;
+        return true;
+      }
+    });
+
+    this.setCurListSubPress(this._subPressData.at(curPressIndex - 1));
+    this.notify(this._curViewState);
   }
 }
