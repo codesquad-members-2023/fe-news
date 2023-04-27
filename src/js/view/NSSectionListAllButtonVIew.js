@@ -35,11 +35,11 @@ export default class ListAllButtonView {
 
   slideButtonHandler({ target }) {
     if (target.closest('[data-id="button_left"]')) {
-      this._curViewStateModel.decreaseIndexOnListView();
+      this._curViewStateModel.decreaseIndexOnListAllView();
     }
 
     if (target.closest('[data-id="button_right"]')) {
-      this._curViewStateModel.increaseIndexOnListView();
+      this._curViewStateModel.increaseIndexOnListAllView();
     }
   }
 
