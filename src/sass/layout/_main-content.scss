@@ -1,7 +1,6 @@
 .main-content {
   &__header {
     @include flex($justify-content: space-between, $align-items: center);
-    border: 1px solid #000;
   }
 }
 
@@ -46,9 +45,6 @@
     right: -47px;
     transform: translate3d(0, -50%, 0);
   }
-  // &-wrapper {
-  //   overflow-x: hidden;
-  // }
 }
 .press-grid {
   display: grid;
@@ -75,6 +71,10 @@
 
   li {
     padding: 0 16px;
+  }
+
+  li.current-category {
+    @include flex($justify-content: space-between, $align-items: center);
   }
 }
 

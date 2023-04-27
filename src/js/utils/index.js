@@ -14,14 +14,14 @@ export const dataUtils = {
 
     return dataSlices;
   },
-  getDataByCategory: ({ dataArr, categoryOrder }) => {
-    const dataByCategoryOrder = {};
+  getDataByCategory: ({ dataArr, categories }) => {
+    const dataByCategory = {};
 
-    categoryOrder.forEach((category) => {
-      dataByCategoryOrder[category] = dataArr.filter(({ newsCategory }) => newsCategory === category);
+    categories.forEach((category) => {
+      dataByCategory[category] = dataArr.filter(({ newsCategory }) => newsCategory === category);
     });
 
-    return dataByCategoryOrder;
+    return dataByCategory;
   },
   getDataCountByCategory: (dataByCategory) => {
     const dataCountByCategory = {};
@@ -65,4 +65,16 @@ export const validatorUtils = {
     pressTabType === activePressTab && showTabType === activeShowTab,
   isFirstPage: (currentPage) => currentPage === 0,
   isLastPage: (currentPage, totalPages) => currentPage === totalPages - 1
+};
+
+export const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+export const getUniqueRandomNumbersArr = (min, max) => {
+  const len = max - min + 1;
+  const uniqueNumbers = new Set();
+
+  while (uniqueNumbers.size < len) {
+    uniqueNumbers.add(getRandomNumber(min, max));
+  }
+
+  return Array.from(uniqueNumbers);
 };

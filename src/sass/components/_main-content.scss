@@ -40,10 +40,20 @@
 .press-list__category {
   border: 1px solid $gray100;
   background-color: $off-white;
+
   li {
     height: 40px;
     line-height: 40px;
     cursor: pointer;
+  }
+
+  li:not(.current-category):hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  li.current-category {
+    width: 166px;
+    background-color: $primary;
   }
 }
 
@@ -63,6 +73,9 @@
   }
 }
 
+.press-list__main-news {
+  width: 320px;
+}
 .press-list__main-news:hover {
   .main-news__img {
     transform: scale(1.05);

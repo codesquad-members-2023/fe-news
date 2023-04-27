@@ -48,6 +48,17 @@ body {
     @include fontType($body-SM);
     color: $gray300;
   }
+  .current-category {
+    color: $white;
+
+    &__count {
+      @include fontType($title-XS);
+    }
+
+    &__entire {
+      color: $white70;
+    }
+  }
 }
 
 .update-time {

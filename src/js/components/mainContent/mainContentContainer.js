@@ -1,5 +1,5 @@
-import { CATEGORY_ORDER } from '../../constants/index.js';
-import { dataUtils } from '../../utils/index.js';
+import { CATEGORY } from '../../constants/index.js';
+import { dataUtils, getUniqueRandomNumbersArr } from '../../utils/index.js';
 import MainContentGrid from './mainContentGrid.js';
 import MainContentList from './mainContentList.js';
 
@@ -22,15 +22,18 @@ export default class MainContentContainer {
     new MainContentGrid(this.$mainEle, { pressTabType: 'all', allPressData }).render();
     new MainContentGrid(this.$mainEle, { pressTabType: 'subscribed', allPressData }).render();
 
+    const randomOrder = getUniqueRandomNumbersArr(0, CATEGORY.length - 1);
+    const categories = randomOrder.map((order) => CATEGORY[order]);
     const dataByCategory = getDataByCategory({
       dataArr: allPressData,
-      categoryOrder: CATEGORY_ORDER
+      categories
     });
     const dataCountByCategory = getDataCountByCategory(dataByCategory);
 
     new MainContentList(this.$mainEle, {
       pressTabType: 'all',
       allPressData: dataByCategory,
+      categories,
       dataCountByCategory
     }).render();
   }
