@@ -1,23 +1,28 @@
 import { Component } from "../../../core/Component.js";
+import blueListBtn from "../../../images/list_btn_blue.svg";
+import grayListBtn from "../../../images/list_btn_gray.svg";
+import blueGridBtn from "../../../images/grid_btn_blue.svg";
+import grayGridBtn from "../../../images/grid_btn_gray.svg";
+import { GRID, LIST } from "../../../constants/index.js";
 
 export class ViewBtns extends Component {
-  templete() {
-    const { viewState } = this.props;
-    const listColor = viewState === "list" ? "blue" : "gray";
-    const gridColor = listColor === "blue" ? "gray" : "blue";
+  template() {
+    const { viewBtnState } = this.props;
+    const listBtn = viewBtnState === LIST ? blueListBtn : grayListBtn;
+    const gridBtn = viewBtnState === GRID ? blueGridBtn : grayGridBtn;
 
     return `
-      <img class="main__btn list ${listColor}" src="src/images/list_btn_${listColor}.svg" alt="" />
-      <img class="main__btn grid ${gridColor}" src="src/images/grid_btn_${gridColor}.svg" alt="" />
+      <img class="main__btn list" src="${listBtn}" alt="" />
+      <img class="main__btn grid" src="${gridBtn}" alt="" />
     `;
   }
 
   setEvent() {
-    const { changeViewState } = this.props;
+    const { changeViewBtnState } = this.props;
 
     this.target.addEventListener("click", ({ target: { className } }) => {
-      const [imgName, viewState, color] = className.split(" ");
-      changeViewState(viewState);
+      const [_imgName, viewBtnState] = className.split(" ");
+      changeViewBtnState(viewBtnState);
     });
   }
 }

@@ -1,25 +1,31 @@
+import { PRESS_STATUS } from "../../../constants/index.js";
+import {
+  SUBSCRIBE_BTN_TEXT,
+  UNSUBSCRIBE_BTN_TEXT,
+} from "../../../constants/ui.js";
 import { Component } from "../../../core/Component.js";
+import subscribeBtn from "../../../images/subscribe_btn.svg";
 
-export class GridItem extends Component {
+export class ItemView extends Component {
   setUp() {
     const { pressIcon, subscribeStatus } = this.props;
 
     const btnText =
-      subscribeStatus === "구독되어 있지 않습니다."
-        ? "+ 구독하기"
-        : "- 해지하기";
+      subscribeStatus === PRESS_STATUS.UNSUBSCRIBED
+        ? SUBSCRIBE_BTN_TEXT
+        : UNSUBSCRIBE_BTN_TEXT;
 
     this._state = {
       currentIcon: pressIcon,
       btnText,
-      btnIcon: "src/images/subscribe_btn.svg",
+      subscribeBtn,
     };
   }
 
-  templete() {
-    const { currentIcon, btnText, btnIcon } = this._state;
+  template() {
+    const { currentIcon, btnText, subscribeBtn } = this._state;
     const itemNode =
-      currentIcon === btnIcon
+      currentIcon === subscribeBtn
         ? `<div class="subscribe-btn">
              <div class="subscribe-text">${btnText}</div>
            </div>`
@@ -31,11 +37,11 @@ export class GridItem extends Component {
   }
 
   setEvent() {
-    const { btnIcon } = this._state;
+    const { subscribeBtn } = this._state;
     const { pressIcon, subscribePress } = this.props;
     const showSubscribeBtn = () => {
       this.target.classList.add("hovered");
-      this.setState({ currentIcon: btnIcon });
+      this.setState({ currentIcon: subscribeBtn });
       this.target.removeEventListener("mouseover", showSubscribeBtn);
     };
 
@@ -52,7 +58,7 @@ export class GridItem extends Component {
         const btnTextToChange = this.getBtnTextToChange(btnText);
         subscribePress(pressIcon);
         this.setState({
-          currentIcon: btnIcon,
+          currentIcon: subscribeBtn,
           btnText: btnTextToChange,
         });
       }
@@ -60,6 +66,8 @@ export class GridItem extends Component {
   }
 
   getBtnTextToChange(btnState) {
-    return btnState === "+ 구독하기" ? "- 해지하기" : "+ 구독하기";
+    return btnState === SUBSCRIBE_BTN_TEXT
+      ? UNSUBSCRIBE_BTN_TEXT
+      : SUBSCRIBE_BTN_TEXT;
   }
 }

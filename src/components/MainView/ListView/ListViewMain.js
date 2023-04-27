@@ -2,7 +2,7 @@ import { Component } from "../../../core/Component.js";
 import { ListViewSubscribeBtn } from "./ListViewSubscribeBtn.js";
 
 export class ListViewMain extends Component {
-  templete() {
+  template() {
     const { currentCategoryData } = this.props;
     const {
       name,
@@ -43,13 +43,13 @@ export class ListViewMain extends Component {
   mounted() {
     const {
       currentCategoryData: { logo_src },
-      subscribeStatus,
+      currentPressSubscribeStatus,
       subscribePress,
     } = this.props;
     const subscribeBtn = this.target.querySelector(".subscribe-btn");
 
     new ListViewSubscribeBtn(subscribeBtn, {
-      subscribeStatus,
+      currentPressSubscribeStatus,
       subscribePress,
       targetLogoSrc: logo_src,
     });

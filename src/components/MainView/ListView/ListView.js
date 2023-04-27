@@ -3,31 +3,39 @@ import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
 import { ListViewHeader } from "./ListViewHeader.js";
 import { ListViewMain } from "./ListViewMain.js";
 import { getPageNumberByDir } from "../../../utils/utils.js";
+import { ALL_PRESSES, LIST_VIEW } from "../../../constants/index.js";
+import { PREV_PAGE_BTN, NEXT_PAGE_BTN } from "../../../constants/ui.js";
 import { ProgressBarAnimationManager } from "./ListViewAnimaionManager.js";
 
 export class ListView extends Component {
   constructor(target, props) {
     super(target, props);
+    const { PAGE_FLIP_INTERVAL, DIRECTION } = LIST_VIEW;
+    const {
+      initProgressBarAnimation,
+      repaintProgressBar,
+      moveToNextPageToward,
+    } = this;
+
     this.progressBarAnimation = new ProgressBarAnimationManager({
-      moveToNextPageToward: this.moveToNextPageToward.bind(this),
-      getCurrentCategoryNode: this.getCurrentCategoryNode.bind(this),
+      PAGE_FLIP_INTERVAL,
+      DIRECTION,
+      repaintProgressBar,
+      moveToNextPageToward: moveToNextPageToward.bind(this),
+      initProgressBarAnimation: initProgressBarAnimation.bind(this),
     });
     this.initProgressBarAnimation();
-  }
-
-  initProgressBarAnimation() {
-    this.progressBarAnimation.init();
   }
 
   setUp() {
     this._state = this.getCurrentListViewState(this.props);
   }
 
-  templete() {
+  template() {
     return `
       <div class="list-view">
-        <div class="view-page-btn left"><</div>
-        <div class="view-page-btn right">></div>
+        <div class="view-page-btn left">${PREV_PAGE_BTN}</div>
+        <div class="view-page-btn right">${NEXT_PAGE_BTN}</div>
         <div class="list-view__header"></div>
         <div class="list-view__main"></div>
       </div>
@@ -39,6 +47,7 @@ export class ListView extends Component {
       if (target.closest(".view-page-btn")) {
         const [_, dir] = target.closest(".view-page-btn").className.split(" ");
         this.moveToNextPageToward(dir);
+        this.initProgressBarAnimation();
       }
     });
   }
@@ -50,9 +59,9 @@ export class ListView extends Component {
       currentCategory,
       currentCategoryTotalPage,
       categoryIds,
-      btnState,
+      filterBtnState,
       currentCategoryData,
-      subscribeStatus,
+      currentPressSubscribeStatus,
     } = this._state;
     const { subscribePress, pressCategories } = this.props;
     const { moveToTargetCategoryBy, initProgressBarAnimation } = this;
@@ -63,7 +72,7 @@ export class ListView extends Component {
       currentCategoryTotalPage,
       categoryIds,
       pressCategories,
-      btnState,
+      filterBtnState,
       moveToTargetCategoryBy: moveToTargetCategoryBy.bind(this),
       initProgressBarAnimation: initProgressBarAnimation.bind(this),
     });
@@ -72,32 +81,48 @@ export class ListView extends Component {
 
     new ListViewMain(listViewMain, {
       currentCategoryData,
-      subscribeStatus,
+      currentPressSubscribeStatus,
       subscribePress,
     });
   }
 
-  getCurrentListViewState(listViewData, dir) {
-    const FIRST_PAGE = 1;
+  initProgressBarAnimation() {
+    const progressBarNode = this.getProgressBarNode();
+    this.progressBarAnimation.init(progressBarNode);
+  }
 
+  getProgressBarNode() {
+    const currentCategoryText = this.target.querySelector(
+      `[data-category-id="${this._state.currentCategory}"`
+    );
+    return currentCategoryText.closest(".list-view__current-category");
+  }
+
+  repaintProgressBar(target, percentage) {
+    const { CURRENT_BACKGROUND_COLOR, BACKGROUND_COLOR_TO_FILL } = LIST_VIEW;
+    target.style.backgroundImage = `linear-gradient(to right, ${CURRENT_BACKGROUND_COLOR} ${percentage}%, ${BACKGROUND_COLOR_TO_FILL} ${percentage}%)`;
+  }
+
+  getCurrentListViewState(listViewData, dir) {
     let {
+      START_PAGE,
       currentPageInAllCategories,
       currentPageInCategory,
       currentCategory,
       targetCategory,
       pressData,
-      btnState,
-      allPressSubscribeStatus,
+      filterBtnState,
+      targetPressSubscribeStatus,
     } = listViewData;
 
     const categoryIds =
-      btnState === "all-press"
+      filterBtnState === ALL_PRESSES
         ? listUpCategoryIds(pressData)
         : listUpPressName(pressData);
     const sortedPressData = this.sortPressDataByCategoryId(
       categoryIds,
       pressData,
-      btnState
+      filterBtnState
     );
     const allPressContents = this.getAllPressContents(sortedPressData);
     const categoryLengths = this.getCategoryLengths(sortedPressData);
@@ -109,12 +134,12 @@ export class ListView extends Component {
         : this.getPageNumberByTargetCategory(
             targetCategory,
             categoryLengths,
-            FIRST_PAGE
+            START_PAGE
           );
 
     if (nextPageInAllCategories > LAST_PAGE) {
-      nextPageInAllCategories = FIRST_PAGE;
-    } else if (nextPageInAllCategories < FIRST_PAGE) {
+      nextPageInAllCategories = START_PAGE;
+    } else if (nextPageInAllCategories < START_PAGE) {
       nextPageInAllCategories = LAST_PAGE;
     }
 
@@ -123,7 +148,7 @@ export class ListView extends Component {
       nextCategory = targetCategory;
     } else {
       nextCategory =
-        btnState === "all-press"
+        filterBtnState === ALL_PRESSES
           ? allPressContents[nextPageInAllCategories - 1].category_id
           : allPressContents[nextPageInAllCategories - 1].name;
     }
@@ -133,34 +158,35 @@ export class ListView extends Component {
     let nextPageInCategory =
       currentCategory !== nextCategory || !currentPageInCategory
         ? dir === "right" || dir === undefined
-          ? FIRST_PAGE
+          ? START_PAGE
           : nextCategoryTotalPage
         : getPageNumberByDir(dir, currentPageInCategory);
 
     const nextCategoryData = allPressContents[nextPageInAllCategories - 1];
-    const targetPressSubscribeStatus =
-      allPressSubscribeStatus[nextPageInAllCategories - 1];
+    const currentPressSubscribeStatus =
+      targetPressSubscribeStatus[nextPageInAllCategories - 1];
 
     return {
+      START_PAGE,
       currentPageInAllCategories: nextPageInAllCategories,
       currentPageInCategory: nextPageInCategory,
       currentCategory: nextCategory,
       currentCategoryTotalPage: nextCategoryTotalPage,
-      categoryIds,
+      currentPressSubscribeStatus,
       currentCategoryData: nextCategoryData,
+      categoryIds,
       pressData,
-      btnState,
-      subscribeStatus: targetPressSubscribeStatus,
-      allPressSubscribeStatus,
+      filterBtnState,
+      targetPressSubscribeStatus,
     };
   }
 
-  sortPressDataByCategoryId(categoryIds, pressData, btnState) {
+  sortPressDataByCategoryId(categoryIds, pressData, filterBtnState) {
     const sortedPressData = {};
 
     categoryIds.forEach((id) => (sortedPressData[id] = []));
     pressData.forEach((press) => {
-      if (btnState === "all-press") {
+      if (filterBtnState === ALL_PRESSES) {
         sortedPressData[press.category_id].push(press);
       } else {
         sortedPressData[press.name].push(press);
@@ -188,44 +214,31 @@ export class ListView extends Component {
     return allPressContents.length;
   }
 
-  getPageNumberByTargetCategory(targetCategory, categoryLengths, FIRST_PAGE) {
-    let currentPage = 0;
-    if (targetCategory) {
-      for (const [key, value] of Object.entries(categoryLengths)) {
-        if (key === targetCategory) {
-          currentPage += FIRST_PAGE;
-          return currentPage;
-        }
-        currentPage += value;
-      }
-    } else {
-      currentPage += FIRST_PAGE;
-      return currentPage;
+  getPageNumberByTargetCategory(targetCategory, categoryLengths, START_PAGE) {
+    let CURRENT_PAGE = START_PAGE;
+    if (!targetCategory) return CURRENT_PAGE;
+
+    for (const [key, value] of Object.entries(categoryLengths)) {
+      if (key === targetCategory) return CURRENT_PAGE;
+      CURRENT_PAGE += value;
     }
   }
 
-  moveToTargetCategoryBy(targetCategory, btnState) {
-    const { pressData, allPressSubscribeStatus } = this._state;
+  moveToTargetCategoryBy(targetCategory, filterBtnState) {
+    const { START_PAGE, pressData, targetPressSubscribeStatus } = this._state;
 
     this.setState(
       this.getCurrentListViewState({
+        START_PAGE,
         pressData,
-        allPressSubscribeStatus,
-        btnState,
+        targetPressSubscribeStatus,
+        filterBtnState,
         targetCategory,
       })
     );
-    this.initProgressBarAnimation();
   }
 
   moveToNextPageToward(dir) {
     this.setState(this.getCurrentListViewState(this._state, dir));
-    this.initProgressBarAnimation();
-  }
-
-  getCurrentCategoryNode() {
-    return this.target.querySelector(
-      `[data-category-id="${this._state.currentCategory}"`
-    );
   }
 }

@@ -1,6 +1,8 @@
 import { Component } from "../../../core/Component.js";
-import { GridItem } from "./GridItem.js";
+import { ItemView } from "./ItemView.js";
 import { getPageNumberByDir } from "../../../utils/utils.js";
+import { NEXT_PAGE_BTN, PREV_PAGE_BTN } from "../../../constants/ui.js";
+import subscribeBtn from "../../../images/subscribe_btn.svg";
 
 export class GridView extends Component {
   setUp() {
@@ -8,13 +10,13 @@ export class GridView extends Component {
     this._state = sortedItems;
   }
 
-  templete() {
-    const { itemLimitPerPage } = this.props;
-    const { allPressData, btnDir } = this._state;
+  template() {
+    const { ITEM_LIMIT_PER_PAGE } = this.props;
+    const { targetPressData, btnDirState } = this._state;
 
     const btnNodes =
-      allPressData.length > itemLimitPerPage
-        ? Object.entries(btnDir).reduce(
+      targetPressData.length > ITEM_LIMIT_PER_PAGE
+        ? Object.entries(btnDirState).reduce(
             (acc, [btnDir, btnDirSymbol]) =>
               acc +
               `<div class="view-page-btn ${btnDir}">${btnDirSymbol}</div>`,
@@ -23,7 +25,7 @@ export class GridView extends Component {
         : "";
 
     const itemContainers = Array.from(
-      { length: itemLimitPerPage },
+      { length: ITEM_LIMIT_PER_PAGE },
       (_, index) =>
         `<div class="item__container" data-index-number="${index}"></div>`
     ).join("");
@@ -50,9 +52,10 @@ export class GridView extends Component {
       );
 
       const subscribeStatus = targetSubscribeStatus[index];
-      new GridItem(itemContainer, {
+
+      new ItemView(itemContainer, {
         pressIcon: logo_src,
-        subscribeBtn: "src/images/subscribe_btn.svg",
+        subscribeBtn,
         subscribeStatus,
         subscribePress,
       });
@@ -61,49 +64,59 @@ export class GridView extends Component {
 
   getGridViewState(pressData, dir) {
     const {
-      pageLimit,
-      itemLimitPerPage,
+      START_PAGE,
+      PAGE_LIMIT,
+      ITEM_LIMIT_PER_PAGE,
       currentPageNumber,
       press,
-      allPressData,
-      btnDir,
-      allPressSubscribeStatus,
+      targetPressData,
+      targetPressSubscribeStatus,
     } = pressData;
-    const currentPage = currentPageNumber ? currentPageNumber : 1;
-    const originalData = allPressData ? allPressData : press;
+
+    const currentPage = currentPageNumber || START_PAGE;
+    const originalData = targetPressData || press;
     const nextPageNumber = dir
       ? getPageNumberByDir(dir, currentPage)
       : currentPage;
-    const endIndex = nextPageNumber * itemLimitPerPage;
-    const firstIndex = endIndex - itemLimitPerPage;
-    const sortedItems = originalData.slice(firstIndex, endIndex);
-    const btnState = this.getBtnState(pageLimit, nextPageNumber, btnDir);
 
-    const targetSubscribeStatus = allPressSubscribeStatus.slice(
+    const endIndex = nextPageNumber * ITEM_LIMIT_PER_PAGE;
+    const firstIndex = endIndex - ITEM_LIMIT_PER_PAGE;
+    const sortedItems = originalData.slice(firstIndex, endIndex);
+    const btnDirState = this.getBtnDirState(
+      START_PAGE,
+      PAGE_LIMIT,
+      nextPageNumber
+    );
+
+    const targetSubscribeStatus = targetPressSubscribeStatus.slice(
       firstIndex,
       endIndex
     );
 
     return {
-      pageLimit,
+      START_PAGE,
+      PAGE_LIMIT,
+      ITEM_LIMIT_PER_PAGE,
       currentPageNumber: nextPageNumber,
       press: sortedItems,
-      allPressData,
-      btnDir: btnState,
-      itemLimitPerPage,
-      allPressSubscribeStatus,
+      targetPressData,
+      btnDirState,
+      targetPressSubscribeStatus,
       targetSubscribeStatus,
     };
   }
 
-  getBtnState(pageLimit, nextPageNumber, btnDir) {
-    const FIRST_PAGE = 1;
-    const LAST_PAGE = pageLimit;
+  getBtnDirState(START_PAGE, PAGE_LIMIT, nextPageNumber) {
+    let btnDirState;
 
-    if (nextPageNumber === FIRST_PAGE) btnDir = { right: ">" };
-    else if (nextPageNumber === LAST_PAGE) btnDir = { left: "<" };
-    else btnDir = { left: "<", right: ">" };
+    if (nextPageNumber === START_PAGE) {
+      btnDirState = { right: NEXT_PAGE_BTN };
+    } else if (nextPageNumber === PAGE_LIMIT) {
+      btnDirState = { left: PREV_PAGE_BTN };
+    } else {
+      btnDirState = { left: PREV_PAGE_BTN, right: NEXT_PAGE_BTN };
+    }
 
-    return btnDir;
+    return btnDirState;
   }
 }
