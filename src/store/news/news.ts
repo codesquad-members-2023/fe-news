@@ -60,6 +60,7 @@ const changePageNumber = ({ state, type }: changePageNumberPropsType) => {
   switch (type) {
     case 'NEXT_PAGE': {
       display.currentPage = isLastPage ? 0 : currentPage + 1;
+      console.log(currentPage);
       return state;
     }
     case 'PREV_PAGE': {

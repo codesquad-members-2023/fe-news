@@ -214,7 +214,7 @@ class ListViewTab extends HTMLElement {
   handleCustomTabClick(e: Event) {
     const target = e.target as HTMLElement;
 
-    const index = getProperty({ target, name: 'index' });
+    const index = getProperty({ target, name: 'index', type: 'number' });
     this.newStore.dispatch({
       type: 'SET_CURRENT_PAGE',
       payload: { currentPage: index },

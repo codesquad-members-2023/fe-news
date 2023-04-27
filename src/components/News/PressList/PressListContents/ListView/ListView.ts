@@ -29,6 +29,7 @@ class ListView extends HTMLElement {
   tab: TAB;
   pressList: PressType[];
   time: number;
+  intervalId: string | number | NodeJS.Timeout | undefined;
 
   constructor() {
     super();
@@ -171,6 +172,7 @@ class ListView extends HTMLElement {
   }
 
   handleSlide() {
+    console.log('dddd');
     const target = select({
       selector: ['list-view-tab-element'],
       parent: this,
@@ -204,10 +206,23 @@ class ListView extends HTMLElement {
       template,
     });
 
-    const { currentTab, currentView } = this.newsStore.getState().display;
-    if (currentView === VIEW.LIST && currentTab === this.tab) {
-      setInterval(this.handleSlide.bind(this), SILDE_INTERVAL_TIME);
-    }
+    this.newsStore.subscribe(() => {
+      const { currentTab, currentView } = this.newsStore.getState().display;
+
+      if (
+        currentView === VIEW.LIST &&
+        this.tab === currentTab &&
+        !this.intervalId
+      ) {
+        this.intervalId = setInterval(
+          this.handleSlide.bind(this),
+          SILDE_INTERVAL_TIME
+        );
+      } else {
+        clearInterval(this.intervalId);
+        this.intervalId = undefined;
+      }
+    });
   }
 }
 
