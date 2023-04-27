@@ -7,4 +7,6 @@ export const filterSusbscribedPress = ({
   pressList: PressType[];
   subscribingPressIds: string[];
 }) =>
-  pressList.filter((list: PressType) => subscribingPressIds.includes(list.pid));
+  subscribingPressIds.map((id: string) =>
+    pressList.find((press: PressType) => press.pid === id)
+  );
