@@ -14,6 +14,7 @@ import { UserType } from '@store/user/userType';
 import { SectionType } from '@store/news/newsType';
 import Modal from '@common/Modal/Modal';
 import UnsubscribeModal from '@common/Modal/UnsubscribeModal/UnsubscribeModal';
+import Snackbar from '@common/Snackbar/Snackbar';
 
 interface ListViewItem {
   icon?: string | null;
@@ -155,6 +156,11 @@ class ListViewItem extends HTMLElement {
       modal.show();
       this.userStore.subscribe(this.renderSubscribingBtn.bind(this));
     } else {
+      const snackbar = create({
+        tagName: 'snackbar-element',
+        attributeList: [['text', '내가 구독한 언론사에 추가되었습니다.']],
+      }) as Snackbar;
+      snackbar.show();
       this.userStore.dispatch({
         type: 'SUBSCRIBE',
         payload: id,

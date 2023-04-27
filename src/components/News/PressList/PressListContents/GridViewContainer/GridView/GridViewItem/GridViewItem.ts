@@ -5,6 +5,7 @@ import {
   getProperty,
   createWrap,
   select,
+  create,
 } from '@utils/dom';
 import style from './GridViewItemStyle';
 import store from '@store/index';
@@ -12,6 +13,7 @@ import store from '@store/index';
 import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
 import UnsubscribeModal from '@common/Modal/UnsubscribeModal/UnsubscribeModal';
+import Snackbar from '@common/Snackbar/Snackbar';
 
 interface GridViewItem {
   icon?: string | null;
@@ -124,6 +126,11 @@ class GridViewItem extends HTMLElement {
       modal.show();
       this.userStore.subscribe(this.renderSubscribingBtn.bind(this));
     } else {
+      const snackbar = create({
+        tagName: 'snackbar-element',
+        attributeList: [['text', '내가 구독한 언론사에 추가되었습니다.']],
+      }) as Snackbar;
+      snackbar.show();
       this.userStore.dispatch({
         type: 'SUBSCRIBE',
         payload: id,

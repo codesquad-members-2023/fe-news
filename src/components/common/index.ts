@@ -12,3 +12,6 @@ customElements.define('controller-item-element', ControllerItem);
 
 import Modal from './Modal/Modal';
 customElements.define('modal-element', Modal);
+
+import Snackbar from './Snackbar/Snackbar';
+customElements.define('snackbar-element', Snackbar);
