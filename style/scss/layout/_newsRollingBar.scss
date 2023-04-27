@@ -1,0 +1,30 @@
+.news__rolling-bar {
+  @include flex(flex, 930px, 0 auto, center, space-between);
+  margin-top: 50px;
+  overflow: hidden;
+}
+
+.rolling-bar {
+  &_right,
+  &_left {
+    display: flex;
+    width: 461px;
+    height: 49px;
+    background: $off-white;
+    border: 1px solid $gray100;
+    img {
+      width: 49px;
+      height: 17px;
+      margin: 15px;
+    }
+  }
+}
+
+.data_list {
+  &_righ,
+  &_left {
+    li {
+      margin: 15px;
+    }
+  }
+}

@@ -2,9 +2,7 @@ import { $ } from "../utils/dom.js";
 
 export const insertNewsHeadlineData = (headlineData, selector) => {
   const rollingBar = $(selector);
-  headlineData.map((headline) => {
-    rollingBar.innerHTML += `<li>${headline}</li>`;
-  });
+  rollingBar.innerHTML = headlineData.reduce((acc, headline) => acc + `<li>${headline}</li>`, "");
 };
 
 export const autoRoll = (selector, interval) => {

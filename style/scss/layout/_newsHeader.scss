@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+.news__header {
+  @include flex(flex, 930px, 0 auto, flex-end, space-between);
+  padding-top: 50px;
+}
+
+.header__logo {
+  display: flex;
+}
+.logo_img {
+  padding-right: 5px;
+}
