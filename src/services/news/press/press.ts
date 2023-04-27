@@ -8,7 +8,9 @@ import {
 export const getSlicedPressList = ({
   pressList,
 }: pressListContentsPropsType) => {
-  return pressList.slice(0, MAX_ITEM_NUM * 4);
+  const randomList = pressList.sort(() => Math.random() - 0.5);
+
+  return randomList.slice(0, MAX_ITEM_NUM * 4);
 };
 
 export const getCustomPressList = async ({

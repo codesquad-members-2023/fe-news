@@ -9,6 +9,10 @@ export default function style() {
       
     }
 
+    a {
+      text-decoration-line: none;
+    }
+
     p {
       margin: 0;
     }
