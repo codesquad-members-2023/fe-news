@@ -46,9 +46,7 @@ export const getRollingNews = async (req: Request, res: Response) => {
 export const getSection = async (req: Request, res: Response) => {
   const page = Number(req.query.page);
   try {
-    const section = await SectionModel.findOne()
-      .sort({ category: 1 })
-      .skip(page);
+    const section = await SectionModel.findOne({}).skip(page);
 
     if (!section) {
       return res.status(204).json({ message: 'No section' });

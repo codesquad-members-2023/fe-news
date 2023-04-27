@@ -66,5 +66,7 @@ const PressSchema = new Schema<PressInfoInterface>({
   isSubscribed: { type: Boolean, required: true },
 });
 
+SectionSchema.index({ category: 1 });
+
 export const SectionModel = model<SectionInterface>('Sections', SectionSchema);
 export const PressModel = model<PressInfoInterface>('Presses', PressSchema);
