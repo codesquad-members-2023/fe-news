@@ -76,7 +76,6 @@ export default class ListView extends Component {
 
     const selectedPress = selectedPresses[index];
 
-    // if (!selectedPress) return;
     const selectedCategories = presses.filter(
       (press) => press.category_id === selectedPress?.category_id
     );
