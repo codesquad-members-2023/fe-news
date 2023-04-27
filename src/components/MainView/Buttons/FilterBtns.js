@@ -11,7 +11,7 @@ export class FilterBtns extends Component {
     const { filterBtnState } = this.props;
     return `
       <div class="main__btn all-press ${
-        filterBtnState === "all-press" ? "clicked" : "unclicked"
+        filterBtnState === ALL_PRESSES ? "clicked" : "unclicked"
       }">전체 언론사</div>
       <div class="main__btn subscribed-press ${
         filterBtnState === SUBSCRIBED_PRESSES ? "clicked" : "unclicked"
@@ -21,11 +21,11 @@ export class FilterBtns extends Component {
 
   setEvent() {
     this.target.addEventListener("click", ({ target: { className } }) => {
-      const [_elementName, btnState, _type] = className.split(" ");
-      const { changeFilterBtnState, changeViewBtnState } = this.props;
-
+      const [elementName, btnState, _type] = className.split(" ");
+      if (elementName !== "main__btn") return;
       const filterBtnState = btnState === ALL_PRESSES ? GRID : LIST;
 
+      const { changeFilterBtnState, changeViewBtnState } = this.props;
       changeViewBtnState(filterBtnState);
       changeFilterBtnState(btnState);
     });

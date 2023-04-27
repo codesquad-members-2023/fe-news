@@ -21,7 +21,8 @@ export class ViewBtns extends Component {
     const { changeViewBtnState } = this.props;
 
     this.target.addEventListener("click", ({ target: { className } }) => {
-      const [_imgName, viewBtnState] = className.split(" ");
+      const [elementName, viewBtnState] = className.split(" ");
+      if (elementName !== "main__btn") return;
       changeViewBtnState(viewBtnState);
     });
   }
