@@ -112,6 +112,11 @@ class PressListHeader extends HTMLElement {
       type: 'CHANGE_TAB',
       payload: isGeneral ? 'general' : 'custom',
     });
+
+    this.newsStore.dispatch({
+      type: 'CHANGE_VIEW',
+      payload: isGeneral ? VIEW.GRID : VIEW.LIST,
+    });
   }
 
   handleViewClick(e: MouseEvent) {
@@ -119,7 +124,6 @@ class PressListHeader extends HTMLElement {
     const viewName = view.querySelector('icon-element')?.getAttribute('name');
 
     const rerender = () => {
-      const state = this.newsStore.getState();
       this.render({
         currentTab: this.newsStore.getState().display.currentTab,
         currentView: this.newsStore.getState().display.currentView,
