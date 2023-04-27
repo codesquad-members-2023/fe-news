@@ -42,29 +42,6 @@ class ListView extends HTMLElement {
     });
     this.pressList = [];
     this.time = 0;
-
-    this.handleDisplay({});
-  }
-
-  static get observedAttributes() {
-    return ['press-list'];
-  }
-
-  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'press-list') {
-      this.pressList = getProperty({
-        target: this,
-        name: 'press-list',
-        type: 'object',
-      });
-
-      setProperty({
-        target: select({ selector: ['list-view-tab-element'], parent: this }),
-        name: 'press-list',
-        value: getProperty({ target: this, name: 'press-list' }),
-      });
-      this.handleDisplay({ pressList: this.pressList });
-    }
   }
 
   connectedCallback() {
@@ -74,6 +51,7 @@ class ListView extends HTMLElement {
       target: this.shadowRoot,
       style: style(),
     });
+    this.handleDisplay({});
 
     const changePage = () => {
       const { currentPage, currentView, currentTab } =
@@ -96,6 +74,27 @@ class ListView extends HTMLElement {
 
     if (this.tab === TAB.CUSTOM) {
       this.userStore.subscribe(this.handleDisplay.bind(this, {}));
+    }
+  }
+
+  static get observedAttributes() {
+    return ['press-list'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'press-list') {
+      this.pressList = getProperty({
+        target: this,
+        name: 'press-list',
+        type: 'object',
+      });
+
+      setProperty({
+        target: select({ selector: ['list-view-tab-element'], parent: this }),
+        name: 'press-list',
+        value: getProperty({ target: this, name: 'press-list' }),
+      });
+      this.handleDisplay({ pressList: this.pressList });
     }
   }
 
@@ -172,7 +171,6 @@ class ListView extends HTMLElement {
   }
 
   handleSlide() {
-    console.log('dddd');
     const target = select({
       selector: ['list-view-tab-element'],
       parent: this,
