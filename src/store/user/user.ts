@@ -2,6 +2,8 @@ import { createStore, ReducerType, ActionType } from '@utils/redux';
 import { UserType } from './userType';
 import { TEMP_ID } from '@constant/index';
 import { subscribeAPI, unsubscribeAPI } from '@apis/user';
+import Modal from '@common/Modal/Modal';
+import UnsubscribeModal from '@common/Modal/UnsubscribeModal/UnsubscribeModal';
 
 const initialState: UserType = {
   id: TEMP_ID,
@@ -27,6 +29,7 @@ const subscribe = ({
       ...state,
       subscribingPressIds: [...state.subscribingPressIds, payload],
     };
+
   subscribeAPI({ id: TEMP_ID, pressId: payload });
   return result;
 };

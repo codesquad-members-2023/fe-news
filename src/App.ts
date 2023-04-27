@@ -4,6 +4,7 @@ import { add, addStyle, addShadow, getProperty } from '@utils/dom';
 import { StoreType } from '@utils/redux';
 import store from './store';
 import { TEMP_ID } from './constant';
+import Modal from '@common/Modal/Modal';
 
 class App extends HTMLElement {
   userStore: StoreType<UserType>;

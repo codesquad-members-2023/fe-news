@@ -11,6 +11,7 @@ import store from '@store/index';
 
 import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
+import UnsubscribeModal from '@common/Modal/UnsubscribeModal/UnsubscribeModal';
 
 interface GridViewItem {
   icon?: string | null;
@@ -45,6 +46,11 @@ class GridViewItem extends HTMLElement {
       target: this,
       name: 'id',
     });
+    const name = getProperty({
+      target: this,
+      name: 'name',
+    });
+
     if (!id) {
       this.wrap?.classList.add('no-hover');
       return;
@@ -55,8 +61,8 @@ class GridViewItem extends HTMLElement {
     const btnContainer = this.querySelector('.press-subscribe-btn-container');
     const template = `${
       isSubscribed
-        ? `<button-element icon="close" id="${id}">해지하기</button-element>`
-        : `<button-element icon="plus" id="${id}">구독하기</button-element>`
+        ? `<button-element icon="close" id="${id}" name="${name}">해지하기</button-element>`
+        : `<button-element icon="plus" id="${id}" name="${name}">구독하기</button-element>`
     }`;
 
     btnContainer &&
@@ -111,10 +117,19 @@ class GridViewItem extends HTMLElement {
     const target = e.target as HTMLElement;
     const isSubscribed = getProperty({ target, name: 'icon' }) === 'close';
     const id = getProperty({ target, name: 'id' });
-    this.userStore.dispatch({
-      type: isSubscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE',
-      payload: id,
-    });
+    const name = getProperty({ target, name: 'name' });
+
+    if (isSubscribed) {
+      const modal = new UnsubscribeModal(name, id);
+      modal.show();
+      this.userStore.subscribe(this.renderSubscribingBtn.bind(this));
+    } else {
+      this.userStore.dispatch({
+        type: 'SUBSCRIBE',
+        payload: id,
+      });
+    }
+
     this.renderSubscribingBtn();
   }
 

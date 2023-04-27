@@ -12,6 +12,8 @@ import store from '@store/index';
 import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
 import { SectionType } from '@store/news/newsType';
+import Modal from '@common/Modal/Modal';
+import UnsubscribeModal from '@common/Modal/UnsubscribeModal/UnsubscribeModal';
 
 interface ListViewItem {
   icon?: string | null;
@@ -121,7 +123,7 @@ class ListViewItem extends HTMLElement {
       type: 'object',
     });
 
-    const { pressId } = sectionData;
+    const { pressId, press } = sectionData;
 
     const btnContainer = select({ selector: ['.btn-container'], parent: this });
     const isSubscribed = pressId
@@ -129,7 +131,9 @@ class ListViewItem extends HTMLElement {
       : '';
 
     const template = `
-      <button-element icon="${isSubscribed ? 'close' : 'plus'}" id='${pressId}'>
+      <button-element name="${press.pname}" icon="${
+      isSubscribed ? 'close' : 'plus'
+    }" id='${pressId}'>
           ${isSubscribed ? '해지하기' : '구독하기'}
       </button-element>`;
     add({ target: btnContainer, template });
@@ -144,10 +148,19 @@ class ListViewItem extends HTMLElement {
     const target = e.target as HTMLElement;
     const isSubscribed = getProperty({ target, name: 'icon' }) === 'close';
     const id = getProperty({ target, name: 'id' });
-    this.userStore.dispatch({
-      type: isSubscribed ? 'UNSUBSCRIBE' : 'SUBSCRIBE',
-      payload: id,
-    });
+    const name = getProperty({ target, name: 'name' });
+
+    if (isSubscribed) {
+      const modal = new UnsubscribeModal(name, id);
+      modal.show();
+      this.userStore.subscribe(this.renderSubscribingBtn.bind(this));
+    } else {
+      this.userStore.dispatch({
+        type: 'SUBSCRIBE',
+        payload: id,
+      });
+    }
+
     this.renderSubscribingBtn();
   }
 }
