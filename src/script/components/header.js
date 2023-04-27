@@ -1,6 +1,6 @@
-import getFormattedDate from '../utils/formatDate.js';
+import { getFormattedDate } from '../utils/formatDate.js';
 
-const Header = () => {
+export const Header = () => {
   const header = document.createElement('div');
   header.classList.add('newsstand_header');
 
@@ -17,5 +17,3 @@ const Header = () => {
 
   return header;
 };
-
-export default Header;

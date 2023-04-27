@@ -1,6 +1,6 @@
 import { URL } from '../constants/constants.js';
 
-const fetchData = async (urlList) => {
+export const fetchData = async (urlList) => {
   try {
     const responseList = await Promise.all(urlList.map((resourcePath) => fetch(`${URL}/${resourcePath}`)));
     const dataList = await Promise.all(responseList.map((response) => response.json()));
@@ -13,4 +13,3 @@ const fetchData = async (urlList) => {
   }
 };
 
-export default fetchData;

@@ -1,4 +1,4 @@
-const getFormattedDate = (date) => {
+export const getFormattedDate = (date) => {
   const options = {
     year: 'numeric',
     month: '2-digit',
@@ -10,6 +10,3 @@ const getFormattedDate = (date) => {
 
   return formattedDate;
 };
-
-
-export default getFormattedDate

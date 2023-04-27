@@ -1,4 +1,4 @@
-class Rolling {
+export class Rolling {
   constructor(rollingData) {
     this.leftData = rollingData.left;
     this.rightData = rollingData.right;
@@ -33,4 +33,3 @@ class Rolling {
   }
 }
 
-export default Rolling;
