@@ -28,6 +28,12 @@ const postSection = async () => {
     mediabox.querySelector('.time').innerText.split(' 편집')[0]
   );
   const subnewses = newsbox.querySelector('.sub_news').querySelectorAll('li');
+  const presslogo = document
+    .querySelector('._NM_NEWSSTAND_ARTICLE_CONTAINER a img')
+    .getAttribute('src');
+  const pressName = document
+    .querySelector('._NM_NEWSSTAND_ARTICLE_CONTAINER a img')
+    .getAttribute('alt');
 
   const articles = [];
   const mainnews = {
@@ -50,7 +56,11 @@ const postSection = async () => {
 
   const section = {
     category,
-    pressId: pid,
+    press: {
+      id: pid,
+      logo: presslogo,
+      name: pressName,
+    },
     lastEdited: lastEdited,
     articles,
   };

@@ -74,20 +74,24 @@ class ListView extends HTMLElement {
       style: style(),
     });
 
-    this.newsStore.subscribe(() => {
-      const { currentPage, currentView } = this.newsStore.getState().display;
+    const changePage = () => {
+      const { currentPage, currentView, currentTab } =
+        this.newsStore.getState().display;
       const isListView = currentView === VIEW.LIST;
       const currentPageChanged = checkStateChanged<NewsType, number>({
         store: this.newsStore,
         target: ['display', 'currentPage'],
         prevState: this.currentPage,
       });
+      const isSameTab = this.tab === currentTab;
 
-      if (isListView && currentPageChanged) {
+      if (isListView && isSameTab && currentPageChanged) {
         this.currentPage = currentPage;
         this.handleDisplay.call(this, {});
       }
-    });
+    };
+
+    this.newsStore.subscribe(changePage.bind(this));
 
     if (this.tab === TAB.CUSTOM) {
       this.userStore.subscribe(this.handleDisplay.bind(this, {}));
@@ -201,7 +205,7 @@ class ListView extends HTMLElement {
     });
 
     if (this.newsStore.getState().display.currentTab === this.tab) {
-      // setInterval(this.handleSlide.bind(this), SILDE_INTERVAL_TIME);
+      setInterval(this.handleSlide.bind(this), SILDE_INTERVAL_TIME);
     }
   }
 }
