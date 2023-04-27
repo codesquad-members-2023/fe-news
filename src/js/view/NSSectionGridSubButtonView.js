@@ -1,4 +1,4 @@
-import { NS_SECTION_INFO, REFERENCE, VIEW_STATE } from '../constant/dom.js';
+import { REFERENCE, VIEW_STATE } from '../constant/dom.js';
 import { isEquivalent } from '../utils/objectUtils.js';
 
 export default class gridSubButtonView {
