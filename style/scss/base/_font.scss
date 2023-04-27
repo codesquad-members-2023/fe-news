@@ -63,7 +63,13 @@
 .display_main-news {
   div {
     @include font(15px, 500, 22px);
-    width: 320px;
-    margin:13px 0px 0px 25px
   }
+}
+
+.headline-news {
+  @include font(16px, 500, 22px);
+}
+.notice-message {
+  @include font(14px, 500, 17px);
+  color: $gray200;
 }

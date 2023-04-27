@@ -7,13 +7,13 @@ import { reciveDetailData } from "../view/mainContent/detail/entirePressDetail.j
 export const preprocessData = async () => {
   const rollingData = await fetchData(API_PATH.auto);
   const gridData = await fetchData(API_PATH.media);
-  const rollingRandomDataLeft = fixedRandomData(rollingData.leftRollingData, ROLLING.TOTAL);
-  const rollingRandomDataRight = fixedRandomData(rollingData.rightRollingData, ROLLING.TOTAL);
-  const gridRandomData = fixedRandomData(gridData, COMPANY.TOTAL_GRID);
+  const rollingRandomDataLeft = fixedRandomData({ data: rollingData.leftRollingData, count: ROLLING.TOTAL });
+  const rollingRandomDataRight = fixedRandomData({ data: rollingData.rightRollingData, count: ROLLING.TOTAL });
+  const gridRandomData = fixedRandomData({ data: gridData, count: COMPANY.TOTAL_GRID });
   insertNewsHeadlineData(rollingRandomDataLeft, ".data_list_left");
   insertNewsHeadlineData(rollingRandomDataRight, ".data_list_right");
   deliverGridData(gridRandomData, COMPANY.PAGES_PER);
-  findData(category.economy, gridData);
+  findData(gridData);
 };
 
 export const fetchData = async (url) => {
@@ -26,7 +26,7 @@ const makeRandomNumber = (max) => {
 };
 
 //랜덤 번호를 이용해서 확정된 랜덤 데이터를 return한다.
-const fixedRandomData = (data, count) => {
+const fixedRandomData = ({ data, count }) => {
   const fixedData = new Set();
   while (count > fixedData.size) {
     fixedData.add(data[makeRandomNumber(data.length)]);
@@ -43,7 +43,12 @@ const deliverGridData = (spreadGridData, size) => {
   reciveGridData(gridDataPage);
 };
 
-const findData = (category, newsData) => {
-  const foundObject = newsData.filter((data) => data.mediaInfo.type === category);
-  reciveDetailData(foundObject);
+const findData = (newsData) => {
+  const categoryData = new Set();
+  const randomData = fixedRandomData({ data: newsData, count: newsData.length });
+
+  Object.values(category).forEach((categoryList) => {
+    categoryData[categoryList] = randomData.filter((data) => data.mediaInfo.type === categoryList);
+  });
+  reciveDetailData(categoryData);
 };

@@ -81,9 +81,15 @@ $category-list: (economy, broadcast, it, engilsh, sports, magazine, area);
   @include flex(flex, 1100px, 0 auto, center, space-between);
 }
 
-.category-display_header {
-  @include flex(flex, 300px, 0 auto, center, space-around);
-  margin: 30px 0px 0px 25px;
+.category-display {
+  &_header {
+    @include flex(flex, 300px, 0 auto, center, space-around);
+    margin: 30px 0px 0px 25px;
+  }
+  &_news {
+    display: flex;
+    margin: 20px 0px 0px 25px;
+  }
 }
 
 .display_header {
@@ -99,9 +105,19 @@ $category-list: (economy, broadcast, it, engilsh, sports, magazine, area);
   img {
     width: 320px;
     height: 200px;
-    margin: 20px 0px 0px 25px;
+  }
+  div {
+    width: 320px;
+    margin-top: 13px;
   }
 }
+.display_headline-news {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 30px;
+}
+
 .hidden {
   visibility: hidden;
 }

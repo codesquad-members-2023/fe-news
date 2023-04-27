@@ -4,7 +4,7 @@
   line-height: $lineHeight;
 }
 
-@mixin flex($display,$width,$margin,$align,$justify) {
+@mixin flex($display, $width, $margin, $align, $justify) {
   display: $display;
   width: $width;
   margin: $margin;
@@ -12,7 +12,7 @@
   justify-content: $justify;
 }
 
-@mixin registerBtn(){
+@mixin registerBtn() {
   background: $white;
   width: 74px;
   height: 24px;

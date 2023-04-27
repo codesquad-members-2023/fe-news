@@ -1,4 +1,5 @@
 import { $, renderMaker } from "../../../utils/dom.js";
+import { category } from "../../../constants/dom.js";
 
 //버튼 조작
 export const changeNewsDetailColor = () => {
@@ -30,37 +31,77 @@ const changeNewsDetailDisplay = () => {
   });
 };
 
-//돔 조작
-export const reciveDetailData = (mediaDetailData) => {
-  const { mediaInfo, mainContent, subContent } = mediaDetailData[0];
-  insertMediaDetailData(mediaInfo);
-  insertMediaMainData(mainContent);
-};
-
 export const insertMediaDetailData = (mediaInfo) => {
   const { imgSrc, modifiedTime } = mediaInfo;
-  const template = `
+  const box = $(".news_category_display");
+  box.innerHTML = `
+  <div class="category-display_header">
   <img class="display_header_logo" src="${imgSrc}"></img>
   <div class="display_header_date">${modifiedTime}</div>
   <button class="display_header_btn">+구독하기</button>
+  </div>
 `;
-  renderMaker({ selector: ".economy_detail_display", element: "div", template: template, nameList: ["category-display_header"] });
 };
 
 const insertMediaMainData = (mainContent) => {
   const { mainImgSrc, mainTitle } = mainContent;
-  const template = `
+  const box = $(".news_category_display");
+  box.innerHTML += `
+  <div class="category-display_news">
   <div class="display_main-news">
   <img src="${mainImgSrc}"/>
   <div class ="main-news_headline">${mainTitle}</div>
   </div>
+  <div class="display_headline-news"></div>
+  </div>
   `;
-
-  renderMaker({ selector: ".economy_detail_display", element: "div", template: template, nameList: ["category-display_news"] });
 };
 
 const insertHeadlineData = (subContent) => {
-  const { subNewsList } = subContent;
-  const template = subNewsList.reduce((acc, data) => acc + `<div class= "headline-news">${data}</div>`, "");
-  renderMaker({ selector: ".category-display_news", element: "div", template: template, nameList: [" display_headline-news"] });
+  const { subNewsList, noticeMessage } = subContent;
+  const headLineNews = $(".display_headline-news");
+  headLineNews.innerHTML = subNewsList.reduce((acc, data) => acc + `<span class= "headline-news">${data}</span>`, "");
+  headLineNews.innerHTML += `<span class= "notice-message">${noticeMessage}</span>`;
+};
+
+const insertMainContent = ({ MediaInfo, MainContent, SubContent }) => {
+  insertMediaDetailData(MediaInfo);
+  insertMediaMainData(MainContent);
+  insertHeadlineData(SubContent);
+};
+
+//돔 조작
+export const reciveDetailData = (mediaDetailData) => {
+  const { mediaInfo, mainContent, subContent } = mediaDetailData[category.economy][0];
+  insertMainContent({ MediaInfo: mediaInfo, MainContent: mainContent, SubContent: subContent });
+  onDetailBtnEvents({ rightBtn: $(".detail_btn-right"), leftBtn: $(".detail_btn-left"), categoryList: $(".news_category-bar"), data: mediaDetailData });
+};
+
+const onDetailBtnEvents = ({ rightBtn, leftBtn, categoryList, data }) => {
+  let currentPage = 0;
+  let categoryMenu = category.economy;
+
+  categoryList.addEventListener("click", (event) => {
+    const { mediaInfo, mainContent, subContent } = data[categoryMenu][currentPage];
+    categoryMenu = event.target.textContent.trim();
+    insertMainContent({ MediaInfo: mediaInfo, MainContent: mainContent, SubContent: subContent });
+  });
+
+  rightBtn.addEventListener("click", () => {
+    if (currentPage === data[categoryMenu].length) return;
+    else {
+      currentPage += 1;
+      const { mediaInfo, mainContent, subContent } = data[categoryMenu][currentPage];
+      insertMainContent({ MediaInfo: mediaInfo, MainContent: mainContent, SubContent: subContent });
+    }
+  });
+
+  leftBtn.addEventListener("click", () => {
+    if (currentPage === 0) return;
+    else {
+      currentPage -= 1;
+      const { mediaInfo, mainContent, subContent } = data[categoryMenu][currentPage];
+      insertMainContent({ MediaInfo: mediaInfo, MainContent: mainContent, SubContent: subContent });
+    }
+  });
 };
