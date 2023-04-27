@@ -16,15 +16,15 @@ export class Journal {
       ["구독", "subscribe-btn"],
       ["해지", "unsubscribe-btn"],
     ];
-    const displayJournalCell = document.createElement("div");
-    displayJournalCell.classList.add("journal-item_show");
-    this.gridElement.appendChild(displayJournalCell);
-    displayJournalCell.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
+    const journalCellEL = document.createElement("div");
+    journalCellEL.classList.add("journal-item_show");
+    this.gridElement.appendChild(journalCellEL);
+    journalCellEL.innerHTML = `<img src="${this.journalData.mediaInfo.imgSrc}" 
                          alt="${this.journalData.mediaInfo.name}">`;
-    displayJournalCell.style.display = "flex";
+    journalCellEL.style.display = "flex";
 
-    const displaySubCell = document.createElement("div");
-    displaySubCell.classList.add("journal-item_hover");
+    const subJournalCellEL = document.createElement("div");
+    subJournalCellEL.classList.add("journal-item_hover");
 
     const subOrNotBtns = [];
     btnLabels.forEach((btnLabel) => {
@@ -32,16 +32,16 @@ export class Journal {
       btn.classList.add(btnLabel[1]);
       btn.textContent = btnLabel[0];
       subOrNotBtns.push(btn);
-      displaySubCell.appendChild(btn);
+      subJournalCellEL.appendChild(btn);
     });
 
-    displaySubCell.style.display = "none";
+    subJournalCellEL.style.display = "none";
 
-    this.gridElement.appendChild(displaySubCell);
+    this.gridElement.appendChild(subJournalCellEL);
 
     return {
-      showDiv: displayJournalCell,
-      hoverDiv: displaySubCell,
+      showDiv: journalCellEL,
+      hoverDiv: subJournalCellEL,
       subscribeBtn: subOrNotBtns[0],
       unSubscribeBtn: subOrNotBtns[1],
     };
