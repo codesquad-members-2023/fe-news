@@ -12,10 +12,6 @@
       @extend .list-category;
       overflow-x: scroll;
       overflow-y: hidden;
-      white-space: nowrap;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      // scroll-snap-type: x mandatory;
       &::-webkit-scrollbar {
         display: none;
       }

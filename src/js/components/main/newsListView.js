@@ -46,6 +46,20 @@ class ListView {
     });
   }
 
+  scrollLeftCategory() {
+    const SCROLL_MARGIN = 10;
+    const categoryArea = this.listContainer.querySelector('.category-area');
+    const subscribeCategories = categoryArea.querySelector('.list-category-subscribed');
+    const currentCategory = categoryArea.querySelector('.current-subscribed');
+
+    const subCategoryWidth = subscribeCategories.offsetWidth;
+    const currentWidth = currentCategory.offsetWidth;
+    const currentLeft = currentCategory.offsetLeft;
+
+    const scrollLeft = currentLeft - (subCategoryWidth - currentWidth) + SCROLL_MARGIN;
+    subscribeCategories.scrollLeft = scrollLeft;
+  }
+
   getCategory(page) {
     const categories = page.pressMap.keys();
     const pressMap = page.pressMap.values();
@@ -127,7 +141,8 @@ class ListView {
   isValidClickCategory(target) {
     const isCategory = target.closest('.list-category');
     const isLI = target.closest('li');
-    if (!isCategory || !isLI) return true;
+    const isSubscribedCategory = target.classList.contains('subscribed');
+    if (!isCategory || !isLI || isSubscribedCategory) return true;
     const isCurrent = isLI.classList.contains('current');
     if (isCurrent) return true;
   }
@@ -188,7 +203,8 @@ class ListView {
   clickSubscribedPressCategory(target) {
     const subscribeList = target.closest('.list-category-subscribed');
     const current = target.closest('.current-subscribed');
-    if(!subscribeList || current) return;
+    const isLI = target.closest('li');
+    if(!subscribeList || current || !isLI) return;
     const targetPress = target.textContent;
     this.#subscribedPressPageStore.dispatch({
       type: 'CLICK_PRESS',
@@ -248,6 +264,7 @@ class ListView {
           categoryArea.outerHTML = this.getSubscribedCategory();
           contentArea.outerHTML = this.getSubscribedPress.bind(this)();
         }
+        this.scrollLeftCategory();
       }
     }
     return viewType[type].bind(this)();
