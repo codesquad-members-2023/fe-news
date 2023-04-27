@@ -223,7 +223,7 @@ export default class NSSectionCurViewStateModel extends Observer {
     this.notify(this._curViewState);
   }
 
-  decreaseIndexOnListView() {
+  decreaseIndexOnListAllView() {
     const { index, curListCategory } = this._curViewState;
     switch (index) {
       case 1:
@@ -239,7 +239,7 @@ export default class NSSectionCurViewStateModel extends Observer {
     this.notify(this._curViewState);
   }
 
-  increaseIndexOnListView() {
+  increaseIndexOnListAllView() {
     const { index, curListCategory } = this._curViewState;
 
     switch (index) {
