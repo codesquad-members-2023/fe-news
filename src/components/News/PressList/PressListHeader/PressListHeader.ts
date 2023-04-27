@@ -2,7 +2,7 @@ import { add, addStyle, addShadow, createWrap } from '@utils/dom';
 import style from './PressListHeaderStyle';
 import store from '@store/index';
 import { StoreType } from '@utils/redux';
-import { NewsType } from '@store/news/newsType';
+import { NewsType, TAB, VIEW } from '@store/news/newsType';
 
 interface PressListHeader {
   icon?: string | null;
@@ -31,19 +31,19 @@ class PressListHeader extends HTMLElement {
   render({ currentTab, currentView }: any = this.newsStore.getState().display) {
     const tab = {
       general: {
-        isActive: currentTab === 'general',
+        isActive: currentTab === TAB.GENERAL,
       },
       custom: {
-        isActive: currentTab === 'custom',
+        isActive: currentTab === TAB.CUSTOM,
       },
     };
     const tabInfo = Object.entries(tab);
     const view = {
       grid: {
-        isActive: currentView === 'grid',
+        isActive: currentView === VIEW.GRID,
       },
       list: {
-        isActive: currentView === 'list',
+        isActive: currentView === VIEW.LIST,
       },
     };
     const viewInfo = Object.entries(view);
@@ -101,7 +101,6 @@ class PressListHeader extends HTMLElement {
   handleTabClick(e: MouseEvent) {
     const tab = e.currentTarget as HTMLElement;
     const rerender = () => {
-      const state = this.newsStore.getState();
       this.render({
         currentView: this.newsStore.getState().display.currentView,
         currentTab: this.newsStore.getState().display.currentTab,
@@ -109,9 +108,6 @@ class PressListHeader extends HTMLElement {
     };
     this.newsStore.subscribe(rerender);
     const isGeneral = tab.classList.contains('general');
-    this.newsStore.dispatch({
-      type: 'RESET_PAGE',
-    });
     this.newsStore.dispatch({
       type: 'CHANGE_TAB',
       payload: isGeneral ? 'general' : 'custom',

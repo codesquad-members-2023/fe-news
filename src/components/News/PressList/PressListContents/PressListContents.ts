@@ -50,7 +50,6 @@ class PressListContents extends HTMLElement {
     await this.setPressList();
     await this.setCustomPressList();
     this.handleDisplay();
-
     this.userStore.subscribe(this.setCustomPressList.bind(this));
   }
 
@@ -81,7 +80,6 @@ class PressListContents extends HTMLElement {
 
   async setPressList() {
     this.pressList = await getPressAPI();
-
     const slicedPressList = getSlicedPressList({ pressList: this.pressList });
 
     setProperty({

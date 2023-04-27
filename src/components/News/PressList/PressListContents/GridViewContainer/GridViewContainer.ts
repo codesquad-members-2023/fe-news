@@ -86,13 +86,12 @@ class GridViewContainer extends HTMLElement {
 
   async render() {
     const pressList = this.pressList;
-
     this.newsStore.dispatch({
       type: 'SET_TOTAL_PAGE',
       payload: {
         view: VIEW.GRID,
         tab: this.tab,
-        totalPage: Math.ceil(pressList.length / 24) - 1,
+        totalPage: Math.ceil(pressList.length / 24),
       },
     });
     const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);

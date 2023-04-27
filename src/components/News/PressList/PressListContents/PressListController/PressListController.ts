@@ -77,7 +77,7 @@ class PressListController extends HTMLElement {
     if (currentView === VIEW.LIST) {
       return setProperty({ target: controller, name: 'hide', value: 'none' });
     }
-    const isLastPage = currentPage === currentTotalPage;
+    const isLastPage = currentPage + 1 === currentTotalPage;
     const isFirstPage = currentPage === 0;
     const isOnePage = currentTotalPage <= 1;
     const hideValue = isOnePage

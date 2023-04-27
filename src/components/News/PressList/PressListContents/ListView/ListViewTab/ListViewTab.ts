@@ -51,6 +51,7 @@ class ListViewTab extends HTMLElement {
     }
     if (name === 'section-data') {
       this.render();
+      this.rearrangeTabPosition();
     }
     if (name === 'progress') {
       const target = select({
@@ -59,12 +60,6 @@ class ListViewTab extends HTMLElement {
       });
       setProperty({ target, name: 'progress', value: newValue });
     }
-  }
-
-  handleDrag() {
-    this.shadowRoot
-      ?.querySelector('.tab-wrap')
-      ?.addEventListener('drag', () => {});
   }
 
   render() {
@@ -77,7 +72,20 @@ class ListViewTab extends HTMLElement {
         this.renderTabForCustomTab();
       });
     }
-    this.handleDrag();
+  }
+
+  rearrangeTabPosition() {
+    const tabWrap = this.shadowRoot?.querySelector('.tab-wrap') as HTMLElement;
+    const activeTab = this.shadowRoot?.querySelector(
+      'list-view-tab-item-element[is-active="1"]'
+    );
+
+    if (!tabWrap || !activeTab) return;
+
+    const tabWrapX = tabWrap?.getBoundingClientRect().x;
+    const actionTabX = activeTab?.getBoundingClientRect().x;
+    const xDiff = actionTabX - tabWrapX;
+    this.scrollTo(xDiff, 0);
   }
 
   renderTabForGeneralTab() {
@@ -135,30 +143,6 @@ class ListViewTab extends HTMLElement {
     );
   }
 
-  handleTabClick(e: Event, categoryCounts: any) {
-    const target = e.target as HTMLElement;
-    const categoryId = getProperty({
-      target,
-      name: 'category-id',
-      type: 'number',
-    });
-    const categoryCountsValues: number[] = Object.values(categoryCounts);
-
-    let targetPage = 0;
-    if (categoryId !== 0) {
-      targetPage = categoryCountsValues
-        .slice(0, categoryId)
-        .reduce((acc: number, curr: number, i: number) => {
-          return acc + curr;
-        }, 0);
-    }
-
-    this.newStore.dispatch({
-      type: 'SET_CURRENT_PAGE',
-      payload: { currentPage: targetPage },
-    });
-  }
-
   renderTabForCustomTab() {
     const section = getProperty({
       target: this,
@@ -202,8 +186,34 @@ class ListViewTab extends HTMLElement {
     );
   }
 
+  handleTabClick(e: Event, categoryCounts: any) {
+    const target = e.target as HTMLElement;
+
+    const categoryId = getProperty({
+      target,
+      name: 'category-id',
+      type: 'number',
+    });
+    const categoryCountsValues: number[] = Object.values(categoryCounts);
+
+    let targetPage = 0;
+    if (categoryId !== 0) {
+      targetPage = categoryCountsValues
+        .slice(0, categoryId)
+        .reduce((acc: number, curr: number, i: number) => {
+          return acc + curr;
+        }, 0);
+    }
+
+    this.newStore.dispatch({
+      type: 'SET_CURRENT_PAGE',
+      payload: { currentPage: targetPage },
+    });
+  }
+
   handleCustomTabClick(e: Event) {
     const target = e.target as HTMLElement;
+
     const index = getProperty({ target, name: 'index' });
     this.newStore.dispatch({
       type: 'SET_CURRENT_PAGE',
