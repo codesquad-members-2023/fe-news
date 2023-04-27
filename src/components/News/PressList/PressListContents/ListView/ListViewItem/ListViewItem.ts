@@ -81,7 +81,7 @@ class ListViewItem extends HTMLElement {
       ${[mainArticle].map(
         (article: any) =>
           `<div class="headliner">
-            <button class="image" ${`style="background-image: url('${article.img}')"`}></button>
+            <button class="image"><img src='${article.img}' width='320px'></img></button>
             <div class="title">
             <a href='${article.link}'>${article.title}</a>
           </div>`
