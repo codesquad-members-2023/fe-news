@@ -16,9 +16,17 @@ export default class SubscriptionMenu extends Component {
   }
 
   template() {
+    const {
+      contents: { subscriptionOption },
+    } = store.getState();
+
     return `
-    <span class="view-option__all">전체 언론사</span>
-    <span class="view-option__subscribe">내가 구독한 언론사</span>
+    <span class="view-option__all ${
+      subscriptionOption === "all" ? "bold" : ""
+    }">전체 언론사</span>
+    <span class="view-option__subscribe ${
+      subscriptionOption === "sub" ? "bold" : ""
+    }">내가 구독한 언론사</span>
     `;
   }
 }

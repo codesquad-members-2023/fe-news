@@ -12,9 +12,17 @@ export default class StyleMenu extends Component {
   }
 
   template() {
+    const {
+      contents: { viewOption },
+    } = store.getState();
+
     return `
-    <img class="list-icon" src="../../assets/icons/list-view.svg" alt="list view icon" /> 
-    <img class="grid-icon" src="../../assets/icons/grid-view.svg" alt="grid view icon" />
+    <img class="list-icon ${
+      viewOption === "list" ? "blue" : ""
+    }" src="../../assets/icons/list-view.svg" alt="list view icon" /> 
+    <img class="grid-icon ${
+      viewOption === "grid" ? "blue" : ""
+    } " src="../../assets/icons/grid-view.svg" alt="grid view icon" />
     `;
   }
 }

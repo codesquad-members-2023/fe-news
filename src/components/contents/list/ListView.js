@@ -16,7 +16,7 @@ export default class ListView extends Component {
 
       const {
         listView: { index },
-        contents: { presses },
+        contents: { presses, subscriptionOption, subscribingPresses },
       } = store.getState();
 
       if (!presses.length) return;
@@ -27,9 +27,15 @@ export default class ListView extends Component {
         a.category_id < b.category_id ? -1 : 1
       );
 
+      const selectedPresses =
+        subscriptionOption === "all"
+          ? categorizedPresses
+          : subscribingPresses?.map((subscribingPressName) =>
+              presses.find((press) => press.name === subscribingPressName)
+            );
+
       const nextIndex =
-        (index + direction + categorizedPresses.length) %
-        categorizedPresses.length;
+        (index + direction + selectedPresses.length) % selectedPresses.length;
 
       store.dispatch(setListIdx(nextIndex));
     };
@@ -49,16 +55,18 @@ export default class ListView extends Component {
   }
 
   renderChildComponents() {
-    const leftButton = this.parentElement.querySelector(".button--left");
-    new LeftButton(leftButton);
-
-    const rightButton = this.parentElement.querySelector(".button--right");
-    new RightButton(rightButton);
-
     const {
       contents: { subscriptionOption, presses, subscribingPresses },
       listView: { index },
     } = store.getState();
+
+    if (!(subscriptionOption === "sub" && !subscribingPresses.length)) {
+      const leftButton = this.parentElement.querySelector(".button--left");
+      new LeftButton(leftButton);
+
+      const rightButton = this.parentElement.querySelector(".button--right");
+      new RightButton(rightButton);
+    }
 
     const categorizedPresses = presses.sort((a, b) =>
       a.category_id < b.category_id ? -1 : 1
