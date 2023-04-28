@@ -3,7 +3,7 @@ import { TrendNews } from "./components/TrendNews/TrendNews.js";
 import { MainView } from "./components/MainView/MainView.js";
 import { Component } from "./core/Component.js";
 import { getDataBy } from "./api/api.js";
-import { suffleData } from "./utils/utils.js";
+import { suffleData } from "./utils/index.js";
 import { URLS } from "./constants/index.js";
 
 export class App extends Component {

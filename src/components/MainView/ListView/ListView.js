@@ -1,8 +1,8 @@
 import { Component } from "../../../core/Component.js";
-import { listUpCategoryIds, listUpPressName } from "../../../utils/utils.js";
+import { listUpCategoryIds, listUpPressName } from "../../../utils/index.js";
 import { ListViewHeader } from "./ListViewHeader.js";
 import { ListViewMain } from "./ListViewMain.js";
-import { getPageNumberByDir } from "../../../utils/utils.js";
+import { getPageNumberByDir } from "../../../utils/index.js";
 import { ALL_PRESSES, LIST_VIEW } from "../../../constants/index.js";
 import { PREV_PAGE_BTN, NEXT_PAGE_BTN } from "../../../constants/ui.js";
 import { ProgressBarAnimationManager } from "./ListViewAnimaionManager.js";
