@@ -60,7 +60,6 @@ class SortButton {
         });
       });
     });
-    return this;
   }
 
   clickView() {
@@ -78,7 +77,6 @@ class SortButton {
         });
       });
     });
-    return this;
   }
 
   getSortButtons() {

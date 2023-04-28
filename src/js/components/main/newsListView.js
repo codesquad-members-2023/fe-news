@@ -26,12 +26,16 @@ class ListView {
   }
 
   init() {
-    this.setTemplate();
-    this.autoMovePages();
+    this.render();
     this.#viewTypeStore.subscribe(this.#reRender.bind(this));
     this.#pageStore.subscribe(this.#reRender.bind(this));
     this.#subscribeStore.subscribe(this.#reRender.bind(this));
     return this;
+  }
+
+  render() {
+    this.setTemplate();
+    this.autoMovePages();
   }
 
   setTemplate({ page } = this.#pageStore.getState()) {
@@ -44,20 +48,6 @@ class ListView {
       this.clickSubscribeBtn(target);
       this.clickSubscribedPressCategory(target);
     });
-  }
-
-  scrollLeftCategory() {
-    const SCROLL_MARGIN = 10;
-    const categoryArea = this.listContainer.querySelector('.category-area');
-    const subscribeCategories = categoryArea.querySelector('.list-category-subscribed');
-    const currentCategory = categoryArea.querySelector('.current-subscribed');
-
-    const subCategoryWidth = subscribeCategories.offsetWidth;
-    const currentWidth = currentCategory.offsetWidth;
-    const currentLeft = currentCategory.offsetLeft;
-
-    const scrollLeft = currentLeft - (subCategoryWidth - currentWidth) + SCROLL_MARGIN;
-    subscribeCategories.scrollLeft = scrollLeft;
   }
 
   getCategory(page) {
@@ -285,6 +275,21 @@ class ListView {
   getSubscribedPress({ currentPress } = this.#subscribedPressPageStore.getState()) {
     const buttonType = 'close';
     return this.pressBoxTemplate(currentPress, buttonType);
+  }
+
+  scrollLeftCategory() {
+    const SCROLL_MARGIN = 10;
+    const categoryArea = this.listContainer.querySelector('.category-area');
+    const subscribeCategories = categoryArea.querySelector('.list-category-subscribed');
+    if (!subscribeCategories) return;
+    const currentCategory = categoryArea.querySelector('.current-subscribed');
+
+    const subCategoryWidth = subscribeCategories.offsetWidth;
+    const currentWidth = currentCategory.offsetWidth;
+    const currentLeft = currentCategory.offsetLeft;
+
+    const scrollLeft = currentLeft - (subCategoryWidth - currentWidth) + SCROLL_MARGIN;
+    subscribeCategories.scrollLeft = scrollLeft;
   }
 
   getListView() {

@@ -1719,26 +1719,6 @@
       },
       {
         "category": "방송/통신",
-        "press": "KBS",
-        "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/056.png",
-        "editedDate": "2023.04.04. 15:03 편집",
-        "main": {
-          "thumbnail": "https://s.pstatic.net/static/newsstand/2023/0404/article_img/new_main/9044/150420_001.jpg",
-          "title": "홍성 산불 진화 안간힘…헬기 20대 투입"
-        },
-        "sub": {
-          "newsLists": [
-            "\n[LIVE] 국회 대정부질문 경제 분야\n",
-            "\n함평 산불 ‘3단계’ 발령…진화율 70%\n",
-            "\n순천 산불 3단계…헬기 투입 진화 중\n",
-            "\n달라진 ‘청년안심주택’, 청년 눈높이 맞출 수 있을까?\n",
-            "\n尹, 양곡법 개정안에 거부권…“포퓰리즘 법안”\n",
-            "\n‘유진 초이’ 실존 인물 황기환 지사 유해 100년 만에 봉환\n"
-          ]
-        }
-      },
-      {
-        "category": "방송/통신",
         "press": "YTN",
         "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/052.png",
         "editedDate": "2023.04.04. 14:26 편집",
@@ -3034,26 +3014,6 @@
             "\n개학 후 일주일간 코로나 확진 학생 ‘5326명\n",
             "\n야산·길가에 핀 봄 야생화 반갑게 너의 이름을 불러본다\n",
             "\n별 탐험대 등 천문체험 프로그램 운영\n"
-          ]
-        }
-      },
-      {
-        "category": "매거진/전문지",
-        "press": "낚시춘추",
-        "pressLogo": "https://s.pstatic.net/static/newsstand/2020/logo/light/0604/984.png",
-        "editedDate": "2023.03.23. 11:45 편집",
-        "main": {
-          "thumbnail": "https://s.pstatic.net/static/newsstand/2023/0325/article_img/new_main/9209/050746_001.jpg",
-          "title": "[특집_도전! 대전갱이낚시] 울산 대전갱이 배낚시"
-        },
-        "sub": {
-          "newsLists": [
-            "\n[특집_도전! 대전갱이낚시] 대전갱이 아지트 6\n",
-            "\n[해외] 2023 요코하마피싱쇼\n",
-            "\n[낚시와 건강] 황사 예방, 비타민과 생채 섭취로 면역력 높여야\n",
-            "\n[피플] 국내 유일의 대나무낚싯대 제작자, 용운공방 송용운 명장\n",
-            "\n[연재_세상 쉬운 바다루어 25] 해변의 요정을 루어로 낚아보자_보리멸 루어낚시\n",
-            "\n[칼럼] 낚시는 과연 운칠기삼(運七技三)의 도락일 뿐일까?\n"
           ]
         }
       },

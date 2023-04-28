@@ -1,5 +1,4 @@
 import createEl from '../utils/util.js';
-// import { CONSTANTS, rollingPositionClassName, autoAnimationInfo } from '../core/constants.js';
 
 class RollingBar {
   LEFT = 'left';
@@ -80,15 +79,18 @@ class RollingBar {
   }
 
   addEventRollingBar() {
-    this.rollingBar.addEventListener('mouseover', ({ target }) => {
-      if (target.tagName !== 'LI') return;
+    this.rollingBar.addEventListener('mouseover', this.mouseInOutRollingBar.bind(this));
+    this.rollingBar.addEventListener('mouseout', this.mouseInOutRollingBar.bind(this));
+  }
+
+  mouseInOutRollingBar({ target, type }) {
+    if(target.tagName !== 'LI') return;
+    if(type === 'mouseover') {
       this.rafState = false;
-    });
-    this.rollingBar.addEventListener('mouseout', ({ target }) => {
-      if (target.tagName !== 'LI') return;
+    } else {
       this.rafState = true;
       requestAnimationFrame(() => this.movePanel());
-    });
+    }
   }
 
   getAutoRollingBar() {

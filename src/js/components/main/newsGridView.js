@@ -20,11 +20,15 @@ class GridView {
   }
 
   init() {
-    this.setTemplate();
-    this.onMouseGridCell();
+    this.render();
     this.#viewTypeStore.subscribe(this.#reRender.bind(this));
     this.#subscribeStore.subscribe(this.#reRender.bind(this));
     return this;
+  }
+
+  render() {
+    this.setTemplate();
+    this.onMouseGridCell();
   }
 
   setTemplate() {
@@ -192,7 +196,6 @@ class GridView {
 
   renderSubscribeGridView(subscribedList) {
     const isGrid = this.#viewTypeStore.getState().view['grid'];
-    // Todo - 24 넘으면 slice하고 나머지 채우기
     const restGridCells = Array(this.GRID_COUNT - subscribedList.size).fill('');
     const LAST_PAGE_SUBSCRIBE = Math.floor(subscribedList.size / this.GRID_COUNT);
     return `<div class="grid-container${isGrid ? `` : ' hidden'}">
