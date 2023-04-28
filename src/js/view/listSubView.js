@@ -65,7 +65,9 @@ export default class ListSubView {
     </div>
     <div class="list_view_bottom">
       <div class="bottom_main">
+      <div class="main_news_img_container">
         <img class="main_news_img" src="${curSubPress.mainNewsImg}" alt="mainNewsImg"/>
+      </div>
         <div class="main_news_text">${curSubPress.mainNews}</div>
       </div>
       <div class="bottom_sub">` +
