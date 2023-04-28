@@ -59,6 +59,14 @@ class MainView {
     this.#mainViewContainer.appendChild(snackbarEl)
   }
 
+  onSnackbar() {
+    const snackbar = document.querySelector('.subscribe-snb')
+    snackbar.classList.remove('none')
+    setTimeout(() => {
+      snackbar.classList.add('none')
+    }, 1000)
+  }
+
   setCurrentViewData(data) {
     const { currentPage, currentViewType, currentViewData, dataLength } = data
 
@@ -76,6 +84,7 @@ class MainView {
 
     if (currentViewType === 'list') {
       this.#createListView(currentViewData)
+      // if(구독하기를 눌렀으면) 스낵바띄우기
     }
   }
 

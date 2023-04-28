@@ -123,11 +123,8 @@ class MainHandler {
 
       if (cell) {
         this.#setSubscriptionList(cell)
+
         if (this.#isOnSubscriptionPage) {
-          // TODO:
-          // 모달창을 띄우고
-          // 예, 해지합니다(.cancel-btn)를 누르면 아래 코드 실행
-          // 아니오(confirm-btn)를 누르면 모달만 닫힘
           this.#currentTypeData = this.#getSubscriptionData(this.#allData)
           this.#renderView()
         }
@@ -138,8 +135,6 @@ class MainHandler {
       }
     })
   }
-
-  showConfirmModal() {}
 
   #toggleSubscriptionButton(target, className) {
     const cell = target.closest('.grid-cell')
@@ -153,11 +148,21 @@ class MainHandler {
     const pressName = cell.querySelector('.press img').alt
     const subscriptionStatus = cell.querySelector('.subscribe-btn img').alt
 
-    subscriptionStatus === 'subscription'
-      ? this.#subscriptionList.delete(pressName)
-      : this.#subscriptionList.add(pressName)
+    if (subscriptionStatus === 'subscription') {
+      this.#subscriptionList.delete(pressName)
+    } else {
+      this.#subscriptionList.add(pressName)
+      if (this.#currentViewType === 'list') {
+        this.onSnackbar()
+      }
+    }
 
     this.#renderView()
+  }
+
+  onSnackbar() {
+    // 직접 함수를 호출하는 것보다 상태를 전달하는 것이 좋을 것 같은데, 고민해보기
+    this.#mainView.onSnackbar()
   }
 
   #getSubscriptionData(data) {
