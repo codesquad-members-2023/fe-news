@@ -13,7 +13,7 @@ export class NsCategoryNavbarView extends TempAbstractView {
     });
     const categorySet = new Set(categories);
 
-    return `<ul id="category-navbar" class="w-full h-full flex flex-row justify-start items-center bg-gray-100 text-sm text-gray-500 border border-gray-200 gap-x-8">
+    return `<ul id="category-navbar" class="w-full h-full p-3 flex flex-row justify-start items-center bg-gray-100 text-sm text-gray-500 border border-gray-200 gap-x-8">
               ${[...categorySet].reduce(
                 (acc, cur) => acc + `<li>${cur}</li>`,
                 '',
