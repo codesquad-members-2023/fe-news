@@ -26,7 +26,7 @@
 
         padding: 0px 14px;
         gap: 8px;
-
+        @include font($Body_xs, $Medium);
         color: $gray300;
         cursor: pointer;
       }
@@ -103,14 +103,24 @@
           padding: 0px;
           gap: 16px;
 
-          .main_news_img {
-            box-sizing: border-box;
+          .main_news_img_container {
             width: 320px;
             height: 200px;
-
             border: 1px solid $gray100;
-          }
+            overflow: hidden;
+            z-index: 2;
+            .main_news_img {
+              box-sizing: border-box;
+              width: 320px;
+              height: 200px;
 
+              &:hover {
+                width: 330px;
+                height: 210px;
+                transform: translate(-5px, -5px);
+              }
+            }
+          }
           .main_news_text {
             width: 320px;
             height: 44px;
