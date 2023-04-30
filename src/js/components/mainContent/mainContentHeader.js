@@ -1,4 +1,4 @@
-import { tabStore } from '../../store/index.js';
+import { tabStore, TAB_ACTION_TYPES } from '../../store/index.js';
 
 export default class MainContentHeader {
   #imgSrc = {
@@ -18,6 +18,7 @@ export default class MainContentHeader {
 
   render() {
     this.$mainEle.innerHTML = this.template();
+    this.setEvent();
   }
 
   template() {
@@ -36,6 +37,28 @@ export default class MainContentHeader {
         <img class="show-tab-btn show-tab__grid" src="${activeShowTab === 'grid' ? gridBlue : gridGray}">
       </div>
     `;
+  }
+
+  setEvent() {
+    const { activePressTab, activeShowTab } = tabStore.getState();
+
+    this.$mainEle.addEventListener('click', ({ target }) => {
+      const { classList } = target;
+      let pressTab;
+      let showTab;
+
+      if (classList.contains('press-tab__all')) pressTab = 'all';
+      else if (classList.contains('press-tab__mine')) pressTab = 'mine';
+
+      if (classList.contains('show-tab__grid')) showTab = 'grid';
+      else if (classList.contains('show-tab__list')) showTab = 'list';
+
+      if (!(pressTab || showTab)) return;
+
+      if (pressTab && pressTab !== activePressTab)
+        tabStore.dispatch({ type: TAB_ACTION_TYPES.TOGGLE_PRESS_TAB });
+      if (showTab && showTab !== activeShowTab) tabStore.dispatch({ type: TAB_ACTION_TYPES.TOGGLE_SHOW_TAB });
+    });
   }
 
   remove() {
