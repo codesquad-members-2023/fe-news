@@ -1,7 +1,13 @@
-import PressTab from './tab/pressTab.js';
-import ShowTab from './tab/showTab.js';
+import { tabStore } from '../../store/index.js';
 
 export default class MainContentHeader {
+  #imgSrc = {
+    listBlue: 'src/images/list_blue.svg',
+    listGray: 'src/images/list_gray.svg',
+    gridBlue: 'src/images/grid_blue.svg',
+    gridGray: 'src/images/grid_gray.svg'
+  };
+
   constructor($parent) {
     this.$parent = $parent;
     this.$mainEle = document.createElement('header');
@@ -11,7 +17,28 @@ export default class MainContentHeader {
   }
 
   render() {
-    new PressTab(this.$mainEle).render();
-    new ShowTab(this.$mainEle).render();
+    this.$mainEle.innerHTML = this.template();
+  }
+
+  template() {
+    const { activePressTab, activeShowTab } = tabStore.getState();
+
+    const { listBlue, listGray, gridBlue, gridGray } = this.#imgSrc;
+    return `
+      <div class="press-tab">
+        <span class="press-tab-btn press-tab__all ${
+          activePressTab === 'all' ? 'active' : ''
+        }">전체 언론사</span>
+        <span class="press-tab-btn press-tab__mine ${
+          activePressTab === 'mine' ? 'active' : ''
+        }">내가 구독한 언론사</span>
+        <img class="show-tab-btn show-tab__list" src="${activeShowTab === 'list' ? listBlue : listGray}">
+        <img class="show-tab-btn show-tab__grid" src="${activeShowTab === 'grid' ? gridBlue : gridGray}">
+      </div>
+    `;
+  }
+
+  remove() {
+    this.$mainEle.remove();
   }
 }
