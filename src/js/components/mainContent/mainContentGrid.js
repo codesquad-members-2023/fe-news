@@ -1,4 +1,5 @@
 import { gridStore, GRID_ACTION_TYPES, subscriptionStore } from '../../store/index.js';
+import PressGrid from './grid/pressGrid.js';
 
 const isFirstPage = (currentPage) => currentPage === 0;
 const isLastPage = (currentPage, totalPages) => currentPage === totalPages - 1;
@@ -12,7 +13,7 @@ const getDataSlices = ({ arr, count = 1 }) => {
   return dataSlices;
 };
 
-export default class MainContentGrid {
+export default class Grid {
   #itemCount = 24;
 
   #imgSrc = {
@@ -37,6 +38,16 @@ export default class MainContentGrid {
 
     this.unregisterGrid = gridStore.register(() => {
       this.displayBtn();
+      this.removeChildren();
+      this.renderChildren();
+    });
+
+    this.unregisterSubscription = subscriptionStore.register(() => {
+      if (activePressTab !== 'mine') return;
+
+      this.initGrid();
+      this.removeChildren();
+      this.renderChildren();
     });
   }
 
@@ -65,6 +76,7 @@ export default class MainContentGrid {
     this.removeChildren();
 
     this.$mainEle.innerHTML = this.template();
+    this.renderChildren();
     this.setEvent();
   }
 
@@ -82,6 +94,21 @@ export default class MainContentGrid {
       <div class="main-content__grid-wrapper">
       </div>
     `;
+  }
+
+  renderChildren() {
+    const { currentPage } = gridStore.getState();
+    const $gridWrapper = this.$mainEle.querySelector('.main-content__grid-wrapper');
+    const itemsData = this.#dataSlices[currentPage] ?? [];
+
+    this.children.add(
+      new PressGrid($gridWrapper, {
+        itemsData,
+        itemCount: this.#itemCount
+      })
+    );
+
+    this.children.forEach((child) => child.render());
   }
 
   setEvent() {
@@ -115,6 +142,12 @@ export default class MainContentGrid {
   remove() {
     this.$mainEle.remove();
     this.removeChildren();
+
+    if (!this.unregisterGrid) return;
+    this.unregisterGrid();
+
+    if (!this.unregisterSubscription) return;
+    this.unregisterSubscription();
   }
 
   removeChildren() {
