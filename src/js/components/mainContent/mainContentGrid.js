@@ -1,14 +1,9 @@
-import { domUtils, dataUtils, validatorUtils } from '../../utils/index.js';
-import { tabStore, gridPageStore, subscriptionListStore } from '../../store/index.js';
-import PressGrid from './grid/pressGrid.js';
+import { gridStore } from '../../store/index.js';
 
-const { $ } = domUtils;
-const { isActiveTab, isFirstPage, isLastPage } = validatorUtils;
-const { getDataSlices } = dataUtils;
+const isFirstPage = (currentPage) => currentPage === 0;
+const isLastPage = (currentPage, totalPages) => currentPage === totalPages - 1;
 
 export default class MainContentGrid {
-  #gridItemCount = 24;
-
   #imgSrc = {
     beforeBtn: 'src/images/before_btn.svg',
     nextBtn: 'src/images/next_btn.svg'
@@ -17,108 +12,29 @@ export default class MainContentGrid {
   constructor($parent, props) {
     this.$parent = $parent;
     this.$mainEle = document.createElement('section');
+    this.$mainEle.className = 'main-content__grid';
 
     this.props = props;
-    const { pressTabType } = this.props;
 
-    this.$mainEle.classList.add('main-content__grid', `${pressTabType}-grid__section`);
-
+    this.children = new Set();
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
-
-    gridPageStore.register(this.displayBtn.bind(this));
-    tabStore.register(this.displayElement.bind(this));
   }
 
   render() {
+    this.removeChildren();
+
     this.$mainEle.innerHTML = this.template();
-
-    this.renderPressGridContainers();
-
-    this.displayElement();
-    this.displayBtn();
-    this.setEvent();
-  }
-
-  renderPressGridContainers() {
-    const { pressTabType, allPressData } = this.props;
-    const subscriptionList = subscriptionListStore.getState();
-
-    const subscribedPressData = allPressData.filter(({ pressName }) => subscriptionList.has(pressName));
-    const pressData = pressTabType === 'all' ? allPressData : subscribedPressData;
-    const pressDataSlices = getDataSlices({
-      dataArr: pressData,
-      count: this.#gridItemCount
-    });
-    const $gridWrapper = $({
-      selector: '.main-content__grid-wrapper',
-      parent: this.$mainEle
-    });
-
-    const pagesCount = pressDataSlices.length === 0 ? 1 : pressDataSlices.length;
-
-    for (let page = 0; page < pagesCount; page += 1) {
-      const data = pressDataSlices[page];
-      new PressGrid($gridWrapper, {
-        pressTabType,
-        page,
-        gridItemsData: data ?? []
-      }).render();
-    }
-
-    gridPageStore.dispatch({
-      type: 'initGridPage',
-      payload: {
-        pressTabType,
-        currentPage: 0,
-        totalPages: pagesCount
-      }
-    });
-  }
-
-  displayElement() {
-    const { pressTabType } = this.props;
-    const { activePressTab, activeShowTab } = tabStore.getState();
-
-    if (
-      !isActiveTab({
-        pressTabType,
-        showTabType: 'grid',
-        activePressTab,
-        activeShowTab
-      })
-    )
-      this.$mainEle.classList.add('display-none');
-    else this.$mainEle.classList.remove('display-none');
-  }
-
-  displayBtn() {
-    const { pressTabType } = this.props;
-    const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
-
-    const $beforeBtn = $({
-      selector: '.main-content__grid-before-btn',
-      parent: this.$mainEle
-    });
-    const $nextBtn = $({
-      selector: '.main-content__grid-next-btn',
-      parent: this.$mainEle
-    });
-
-    if (isFirstPage(currentPage)) $beforeBtn.classList.add('hidden');
-    else $beforeBtn.classList.remove('hidden');
-
-    if (isLastPage(currentPage, totalPages)) $nextBtn.classList.add('hidden');
-    else $nextBtn.classList.remove('hidden');
   }
 
   template() {
     const { beforeBtn, nextBtn } = this.#imgSrc;
+    const { currentPage, totalPages } = gridStore.getState();
 
     return `
-      <div class="main-content__grid-before-btn">
+      <div class="main-content__grid-before-btn ${isFirstPage(currentPage) ? 'hidden' : ''}">
         <img id="grid-before-btn" src="${beforeBtn}" alt="before grid page" />
       </div>
-      <div class="main-content__grid-next-btn">
+      <div class="main-content__grid-next-btn ${isLastPage(currentPage, totalPages) ? 'hidden' : ''}">
         <img id="grid-next-btn" src="${nextBtn}" alt="next grid page" />
       </div>
       <div class="main-content__grid-wrapper">
@@ -126,23 +42,15 @@ export default class MainContentGrid {
     `;
   }
 
-  setEvent() {
-    this.$mainEle.addEventListener('click', ({ target }) => {
-      const { pressTabType } = this.props;
-      const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
+  remove() {
+    this.$mainEle.remove();
+    this.removeChildren();
+  }
 
-      if (target.id === 'grid-before-btn') {
-        gridPageStore.dispatch({
-          type: 'beforePage',
-          payload: { pressTabType, currentPage, totalPages }
-        });
-      }
-      if (target.id === 'grid-next-btn') {
-        gridPageStore.dispatch({
-          type: 'nextPage',
-          payload: { pressTabType, currentPage, totalPages }
-        });
-      }
-    });
+  removeChildren() {
+    if (this.children.size === 0) return;
+
+    this.children.forEach((child) => child.remove());
+    this.children.clear();
   }
 }

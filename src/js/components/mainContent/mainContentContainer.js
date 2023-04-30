@@ -1,3 +1,5 @@
+import MainContentGrid from './mainContentGrid.js';
+
 export default class MainContentContainer {
   constructor($parent, props) {
     this.$parent = $parent;
@@ -15,7 +17,21 @@ export default class MainContentContainer {
     this.renderChildren();
   }
 
-  renderChildren() {}
+  renderChildren() {
+    const { pressData, activePressTab, activeShowTab } = this.props;
+
+    if (activeShowTab === 'grid') {
+      this.children.add(
+        new MainContentGrid(this.$mainEle, {
+          pressData,
+          activePressTab,
+          activeShowTab
+        })
+      );
+    }
+
+    this.children.forEach((child) => child.render());
+  }
 
   remove() {
     this.$mainEle.remove();
