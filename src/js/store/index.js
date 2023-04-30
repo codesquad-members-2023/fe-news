@@ -1,27 +1,36 @@
-import Store from '../core/store.js';
-import MyStore from '../core/myStore.js';
-import { tabReducer, gridPageReducer, subscriptionListReducer, listPageReducer } from '../reducer/index.js';
+function createStore({ initState = {}, reducer }) {
+  let state = initState;
+  const listeners = [];
 
-const INIT_TAB_STATE = {
-  activePressTab: 'all',
-  activeShowTab: 'grid'
-};
+  function getState() {
+    return state;
+  }
 
-export const tabStore = new Store(INIT_TAB_STATE, tabReducer);
+  // * 삭제된 컴포넌트가 등록한 listener가 제대로 삭제됐는지 확인하는 용도, 나중에 삭제 예정
+  function getListeners() {
+    return listeners;
+  }
 
-const INIT_GRID_PAGE_STATE = {
-  all: { currentPage: null, totalPages: null },
-  subscribed: { currentPage: null, totalPages: null }
-};
+  function dispatch(action) {
+    state = reducer(state, action);
+    listeners.forEach((listener) => listener());
 
-export const gridPageStore = new Store(INIT_GRID_PAGE_STATE, gridPageReducer);
+    return action;
+  }
 
-const INIT_SUBSCRIPTION_LIST_STATE = new Set();
+  function register(listener) {
+    listeners.push(listener);
 
-export const subscriptionListStore = new MyStore(INIT_SUBSCRIPTION_LIST_STATE, subscriptionListReducer);
+    return () => {
+      const index = listeners.indexOf(listener);
+      listeners.splice(index, 1);
+    };
+  }
 
-export const INIT_LIST_PAGE_STATE = {
-  all: { currentCategory: null, currentItemIdx: null }
-};
-
-export const listPageStore = new Store(INIT_LIST_PAGE_STATE, listPageReducer);
+  return {
+    getState,
+    getListeners,
+    dispatch,
+    register
+  };
+}
