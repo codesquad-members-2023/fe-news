@@ -1,5 +1,5 @@
 import MainContentHeader from './mainContentHeader.js';
-import MainContentContainer from './mainContentContainer.js';
+import { tabStore } from '../../store/index.js';
 
 export default class MainContent {
   constructor($parent, props) {
@@ -9,13 +9,27 @@ export default class MainContent {
 
     this.props = props;
 
+    this.children = new Set();
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
+
+    this.unregister = tabStore.register(() => this.render());
   }
 
   render() {
-    const { pressData } = this.props;
+    this.removeChildren();
+    this.renderChildren();
+  }
 
-    new MainContentHeader(this.$mainEle).render();
-    new MainContentContainer(this.$mainEle, { allPressData: pressData }).render();
+  renderChildren() {
+    this.children.add(new MainContentHeader(this.$mainEle));
+
+    this.children.forEach((child) => child.render());
+  }
+
+  removeChildren() {
+    if (this.children.size === 0) return;
+
+    this.children.forEach((child) => child.remove());
+    this.children.clear();
   }
 }
