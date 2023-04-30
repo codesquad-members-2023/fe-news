@@ -114,3 +114,49 @@ export const gridStore = createStore({
   initState: INIT_GRID_STATE,
   reducer: gridReducer
 });
+
+export const SUBSCRIPTION_ACTION_TYPES = {
+  ADD_SUBSCRIPTION: 'ADD_SUBSCRIPTION',
+  DELETE_SUBSCRIPTION: 'DELETE_SUBSCRIPTION'
+};
+
+const subscriptionReducer = (state, action) => {
+  const { ADD_SUBSCRIPTION, DELETE_SUBSCRIPTION } = SUBSCRIPTION_ACTION_TYPES;
+
+  switch (action.type) {
+    case ADD_SUBSCRIPTION: {
+      const { subscriptionList } = state;
+
+      const newSubscriptionList = [...subscriptionList];
+      newSubscriptionList.push(action.payload);
+
+      return {
+        ...state,
+        subscriptionList: newSubscriptionList
+      };
+    }
+    case DELETE_SUBSCRIPTION: {
+      const { subscriptionList } = state;
+
+      const newSubscriptionList = subscriptionList.filter(
+        ({ pressName }) => pressName !== action.payload.pressName
+      );
+
+      return {
+        ...state,
+        subscriptionList: newSubscriptionList
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+const INIT_SUBSCRIPTION_STATE = {
+  subscriptionList: []
+};
+
+export const subscriptionStore = createStore({
+  initState: INIT_SUBSCRIPTION_STATE,
+  reducer: subscriptionReducer
+});
