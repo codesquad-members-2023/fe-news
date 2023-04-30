@@ -1,4 +1,5 @@
 import MainContentHeader from './mainContentHeader.js';
+import MainContentContainer from './mainContentContainer.js';
 import { tabStore } from '../../store/index.js';
 
 export default class MainContent {
@@ -21,7 +22,11 @@ export default class MainContent {
   }
 
   renderChildren() {
+    const { pressData } = this.props;
+    const { activePressTab, activeShowTab } = tabStore.getState();
+
     this.children.add(new MainContentHeader(this.$mainEle));
+    this.children.add(new MainContentContainer(this.$mainEle, { activePressTab, activeShowTab, pressData }));
 
     this.children.forEach((child) => child.render());
   }

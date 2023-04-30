@@ -1,10 +1,3 @@
-import { CATEGORY } from '../../constants/index.js';
-import { dataUtils, getUniqueRandomNumbersArr } from '../../utils/index.js';
-import MainContentGrid from './mainContentGrid.js';
-import MainContentList from './mainContentList.js';
-
-const { getDataByCategory, getDataCountByCategory } = dataUtils;
-
 export default class MainContentContainer {
   constructor($parent, props) {
     this.$parent = $parent;
@@ -13,28 +6,26 @@ export default class MainContentContainer {
 
     this.props = props;
 
+    this.children = new Set();
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
   }
 
   render() {
-    const { allPressData } = this.props;
+    this.removeChildren();
+    this.renderChildren();
+  }
 
-    new MainContentGrid(this.$mainEle, { pressTabType: 'all', allPressData }).render();
-    new MainContentGrid(this.$mainEle, { pressTabType: 'subscribed', allPressData }).render();
+  renderChildren() {}
 
-    const randomOrder = getUniqueRandomNumbersArr(0, CATEGORY.length - 1);
-    const categories = randomOrder.map((order) => CATEGORY[order]);
-    const dataByCategory = getDataByCategory({
-      dataArr: allPressData,
-      categories
-    });
-    const dataCountByCategory = getDataCountByCategory(dataByCategory);
+  remove() {
+    this.$mainEle.remove();
+    this.removeChildren();
+  }
 
-    new MainContentList(this.$mainEle, {
-      pressTabType: 'all',
-      allPressData: dataByCategory,
-      categories,
-      dataCountByCategory
-    }).render();
+  removeChildren() {
+    if (this.children.size === 0) return;
+
+    this.children.forEach((child) => child.remove());
+    this.children.clear();
   }
 }
