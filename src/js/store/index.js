@@ -74,3 +74,43 @@ export const tabStore = createStore({
   initState: INIT_TAB_STATE,
   reducer: tabReducer
 });
+
+export const GRID_ACTION_TYPES = {
+  INIT_STATE: 'INIT_STATE',
+  NEXT_PAGE: 'NEXT_PAGE',
+  BEFORE_PAGE: 'BEFORE_PAGE'
+};
+
+const gridReducer = (state, action) => {
+  const { INIT_STATE, NEXT_PAGE, BEFORE_PAGE } = GRID_ACTION_TYPES;
+
+  switch (action.type) {
+    case INIT_STATE: {
+      const { pressTab, totalPages } = action.payload;
+      return { ...state, pressTab, currentPage: 0, totalPages };
+    }
+    case NEXT_PAGE: {
+      const { currentPage, totalPages } = state;
+      const newPage = currentPage + 1 === totalPages ? currentPage : currentPage + 1;
+      return { ...state, currentPage: newPage };
+    }
+    case BEFORE_PAGE: {
+      const { currentPage } = state;
+      const newPage = currentPage === 0 ? 0 : currentPage - 1;
+      return { ...state, currentPage: newPage };
+    }
+    default:
+      return state;
+  }
+};
+
+const INIT_GRID_STATE = {
+  pressTab: 'all',
+  currentPage: 0,
+  totalPages: null
+};
+
+export const gridStore = createStore({
+  initState: INIT_GRID_STATE,
+  reducer: gridReducer
+});
