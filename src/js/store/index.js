@@ -34,3 +34,43 @@ function createStore({ initState = {}, reducer }) {
     register
   };
 }
+
+export const TAB_ACTION_TYPES = {
+  TOGGLE_PRESS_TAB: 'TOGGLE_PRESS_TAB',
+  TOGGLE_SHOW_TAB: 'TOGGLE_SHOW_TAB'
+};
+
+export const tabReducer = (state, action) => {
+  switch (action.type) {
+    case TAB_ACTION_TYPES.TOGGLE_PRESS_TAB: {
+      const { activePressTab } = state;
+      let newPressTab;
+
+      if (activePressTab === 'all') newPressTab = 'mine';
+      else if (activePressTab === 'mine') newPressTab = 'all';
+
+      return { ...state, activePressTab: newPressTab };
+    }
+    case TAB_ACTION_TYPES.TOGGLE_SHOW_TAB: {
+      const { activeShowTab } = state;
+      let newShowTab;
+
+      if (activeShowTab === 'grid') newShowTab = 'list';
+      else if (activeShowTab === 'list') newShowTab = 'grid';
+
+      return { ...state, activeShowTab: newShowTab };
+    }
+    default:
+      return state;
+  }
+};
+
+const INIT_TAB_STATE = {
+  activePressTab: 'all',
+  activeShowTab: 'grid'
+};
+
+export const tabStore = createStore({
+  initState: INIT_TAB_STATE,
+  reducer: tabReducer
+});
