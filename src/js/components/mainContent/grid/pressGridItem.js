@@ -1,4 +1,4 @@
-import { subscriptionStore } from '../../../store/index.js';
+import { subscriptionStore, SUBSCRIPTION_ACTION_TYPES } from '../../../store/index.js';
 
 export default class PressGridItem {
   constructor($parent, props) {
@@ -15,6 +15,7 @@ export default class PressGridItem {
     if (!this.props) return;
 
     this.$mainEle.innerHTML = this.template();
+    this.setEvent();
   }
 
   template() {
@@ -33,6 +34,33 @@ export default class PressGridItem {
         }">+ ${btnText}</button>
       </div>
     `;
+  }
+
+  setEvent() {
+    const $subscribeToggleBtn = this.$mainEle.querySelector('.subscribe-toggle-btn');
+    const actionByTarget = {
+      'subscribe-btn': SUBSCRIPTION_ACTION_TYPES.ADD_SUBSCRIPTION,
+      'unsubscribe-btn': SUBSCRIPTION_ACTION_TYPES.DELETE_SUBSCRIPTION
+    };
+
+    $subscribeToggleBtn.addEventListener('click', ({ target }) => {
+      const { classList } = target;
+      const itemData = this.props;
+      let actionKey;
+
+      if (classList.contains('subscribe-btn')) actionKey = 'subscribe-btn';
+      else if (classList.contains('unsubscribe-btn')) actionKey = 'unsubscribe-btn';
+
+      if (actionKey) {
+        subscriptionStore.dispatch({
+          type: actionByTarget[actionKey],
+          payload: itemData
+        });
+
+        // ? subscriptionStore에 render 메소드 등록 고민
+        this.render();
+      }
+    });
   }
 
   remove() {
