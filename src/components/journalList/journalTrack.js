@@ -38,13 +38,9 @@ export class Track {
     const FIRST_PAGE = 0;
     const LAST_PAGE = this.currentBatchSize - 1;
 
-    if (direction === "left") {
-      this.currentPage--;
-      this.updateDetailNav();
-    } else if (direction === "right") {
-      this.currentPage++;
-      this.updateDetailNav();
-    }
+    this.currentPage =
+      direction === "left" ? this.currentPage - 1 : this.currentPage + 1;
+    this.updateDetailNav();
 
     const currentPosition = this.currentPage * -WIDTH_PER_PAGE;
     trackContainer.style.transform = `translateX(${currentPosition}px)`;

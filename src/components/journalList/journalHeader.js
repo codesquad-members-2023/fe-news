@@ -6,7 +6,7 @@ export class JournalHeader {
     this.renderJournalHeader();
   }
 
-  getHeaderHTML() {
+  createHeaderHTML() {
     const currentState = this.journalHeaderStore.getState();
     const currentFrame = this.journalHeaderStore.getFrame();
 
@@ -79,7 +79,7 @@ export class JournalHeader {
   }
 
   renderJournalHeader() {
-    this.getHeaderHTML();
+    this.createHeaderHTML();
     this.addEventToHeader();
   }
 }
