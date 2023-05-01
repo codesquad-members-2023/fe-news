@@ -3,9 +3,9 @@ describe('전체 언론사 그리드 보기 테스트 ', () => {
     cy.visit('http://127.0.0.1:5500/index.html');
   });
 
-  // Todo: class 값 매직 스트링 처리하기
-  it('첫 화면 로딩할 때, [전체 언론사] 탭의 [그리드 보기]가 보인다.', () => {
-    cy.visible('.all-grid__section');
+  it('첫 화면 로딩할 때, [전체 언론사] 탭의 [그리드 보기]를 기본 상태로 한다.', () => {
+    cy.get('.press-tab__all').should('have.class', 'active');
+    // ? [그리드 보기]를 테스트 하기 위해 class를 추가하는 것은 좋지 않은 것 같은데 다른 방법 찾아보기
   });
 
   it('가장 첫 페이지일 때, 왼쪽 화살표 버튼은 보이지 않는다.', () => {
@@ -13,8 +13,9 @@ describe('전체 언론사 그리드 보기 테스트 ', () => {
   });
 
   it('가장 마지막 페이지일 때, 오른쪽 화살표 버튼은 보이지 않는다.', () => {
-    // Todo: grid 페이지 개수 매직넘버 처리하기
-    for (let i = 0; i < 3; i += 1) {
+    const totalPages = 3;
+
+    for (let i = 0; i < totalPages; i += 1) {
       cy.clickBtn('#grid-next-btn');
     }
 
@@ -35,16 +36,19 @@ describe('전체 언론사 그리드 보기 테스트 ', () => {
       .and('contain', '해지하기');
   });
 
-  it('그리드의 우 화살표를 클릭했을 때, 다음 페이지로 돌아간다.', () => {
+  // ? 다음 페이지 혹은 이전 페이지로 이동했다는 걸 어떻게 테스트 할까? 테스트 때문에 class나 dataset을 추가하는게 정말 좋은 방법일까?
+  it('그리드의 우 화살표를 클릭했을 때, 다음 페이지로 넘어간다.', () => {
+    cy.notVisible('#grid-before-btn');
+
     cy.clickBtn('#grid-next-btn');
-    cy.get('.press-grid').first().should('not.be.visible').and('have.class', 'display-none');
-    cy.get('.press-grid').first().next().should('be.visible').and('not.have.class', 'display-none');
+    cy.visible('#grid-before-btn');
   });
 
   it('그리드의 좌 화살표를 클릭했을 때, 이전 페이지로 돌아간다.', () => {
+    cy.notVisible('#grid-before-btn');
+
     cy.clickBtn('#grid-next-btn');
     cy.clickBtn('#grid-before-btn');
-    cy.get('.press-grid').first().should('be.visible').and('not.have.class', 'display-none');
-    cy.get('.press-grid').first().next().should('not.be.visible').and('have.class', 'display-none');
+    cy.notVisible('#grid-before-btn');
   });
 });
