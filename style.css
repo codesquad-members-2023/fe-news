@@ -191,6 +191,9 @@ body {
         font-family: 'Pretendard', sans-serif;
         color: #6e8091;
         cursor: pointer; }
+        .newssection_view .newssection_view_list .list_header .list_header_view .list_header_category:hover {
+          text-decoration: underline #6e8091;
+          cursor: pointer; }
       .newssection_view .newssection_view_list .list_header .list_header_view .show {
         display: flex;
         align-items: center;
@@ -202,6 +205,9 @@ body {
         background: #4362d0;
         color: #ffffff;
         cursor: inherit; }
+        .newssection_view .newssection_view_list .list_header .list_header_view .show:hover {
+          text-decoration: none;
+          cursor: inherit; }
   .newssection_view .newssection_view_list .list_view {
     display: flex;
     flex-direction: column;

@@ -36,6 +36,10 @@
           @include font($Body_xs, $Medium);
           color: $gray300;
           cursor: pointer;
+          &:hover {
+            text-decoration: underline $gray300;
+            cursor: pointer;
+          }
         }
 
         .show {
@@ -51,6 +55,11 @@
           background: $primary;
           color: $white;
           cursor: inherit;
+
+          &:hover {
+            text-decoration: none;
+            cursor: inherit;
+          }
         }
       }
     }
