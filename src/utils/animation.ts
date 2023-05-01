@@ -5,28 +5,17 @@ export const customSetInterval = ({
   intervalTime: number;
   callback: any;
 }) => {
-  let lastTime: any = null;
   let id: any = null;
-  const step = (timestamp: any) => {
-    if (!lastTime) lastTime = timestamp;
-    const now = timestamp;
-    const elapsed = now - lastTime;
-    if (elapsed >= intervalTime) {
-      callback();
-      lastTime = now;
-    }
-    id = requestAnimationFrame(step);
-  };
 
   const start = () => {
     if (id === null) {
-      requestAnimationFrame(step);
+      id = setInterval(callback, intervalTime);
     }
   };
 
   const stop = () => {
     if (id !== null) {
-      cancelAnimationFrame(id);
+      clearInterval(id);
       id = null;
     }
   };

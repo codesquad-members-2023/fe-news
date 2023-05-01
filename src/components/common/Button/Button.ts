@@ -1,4 +1,11 @@
-import { addShadow, getProperty, add, addStyle } from '@utils/dom';
+import {
+  addShadow,
+  getProperty,
+  add,
+  addStyle,
+  setProperty,
+  select,
+} from '@utils/dom';
 import style from './ButtonStyle';
 
 interface Button {
@@ -13,9 +20,11 @@ class Button extends HTMLElement {
 
   render() {
     const icon = getProperty({ target: this, name: 'icon' });
+    const styleLiteral = getProperty({ target: this, name: 'btn-style' });
     const text = this.innerText;
+
     const template = `
-    <button class="typo-body-xs">
+    <button class="typo-body-xs" style='${styleLiteral}'>
       ${
         icon
           ? `<icon-element name="${icon}" size="12" fill="var(--gray200)"></icon-element>`
@@ -24,6 +33,7 @@ class Button extends HTMLElement {
       ${text}
     </button>
     `;
+
     addShadow({ target: this });
     add({
       target: this.shadowRoot,

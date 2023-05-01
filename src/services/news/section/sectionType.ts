@@ -10,7 +10,6 @@ export interface getSectionPropsType extends sectionContentsPropsType {
   page?: number;
 }
 
-export interface getCustomSectionPropsType extends sectionContentsPropsType {
-  userStore: StoreType<UserType>;
-  page?: number;
+export interface getCustomSectionPropsType {
+  pressId: string;
 }

@@ -21,6 +21,7 @@ export interface SectionInterface {
   lastEdited: Date;
   articles: ArticleInterface[];
   category: CategoryType;
+  press: PressInfoInterface;
 }
 export interface ArticleInterface {
   id: string;
@@ -34,6 +35,16 @@ const SectionSchema = new Schema<SectionInterface>({
   pressId: { type: String, required: true },
   lastEdited: { type: Date, required: true },
   category: { type: String, required: true },
+  press: {
+    pid: { type: String, required: true },
+    pname: { type: String, required: true },
+    newMainLogo: { type: String, required: true },
+    newMainLightLogo: { type: String, required: true },
+    newMainDarkLogo: { type: String, required: true },
+    thumbnailValid: { type: Boolean, required: true },
+    valid: { type: Boolean, required: true },
+    isSubscribed: { type: Boolean, required: true },
+  },
   articles: [
     {
       id: { type: String, required: true },
@@ -54,6 +65,8 @@ const PressSchema = new Schema<PressInfoInterface>({
   valid: { type: Boolean, required: true },
   isSubscribed: { type: Boolean, required: true },
 });
+
+SectionSchema.index({ category: 1 });
 
 export const SectionModel = model<SectionInterface>('Sections', SectionSchema);
 export const PressModel = model<PressInfoInterface>('Presses', PressSchema);

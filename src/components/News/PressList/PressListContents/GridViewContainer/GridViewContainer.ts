@@ -17,27 +17,47 @@ import { StoreType } from '@utils/redux';
 
 import store from '@store/index';
 import { NewsType, PressType, TAB, VIEW } from '@store/news/newsType';
-import { getPressList, getCustomPressList } from '@services/news/press/press';
+import { UserType } from '@store/user/userType';
+import { filterSusbscribedPress } from '@services/news/news';
 
 class GridViewContainer extends HTMLElement {
   wrap: HTMLElement | null = null;
   newsStore: StoreType<NewsType>;
+  userStore: StoreType<UserType>;
   tab: TAB;
+  pressList: PressType[];
 
   constructor() {
     super();
     this.newsStore = store.news;
+    this.userStore = store.user;
     this.tab = getProperty({ target: this, name: 'tab' });
+    this.pressList = [];
   }
 
   async connectedCallback() {
     addShadow({ target: this });
-    this.render();
     addStyle({
       target: this.shadowRoot,
       style: style(),
     });
+
     this.newsStore.subscribe(this.handleDisplay.bind(this));
+  }
+
+  static get observedAttributes() {
+    return ['press-list'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === 'press-list') {
+      this.pressList = getProperty({
+        target: this,
+        name: 'press-list',
+        type: 'object',
+      });
+      this.render();
+    }
   }
 
   handleDisplay() {
@@ -65,10 +85,15 @@ class GridViewContainer extends HTMLElement {
   }
 
   async render() {
-    const isGeneral = this.tab === TAB.GENERAL;
-    const pressList = isGeneral
-      ? await getPressList({ newsStore: this.newsStore })
-      : await getCustomPressList({ newsStore: this.newsStore });
+    const pressList = this.pressList;
+    this.newsStore.dispatch({
+      type: 'SET_TOTAL_PAGE',
+      payload: {
+        view: VIEW.GRID,
+        tab: this.tab,
+        totalPage: Math.ceil(pressList.length / 24),
+      },
+    });
     const maxPage = Math.ceil(pressList.length / MAX_ITEM_NUM);
     const slicedPressList = Array.from({ length: maxPage }).map(
       (v: unknown, i: number) =>

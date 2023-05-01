@@ -7,6 +7,7 @@ import {
   changeTabPropsType,
   changeViewPropsType,
   setCurrentPagePropsType,
+  setPressListPropsType,
   setTotalPagePropsType,
 } from './newsType';
 
@@ -26,11 +27,15 @@ const initialState: NewsType = {
       },
     },
   },
+  press: {
+    pressList: [],
+  },
 };
 
 const changeTab = ({ state, payload }: changeTabPropsType) => {
   state.display.currentTab = payload;
   state.display.currentPage = 0;
+
   return {
     ...state,
   };
@@ -39,6 +44,7 @@ const changeTab = ({ state, payload }: changeTabPropsType) => {
 const changeView = ({ state, payload }: changeViewPropsType) => {
   state.display.currentView = payload;
   state.display.currentPage = 0;
+
   return {
     ...state,
   };
@@ -54,6 +60,7 @@ const changePageNumber = ({ state, type }: changePageNumberPropsType) => {
   switch (type) {
     case 'NEXT_PAGE': {
       display.currentPage = isLastPage ? 0 : currentPage + 1;
+      console.log(currentPage);
       return state;
     }
     case 'PREV_PAGE': {
@@ -81,6 +88,12 @@ const setTotalPage = ({ state, payload }: setTotalPagePropsType) => {
   return state;
 };
 
+const setPressList = ({ state, payload }: setPressListPropsType) => {
+  const { pressList } = payload;
+  state.press.pressList = pressList;
+  return state;
+};
+
 const reducer: ReducerType<NewsType> = (
   state = initialState,
   action: ActionType
@@ -100,6 +113,8 @@ const reducer: ReducerType<NewsType> = (
       return setCurrentPage({ state, payload: action.payload });
     case 'SET_TOTAL_PAGE':
       return setTotalPage({ state, payload: action.payload });
+    case 'SET_PRESS_LIST':
+      return setPressList({ state, payload: action.payload });
     default:
       return state;
   }

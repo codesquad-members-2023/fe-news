@@ -5,12 +5,15 @@ import {
   getProperty,
   createWrap,
   select,
+  create,
 } from '@utils/dom';
 import style from './GridViewItemStyle';
 import store from '@store/index';
 
 import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
+import UnsubscribeModal from '@common/Modal/UnsubscribeModal/UnsubscribeModal';
+import Snackbar from '@common/Snackbar/Snackbar';
 
 interface GridViewItem {
   icon?: string | null;
@@ -45,6 +48,11 @@ class GridViewItem extends HTMLElement {
       target: this,
       name: 'id',
     });
+    const name = getProperty({
+      target: this,
+      name: 'name',
+    });
+
     if (!id) {
       this.wrap?.classList.add('no-hover');
       return;
@@ -55,8 +63,8 @@ class GridViewItem extends HTMLElement {
     const btnContainer = this.querySelector('.press-subscribe-btn-container');
     const template = `${
       isSubscribed
-        ? `<button-element icon="close" id="${id}">해지하기</button-element>`
-        : `<button-element icon="plus" id="${id}">구독하기</button-element>`
+        ? `<button-element icon="close" id="${id}" name="${name}">해지하기</button-element>`
+        : `<button-element icon="plus" id="${id}" name="${name}">구독하기</button-element>`
     }`;
 
     btnContainer &&
@@ -64,6 +72,10 @@ class GridViewItem extends HTMLElement {
         target: btnContainer,
         template,
       });
+    select({ selector: ['button-element'], parent: this })?.addEventListener(
+      'click',
+      this.handleClick.bind(this)
+    );
   }
 
   render() {
@@ -99,21 +111,45 @@ class GridViewItem extends HTMLElement {
     });
 
     this.renderSubscribingBtn();
-    this.handleHover();
+
+    this.wrap?.addEventListener('mouseenter', this.handleHover.bind(this));
   }
 
-  handleHover = () => {
-    this.wrap?.addEventListener('mouseenter', () => {
+  handleClick(e: Event) {
+    const target = e.target as HTMLElement;
+    const isSubscribed = getProperty({ target, name: 'icon' }) === 'close';
+    const id = getProperty({ target, name: 'id' });
+    const name = getProperty({ target, name: 'name' });
+
+    if (isSubscribed) {
+      const modal = new UnsubscribeModal(name, id);
+      modal.show();
+      this.userStore.subscribe(this.renderSubscribingBtn.bind(this));
+    } else {
+      const snackbar = create({
+        tagName: 'snackbar-element',
+        attributeList: [['text', '내가 구독한 언론사에 추가되었습니다.']],
+      }) as Snackbar;
+      snackbar.show();
+      this.userStore.dispatch({
+        type: 'SUBSCRIBE',
+        payload: id,
+      });
+    }
+
+    this.renderSubscribingBtn();
+  }
+
+  handleHover() {
+    this.wrap
+      ?.querySelector('.press-subscribe-btn-container')
+      ?.classList.remove('hide');
+    this.addEventListener('mouseleave', () => {
       this.wrap
         ?.querySelector('.press-subscribe-btn-container')
-        ?.classList.remove('hide');
-      this.addEventListener('mouseleave', () => {
-        this.wrap
-          ?.querySelector('.press-subscribe-btn-container')
-          ?.classList.add('hide');
-      });
+        ?.classList.add('hide');
     });
-  };
+  }
 }
 
 export default GridViewItem;

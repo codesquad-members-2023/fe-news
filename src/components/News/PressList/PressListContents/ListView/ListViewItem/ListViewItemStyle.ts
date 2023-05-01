@@ -43,9 +43,22 @@ export default function style() {
     .headliner > .image {
       width: 320px;
       height: 200px;
-      display: inline-block;
-      background-size: cover;
+    
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
 
+    .headliner:hover > .image > img {
+      cursor: pointer;
+      transform: scale(1.05);
+      transition: transform .2s cubic-bezier(.165,.84,.44,1);
+    }
+
+    .headliner > .image > img {
+      transform: scale(1);
+      transition: transform .2s cubic-bezier(.165,.84,.44,1);
     }
 
     .headliner > .title {
@@ -69,8 +82,12 @@ export default function style() {
       font-size: var(--typo-body-xs-fontsize);
       line-height: var(--typo-body-xs-lineheight);
     }
+    
+    .headliner:hover .image {
+      background-size: 120%;
+    }
 
-    .headliner > .title:hover, li:hover {
+    .headliner:hover > .title, .headliner > .title:hover, li:hover {
       text-decoration-line: underline;
     }
 

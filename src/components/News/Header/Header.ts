@@ -37,10 +37,10 @@ class HeaderItem extends HTMLElement {
     });
 
     const template = `
-    <p class="title">
+    <a href='/' class="title">
       <icon-element name="newspaper" fill="var(--primary)" size="24"></icon-element>
       뉴스스탠드
-    </p>
+    </a>
     <p class="date typo-body-md">${`${date} ${day}요일`}</p>
     `;
     add({

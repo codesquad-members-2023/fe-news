@@ -1,6 +1,9 @@
 import { createStore, ReducerType, ActionType } from '@utils/redux';
 import { UserType } from './userType';
 import { TEMP_ID } from '@constant/index';
+import { subscribeAPI, unsubscribeAPI } from '@apis/user';
+import Modal from '@common/Modal/Modal';
+import UnsubscribeModal from '@common/Modal/UnsubscribeModal/UnsubscribeModal';
 
 const initialState: UserType = {
   id: TEMP_ID,
@@ -18,12 +21,17 @@ const subscribe = ({
   state: UserType;
   payload: string;
 }) => {
+  let result;
   if (state.subscribingPressIds.length === 0)
-    return { ...state, subscribingPressIds: [payload] };
-  return {
-    ...state,
-    subscribingPressIds: [...state.subscribingPressIds, payload],
-  };
+    result = { ...state, subscribingPressIds: [payload] };
+  else
+    result = {
+      ...state,
+      subscribingPressIds: [...state.subscribingPressIds, payload],
+    };
+
+  subscribeAPI({ id: TEMP_ID, pressId: payload });
+  return result;
 };
 
 const unsubscribe = ({
@@ -36,6 +44,7 @@ const unsubscribe = ({
   const newSubscribingPress = state.subscribingPressIds.filter(
     (pressId: string) => pressId !== payload
   );
+  unsubscribeAPI({ id: TEMP_ID, pressId: payload });
   return { ...state, subscribingPressIds: newSubscribingPress };
 };
 

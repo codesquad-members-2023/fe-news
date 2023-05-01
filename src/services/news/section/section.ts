@@ -11,37 +11,15 @@ export const getSection = async ({
   section.sectionData.articles.forEach((article: ArticleInterface) => {
     article.title = parseQuotationMarks(article.title);
   });
-  newsStore.dispatch({
-    type: 'SET_TOTAL_PAGE',
-    payload: {
-      view: VIEW.LIST,
-      tab: TAB.GENERAL,
-      totalPage: section.tabData.totalNumber,
-    },
-  });
   return section;
 };
 
 export const getCustomSection = async ({
-  newsStore,
-  userStore,
-  page = 0,
+  pressId,
 }: getCustomSectionPropsType) => {
-  const subscribingPressIds = userStore.getState().subscribingPressIds;
-  const noSubscribe = subscribingPressIds.length === 0;
-  if (noSubscribe) return null;
-  const pressId = subscribingPressIds[page];
   const section = await getCustomSectionAPI({ pressId });
   section.sectionData.articles.forEach((article: ArticleInterface) => {
     article.title = parseQuotationMarks(article.title);
-  });
-  newsStore.dispatch({
-    type: 'SET_TOTAL_PAGE',
-    payload: {
-      view: VIEW.LIST,
-      tab: TAB.CUSTOM,
-      totalPage: userStore.getState().subscribingPressIds.length,
-    },
   });
   return section;
 };

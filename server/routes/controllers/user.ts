@@ -9,7 +9,7 @@ export const getUser = async (req: Request, res: Response) => {
     });
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ message: error });
   }
 };
@@ -44,7 +44,7 @@ export const unsubsrcibe = async (req: Request, res: Response) => {
     await PressModel.updateOne({ pid: id }, { $push: { isSubscribed: false } });
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ message: error });
   }
 };

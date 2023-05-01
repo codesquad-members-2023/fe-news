@@ -22,12 +22,11 @@ class GridView extends HTMLElement {
     this.wrap.classList.add('grid-view');
     this.shadowRoot?.append(this.wrap);
     this.render();
-    this.setShowAtrribute();
-
     addStyle({
       target: this.shadowRoot,
       style: style(),
     });
+    this.setShowAtrribute();
   }
 
   static get observedAttributes() {
@@ -69,7 +68,7 @@ class GridView extends HTMLElement {
       .map((_, i: number) => {
         const press = pressList[i];
         if (press) {
-          return `<grid-view-item-element id='${press.pid}' image='${press.newMainLogo}' index='${i}' is-subscribed='${press.isSubscribed}'></grid-view-item-element>`;
+          return `<grid-view-item-element id='${press.pid}' name='${press.pname}' image='${press.newMainLogo}' index='${i}' is-subscribed='${press.isSubscribed}'></grid-view-item-element>`;
         }
         return `<grid-view-item-element index='${i}'></grid-view-item-element>`;
       })

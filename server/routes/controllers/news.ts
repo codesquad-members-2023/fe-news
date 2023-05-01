@@ -28,7 +28,7 @@ export const postPress = async (req: Request, res: Response) => {
     });
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ message: error });
   }
 };
@@ -46,33 +46,9 @@ export const getRollingNews = async (req: Request, res: Response) => {
 export const getSection = async (req: Request, res: Response) => {
   const page = Number(req.query.page);
   try {
-    const sectionsWithPress = await SectionModel.aggregate([
-      {
-        $sort: {
-          category: 1,
-        },
-      },
-      {
-        $lookup: {
-          from: 'presses',
-          localField: 'pressId',
-          foreignField: 'pid',
-          as: 'press',
-        },
-      },
-      {
-        $unwind: {
-          path: '$press',
-        },
-      },
-      {
-        $skip: page * 1,
-      },
-      {
-        $limit: 1,
-      },
-    ]);
-    if (sectionsWithPress.length === 0) {
+    const section = await SectionModel.findOne({}).skip(page);
+
+    if (!section) {
       return res.status(204).json({ message: 'No section' });
     }
 
@@ -89,7 +65,7 @@ export const getSection = async (req: Request, res: Response) => {
 
     let totalNumber = 0;
     let currentCategoryIndex = page;
-    const category = sectionsWithPress[0].category;
+    const category = section.category;
     const categoryCountsObj = categoryCounts.reduce((acc, curr) => {
       if (Number(category) > Number(curr._id)) {
         currentCategoryIndex -= curr.count;
@@ -99,12 +75,8 @@ export const getSection = async (req: Request, res: Response) => {
       return acc;
     }, {});
 
-    if (sectionsWithPress.length === 0) {
-      return res.status(204).json({ message: 'No sections' });
-    }
-
     res.status(200).json({
-      sectionData: sectionsWithPress[0],
+      sectionData: section,
       tabData: {
         categoryCounts: categoryCountsObj,
         totalNumber,
@@ -166,7 +138,23 @@ export const postSection = async (req: Request, res: Response) => {
     if (!result) res.status(204).json({ message: 'No section' });
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(400).json({ message: error });
+  }
+};
+
+export const insertPressToSection = async (req: Request, res: Response) => {
+  try {
+    const pressList = await PressModel.find({});
+    const updatePromises = pressList.map(async (press) => {
+      const pressId = press.pid;
+      return SectionModel.updateOne({ pressId }, { $set: { press: press } });
+    });
+
+    const results = await Promise.all(updatePromises);
+
+    res.status(200).json(results);
+  } catch (error) {
     res.status(400).json({ message: error });
   }
 };

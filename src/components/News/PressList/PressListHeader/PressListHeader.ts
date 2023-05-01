@@ -2,7 +2,7 @@ import { add, addStyle, addShadow, createWrap } from '@utils/dom';
 import style from './PressListHeaderStyle';
 import store from '@store/index';
 import { StoreType } from '@utils/redux';
-import { NewsType } from '@store/news/newsType';
+import { NewsType, TAB, VIEW } from '@store/news/newsType';
 
 interface PressListHeader {
   icon?: string | null;
@@ -31,19 +31,19 @@ class PressListHeader extends HTMLElement {
   render({ currentTab, currentView }: any = this.newsStore.getState().display) {
     const tab = {
       general: {
-        isActive: currentTab === 'general',
+        isActive: currentTab === TAB.GENERAL,
       },
       custom: {
-        isActive: currentTab === 'custom',
+        isActive: currentTab === TAB.CUSTOM,
       },
     };
     const tabInfo = Object.entries(tab);
     const view = {
       grid: {
-        isActive: currentView === 'grid',
+        isActive: currentView === VIEW.GRID,
       },
       list: {
-        isActive: currentView === 'list',
+        isActive: currentView === VIEW.LIST,
       },
     };
     const viewInfo = Object.entries(view);
@@ -86,60 +86,55 @@ class PressListHeader extends HTMLElement {
       target: this.wrap,
       template,
     });
-    this.handleTabClick();
-    this.handleViewClick();
+
+    this.shadowRoot?.querySelectorAll('button').forEach((button) => {
+      if (button.classList.contains('tab'))
+        return button.addEventListener('click', this.handleTabClick.bind(this));
+      if (button.classList.contains('view'))
+        return button.addEventListener(
+          'click',
+          this.handleViewClick.bind(this)
+        );
+    });
   }
 
-  handleTabClick = () => {
-    this.shadowRoot?.querySelectorAll('button').forEach((button) => {
-      if (button.classList.contains('tab')) {
-        const buttonClickHandler = (e: MouseEvent) => {
-          const tab = e.currentTarget as HTMLElement;
-          const rerender = () => {
-            const state = this.newsStore.getState();
-            this.render({
-              currentView: this.newsStore.getState().display.currentView,
-              currentTab: this.newsStore.getState().display.currentTab,
-            });
-          };
-          this.newsStore.subscribe(rerender);
-          const isGeneral = tab.classList.contains('general');
-          this.newsStore.dispatch({
-            type: 'CHANGE_TAB',
-            payload: isGeneral ? 'general' : 'custom',
-          });
-        };
-        button.addEventListener('click', buttonClickHandler);
-      }
+  handleTabClick(e: MouseEvent) {
+    const tab = e.currentTarget as HTMLElement;
+    const rerender = () => {
+      this.render({
+        currentView: this.newsStore.getState().display.currentView,
+        currentTab: this.newsStore.getState().display.currentTab,
+      });
+    };
+    this.newsStore.subscribe(rerender);
+    const isGeneral = tab.classList.contains('general');
+    this.newsStore.dispatch({
+      type: 'CHANGE_TAB',
+      payload: isGeneral ? 'general' : 'custom',
     });
-  };
 
-  handleViewClick = () => {
-    this.shadowRoot?.querySelectorAll('button').forEach((button) => {
-      if (button.classList.contains('view')) {
-        const buttonClickHandler = (e: MouseEvent) => {
-          const view = e.currentTarget as HTMLElement;
-          const viewName = view
-            .querySelector('icon-element')
-            ?.getAttribute('name');
-
-          const rerender = () => {
-            const state = this.newsStore.getState();
-            this.render({
-              currentTab: this.newsStore.getState().display.currentTab,
-              currentView: this.newsStore.getState().display.currentView,
-            });
-          };
-          this.newsStore.subscribe(rerender);
-          this.newsStore.dispatch({
-            type: 'CHANGE_VIEW',
-            payload: viewName,
-          });
-        };
-        button.addEventListener('click', buttonClickHandler);
-      }
+    this.newsStore.dispatch({
+      type: 'CHANGE_VIEW',
+      payload: isGeneral ? VIEW.GRID : VIEW.LIST,
     });
-  };
+  }
+
+  handleViewClick(e: MouseEvent) {
+    const view = e.currentTarget as HTMLElement;
+    const viewName = view.querySelector('icon-element')?.getAttribute('name');
+
+    const rerender = () => {
+      this.render({
+        currentTab: this.newsStore.getState().display.currentTab,
+        currentView: this.newsStore.getState().display.currentView,
+      });
+    };
+    this.newsStore.subscribe(rerender);
+    this.newsStore.dispatch({
+      type: 'CHANGE_VIEW',
+      payload: viewName,
+    });
+  }
 }
 
 export default PressListHeader;

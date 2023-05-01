@@ -1,5 +1,8 @@
 export interface NewsType {
   display: DisplayType;
+  press: {
+    pressList: PressType[];
+  };
 }
 
 export enum TAB {
@@ -114,5 +117,11 @@ export interface setTotalPagePropsType extends newsPropsType {
     view: VIEW;
     tab: TAB;
     totalPage: number;
+  };
+}
+
+export interface setPressListPropsType extends newsPropsType {
+  payload: {
+    pressList: PressType[];
   };
 }

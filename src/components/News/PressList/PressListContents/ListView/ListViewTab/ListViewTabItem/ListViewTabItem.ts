@@ -16,7 +16,7 @@ class ListViewTabItem extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['is-active', 'current-number'];
+    return ['is-active', 'current-number', 'progress'];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
@@ -26,6 +26,9 @@ class ListViewTabItem extends HTMLElement {
     if (name === 'current-number') {
       this.render();
     }
+    if (name === 'progress') {
+      this.render();
+    }
   }
 
   render() {
@@ -33,11 +36,11 @@ class ListViewTabItem extends HTMLElement {
       target: this,
       name: 'name',
     });
-    const isActive =
-      getProperty({
-        target: this,
-        name: 'is-active',
-      }) === 'true';
+    const isActive = getProperty({
+      target: this,
+      name: 'is-active',
+      type: 'boolean',
+    });
     const totalNumber = getProperty({
       target: this,
       name: 'total-number',
@@ -49,17 +52,19 @@ class ListViewTabItem extends HTMLElement {
 
     const template = `
     <button class="tab-container typo-body-sm${isActive ? ' is-active' : ''}">
-      <span>${name}</span>
-      ${
-        isActive && totalNumber
-          ? `
-          <span class="index-indicator typo-title-xs">
-            <span class="current-index">${
-              Number(currentNumber) + 1
-            }</span><span>/</span><span class="total-index">${totalNumber}</span>
-          </span>`
-          : ''
-      }
+      <div class="tab-contents">
+        <span>${name}</span>
+        ${
+          isActive && totalNumber
+            ? `
+            <span class="index-indicator typo-title-xs">
+              <span class="current-index">${
+                Number(currentNumber) + 1
+              }</span><span>/</span><span class="total-index">${totalNumber}</span>
+            </span>`
+            : ''
+        }
+      </div>
     </button>
     `;
 

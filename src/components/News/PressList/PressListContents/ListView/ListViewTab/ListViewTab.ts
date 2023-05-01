@@ -1,10 +1,19 @@
-import { add, addStyle, addShadow, getProperty, setProperty } from '@utils/dom';
+import {
+  add,
+  addStyle,
+  addShadow,
+  getProperty,
+  setProperty,
+  selectAll,
+  select,
+} from '@utils/dom';
 import style from './ListViewTabStyle';
 import store from '@store/index';
 import { StoreType } from '@utils/redux';
 import { UserType } from '@store/user/userType';
-import { NewsType, SectionType, TAB } from '@store/news/newsType';
-import News from 'src/App';
+import { CATEGORY, NewsType, SectionType, TAB } from '@store/news/newsType';
+import PressList from '@component/News/PressList/PressList';
+import { CATEGORIES } from '@constant/index';
 
 interface ListViewTab {
   icon?: string | null;
@@ -13,10 +22,17 @@ interface ListViewTab {
 class ListViewTab extends HTMLElement {
   userStore: StoreType<UserType>;
   newStore: StoreType<NewsType>;
+  tab: TAB;
+  pressList: PressList[];
   constructor() {
     super();
     this.userStore = store.user;
     this.newStore = store.news;
+    this.tab = getProperty({
+      target: this,
+      name: 'tab',
+    });
+    this.pressList = [];
   }
 
   connectedCallback() {
@@ -25,84 +41,86 @@ class ListViewTab extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['section'];
+    return ['section-data', 'press-list', 'progress'];
   }
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name === 'section') {
-      this.render();
+    if ((this.tab === TAB.CUSTOM && name) === 'press-list') {
+      this.pressList = JSON.parse(newValue);
+      this.renderTabForCustomTab();
     }
-  }
-
-  handleDrag() {
-    this.shadowRoot
-      ?.querySelector('.tab-wrap')
-      ?.addEventListener('drag', () => {});
+    if (name === 'section-data') {
+      this.render();
+      this.rearrangeTabPosition();
+    }
+    if (name === 'progress') {
+      const target = select({
+        selector: ['list-view-tab-item-element[is-active="1"]'],
+        parent: this,
+      });
+      setProperty({ target, name: 'progress', value: newValue });
+    }
   }
 
   render() {
-    const tab = getProperty({
-      target: this,
-      name: 'tab',
-    });
-
-    const sectionData = getProperty({
-      target: this,
-      name: 'section-data',
-      type: 'object',
-    });
-
-    if (tab === TAB.GENERAL) {
+    if (this.tab === TAB.GENERAL) {
       this.renderTabForGeneralTab();
-    } else {
-      this.renderTabForCustomTab(sectionData);
+    }
+    if (this.tab === TAB.CUSTOM) {
+      this.renderTabForCustomTab();
       this.userStore.subscribe(() => {
-        const subscribingPressIds =
-          this.userStore.getState().subscribingPressIds;
-        this.renderTabForCustomTab(sectionData);
+        this.renderTabForCustomTab();
       });
     }
-    this.handleDrag();
+  }
+
+  rearrangeTabPosition() {
+    const tabWrap = this.shadowRoot?.querySelector('.tab-wrap') as HTMLElement;
+    const activeTab = this.shadowRoot?.querySelector(
+      'list-view-tab-item-element[is-active="1"]'
+    );
+
+    if (!tabWrap || !activeTab) return;
+
+    const tabWrapX = tabWrap?.getBoundingClientRect().x;
+    const actionTabX = activeTab?.getBoundingClientRect().x;
+    const xDiff = actionTabX - tabWrapX;
+    this.scrollTo(xDiff, 0);
   }
 
   renderTabForGeneralTab() {
     const section = getProperty({
       target: this,
-      name: 'section',
+      name: 'section-data',
       type: 'object',
     });
 
-    const { category, pressId } = section.sectionData;
-    const { categoryCounts, categoryIndex } = section.tabData;
+    if (!section) return;
+
+    const { sectionData, tabData } = section;
+    const { category, pressId } = sectionData;
+    const { categoryCounts, currentCategoryIndex } = tabData;
 
     const isActive = (categoryId: string) =>
       category === categoryId ? true : false;
 
-    const categories = [
-      '종합/경제',
-      '방송/통신',
-      'IT',
-      '영자지',
-      '스포츠/연예',
-      '매거진/전문지',
-      '지역',
-    ];
-
     const template = `
       <div class="tab-wrap">
       ${Object.keys(categoryCounts)
-        .map((categoryId) => {
-          return `<list-view-tab-item-element id='${pressId}' total-number='${
+        .map((categoryId, i: number) => {
+          return `
+          <list-view-tab-item-element id='${pressId}' total-number='${
             categoryCounts[categoryId]
           }' name='${
-            categories[Number(categoryId)]
+            CATEGORIES[Number(categoryId)]
           }' category-id='${categoryId}' is-active=${
-            isActive(categoryId) ? 'true' : 'false'
+            isActive(categoryId) ? '1' : '0'
           } ${
             isActive(categoryId)
-              ? `progress="50" current-number='${categoryIndex}'`
+              ? `progress="0" current-number='${currentCategoryIndex}'`
               : ''
-          }></list-view-tab-item-element>`;
+          }></list-view-tab-item-element>
+          `;
         })
         .join('')}
       </div>
@@ -115,32 +133,40 @@ class ListViewTab extends HTMLElement {
       target: this.shadowRoot,
       style: style(),
     });
+    selectAll({
+      selector: ['list-view-tab-item-element'],
+      parent: this,
+    })?.forEach((element: HTMLElement) =>
+      element.addEventListener('click', (e) =>
+        this.handleTabClick(e, categoryCounts)
+      )
+    );
   }
 
-  renderTabForCustomTab(tabData: SectionType['tabData']) {
+  renderTabForCustomTab() {
     const section = getProperty({
       target: this,
-      name: 'section',
+      name: 'section-data',
       type: 'object',
     });
+    if (!section) return;
     const { pressId } = section.sectionData;
-    const subscribingPressIds = this.userStore.getState().subscribingPressIds;
-    const currentPressId = pressId;
-    const isActive = (id: string) => (currentPressId === id ? true : false);
-    const currentPage = this.newStore.getState().display.currentPage;
+
+    const checkActive = (id: string, currentPressId: string) =>
+      currentPressId === id;
 
     const template = `
       <div class="tab-wrap" draggable="true">
-      ${subscribingPressIds
-        .map(
-          (press: any) =>
-            `<list-view-tab-item-element is-active=${
-              isActive(press.pid) ? 'true' : 'false'
-            } ${isActive(press.pid) ? `progress="50"` : ''} id='${
-              press.pid
-            }' name='${press.pname}'>
-            </list-view-tab-item-element>`
-        )
+      ${this.pressList
+        .map((press: any, i: number) => {
+          const isActive = checkActive(press.pid, pressId);
+          return `<list-view-tab-item-element index='${i}' is-active=${
+            isActive ? '1' : '0'
+          } ${isActive ? `progress="50"` : ''} id='${press.pid}' name='${
+            press.pname
+          }'>
+            </list-view-tab-item-element>`;
+        })
         .join('')}
       </div>
     `;
@@ -150,7 +176,48 @@ class ListViewTab extends HTMLElement {
     });
     addStyle({
       target: this.shadowRoot,
-      style: style(currentPage),
+      style: style(),
+    });
+    selectAll({
+      selector: ['list-view-tab-item-element'],
+      parent: this,
+    })?.forEach((element: HTMLElement) =>
+      element.addEventListener('click', this.handleCustomTabClick.bind(this))
+    );
+  }
+
+  handleTabClick(e: Event, categoryCounts: any) {
+    const target = e.target as HTMLElement;
+
+    const categoryId = getProperty({
+      target,
+      name: 'category-id',
+      type: 'number',
+    });
+    const categoryCountsValues: number[] = Object.values(categoryCounts);
+
+    let targetPage = 0;
+    if (categoryId !== 0) {
+      targetPage = categoryCountsValues
+        .slice(0, categoryId)
+        .reduce((acc: number, curr: number, i: number) => {
+          return acc + curr;
+        }, 0);
+    }
+
+    this.newStore.dispatch({
+      type: 'SET_CURRENT_PAGE',
+      payload: { currentPage: targetPage },
+    });
+  }
+
+  handleCustomTabClick(e: Event) {
+    const target = e.target as HTMLElement;
+
+    const index = getProperty({ target, name: 'index', type: 'number' });
+    this.newStore.dispatch({
+      type: 'SET_CURRENT_PAGE',
+      payload: { currentPage: index },
     });
   }
 }

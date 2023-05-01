@@ -5,7 +5,7 @@ export default function style() {
     .wrap {
       position: relative;
       border: 1px solid var(--gray100);
-      height: 387px;
+      height: 385px;
     }
 
     .grid-view-container {
