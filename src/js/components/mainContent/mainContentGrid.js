@@ -29,6 +29,9 @@ export default class Grid {
     this.$mainEle.className = 'main-content__grid';
 
     this.props = props;
+    const { activePressTab } = this.props;
+
+    this.$mainEle.id = `${activePressTab}-grid__section`;
 
     this.children = new Set();
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
@@ -41,7 +44,6 @@ export default class Grid {
       this.renderChildren();
     });
 
-    const { activePressTab } = this.props;
     this.unregisterSubscription = subscriptionStore.register(() => {
       if (activePressTab !== 'mine') return;
 
