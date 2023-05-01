@@ -39,8 +39,8 @@ export default class ListAllView {
       listAllCategory.reduce((acc, cur) => {
         acc += `<div class="list_header_category" data-id="category"><span data-value="category_name">${cur}</span></div>`;
         return acc;
-      }, `<div class="list_header">`) +
-      `</div>
+      }, `<div class="list_header" data-id="categoryContainer"><div class="list_header_view">`) +
+      `</div></div>
     <div class="list_view">
       <div class="list_view_top">
         <img class="press_logo" src="${data.logoImgSrc}" alt="${data.pressName}" data-id="pressname"/>

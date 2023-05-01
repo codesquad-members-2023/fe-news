@@ -18,31 +18,40 @@
       border: 1px solid $gray100;
       background-color: $off-white;
 
-      .list_header_category {
+      .list_header_view {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 40px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
-        padding: 0px 14px;
-        gap: 8px;
-        @include font($Body_xs, $Medium);
-        color: $gray300;
-        cursor: pointer;
-      }
+        .list_header_category {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          min-width: max-content;
+          height: 40px;
+          padding: 0px 14px;
+          @include font($Body_xs, $Medium);
+          color: $gray300;
+          cursor: pointer;
+        }
 
-      .show {
-        display: flex;
-        align-items: center;
-        padding: 0px 16px;
-        gap: 8px;
+        .show {
+          display: flex;
+          align-items: center;
+          padding: 0px 16px;
+          gap: 8px;
 
-        width: 166px;
-        height: 40px;
+          min-width: 166px;
+          width: 166px;
+          height: 40px;
 
-        background: $primary;
-        color: $white;
-        cursor: inherit;
+          background: $primary;
+          color: $white;
+          cursor: inherit;
+        }
       }
     }
 

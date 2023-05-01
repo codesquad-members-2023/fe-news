@@ -55,8 +55,8 @@ export default class ListSubView {
       allSubPress.reduce((acc, cur) => {
         acc += `<div class="list_header_category" data-id="category"><span data-value="category_name">${cur.pressName}</span></div>`;
         return acc;
-      }, `<div class="list_header" data-id="categoryContainer">`) +
-      `</div>
+      }, `<div class="list_header" data-id="categoryContainer"><div class="list_header_view">`) +
+      `</div></div>
   <div class="list_view">
     <div class="list_view_top">
       <img class="press_logo" src="${curSubPress.logoImgSrc}" alt="${curSubPress.pressName}" data-id="pressName"/>
