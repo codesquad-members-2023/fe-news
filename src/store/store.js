@@ -10,7 +10,7 @@ const initState = {
     subscribingPresses: [],
     presses: [],
     viewOption: "list",
-    subscriptionOption: "sub",
+    subscriptionOption: "all",
   },
   listView: {
     index: 0,
@@ -33,7 +33,8 @@ export const SET_VIEW_LIST = "SET_VIEW_LIST";
 export const SET_SUBSCRIPTION_ALL = "SET_SUBSCRIPTION_ALL";
 export const SET_SUBSCRIPTION_SUB = "SET_SUBSCRIPTION_SUB";
 
-export const SET_LIST_INDEX = "INCREASE_LIST_IDX";
+export const SET_LIST_INDEX = "SET_LIST_INDEX";
+export const SET_CATEGORY_INDEX = "SET_CATEGORY_INDEX";
 
 export const SET_GRID_PAGE_NUM = "SET_GRID_PAGE_NUM";
 
@@ -180,6 +181,17 @@ export const store = createStore((state = initState, action = {}) => {
         },
       };
 
+    case SET_CATEGORY_INDEX:
+      return {
+        ...state,
+        listView: {
+          ...state.listView,
+          index: state.contents.presses
+            .sort((a, b) => (a.category_id < b.category_id ? -1 : 1))
+            .findIndex((el) => el.category_id === action.payload),
+        },
+      };
+
     case SET_GRID_PAGE_NUM:
       return {
         ...state,
@@ -261,6 +273,11 @@ export const setSubscriptionSubscribing = () => ({
 
 export const setListIdx = (payload) => ({
   type: SET_LIST_INDEX,
+  payload,
+});
+
+export const setCategoryIdx = (payload) => ({
+  type: SET_CATEGORY_INDEX,
   payload,
 });
 

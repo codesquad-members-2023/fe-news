@@ -208,3 +208,12 @@ button {
 .selected-press-name {
   color: blue;
 }
+
+.bold {
+  font-weight: 900;
+}
+
+.blue {
+  filter: invert(39%) sepia(22%) saturate(3651%) hue-rotate(205deg)
+    brightness(86%) contrast(89%);
+}
