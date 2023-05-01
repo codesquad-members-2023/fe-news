@@ -1,4 +1,5 @@
 import { getElement, createNode } from '../../script/utils.js'
+import { CONTENTS } from '../../script/contents.js'
 import PressesGridView from './pressesGridView.js'
 import PressListView from './pressListView.js'
 import ViewSelectionBtn from './viewSelectionBtn.js'
@@ -58,6 +59,14 @@ class MainView {
     this.#mainViewContainer.appendChild(snackbarEl)
   }
 
+  onSnackbar() {
+    const snackbar = document.querySelector('.subscribe-snb')
+    snackbar.classList.remove('none')
+    setTimeout(() => {
+      snackbar.classList.add('none')
+    }, 1000)
+  }
+
   setCurrentViewData(data) {
     const { currentPage, currentViewType, currentViewData, dataLength } = data
 
@@ -65,8 +74,8 @@ class MainView {
 
     const lastPage =
       currentViewType === 'grid'
-        ? Math.ceil(dataLength / 24) || 1
-        : dataLength - 1 || 0
+        ? Math.ceil(dataLength / CONTENTS.PRESSES_PER_PAGE) || 1
+        : dataLength || 0
     this.#directionButton.setAttribute('last-page', lastPage)
 
     if (currentViewType === 'grid') {
@@ -75,6 +84,7 @@ class MainView {
 
     if (currentViewType === 'list') {
       this.#createListView(currentViewData)
+      // if(구독하기를 눌렀으면) 스낵바띄우기
     }
   }
 

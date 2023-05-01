@@ -1,0 +1,25 @@
+.rollingbar {
+  width: 930px;
+  height: 49px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rolling-news {
+  background-color: var(--off-white);
+  width: 461px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--gray100);
+}
+
+.rolling-press {
+  margin: 16px;
+  color: var(--black);
+}
+
+.rolling-headline {
+  color: var(--gray500);
+  cursor: pointer;
+}

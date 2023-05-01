@@ -8,9 +8,11 @@ import './pages/mainSection/mainView.js'
 import './pages/mainSection/directionBtn.js'
 import './pages/mainSection/UnsubscribeModal.js'
 import MainHandler from './pages/mainSection/mainHandler.js'
+import RollingbarHandler from './pages/rollingbar/rollingbarHandler.js'
 
 const app = () => {
   new HeaderHandler()
+  new RollingbarHandler()
   new MainHandler('http://localhost:3001/presses')
 }
 

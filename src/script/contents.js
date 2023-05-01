@@ -2,6 +2,13 @@ const CONTENTS = {
   PRESSES_PER_PAGE: 24
 }
 
+// const VIEW_TYPE = {
+//   GRID,
+//   LIST,
+//   MY,
+//   ALL
+// }
+
 const CATEGORIES = {
   dloc: '지역',
   daei: '종합/경제',
