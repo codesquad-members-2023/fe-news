@@ -1,10 +1,6 @@
-import { gridPageStore } from '../../../store/index.js';
 import PressGridItem from './pressGridItem.js';
 
 export default class PressGrid {
-  // Todo: #gridItemCount constants 폴더에 상수로 관리하기
-  #gridItemCount = 24;
-
   constructor($parent, props) {
     this.$parent = $parent;
     this.$mainEle = document.createElement('div');
@@ -12,25 +8,37 @@ export default class PressGrid {
 
     this.props = props;
 
-    gridPageStore.register(this.displayElement.bind(this));
+    this.children = new Set();
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
   }
 
   render() {
-    const { gridItemsData } = this.props;
-
-    for (let idx = 0; idx < this.#gridItemCount; idx += 1) {
-      const data = gridItemsData[idx];
-
-      new PressGridItem(this.$mainEle, data).render();
-    }
+    this.removeChildren();
+    this.renderChildren();
   }
 
-  displayElement() {
-    const { pressTabType, page } = this.props;
-    const { currentPage } = gridPageStore.getState()[pressTabType];
+  renderChildren() {
+    const { itemsData, itemCount } = this.props;
 
-    if (currentPage !== page) this.$mainEle.classList.add('display-none');
-    else this.$mainEle.classList.remove('display-none');
+    for (let i = 0; i < itemCount; i += 1) {
+      const itemData = itemsData[i];
+      this.children.add(new PressGridItem(this.$mainEle, itemData));
+    }
+
+    this.children.forEach((child) => child.render());
+  }
+
+  remove() {
+    this.$mainEle.remove();
+
+    if (!this.unregister) return;
+    this.unregister();
+  }
+
+  removeChildren() {
+    if (this.children.size === 0) return;
+
+    this.children.forEach((child) => child.remove());
+    this.children.clear();
   }
 }

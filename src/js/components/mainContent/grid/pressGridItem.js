@@ -1,7 +1,4 @@
-import { domUtils } from '../../../utils/index.js';
-import { subscriptionListStore } from '../../../store/index.js';
-
-const { $ } = domUtils;
+import { subscriptionStore, SUBSCRIPTION_ACTION_TYPES } from '../../../store/index.js';
 
 export default class PressGridItem {
   constructor($parent, props) {
@@ -12,56 +9,61 @@ export default class PressGridItem {
     this.props = props;
 
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
-
-    // ! logo 이미지가 없는 grid item도 렌더링 함수 등록해야함
-    if (this.props)
-      subscriptionListStore.register({
-        listenerType: this.props.pressName,
-        listenerCallBack: this.render.bind(this)
-      });
   }
 
   render() {
-    // * 만약 props에 담은 정보가 없다면 아무것도 들어있지 않은 grid item을 만들기 위해 return
     if (!this.props) return;
+
     this.$mainEle.innerHTML = this.template();
     this.setEvent();
   }
 
   template() {
-    const { pressName, pressLogo } = this.props;
-    const subscriptionList = subscriptionListStore.getState();
-    const isSubscribed = subscriptionList.has(pressName);
+    const { pressName: currentPressName, pressLogo: currentPressLogo } = this.props;
+    const { subscriptionList } = subscriptionStore.getState();
+    const subscribedPressNames = subscriptionList.map(({ pressName }) => pressName);
+
+    const isSubscribed = subscribedPressNames.includes(currentPressName);
+    const btnText = isSubscribed ? '해지하기' : '구독하기';
 
     return /* html */ `
-      <img class="press-logo" src="${pressLogo}" alt="${pressName}"/>
+      <img class="press-logo" src="${currentPressLogo}" alt="${currentPressName}"/>
       <div class="subscribe-toggle-btn-container">
-        <button class="subscribe-toggle-btn ${isSubscribed ? 'unsubscribe-btn' : 'subscribe-btn'}">+ ${
-      isSubscribed ? '해지하기' : '구독하기'
-    }</button>
+        <button class="subscribe-toggle-btn ${
+          isSubscribed ? 'unsubscribe-btn' : 'subscribe-btn'
+        }">+ ${btnText}</button>
       </div>
     `;
   }
 
   setEvent() {
-    const $subscribeToggleBtn = $({ selector: '.subscribe-toggle-btn', parent: this.$mainEle });
+    const $subscribeToggleBtn = this.$mainEle.querySelector('.subscribe-toggle-btn');
+    const actionByTarget = {
+      'subscribe-btn': SUBSCRIPTION_ACTION_TYPES.ADD_SUBSCRIPTION,
+      'unsubscribe-btn': SUBSCRIPTION_ACTION_TYPES.DELETE_SUBSCRIPTION
+    };
 
     $subscribeToggleBtn.addEventListener('click', ({ target }) => {
-      const { pressName } = this.props;
+      const { classList } = target;
+      const itemData = this.props;
+      let actionKey;
 
-      if (target.classList.contains('subscribe-btn')) {
-        subscriptionListStore.dispatch({
-          listenerType: pressName,
-          action: { type: 'addSubscription', payload: pressName }
-        });
-      }
+      if (classList.contains('subscribe-btn')) actionKey = 'subscribe-btn';
+      else if (classList.contains('unsubscribe-btn')) actionKey = 'unsubscribe-btn';
 
-      if (target.classList.contains('unsubscribe-btn')) {
-        subscriptionListStore.dispatch({
-          listenerType: pressName,
-          action: { type: 'deleteSubscription', payload: pressName }
+      if (actionKey) {
+        subscriptionStore.dispatch({
+          type: actionByTarget[actionKey],
+          payload: itemData
         });
+
+        // ? subscriptionStore에 render 메소드 등록 고민
+        this.render();
       }
     });
+  }
+
+  remove() {
+    this.$mainEle.remove();
   }
 }

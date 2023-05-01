@@ -1,108 +1,139 @@
-import { domUtils, dataUtils, validatorUtils } from '../../utils/index.js';
-import { tabStore, gridPageStore, subscriptionListStore } from '../../store/index.js';
+import { gridStore, GRID_ACTION_TYPES, subscriptionStore } from '../../store/index.js';
 import PressGrid from './grid/pressGrid.js';
 
-const { $ } = domUtils;
-const { isActiveTab, isFirstPage, isLastPage } = validatorUtils;
-const { getDataSlices } = dataUtils;
+const isFirstPage = (currentPage) => currentPage === 0;
+const isLastPage = (currentPage, totalPages) => currentPage === totalPages - 1;
+const getDataSlices = ({ arr, count = 1 }) => {
+  const dataSlices = [];
 
-export default class MainContentGrid {
-  #gridItemCount = 24;
+  for (let i = 0; i < arr.length; i += count) {
+    dataSlices.push(arr.slice(i, i + count));
+  }
+
+  return dataSlices;
+};
+
+export default class Grid {
+  #itemCount = 24;
 
   #imgSrc = {
     beforeBtn: 'src/images/before_btn.svg',
     nextBtn: 'src/images/next_btn.svg'
   };
 
+  #dataSlices;
+
   constructor($parent, props) {
     this.$parent = $parent;
     this.$mainEle = document.createElement('section');
+    this.$mainEle.className = 'main-content__grid';
 
     this.props = props;
-    const { pressTabType } = this.props;
+    const { activePressTab } = this.props;
 
-    this.$mainEle.classList.add('main-content__grid', `${pressTabType}-grid__section`);
+    this.$mainEle.id = `${activePressTab}-grid__section`;
 
+    this.children = new Set();
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
 
-    gridPageStore.register(this.displayBtn.bind(this));
-    tabStore.register(this.displayElement.bind(this));
+    this.initGrid();
+
+    this.unregisterGrid = gridStore.register(() => {
+      this.displayBtn();
+      this.removeChildren();
+      this.renderChildren();
+    });
+
+    this.unregisterSubscription = subscriptionStore.register(() => {
+      if (activePressTab !== 'mine') return;
+
+      this.initGrid();
+      this.removeChildren();
+      this.renderChildren();
+    });
+  }
+
+  initGrid() {
+    const { pressData, activePressTab } = this.props;
+    this.setDataSlices(pressData, activePressTab);
+    const totalPages = this.getTotalPages();
+
+    gridStore.dispatch({
+      type: GRID_ACTION_TYPES.INIT_STATE,
+      payload: { pressTab: activePressTab, totalPages }
+    });
+  }
+
+  setDataSlices(pressData, activePressTab) {
+    const { subscriptionList } = subscriptionStore.getState();
+    const selectedPressData = activePressTab === 'all' ? pressData : subscriptionList;
+
+    this.#dataSlices = getDataSlices({ arr: selectedPressData, count: this.#itemCount });
+  }
+
+  getTotalPages() {
+    return this.#dataSlices.length === 0 ? 1 : this.#dataSlices.length;
   }
 
   render() {
+    this.removeChildren();
+
     this.$mainEle.innerHTML = this.template();
-
-    this.renderPressGridContainers();
-
-    this.displayElement();
-    this.displayBtn();
+    this.renderChildren();
     this.setEvent();
   }
 
-  renderPressGridContainers() {
-    const { pressTabType, allPressData } = this.props;
-    const subscriptionList = subscriptionListStore.getState();
+  template() {
+    const { beforeBtn, nextBtn } = this.#imgSrc;
+    const { currentPage, totalPages } = gridStore.getState();
 
-    const subscribedPressData = allPressData.filter(({ pressName }) => subscriptionList.has(pressName));
-    const pressData = pressTabType === 'all' ? allPressData : subscribedPressData;
-    const pressDataSlices = getDataSlices({
-      dataArr: pressData,
-      count: this.#gridItemCount
-    });
-    const $gridWrapper = $({
-      selector: '.main-content__grid-wrapper',
-      parent: this.$mainEle
-    });
+    return `
+      <div class="main-content__grid-before-btn ${isFirstPage(currentPage) ? 'hidden' : ''}">
+        <img id="grid-before-btn" src="${beforeBtn}" alt="before grid page" />
+      </div>
+      <div class="main-content__grid-next-btn ${isLastPage(currentPage, totalPages) ? 'hidden' : ''}">
+        <img id="grid-next-btn" src="${nextBtn}" alt="next grid page" />
+      </div>
+      <div class="main-content__grid-wrapper">
+      </div>
+    `;
+  }
 
-    const pagesCount = pressDataSlices.length === 0 ? 1 : pressDataSlices.length;
+  renderChildren() {
+    const { currentPage } = gridStore.getState();
+    const $gridWrapper = this.$mainEle.querySelector('.main-content__grid-wrapper');
+    const itemsData = this.#dataSlices[currentPage] ?? [];
 
-    for (let page = 0; page < pagesCount; page += 1) {
-      const data = pressDataSlices[page];
+    this.children.add(
       new PressGrid($gridWrapper, {
-        pressTabType,
-        page,
-        gridItemsData: data ?? []
-      }).render();
-    }
+        itemsData,
+        itemCount: this.#itemCount
+      })
+    );
 
-    gridPageStore.dispatch({
-      type: 'initGridPage',
-      payload: {
-        pressTabType,
-        currentPage: 0,
-        totalPages: pagesCount
+    this.children.forEach((child) => child.render());
+  }
+
+  setEvent() {
+    const actionByTarget = {
+      'grid-before-btn': GRID_ACTION_TYPES.BEFORE_PAGE,
+      'grid-next-btn': GRID_ACTION_TYPES.NEXT_PAGE
+    };
+
+    this.$mainEle.addEventListener('click', ({ target }) => {
+      const { id } = target;
+
+      if (actionByTarget[id]) {
+        gridStore.dispatch({ type: actionByTarget[id] });
       }
     });
   }
 
-  displayElement() {
-    const { pressTabType } = this.props;
-    const { activePressTab, activeShowTab } = tabStore.getState();
-
-    if (
-      !isActiveTab({
-        pressTabType,
-        showTabType: 'grid',
-        activePressTab,
-        activeShowTab
-      })
-    )
-      this.$mainEle.classList.add('display-none');
-    else this.$mainEle.classList.remove('display-none');
-  }
-
   displayBtn() {
-    const { pressTabType } = this.props;
-    const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
+    const { currentPage, totalPages } = gridStore.getState();
 
-    const $beforeBtn = $({
-      selector: '.main-content__grid-before-btn',
-      parent: this.$mainEle
-    });
-    const $nextBtn = $({
-      selector: '.main-content__grid-next-btn',
-      parent: this.$mainEle
-    });
+    const $beforeBtn = this.$mainEle.querySelector('.main-content__grid-before-btn');
+    const $nextBtn = this.$mainEle.querySelector('.main-content__grid-next-btn');
 
     if (isFirstPage(currentPage)) $beforeBtn.classList.add('hidden');
     else $beforeBtn.classList.remove('hidden');
@@ -111,38 +142,21 @@ export default class MainContentGrid {
     else $nextBtn.classList.remove('hidden');
   }
 
-  template() {
-    const { beforeBtn, nextBtn } = this.#imgSrc;
+  remove() {
+    this.$mainEle.remove();
+    this.removeChildren();
 
-    return `
-      <div class="main-content__grid-before-btn">
-        <img id="grid-before-btn" src="${beforeBtn}" alt="before grid page" />
-      </div>
-      <div class="main-content__grid-next-btn">
-        <img id="grid-next-btn" src="${nextBtn}" alt="next grid page" />
-      </div>
-      <div class="main-content__grid-wrapper">
-      </div>
-    `;
+    if (!this.unregisterGrid) return;
+    this.unregisterGrid();
+
+    if (!this.unregisterSubscription) return;
+    this.unregisterSubscription();
   }
 
-  setEvent() {
-    this.$mainEle.addEventListener('click', ({ target }) => {
-      const { pressTabType } = this.props;
-      const { currentPage, totalPages } = gridPageStore.getState()[pressTabType];
+  removeChildren() {
+    if (this.children.size === 0) return;
 
-      if (target.id === 'grid-before-btn') {
-        gridPageStore.dispatch({
-          type: 'beforePage',
-          payload: { pressTabType, currentPage, totalPages }
-        });
-      }
-      if (target.id === 'grid-next-btn') {
-        gridPageStore.dispatch({
-          type: 'nextPage',
-          payload: { pressTabType, currentPage, totalPages }
-        });
-      }
-    });
+    this.children.forEach((child) => child.remove());
+    this.children.clear();
   }
 }
