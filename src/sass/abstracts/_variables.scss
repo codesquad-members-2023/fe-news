@@ -1,5 +1,5 @@
 $white70: rgba(255, 255, 255, 0.7);
-$white: #FFFFFF;
+$white: #FFF;
 $offwhite: #F5F7F9;
 $gray100: #D2DAE0;
 $gray200: #879298;
@@ -25,4 +25,12 @@ $bold: 700;
 $medium: 500;
 
 $containerWidth: 930px;
-$popupWidth: 320px
+$containerHeight: 390px;
+
+$boxWidth: 320px;
+
+$popupZindex: 1000;
+
+$afterWidth: 1280px;
+$afterHeight: 450px;
+$afterZindex: 100;

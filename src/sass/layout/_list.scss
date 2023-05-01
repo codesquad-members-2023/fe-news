@@ -12,10 +12,6 @@
       @extend .list-category;
       overflow-x: scroll;
       overflow-y: hidden;
-      white-space: nowrap;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      // scroll-snap-type: x mandatory;
       &::-webkit-scrollbar {
         display: none;
       }
@@ -24,7 +20,7 @@
     li:not(.current, .current-subscribed) {
       display: inline-block;
       height: 40px;
-      width: auto;
+      min-width: max-content;
       padding: 0 16px;
       @include font($bodySM, $medium);
       color: $gray300;
@@ -62,7 +58,7 @@
     gap: 45px;
 
     .main-news {
-      width: 320px;
+      width: $boxWidth;
 
       .main-thumbnail {
         display: block;
@@ -70,7 +66,7 @@
 
         img {
           height: 200px;
-          width: 320px;
+          width: $boxWidth;
           transition: all 0.2s linear;
 
           &:hover {

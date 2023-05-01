@@ -20,6 +20,7 @@ const subscribedPressPageReducer = (state = initialState, action) => {
         pressData,
       );
       if(state.pressIndex < 0) state.pressIndex = 0;
+      state.pressIndex = state.subscribedPressInfo.length - 1;
       state.currentPress = state.subscribedPressInfo[state.pressIndex];
       return {
         ...state,
@@ -39,11 +40,13 @@ const subscribedPressPageReducer = (state = initialState, action) => {
       };
     case 'PREV_PRESS':
       state.pressIndex = movePrevPress({ state });
+      state.currentPress = state.subscribedPressInfo[state.pressIndex];
       return {
         ...state,
       };
     case 'NEXT_PRESS':
       state.pressIndex = moveNextPress({ state });
+      state.currentPress = state.subscribedPressInfo[state.pressIndex];
       return {
         ...state,
       };

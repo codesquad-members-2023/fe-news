@@ -25,6 +25,22 @@ const viewTypeReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case 'MOVE_SUBSCRIBE_LIST':
+      const activatedSubscribedListState = {
+        press: {
+          all: false,
+          subscribe: true,
+        },
+        view: {
+          list: true,
+          grid: false,
+        },
+      }
+      return {
+        ...state,
+        press: activatedSubscribedListState.press,
+        view: activatedSubscribedListState.view,
+      };
     default:
       return state;
   }

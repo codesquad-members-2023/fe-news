@@ -359,7 +359,7 @@ main .view-buttons .grid-active {
 
 .subscribe {
   width: 74px;
-  background-color: #FFFFFF;
+  background-color: #FFF;
 }
 
 .unsubscribe {
@@ -369,7 +369,7 @@ main .view-buttons .grid-active {
 
 .close {
   width: 24px;
-  background-color: #FFFFFF;
+  background-color: #FFF;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -389,7 +389,16 @@ main .view-buttons .grid-active {
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  background-color: #FFFFFF;
+  background-color: #FFF;
+}
+.popup-confirm::after {
+  z-index: 100;
+  position: absolute;
+  left: -480px;
+  top: -190px;
+  width: 1280px;
+  height: 450px;
+  content: "";
 }
 .popup-confirm p {
   width: 320px;
@@ -401,7 +410,8 @@ main .view-buttons .grid-active {
 .popup-confirm p strong {
   color: #14212B;
 }
-.popup-confirm > div {
+.popup-confirm .popup-btn {
+  z-index: 1000;
   width: 320px;
   display: flex;
   flex-direction: row;
@@ -410,34 +420,40 @@ main .view-buttons .grid-active {
   border: solid #D2DAE0;
   border-width: 0px 1px 1px 1px;
 }
-.popup-confirm > div a {
+.popup-confirm .popup-btn a {
   width: 100%;
   height: 50px;
   line-height: 50px;
 }
-.popup-confirm > div a:hover {
+.popup-confirm .popup-btn a:hover {
   text-decoration: underline #5f6E76;
   cursor: pointer;
 }
-.popup-confirm > div a:nth-child(1) {
+.popup-confirm .popup-btn a:nth-child(1) {
   border-right: 1px solid #D2DAE0;
 }
 
 .popup-add {
+  z-index: 1000;
   position: absolute;
   top: 130px;
-  left: 300px;
+  left: 305px;
   width: 320px;
   height: 55px;
   line-height: 55px;
   text-align: center;
   background-color: #4362D0;
-  color: #FFFFFF;
+  color: #FFF;
   cursor: defalt;
-  -webkit-user-select: all;
-  -moz-user-select: all;
-  -ms-use-select: all;
-  user-select: all;
+}
+.popup-add::after {
+  z-index: 100;
+  position: absolute;
+  left: -480px;
+  top: -190px;
+  width: 1280px;
+  height: 450px;
+  content: "";
 }
 
 .view-container {
@@ -479,7 +495,7 @@ main .view-buttons .grid-active {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #FFFFFF;
+  background-color: #FFF;
 }
 .view-container .grid-area .cell-item {
   width: 100%;
@@ -498,7 +514,7 @@ main .view-buttons .grid-active {
   justify-content: center;
   align-items: center;
   gap: 16px;
-  background-color: #FFFFFF;
+  background-color: #FFF;
   border: solid #D2DAE0;
   border-width: 0 1px 1px 0;
 }
@@ -527,9 +543,6 @@ main .view-buttons .grid-active {
 .category-area .list-category-subscribed {
   overflow-x: scroll;
   overflow-y: hidden;
-  white-space: nowrap;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 .category-area .list-category-subscribed::-webkit-scrollbar {
   display: none;
@@ -537,7 +550,7 @@ main .view-buttons .grid-active {
 .category-area .list-category li:not(.current, .current-subscribed), .category-area .list-category-subscribed li:not(.current, .current-subscribed) {
   display: inline-block;
   height: 40px;
-  width: auto;
+  min-width: max-content;
   padding: 0 16px;
   font-size: 14px;
   font-weight: 500;
@@ -633,7 +646,7 @@ main .view-buttons .grid-active {
   font-size: 14px;
   font-weight: 700;
   background-color: #4362D0;
-  color: #FFFFFF;
+  color: #FFF;
   display: flex;
   justify-content: space-between;
   cursor: default;

@@ -2,16 +2,16 @@ import createElement from '../../utils/util.js';
 import { ViewTypeStore } from '../../stores/viewTypeStore.js';
 import { SubscribeStore } from '../../stores/subscribeListStore.js';
 import { DURATION_TIME } from '../../core/constants.js';
-import { createBtn, popupUnsubscribeBtn, popupSubscribeBtn } from './subscribeButton.js';
+import { createBtn, getUnsubscribePopup, getSubscribePopup } from './subscribeButton.js';
 
 class GridView {
   #gridData;
-  #viewStore;
+  #viewTypeStore;
   #subscribeStore;
   page = 0;
   constructor(gridData, { GRID_INFO }) {
     this.#gridData = gridData;
-    this.#viewStore = ViewTypeStore;
+    this.#viewTypeStore = ViewTypeStore;
     this.#subscribeStore = SubscribeStore;
     this.FIRST_PAGE = GRID_INFO.FIRST_PAGE;
     this.LAST_PAGE = GRID_INFO.LAST_PAGE;
@@ -20,11 +20,15 @@ class GridView {
   }
 
   init() {
-    this.setTemplate();
-    this.onMouseGridCell();
-    this.#viewStore.subscribe(this.#reRender.bind(this));
+    this.render();
+    this.#viewTypeStore.subscribe(this.#reRender.bind(this));
     this.#subscribeStore.subscribe(this.#reRender.bind(this));
     return this;
+  }
+
+  render() {
+    this.setTemplate();
+    this.onMouseGridCell();
   }
 
   setTemplate() {
@@ -33,7 +37,7 @@ class GridView {
   }
 
   renderAllGridView() {
-    const { view } = this.#viewStore.getState();
+    const { view } = this.#viewTypeStore.getState();
     const { subscribedList } = this.#subscribeStore.getState();
     const isGrid = view['grid'];
     const pressInfo = this.#gridData.slice(this.GRID_COUNT * this.page, this.GRID_COUNT * (this.page + 1));
@@ -42,7 +46,9 @@ class GridView {
     ${pressInfo.reduce((template, press) => {
       const isSubscribe = subscribedList.has(press.pressLogo);
       const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
-      template += `<div class="grid-cell"><img src=${press.pressLogo} alt=${press.press}><div class="cell-item hidden">${createBtn(buttonType)}</div></div>`;
+      template += `<div class="grid-cell"><img src=${press.pressLogo} alt=${
+        press.press
+      }><div class="cell-item hidden">${createBtn(buttonType)}</div></div>`;
       return template;
     }, ``)}
       </div>
@@ -70,28 +76,25 @@ class GridView {
 
   onMouseGridCell() {
     const gridArea = this.viewContainer.querySelector('.grid-area');
-    gridArea.addEventListener('mouseover', this.mouseOverGridCell.bind(this));
-    gridArea.addEventListener('mouseout', this.mouseOutGridCell.bind(this));
+    gridArea.addEventListener('mouseover', this.mouseInOutGridCell.bind(this));
+    gridArea.addEventListener('mouseout', this.mouseInOutGridCell.bind(this));
     gridArea.addEventListener('click', this.clickCellBtn.bind(this));
   }
 
-  mouseOverGridCell({ target }) {
+  mouseInOutGridCell({ target, type }) {
+    const isMouseOver = type === 'mouseover' ? true : false;
     const gridCell = target.closest('.grid-cell');
     if (!gridCell) return;
     const pressLogo = gridCell.querySelector('img');
     const cellBtn = gridCell.querySelector('.cell-item');
-    if (pressLogo.src === '') return;
-    pressLogo.classList.add('hidden');
-    cellBtn.classList.replace('hidden', 'flex');
-  }
-
-  mouseOutGridCell({ target }) {
-    const gridCell = target.closest('.grid-cell');
-    if (!gridCell) return;
-    const pressLogo = gridCell.querySelector('img');
-    const cellBtn = gridCell.querySelector('.cell-item');
-    pressLogo.classList.remove('hidden');
-    cellBtn.classList.replace('flex', 'hidden');
+    if (isMouseOver) {
+      if (pressLogo.src === '') return;
+      pressLogo.classList.add('hidden');
+      cellBtn.classList.replace('hidden', 'flex');
+    } else {
+      pressLogo.classList.remove('hidden');
+      cellBtn.classList.replace('flex', 'hidden');
+    }
   }
 
   clickCellBtn({ target }) {
@@ -107,7 +110,7 @@ class GridView {
     cellBtn.outerHTML = createBtn('unsubscribe');
     const addPopup = document.querySelector('.popup-add');
     if (addPopup) addPopup.classList.remove('hidden');
-    else this.viewContainer.insertAdjacentHTML('beforeend', popupSubscribeBtn());
+    else this.viewContainer.insertAdjacentHTML('beforeend', getSubscribePopup());
     this.disappearPopup();
     this.#subscribeStore.dispatch({
       type: 'SUBSCRIBE',
@@ -118,13 +121,16 @@ class GridView {
   clickUnsubscribeBtn(cellBtn, subscribedPressInfo) {
     if (cellBtn.classList.contains('subscribe')) return;
     if (this.viewContainer.querySelector('.popup-btn'))
-    this.viewContainer.querySelector('.popup-confirm').outerHTML = popupUnsubscribeBtn(subscribedPressInfo.alt);
-    else this.viewContainer.insertAdjacentHTML('beforeend', popupUnsubscribeBtn(subscribedPressInfo.alt));
+      this.viewContainer.querySelector('.popup-confirm').outerHTML = getUnsubscribePopup(subscribedPressInfo.alt);
+    else this.viewContainer.insertAdjacentHTML('beforeend', getUnsubscribePopup(subscribedPressInfo.alt));
     this.confirmUnsubscribe.bind(this)(cellBtn, subscribedPressInfo);
   }
 
   disappearPopup() {
     setTimeout(() => {
+      this.#viewTypeStore.dispatch({
+        type: 'MOVE_SUBSCRIBE_LIST',
+      });
       document.querySelector('.popup-add').classList.add('hidden');
     }, DURATION_TIME.snackbar);
   }
@@ -144,7 +150,7 @@ class GridView {
   }
 
   #reRender() {
-    const { press, view } = this.#viewStore.getState();
+    const { press, view } = this.#viewTypeStore.getState();
     if (press['all'] && view['grid']) this.excuteRerender('PRESS_ALL_GRID_VIEW');
     else if (press['all'] && view['list']) this.excuteRerender('PRESS_ALL_LIST_VIEW');
     else if (press['subscribe'] && view['grid']) this.excuteRerender('PRESS_SUBSCRIBE_GRID_VIEW');
@@ -189,8 +195,7 @@ class GridView {
   }
 
   renderSubscribeGridView(subscribedList) {
-    const isGrid = this.#viewStore.getState().view['grid'];
-    // Todo - 24 넘으면 slice하고 나머지 채우기
+    const isGrid = this.#viewTypeStore.getState().view['grid'];
     const restGridCells = Array(this.GRID_COUNT - subscribedList.size).fill('');
     const LAST_PAGE_SUBSCRIBE = Math.floor(subscribedList.size / this.GRID_COUNT);
     return `<div class="grid-container${isGrid ? `` : ' hidden'}">
@@ -199,7 +204,9 @@ class GridView {
           const isSubscribe = subscribedList.has(press);
           const buttonType = isSubscribe ? 'unsubscribe' : 'subscribe';
           const pressInfo = press === '' ? `` : `src="${press}"`;
-          template += `<div class="grid-cell"><img ${pressInfo}><div class="cell-item hidden">${createBtn(buttonType)}</div></div>`;
+          template += `<div class="grid-cell"><img ${pressInfo}><div class="cell-item hidden">${createBtn(
+            buttonType,
+          )}</div></div>`;
           return template;
         }, ``)}
       </div>
