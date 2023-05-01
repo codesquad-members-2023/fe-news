@@ -87,7 +87,7 @@ const gridReducer = (state, action) => {
   switch (action.type) {
     case INIT_STATE: {
       const { pressTab, totalPages } = action.payload;
-      return { ...state, pressTab, currentPage: 0, totalPages };
+      return { ...state, pressTab, currentPage: pressTab === 'mine' ? totalPages - 1 : 0, totalPages };
     }
     case NEXT_PAGE: {
       const { currentPage, totalPages } = state;

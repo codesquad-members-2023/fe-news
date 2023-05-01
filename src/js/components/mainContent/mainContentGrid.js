@@ -33,8 +33,7 @@ export default class Grid {
     this.children = new Set();
     this.$parent.insertAdjacentElement('beforeend', this.$mainEle);
 
-    const { pressData, activePressTab } = this.props;
-    this.initGrid(pressData, activePressTab);
+    this.initGrid();
 
     this.unregisterGrid = gridStore.register(() => {
       this.displayBtn();
@@ -42,6 +41,7 @@ export default class Grid {
       this.renderChildren();
     });
 
+    const { activePressTab } = this.props;
     this.unregisterSubscription = subscriptionStore.register(() => {
       if (activePressTab !== 'mine') return;
 
@@ -51,7 +51,8 @@ export default class Grid {
     });
   }
 
-  initGrid(pressData, activePressTab) {
+  initGrid() {
+    const { pressData, activePressTab } = this.props;
     this.setDataSlices(pressData, activePressTab);
     const totalPages = this.getTotalPages();
 
