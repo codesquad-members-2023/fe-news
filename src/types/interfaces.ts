@@ -47,6 +47,9 @@ export interface ObserverViewComponent extends View, Component {
   subscribe(): void;
 }
 
+export interface TempObserverViewComponent extends View, TempComponent {
+  subscribe(): void;
+}
 /**
  * Flux
  */
