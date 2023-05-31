@@ -1,6 +1,6 @@
 import { Component } from "../../../core/Component.js";
 import { ItemView } from "./ItemView.js";
-import { getPageNumberByDir } from "../../../utils/utils.js";
+import { getPageNumberByDir } from "../../../utils/index.js";
 import { NEXT_PAGE_BTN, PREV_PAGE_BTN } from "../../../constants/ui.js";
 import subscribeBtn from "../../../images/subscribe_btn.svg";
 
