@@ -13,6 +13,7 @@ export default class NSSectionCurViewStateModel extends Observer {
 
       index: 1,
       curListCategory: null,
+      curListSubPress: null,
     };
     this._dataFetcher = dataFetcher;
     this._allPressData = {};
@@ -37,7 +38,9 @@ export default class NSSectionCurViewStateModel extends Observer {
   }
 
   setSubData(data) {
-    this._subPressData.push(data);
+    const article = typeof data === 'string' ? this.getArticleByPublish(data) : data;
+    this._subPressData.push(article);
+    if (!this._curViewState.curListSubPress) this._curViewState.curListSubPress = article;
   }
 
   async getAllData(data) {
@@ -84,6 +87,18 @@ export default class NSSectionCurViewStateModel extends Observer {
     return [...this._subPressData.slice(start, end)];
   }
 
+  getAllListSubPresses() {
+    return this._subPressData;
+  }
+
+  setCurListSubPress(article) {
+    this._curViewState.curListSubPress = article;
+  }
+
+  getCurListSubPress() {
+    return this._curViewState.curListSubPress;
+  }
+
   getAllCategory() {
     return this._allCategory;
   }
@@ -113,7 +128,7 @@ export default class NSSectionCurViewStateModel extends Observer {
 
   getArticleByPublish(pressName) {
     let article;
-    for (const [category, data] of Object.entries(this._allPressData)) {
+    for (const [_category, data] of Object.entries(this._allPressData)) {
       if (
         data.some((data) => {
           if (data.pressName === pressName) {
@@ -130,10 +145,12 @@ export default class NSSectionCurViewStateModel extends Observer {
 
   deleteSubDataOnAllView(data) {
     this._subPressData = this._subPressData.filter((subData) => subData.pressName !== data);
+    const article = this._subPressData[0];
+    this.setCurListSubPress(article);
   }
 
-  deleteSubData(data) {
-    this._subPressData = this._subPressData.filter((subData) => subData.pressName !== data);
+  deleteSubDataOnGridSubView(pressName) {
+    this._subPressData = this._subPressData.filter((subData) => subData.pressName !== pressName);
     const { gridOrList, allOrSub } = this._curViewState;
     if (
       this.getGridSubData().length === 0 &&
@@ -142,6 +159,27 @@ export default class NSSectionCurViewStateModel extends Observer {
     ) {
       this._curViewState.index -= 1;
     }
+    const article = this._subPressData[0];
+    this.setCurListSubPress(article);
+    this.notify(this._curViewState);
+  }
+
+  deleteSubDataOnListSubView(pressName) {
+    let curPressIndex = null;
+    this._subPressData.some((press, index) => {
+      if (press.pressName === pressName) {
+        curPressIndex = index;
+        return true;
+      }
+    });
+
+    if (curPressIndex === this._subPressData.length - 1) {
+      curPressIndex -= 1;
+    }
+    this._subPressData = this._subPressData.filter((subData) => subData.pressName !== pressName);
+    this._subPressData.length !== 0
+      ? this.setCurListSubPress(this._subPressData[curPressIndex])
+      : this.setCurListSubPress(null);
     this.notify(this._curViewState);
   }
 
@@ -156,15 +194,25 @@ export default class NSSectionCurViewStateModel extends Observer {
     }
     this._curViewState.curListCategory = this._allCategory[0];
     this._curViewState.index = 1;
+    const article = this._subPressData[0];
+    this.setCurListSubPress(article);
     this.notify(this._curViewState);
   }
 
-  changeListCategory(selectedCategory) {
+  changeListCategoryOnListAllView(selectedCategory) {
     if (this._curViewState.curListCategory === selectedCategory) return;
 
     this._curViewState.curListCategory = selectedCategory;
     this._curViewState.index = 1;
 
+    this.notify(this._curViewState);
+  }
+
+  changePressOnListSubView(selectedPress) {
+    if (this._curViewState.curListSubPress.pressName === selectedPress) return;
+
+    const article = this.getArticleByPublish(selectedPress);
+    this.setCurListSubPress(article);
     this.notify(this._curViewState);
   }
 
@@ -178,7 +226,7 @@ export default class NSSectionCurViewStateModel extends Observer {
     this.notify(this._curViewState);
   }
 
-  decreaseIndexOnListView() {
+  decreaseIndexOnListAllView() {
     const { index, curListCategory } = this._curViewState;
     switch (index) {
       case 1:
@@ -194,7 +242,7 @@ export default class NSSectionCurViewStateModel extends Observer {
     this.notify(this._curViewState);
   }
 
-  increaseIndexOnListView() {
+  increaseIndexOnListAllView() {
     const { index, curListCategory } = this._curViewState;
 
     switch (index) {
@@ -238,5 +286,33 @@ export default class NSSectionCurViewStateModel extends Observer {
     const changedCategoryIndex = curCategoryIndex + 1;
     const changedCategory = this._allCategory.at(changedCategoryIndex - categoryCount);
     return changedCategory;
+  }
+
+  increaseIndexOnListSubView() {
+    const { curListSubPress } = this._curViewState;
+    let curPressIndex = null;
+    this._subPressData.some((press, index) => {
+      if (press === curListSubPress) {
+        curPressIndex = index;
+        return true;
+      }
+    });
+
+    this.setCurListSubPress(this._subPressData.at(curPressIndex + 1 - this._subPressData.length));
+    this.notify(this._curViewState);
+  }
+
+  decreaseIndexOnListSubView() {
+    const { curListSubPress } = this._curViewState;
+    let curPressIndex = null;
+    this._subPressData.some((press, index) => {
+      if (press === curListSubPress) {
+        curPressIndex = index;
+        return true;
+      }
+    });
+
+    this.setCurListSubPress(this._subPressData.at(curPressIndex - 1));
+    this.notify(this._curViewState);
   }
 }

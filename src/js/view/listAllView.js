@@ -26,9 +26,9 @@ export default class ListAllView {
     parentElem.insertAdjacentHTML('afterbegin', listAllSection);
 
     const [index, curListCategory, curListCategoryLength] =
-      this._curViewStateModel.getCurIndexAndCategory();
+      this._curViewStateModel.getCurIndexAndCategory(); // 객체를 넘겨주기
     this.setListSection();
-    this.setCategoryState(index, curListCategory, curListCategoryLength);
+    this.setCategoryState(index, curListCategory, curListCategoryLength); // 객체를 받자
     this.setStateOfSubOrNoSub();
     this.setEvent();
   }
@@ -39,8 +39,8 @@ export default class ListAllView {
       listAllCategory.reduce((acc, cur) => {
         acc += `<div class="list_header_category" data-id="category"><span data-value="category_name">${cur}</span></div>`;
         return acc;
-      }, `<div class="list_header">`) +
-      `</div>
+      }, `<div class="list_header" data-id="categoryContainer"><div class="list_header_view">`) +
+      `</div></div>
     <div class="list_view">
       <div class="list_view_top">
         <img class="press_logo" src="${data.logoImgSrc}" alt="${data.pressName}" data-id="pressname"/>
@@ -50,7 +50,9 @@ export default class ListAllView {
       </div>
       <div class="list_view_bottom">
         <div class="bottom_main">
+          <div class="main_news_img_container">
           <img class="main_news_img" src="${data.mainNewsImg}" alt="mainNewsImg"/>
+          </div>
           <div class="main_news_text">${data.mainNews}</div>
         </div>
         <div class="bottom_sub">` +
@@ -121,7 +123,6 @@ export default class ListAllView {
 
   subButtonClickHandler(article) {
     this._curViewStateModel.setSubData(article);
-
     this._subButton.classList.add('hidden');
     this._noSubButton.classList.remove('hidden');
   }
@@ -139,7 +140,7 @@ export default class ListAllView {
     const spanElement = categorySection.querySelector('[data-value="category_name"]');
     const selectedCategory = spanElement.textContent;
 
-    this._curViewStateModel.changeListCategory(selectedCategory);
+    this._curViewStateModel.changeListCategoryOnListAllView(selectedCategory);
   }
 
   setEvent() {

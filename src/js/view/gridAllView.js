@@ -74,9 +74,7 @@ export default class GridAllView {
   }
 
   subButtonHandler() {
-    const article = this._curViewStateModel.getArticleByPublish(this._pressName);
-    this._curViewStateModel.setSubData(article);
-
+    this._curViewStateModel.setSubData(this._pressName);
     this._subPopupWrap.classList.add('hidden');
     this._noSubPopupWrap.classList.remove('hidden');
   }

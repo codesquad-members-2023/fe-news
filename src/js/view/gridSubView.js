@@ -24,8 +24,7 @@ export default class GridSubView {
 
     parentElem.innerHTML = '';
     parentElem.insertAdjacentHTML('afterbegin', gridSubSection);
-
-    this._curViewStateModel.isEmptySubData() ? null : this.setEvent();
+    if (!this._curViewStateModel.isEmptySubData()) this.setEvent();
   }
 
   getEmptySubDataMarkup() {
@@ -81,7 +80,7 @@ export default class GridSubView {
 
   gridSectionClickEventHandler({ target }) {
     if (!target.classList.contains('nosub_button')) return;
-    this._curViewStateModel.deleteSubData(this._pressName);
+    this._curViewStateModel.deleteSubDataOnGridSubView(this._pressName);
   }
 
   setEvent() {
